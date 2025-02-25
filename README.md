@@ -54,11 +54,8 @@ const client = new Reducto({
 });
 
 async function main() {
-  const params: Reducto.SplitRunParams = {
-    document_url: 'document_url',
-    split_description: [{ description: 'description', name: 'name' }],
-  };
-  const splitResponse: Reducto.SplitResponse = await client.split.run(params);
+  const params: Reducto.ParseRunParams = { document_url: 'https://pdfobject.com/pdf/sample.pdf' };
+  const parseResponse: Reducto.ParseResponse = await client.parse.run(params);
 }
 
 main();
@@ -105,8 +102,8 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const splitResponse = await client.split
-    .run({ document_url: 'document_url', split_description: [{ description: 'description', name: 'name' }] })
+  const parseResponse = await client.parse
+    .run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' })
     .catch(async (err) => {
       if (err instanceof Reducto.APIError) {
         console.log(err.status); // 400
@@ -150,7 +147,7 @@ const client = new Reducto({
 });
 
 // Or, configure per-request:
-await client.split.run({ document_url: 'document_url', split_description: [{ description: 'description', name: 'name' }] }, {
+await client.parse.run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' }, {
   maxRetries: 5,
 });
 ```
@@ -167,7 +164,7 @@ const client = new Reducto({
 });
 
 // Override per-request:
-await client.split.run({ document_url: 'document_url', split_description: [{ description: 'description', name: 'name' }] }, {
+await client.parse.run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -188,17 +185,17 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new Reducto();
 
-const response = await client.split
-  .run({ document_url: 'document_url', split_description: [{ description: 'description', name: 'name' }] })
+const response = await client.parse
+  .run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: splitResponse, response: raw } = await client.split
-  .run({ document_url: 'document_url', split_description: [{ description: 'description', name: 'name' }] })
+const { data: parseResponse, response: raw } = await client.parse
+  .run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(splitResponse.result);
+console.log(parseResponse.job_id);
 ```
 
 ### Making custom/undocumented requests
@@ -302,8 +299,8 @@ const client = new Reducto({
 });
 
 // Override per-request:
-await client.split.run(
-  { document_url: 'document_url', split_description: [{ description: 'description', name: 'name' }] },
+await client.parse.run(
+  { document_url: 'https://pdfobject.com/pdf/sample.pdf' },
   {
     httpAgent: new http.Agent({ keepAlive: false }),
   },

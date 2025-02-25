@@ -6,8 +6,9 @@ import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
+import * as Shared from './resources/shared';
 import * as TopLevelAPI from './resources/top-level';
-import { APIVersionResponse, UploadParams, UploadResponse } from './resources/top-level';
+import { APIVersionResponse, UploadParams } from './resources/top-level';
 import { Extract, ExtractRunJobParams, ExtractRunJobResponse, ExtractRunParams } from './resources/extract';
 import { Job, JobCancelResponse, JobGetResponse } from './resources/job';
 import { Parse, ParseRunJobParams, ParseRunJobResponse, ParseRunParams } from './resources/parse';
@@ -143,15 +144,12 @@ export class Reducto extends Core.APIClient {
   /**
    * Upload
    */
-  upload(
-    params?: TopLevelAPI.UploadParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TopLevelAPI.UploadResponse>;
-  upload(options?: Core.RequestOptions): Core.APIPromise<TopLevelAPI.UploadResponse>;
+  upload(params?: TopLevelAPI.UploadParams, options?: Core.RequestOptions): Core.APIPromise<Shared.Upload>;
+  upload(options?: Core.RequestOptions): Core.APIPromise<Shared.Upload>;
   upload(
     params: TopLevelAPI.UploadParams | Core.RequestOptions = {},
     options?: Core.RequestOptions,
-  ): Core.APIPromise<TopLevelAPI.UploadResponse> {
+  ): Core.APIPromise<Shared.Upload> {
     if (isRequestOptions(params)) {
       return this.upload({}, params);
     }
@@ -203,11 +201,7 @@ Reducto.Webhook = Webhook;
 export declare namespace Reducto {
   export type RequestOptions = Core.RequestOptions;
 
-  export {
-    type APIVersionResponse as APIVersionResponse,
-    type UploadResponse as UploadResponse,
-    type UploadParams as UploadParams,
-  };
+  export { type APIVersionResponse as APIVersionResponse, type UploadParams as UploadParams };
 
   export { Job as Job, type JobCancelResponse as JobCancelResponse, type JobGetResponse as JobGetResponse };
 
@@ -245,6 +239,7 @@ export declare namespace Reducto {
   export type ParseUsage = API.ParseUsage;
   export type SplitCategory = API.SplitCategory;
   export type SplitResponse = API.SplitResponse;
+  export type Upload = API.Upload;
   export type WebhookConfigNew = API.WebhookConfigNew;
 }
 

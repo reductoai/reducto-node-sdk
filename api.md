@@ -3,12 +3,11 @@
 Types:
 
 - <code><a href="./src/resources/top-level.ts">APIVersionResponse</a></code>
-- <code><a href="./src/resources/top-level.ts">UploadResponse</a></code>
 
 Methods:
 
 - <code title="get /version">client.<a href="./src/index.ts">apiVersion</a>() -> unknown</code>
-- <code title="post /upload">client.<a href="./src/index.ts">upload</a>({ ...params }) -> UploadResponse</code>
+- <code title="post /upload">client.<a href="./src/index.ts">upload</a>({ ...params }) -> Upload</code>
 
 # Shared
 
@@ -25,6 +24,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">ParseUsage</a></code>
 - <code><a href="./src/resources/shared.ts">SplitCategory</a></code>
 - <code><a href="./src/resources/shared.ts">SplitResponse</a></code>
+- <code><a href="./src/resources/shared.ts">Upload</a></code>
 - <code><a href="./src/resources/shared.ts">WebhookConfigNew</a></code>
 
 # Job
