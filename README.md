@@ -30,12 +30,9 @@ const client = new Reducto({
 });
 
 async function main() {
-  const splitResponse = await client.split.run({
-    document_url: 'document_url',
-    split_description: [{ description: 'description', name: 'name' }],
-  });
+  const parseResponse = await client.parse.run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' });
 
-  console.log(splitResponse.result);
+  console.log(parseResponse.job_id);
 }
 
 main();
