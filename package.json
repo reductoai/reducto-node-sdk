@@ -1,5 +1,5 @@
 {
-  "name": "reductoai",
+  "name": "reducto",
   "version": "0.1.0-alpha.1",
   "description": "The official TypeScript library for the Reducto API",
   "author": "Reducto <dev-feedback@reductoai.com>",
@@ -59,8 +59,8 @@
     "./shims/web.mjs"
   ],
   "imports": {
-    "reductoai": ".",
-    "reductoai/*": "./src/*"
+    "reducto": ".",
+    "reducto/*": "./src/*"
   },
   "exports": {
     "./_shims/auto/*": {

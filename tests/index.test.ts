@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Reducto from 'reductoai';
-import { APIUserAbortError } from 'reductoai';
-import { Headers } from 'reductoai/core';
+import Reducto from 'reducto';
+import { APIUserAbortError } from 'reducto';
+import { Headers } from 'reducto/core';
 import defaultFetch, { Response, type RequestInit, type RequestInfo } from 'node-fetch';
 
 describe('instantiate client', () => {

@@ -1,6 +1,6 @@
 # Reducto Node API Library
 
-[![NPM version](https://img.shields.io/npm/v/reductoai.svg)](https://npmjs.org/package/reductoai) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/reductoai)
+[![NPM version](https://img.shields.io/npm/v/reducto.svg)](https://npmjs.org/package/reducto) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/reducto)
 
 This library provides convenient access to the Reducto REST API from server-side TypeScript or JavaScript.
 
@@ -11,7 +11,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 ## Installation
 
 ```sh
-npm install reductoai
+npm install reducto
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import Reducto from 'reductoai';
+import Reducto from 'reducto';
 
 const client = new Reducto({
   apiKey: process.env['REDUCTO_API_KEY'], // This is the default and can be omitted
@@ -41,7 +41,7 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import Reducto from 'reductoai';
+import Reducto from 'reducto';
 
 const client = new Reducto({
   apiKey: process.env['REDUCTO_API_KEY'], // This is the default and can be omitted
@@ -69,7 +69,7 @@ Request parameters that correspond to file uploads can be passed in many differe
 ```ts
 import fs from 'fs';
 import fetch from 'node-fetch';
-import Reducto, { toFile } from 'reductoai';
+import Reducto, { toFile } from 'reducto';
 
 const client = new Reducto();
 
@@ -247,11 +247,11 @@ add the following import before your first import `from "Reducto"`:
 ```ts
 // Tell TypeScript and the package to use the global web fetch instead of node-fetch.
 // Note, despite the name, this does not add any polyfills, but expects them to be provided if needed.
-import 'reductoai/shims/web';
-import Reducto from 'reductoai';
+import 'reducto/shims/web';
+import Reducto from 'reducto';
 ```
 
-To do the inverse, add `import "reductoai/shims/node"` (which does import polyfills).
+To do the inverse, add `import "reducto/shims/node"` (which does import polyfills).
 This can also be useful if you are getting the wrong TypeScript types for `Response` ([more details](https://github.com/reductoai/reducto-node-sdk/tree/main/src/_shims#readme)).
 
 ### Logging and middleware
@@ -261,7 +261,7 @@ which can be used to inspect or alter the `Request` or `Response` before/after e
 
 ```ts
 import { fetch } from 'undici'; // as one example
-import Reducto from 'reductoai';
+import Reducto from 'reducto';
 
 const client = new Reducto({
   fetch: async (url: RequestInfo, init?: RequestInit): Promise<Response> => {
