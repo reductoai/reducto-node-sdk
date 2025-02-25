@@ -7,9 +7,9 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^reductoai$': '<rootDir>/src/index.ts',
-    '^reductoai/_shims/auto/(.*)$': '<rootDir>/src/_shims/auto/$1-node',
-    '^reductoai/(.*)$': '<rootDir>/src/$1',
+    '^reducto$': '<rootDir>/src/index.ts',
+    '^reducto/_shims/auto/(.*)$': '<rootDir>/src/_shims/auto/$1-node',
+    '^reducto/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',

@@ -1,5 +1,5 @@
-import { createResponseHeaders } from 'reductoai/core';
-import { Headers } from 'reductoai/_shims/index';
+import { createResponseHeaders } from 'reducto/core';
+import { Headers } from 'reducto/_shims/index';
 
 describe('response parsing', () => {
   // TODO: test unicode characters
