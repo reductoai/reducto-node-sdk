@@ -4,12 +4,6 @@ import { type Uploadable } from '../core';
 
 export type APIVersionResponse = unknown;
 
-export interface UploadResponse {
-  file_id: string;
-
-  presigned_url?: string | null;
-}
-
 export interface UploadParams {
   /**
    * Query param:
@@ -23,9 +17,5 @@ export interface UploadParams {
 }
 
 export declare namespace TopLevel {
-  export {
-    type APIVersionResponse as APIVersionResponse,
-    type UploadResponse as UploadResponse,
-    type UploadParams as UploadParams,
-  };
+  export { type APIVersionResponse as APIVersionResponse, type UploadParams as UploadParams };
 }

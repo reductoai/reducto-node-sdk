@@ -515,6 +515,12 @@ export namespace SplitResponse {
   }
 }
 
+export interface Upload {
+  file_id: string;
+
+  presigned_url?: string | null;
+}
+
 export interface WebhookConfigNew {
   /**
    * A list of Svix channels the message will be delivered down, omit to send to all
