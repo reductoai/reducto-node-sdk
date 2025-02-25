@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Reducto } from 'reductoai';
+import { Reducto } from 'reducto';
 
 const { stringifyQuery } = Reducto.prototype as any;
 
