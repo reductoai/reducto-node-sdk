@@ -12,7 +12,7 @@ describe('resource split', () => {
   // skipped: tests are disabled for the time being
   test.skip('run: only required params', async () => {
     const responsePromise = client.split.run({
-      document_url: 'document_url',
+      document_url: 'string',
       split_description: [{ description: 'description', name: 'name' }],
     });
     const rawResponse = await responsePromise.asResponse();
@@ -27,7 +27,7 @@ describe('resource split', () => {
   // skipped: tests are disabled for the time being
   test.skip('run: required and optional params', async () => {
     const response = await client.split.run({
-      document_url: 'document_url',
+      document_url: 'string',
       split_description: [{ description: 'description', name: 'name', partition_key: 'partition_key' }],
       advanced_options: {
         add_page_markers: true,
@@ -70,7 +70,7 @@ describe('resource split', () => {
   // skipped: tests are disabled for the time being
   test.skip('runJob: only required params', async () => {
     const responsePromise = client.split.runJob({
-      document_url: 'document_url',
+      document_url: 'string',
       split_description: [{ description: 'description', name: 'name' }],
     });
     const rawResponse = await responsePromise.asResponse();
@@ -85,7 +85,7 @@ describe('resource split', () => {
   // skipped: tests are disabled for the time being
   test.skip('runJob: required and optional params', async () => {
     const response = await client.split.runJob({
-      document_url: 'document_url',
+      document_url: 'string',
       split_description: [{ description: 'description', name: 'name', partition_key: 'partition_key' }],
       advanced_options: {
         add_page_markers: true,
