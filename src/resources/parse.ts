@@ -33,7 +33,7 @@ export interface ParseRunParams {
    * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
    *    uploading a document
    */
-  document_url: string;
+  document_url: string | Shared.Upload;
 
   advanced_options?: Shared.AdvancedProcessingOptions;
 
@@ -51,7 +51,7 @@ export interface ParseRunJobParams {
    * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
    *    uploading a document
    */
-  document_url: string;
+  document_url: string | Shared.Upload;
 
   advanced_options?: Shared.AdvancedProcessingOptions;
 

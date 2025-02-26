@@ -33,7 +33,7 @@ export interface ExtractRunParams {
    * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
    *    uploading a document
    */
-  document_url: string;
+  document_url: string | Shared.Upload;
 
   /**
    * The JSON schema to use for extraction.
@@ -72,7 +72,7 @@ export interface ExtractRunJobParams {
    * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
    *    uploading a document
    */
-  document_url: string;
+  document_url: string | Shared.Upload;
 
   /**
    * The JSON schema to use for extraction.

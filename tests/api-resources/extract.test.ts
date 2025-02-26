@@ -11,7 +11,7 @@ const client = new Reducto({
 describe('resource extract', () => {
   // skipped: tests are disabled for the time being
   test.skip('run: only required params', async () => {
-    const responsePromise = client.extract.run({ document_url: 'document_url', schema: {} });
+    const responsePromise = client.extract.run({ document_url: 'string', schema: {} });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,7 +24,7 @@ describe('resource extract', () => {
   // skipped: tests are disabled for the time being
   test.skip('run: required and optional params', async () => {
     const response = await client.extract.run({
-      document_url: 'document_url',
+      document_url: 'string',
       schema: {},
       advanced_options: {
         add_page_markers: true,
@@ -68,7 +68,7 @@ describe('resource extract', () => {
 
   // skipped: tests are disabled for the time being
   test.skip('runJob: only required params', async () => {
-    const responsePromise = client.extract.runJob({ document_url: 'document_url', schema: {} });
+    const responsePromise = client.extract.runJob({ document_url: 'string', schema: {} });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -81,7 +81,7 @@ describe('resource extract', () => {
   // skipped: tests are disabled for the time being
   test.skip('runJob: required and optional params', async () => {
     const response = await client.extract.runJob({
-      document_url: 'document_url',
+      document_url: 'string',
       schema: {},
       advanced_options: {
         add_page_markers: true,
