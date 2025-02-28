@@ -55,12 +55,12 @@ $ cd reducto-node-sdk
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link reducto
+$ yarn link reductoai
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global reducto
+$ pnpm link -—global reductoai
 ```
 
 ## Running tests
