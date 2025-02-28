@@ -1,6 +1,6 @@
 import fs from 'fs';
-import { toFile, type ResponseLike } from 'reducto/uploads';
-import { File } from 'reducto/_shims/index';
+import { toFile, type ResponseLike } from 'reductoai/uploads';
+import { File } from 'reductoai/_shims/index';
 
 class MyClass {
   name: string = 'foo';

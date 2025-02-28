@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "reducto/*": ["dist/src/*"],
-      "reducto": ["dist/src/index.ts"],
+      "reductoai/*": ["dist/src/*"],
+      "reductoai": ["dist/src/index.ts"],
     },
     "noEmit": false,
     "declaration": true,

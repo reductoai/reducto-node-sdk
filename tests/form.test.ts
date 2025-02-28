@@ -1,6 +1,6 @@
-import { multipartFormRequestOptions, createForm } from 'reducto/core';
-import { Blob } from 'reducto/_shims/index';
-import { toFile } from 'reducto';
+import { multipartFormRequestOptions, createForm } from 'reductoai/core';
+import { Blob } from 'reductoai/_shims/index';
+import { toFile } from 'reductoai';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {
