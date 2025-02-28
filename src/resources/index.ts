@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export * from './shared';
+export { Config, type ExtractConfig, type ParseConfig } from './config';
 export {
   Extract,
   type ExtractRunJobResponse,

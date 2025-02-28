@@ -81,3 +81,10 @@ Types:
 Methods:
 
 - <code title="post /configure_webhook">client.webhook.<a href="./src/resources/webhook.ts">run</a>() -> string</code>
+
+# Config
+
+Types:
+
+- <code><a href="./src/resources/config.ts">ExtractConfig</a></code>
+- <code><a href="./src/resources/config.ts">ParseConfig</a></code>

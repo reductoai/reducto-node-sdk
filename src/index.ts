@@ -9,6 +9,7 @@ import * as API from './resources/index';
 import * as Shared from './resources/shared';
 import * as TopLevelAPI from './resources/top-level';
 import { APIVersionResponse, UploadParams } from './resources/top-level';
+import { Config, ExtractConfig, ParseConfig } from './resources/config';
 import { Extract, ExtractRunJobParams, ExtractRunJobResponse, ExtractRunParams } from './resources/extract';
 import { Job, JobCancelResponse, JobGetResponse } from './resources/job';
 import { Parse, ParseRunJobParams, ParseRunJobResponse, ParseRunParams } from './resources/parse';
@@ -133,6 +134,7 @@ export class Reducto extends Core.APIClient {
   parse: API.Parse = new API.Parse(this);
   extract: API.Extract = new API.Extract(this);
   webhook: API.Webhook = new API.Webhook(this);
+  config: API.Config = new API.Config(this);
 
   /**
    * Get Version
@@ -198,6 +200,7 @@ Reducto.Split = Split;
 Reducto.Parse = Parse;
 Reducto.Extract = Extract;
 Reducto.Webhook = Webhook;
+Reducto.Config = Config;
 export declare namespace Reducto {
   export type RequestOptions = Core.RequestOptions;
 
@@ -227,6 +230,8 @@ export declare namespace Reducto {
   };
 
   export { Webhook as Webhook, type WebhookRunResponse as WebhookRunResponse };
+
+  export { Config as Config, type ExtractConfig as ExtractConfig, type ParseConfig as ParseConfig };
 
   export type AdvancedProcessingOptions = API.AdvancedProcessingOptions;
   export type ArrayExtractConfig = API.ArrayExtractConfig;
