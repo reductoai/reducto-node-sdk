@@ -9,9 +9,9 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "reducto/_shims/auto/*": ["src/_shims/auto/*-node"],
-      "reducto/*": ["src/*"],
-      "reducto": ["src/index.ts"]
+      "reductoai/_shims/auto/*": ["src/_shims/auto/*-node"],
+      "reductoai/*": ["src/*"],
+      "reductoai": ["src/index.ts"]
     },
     "noEmit": true,
 

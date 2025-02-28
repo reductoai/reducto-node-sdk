@@ -9,9 +9,9 @@ export function getRuntime({ manuallyImported }: { manuallyImported?: boolean } 
   const recommendation =
     manuallyImported ?
       `You may need to use polyfills`
-    : `Add one of these imports before your first \`import … from 'reducto'\`:
-- \`import 'reducto/shims/node'\` (if you're running on Node)
-- \`import 'reducto/shims/web'\` (otherwise)
+    : `Add one of these imports before your first \`import … from 'reductoai'\`:
+- \`import 'reductoai/shims/node'\` (if you're running on Node)
+- \`import 'reductoai/shims/web'\` (otherwise)
 `;
 
   let _fetch, _Request, _Response, _Headers;

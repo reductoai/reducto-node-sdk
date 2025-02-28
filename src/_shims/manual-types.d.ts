@@ -4,8 +4,8 @@
 /**
  * Types will get added to this namespace when you import one of the following:
  *
- *   import 'reducto/shims/node'
- *   import 'reducto/shims/web'
+ *   import 'reductoai/shims/node'
+ *   import 'reductoai/shims/web'
  *
  * Importing more than one will cause type and runtime errors.
  */
