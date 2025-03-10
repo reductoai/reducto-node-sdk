@@ -57,6 +57,7 @@ describe('resource parse', () => {
         figure_summary: { enabled: true, override: true, prompt: 'prompt' },
         filter_blocks: ['Header'],
         force_url_result: true,
+        ocr_mode: 'standard',
         table_summary: { enabled: true, prompt: 'prompt' },
       },
     });
@@ -110,6 +111,7 @@ describe('resource parse', () => {
         figure_summary: { enabled: true, override: true, prompt: 'prompt' },
         filter_blocks: ['Header'],
         force_url_result: true,
+        ocr_mode: 'standard',
         table_summary: { enabled: true, prompt: 'prompt' },
       },
       priority: true,
