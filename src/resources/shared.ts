@@ -162,6 +162,12 @@ export interface BaseProcessingOptions {
   force_url_result?: boolean;
 
   /**
+   * The mode to use for OCR. If agentic is enabled, at a small cost table OCR will
+   * be automatically edited.
+   */
+  ocr_mode?: 'standard' | 'agentic';
+
+  /**
    * The configuration options for table summarization.
    */
   table_summary?: BaseProcessingOptions.TableSummary;

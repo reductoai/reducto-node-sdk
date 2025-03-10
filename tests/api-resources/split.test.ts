@@ -12,7 +12,7 @@ describe('resource split', () => {
   // skipped: tests are disabled for the time being
   test.skip('run: only required params', async () => {
     const responsePromise = client.split.run({
-      document_url: 'document_url',
+      document_url: 'string',
       split_description: [{ description: 'description', name: 'name' }],
     });
     const rawResponse = await responsePromise.asResponse();
@@ -27,7 +27,7 @@ describe('resource split', () => {
   // skipped: tests are disabled for the time being
   test.skip('run: required and optional params', async () => {
     const response = await client.split.run({
-      document_url: 'document_url',
+      document_url: 'string',
       split_description: [{ description: 'description', name: 'name', partition_key: 'partition_key' }],
       advanced_options: {
         add_page_markers: true,
@@ -61,6 +61,7 @@ describe('resource split', () => {
         figure_summary: { enabled: true, override: true, prompt: 'prompt' },
         filter_blocks: ['Header'],
         force_url_result: true,
+        ocr_mode: 'standard',
         table_summary: { enabled: true, prompt: 'prompt' },
       },
       split_rules: 'split_rules',
@@ -70,7 +71,7 @@ describe('resource split', () => {
   // skipped: tests are disabled for the time being
   test.skip('runJob: only required params', async () => {
     const responsePromise = client.split.runJob({
-      document_url: 'document_url',
+      document_url: 'string',
       split_description: [{ description: 'description', name: 'name' }],
     });
     const rawResponse = await responsePromise.asResponse();
@@ -85,7 +86,7 @@ describe('resource split', () => {
   // skipped: tests are disabled for the time being
   test.skip('runJob: required and optional params', async () => {
     const response = await client.split.runJob({
-      document_url: 'document_url',
+      document_url: 'string',
       split_description: [{ description: 'description', name: 'name', partition_key: 'partition_key' }],
       advanced_options: {
         add_page_markers: true,
@@ -119,6 +120,7 @@ describe('resource split', () => {
         figure_summary: { enabled: true, override: true, prompt: 'prompt' },
         filter_blocks: ['Header'],
         force_url_result: true,
+        ocr_mode: 'standard',
         table_summary: { enabled: true, prompt: 'prompt' },
       },
       priority: true,

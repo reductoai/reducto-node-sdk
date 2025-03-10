@@ -11,7 +11,7 @@ const client = new Reducto({
 describe('resource parse', () => {
   // skipped: tests are disabled for the time being
   test.skip('run: only required params', async () => {
-    const responsePromise = client.parse.run({ document_url: 'document_url' });
+    const responsePromise = client.parse.run({ document_url: 'string' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,7 +24,7 @@ describe('resource parse', () => {
   // skipped: tests are disabled for the time being
   test.skip('run: required and optional params', async () => {
     const response = await client.parse.run({
-      document_url: 'document_url',
+      document_url: 'string',
       advanced_options: {
         add_page_markers: true,
         continue_hierarchy: true,
@@ -57,6 +57,7 @@ describe('resource parse', () => {
         figure_summary: { enabled: true, override: true, prompt: 'prompt' },
         filter_blocks: ['Header'],
         force_url_result: true,
+        ocr_mode: 'standard',
         table_summary: { enabled: true, prompt: 'prompt' },
       },
     });
@@ -64,7 +65,7 @@ describe('resource parse', () => {
 
   // skipped: tests are disabled for the time being
   test.skip('runJob: only required params', async () => {
-    const responsePromise = client.parse.runJob({ document_url: 'document_url' });
+    const responsePromise = client.parse.runJob({ document_url: 'string' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -77,7 +78,7 @@ describe('resource parse', () => {
   // skipped: tests are disabled for the time being
   test.skip('runJob: required and optional params', async () => {
     const response = await client.parse.runJob({
-      document_url: 'document_url',
+      document_url: 'string',
       advanced_options: {
         add_page_markers: true,
         continue_hierarchy: true,
@@ -110,6 +111,7 @@ describe('resource parse', () => {
         figure_summary: { enabled: true, override: true, prompt: 'prompt' },
         filter_blocks: ['Header'],
         force_url_result: true,
+        ocr_mode: 'standard',
         table_summary: { enabled: true, prompt: 'prompt' },
       },
       priority: true,

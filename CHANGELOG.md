@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.1.0 (2025-03-10)
+
+Full Changelog: [v0.1.0-alpha.1...v0.1.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.1.0-alpha.1...v0.1.0)
+
+### Features
+
+* **api:** api update ([#13](https://github.com/reductoai/reducto-node-sdk/issues/13)) ([283e8bc](https://github.com/reductoai/reducto-node-sdk/commit/283e8bc6ac41bff32d7b6747df25a323b46b9901))
+* **api:** api update ([#9](https://github.com/reductoai/reducto-node-sdk/issues/9)) ([1c99e9b](https://github.com/reductoai/reducto-node-sdk/commit/1c99e9b555c0ffb3180cc4df26624bdc76765cef))
+* **api:** manual updates ([#8](https://github.com/reductoai/reducto-node-sdk/issues/8)) ([1913549](https://github.com/reductoai/reducto-node-sdk/commit/191354923c5515897fe1e52d2e2430ffdb5514cf))
+* **api:** update via SDK Studio ([#5](https://github.com/reductoai/reducto-node-sdk/issues/5)) ([09a1bd5](https://github.com/reductoai/reducto-node-sdk/commit/09a1bd5ab71e901777d67db4270bf0067f4bba8f))
+* **api:** update via SDK Studio ([#7](https://github.com/reductoai/reducto-node-sdk/issues/7)) ([007fa96](https://github.com/reductoai/reducto-node-sdk/commit/007fa96888e54cfeac14138c7c664baf1b771216))
+
+
+### Chores
+
+* remove custom code ([924d95c](https://github.com/reductoai/reducto-node-sdk/commit/924d95c80e20d87696458092480433061238e5c6))
+* update SDK settings ([#11](https://github.com/reductoai/reducto-node-sdk/issues/11)) ([9550f19](https://github.com/reductoai/reducto-node-sdk/commit/9550f19886b67fb960f23add9250d3a1008916ab))
+
+
+### Documentation
+
+* update URLs from stainlessapi.com to stainless.com ([#10](https://github.com/reductoai/reducto-node-sdk/issues/10)) ([bb7eb3e](https://github.com/reductoai/reducto-node-sdk/commit/bb7eb3e8a756364c7fb79479e1e0faa7dbf9327c))
+
 ## 0.1.0-alpha.1 (2025-02-25)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/reductoai/reducto-node-sdk/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)
