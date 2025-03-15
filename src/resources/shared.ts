@@ -297,6 +297,11 @@ export interface ExperimentalProcessingOptions {
   return_figure_images?: boolean;
 
   /**
+   * If table images should be returned in the result. Defaults to False.
+   */
+  return_table_images?: boolean;
+
+  /**
    * Use an orientation model to detect and rotate pages as needed, defaults to True
    */
   rotate_pages?: boolean;

@@ -49,6 +49,7 @@ describe('resource parse', () => {
         enrich: { enabled: true, prompt: 'prompt' },
         native_office_conversion: true,
         return_figure_images: true,
+        return_table_images: true,
         rotate_pages: true,
       },
       options: {
@@ -103,6 +104,7 @@ describe('resource parse', () => {
         enrich: { enabled: true, prompt: 'prompt' },
         native_office_conversion: true,
         return_figure_images: true,
+        return_table_images: true,
         rotate_pages: true,
       },
       options: {
