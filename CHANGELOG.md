@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.2.0 (2025-03-15)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* add SKIP_BREW env var to ./scripts/bootstrap ([#15](https://github.com/reductoai/reducto-node-sdk/issues/15)) ([b65224e](https://github.com/reductoai/reducto-node-sdk/commit/b65224e425b763348cb374146c89760b0cafac3d))
+* **api:** api update ([#18](https://github.com/reductoai/reducto-node-sdk/issues/18)) ([8d7f4e0](https://github.com/reductoai/reducto-node-sdk/commit/8d7f4e0f99b8c6c9f13b90f2243837a7ab26c3fd))
+* **client:** accept RFC6838 JSON content types ([#17](https://github.com/reductoai/reducto-node-sdk/issues/17)) ([4da9c07](https://github.com/reductoai/reducto-node-sdk/commit/4da9c074d07b96a90a38b25b9e5215fdd1619d32))
+
+
+### Chores
+
+* **internal:** remove extra empty newlines ([#19](https://github.com/reductoai/reducto-node-sdk/issues/19)) ([dd0554d](https://github.com/reductoai/reducto-node-sdk/commit/dd0554d51761fb3e4e7450fb649203b450798bd5))
+
 ## 0.1.0 (2025-03-10)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.1.0-alpha.1...v0.1.0)
