@@ -321,6 +321,11 @@ export namespace ExperimentalProcessingOptions {
     enabled?: boolean;
 
     /**
+     * The mode to use for enrichment. Defaults to standard
+     */
+    mode?: 'standard' | 'page';
+
+    /**
      * Add information to the prompt for enrichment.
      */
     prompt?: string;
