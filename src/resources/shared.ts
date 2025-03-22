@@ -303,7 +303,7 @@ export interface ExperimentalProcessingOptions {
   return_table_images?: boolean;
 
   /**
-   * Use an orientation model to detect and rotate pages as needed, defaults to True
+   * Use an orientation model to detect and rotate pages as needed, defaults to False
    */
   rotate_pages?: boolean;
 }
