@@ -62,6 +62,11 @@ export interface ExtractRunParams {
    * applied to the entire document before any other prompts.
    */
   system_prompt?: string;
+
+  /**
+   * If chunking should be used for the extraction. Defaults to False.
+   */
+  use_chunking?: boolean;
 }
 
 export interface ExtractRunJobParams {
@@ -109,6 +114,11 @@ export interface ExtractRunJobParams {
    * applied to the entire document before any other prompts.
    */
   system_prompt?: string;
+
+  /**
+   * If chunking should be used for the extraction. Defaults to False.
+   */
+  use_chunking?: boolean;
 
   webhook?: Shared.WebhookConfigNew;
 }

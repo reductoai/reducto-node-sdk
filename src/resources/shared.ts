@@ -180,9 +180,10 @@ export namespace BaseProcessingOptions {
   export interface Chunking {
     /**
      * The mode to use for chunking. Section chunks according to sections in the
-     * document. Page chunks according to pages. Disabled returns a single chunk.
+     * document. Page chunks according to pages. Page sections chunks according to both
+     * pages and sections. Disabled returns a single chunk.
      */
-    chunk_mode?: 'variable' | 'section' | 'page' | 'block' | 'disabled';
+    chunk_mode?: 'variable' | 'section' | 'page' | 'block' | 'disabled' | 'page_sections';
 
     /**
      * The approximate size of chunks (in characters) that the document will be split
@@ -302,7 +303,7 @@ export interface ExperimentalProcessingOptions {
   return_table_images?: boolean;
 
   /**
-   * Use an orientation model to detect and rotate pages as needed, defaults to True
+   * Use an orientation model to detect and rotate pages as needed, defaults to False
    */
   rotate_pages?: boolean;
 }
@@ -318,6 +319,11 @@ export namespace ExperimentalProcessingOptions {
      * markdown format. Defaults to False.
      */
     enabled?: boolean;
+
+    /**
+     * The mode to use for enrichment. Defaults to standard
+     */
+    mode?: 'standard' | 'page';
 
     /**
      * Add information to the prompt for enrichment.

@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.3.0 (2025-03-22)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** api update ([#22](https://github.com/reductoai/reducto-node-sdk/issues/22)) ([630ac4d](https://github.com/reductoai/reducto-node-sdk/commit/630ac4d1af86f0571741d9fc996a96995c50007d))
+* **api:** api update ([#23](https://github.com/reductoai/reducto-node-sdk/issues/23)) ([56d80e3](https://github.com/reductoai/reducto-node-sdk/commit/56d80e39ee31c2930783d823e067fc112cda3455))
+* **api:** api update ([#24](https://github.com/reductoai/reducto-node-sdk/issues/24)) ([2574f5d](https://github.com/reductoai/reducto-node-sdk/commit/2574f5de02de2c9df0ca0b8de825442f46766ad3))
+* **api:** api update ([#27](https://github.com/reductoai/reducto-node-sdk/issues/27)) ([6cc4e9c](https://github.com/reductoai/reducto-node-sdk/commit/6cc4e9c194a5e779fc4890d497c2221fa8d1b3ed))
+
+
+### Bug Fixes
+
+* avoid type error in certain environments ([#28](https://github.com/reductoai/reducto-node-sdk/issues/28)) ([546c952](https://github.com/reductoai/reducto-node-sdk/commit/546c9524d72028cffec40b9c6973c6628ae37546))
+
+
+### Chores
+
+* **exports:** cleaner resource index imports ([#25](https://github.com/reductoai/reducto-node-sdk/issues/25)) ([977f7a8](https://github.com/reductoai/reducto-node-sdk/commit/977f7a81cb37804613fc35532461a5dcb1476367))
+* **exports:** stop using path fallbacks ([#26](https://github.com/reductoai/reducto-node-sdk/issues/26)) ([3b10332](https://github.com/reductoai/reducto-node-sdk/commit/3b1033256931afdb55f5bd8e7efe444d8390c1c9))
+
 ## 0.2.0 (2025-03-15)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.1.0...v0.2.0)
