@@ -48,7 +48,7 @@ describe('resource extract', () => {
         enable_equations: true,
         enable_scripts: true,
         enable_underlines: true,
-        enrich: { enabled: true, prompt: 'prompt' },
+        enrich: { enabled: true, mode: 'standard', prompt: 'prompt' },
         native_office_conversion: true,
         return_figure_images: true,
         return_table_images: true,
@@ -65,6 +65,7 @@ describe('resource extract', () => {
         table_summary: { enabled: true, prompt: 'prompt' },
       },
       system_prompt: 'system_prompt',
+      use_chunking: true,
     });
   });
 
@@ -107,7 +108,7 @@ describe('resource extract', () => {
         enable_equations: true,
         enable_scripts: true,
         enable_underlines: true,
-        enrich: { enabled: true, prompt: 'prompt' },
+        enrich: { enabled: true, mode: 'standard', prompt: 'prompt' },
         native_office_conversion: true,
         return_figure_images: true,
         return_table_images: true,
@@ -125,6 +126,7 @@ describe('resource extract', () => {
       },
       priority: true,
       system_prompt: 'system_prompt',
+      use_chunking: true,
       webhook: { channels: ['string'], metadata: {}, mode: 'disabled', url: 'url' },
     });
   });
