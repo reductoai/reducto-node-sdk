@@ -74,7 +74,7 @@ export interface AdvancedProcessingOptions {
    * The mode to use for table output. Dynamic returns md for simpler tables and html
    * for more complex tables.
    */
-  table_output_format?: 'html' | 'json' | 'md' | 'jsonbbox' | 'dynamic' | 'ai_json';
+  table_output_format?: 'html' | 'json' | 'md' | 'jsonbbox' | 'dynamic' | 'ai_json' | 'csv';
 }
 
 export namespace AdvancedProcessingOptions {
@@ -303,7 +303,7 @@ export interface ExperimentalProcessingOptions {
   return_table_images?: boolean;
 
   /**
-   * Use an orientation model to detect and rotate pages as needed, defaults to False
+   * Use an orientation model to detect and rotate pages as needed, defaults to True
    */
   rotate_pages?: boolean;
 }
