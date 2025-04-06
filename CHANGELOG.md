@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.4.0 (2025-04-04)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** api update ([#30](https://github.com/reductoai/reducto-node-sdk/issues/30)) ([bb9b6dc](https://github.com/reductoai/reducto-node-sdk/commit/bb9b6dcdcf2c18b901dd0c67aabc2923b2475b6d))
+* **api:** api update ([#32](https://github.com/reductoai/reducto-node-sdk/issues/32)) ([d2f4b3c](https://github.com/reductoai/reducto-node-sdk/commit/d2f4b3cee3936085ddf86cb43411a9de20ba054c))
+* **api:** api update ([#33](https://github.com/reductoai/reducto-node-sdk/issues/33)) ([1753779](https://github.com/reductoai/reducto-node-sdk/commit/17537795519d5efcba4e727e35a699a382baa83d))
+* **api:** api update ([#34](https://github.com/reductoai/reducto-node-sdk/issues/34)) ([e814ed9](https://github.com/reductoai/reducto-node-sdk/commit/e814ed92eede085a013cdc7a7f80d01ee9b4a7b6))
+* **api:** api update ([#35](https://github.com/reductoai/reducto-node-sdk/issues/35)) ([a8819aa](https://github.com/reductoai/reducto-node-sdk/commit/a8819aa2038ff3a4ebc3e8569b5d1347f7d0d091))
+* **api:** api update ([#37](https://github.com/reductoai/reducto-node-sdk/issues/37)) ([83125e1](https://github.com/reductoai/reducto-node-sdk/commit/83125e16052d5110966fe2623991acade8fd6072))
+* **api:** api update ([#38](https://github.com/reductoai/reducto-node-sdk/issues/38)) ([778db4d](https://github.com/reductoai/reducto-node-sdk/commit/778db4d5f4c86f11959c1dce549bc631e61e05d5))
+
+
+### Bug Fixes
+
+* **api:** improve type resolution when importing as a package ([#41](https://github.com/reductoai/reducto-node-sdk/issues/41)) ([198c64a](https://github.com/reductoai/reducto-node-sdk/commit/198c64a93b0d356e75c89948cdea0d3d8357f8b1))
+* **client:** send `X-Stainless-Timeout` in seconds ([#39](https://github.com/reductoai/reducto-node-sdk/issues/39)) ([08c94b9](https://github.com/reductoai/reducto-node-sdk/commit/08c94b9baaaf977fbfcc94602c756e38ef013085))
+* **internal:** work around https://github.com/vercel/next.js/issues/76881 ([#36](https://github.com/reductoai/reducto-node-sdk/issues/36)) ([f31b51e](https://github.com/reductoai/reducto-node-sdk/commit/f31b51e304e422427b5b73d964c5e13612c74b4c))
+
+
+### Chores
+
+* **internal:** add aliases for Record and Array ([#40](https://github.com/reductoai/reducto-node-sdk/issues/40)) ([8ffc917](https://github.com/reductoai/reducto-node-sdk/commit/8ffc9178501d0aee5845617bcd23e4fa6507ba2b))
+
 ## 0.3.0 (2025-03-22)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.2.0...v0.3.0)
