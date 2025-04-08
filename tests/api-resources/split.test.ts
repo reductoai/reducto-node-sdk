@@ -65,6 +65,7 @@ describe('resource split', () => {
         ocr_mode: 'standard',
         table_summary: { enabled: true, prompt: 'prompt' },
       },
+      priority: true,
       split_rules: 'split_rules',
     });
   });
