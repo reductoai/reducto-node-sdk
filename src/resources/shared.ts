@@ -21,6 +21,11 @@ export interface AdvancedProcessingOptions {
   document_password?: string;
 
   /**
+   * If True, filter out line numbers from the output. Defaults to False.
+   */
+  filter_line_numbers?: boolean;
+
+  /**
    * Force the URL to be downloaded as a specific file extension (e.g. .png).
    */
   force_file_extension?: string;
