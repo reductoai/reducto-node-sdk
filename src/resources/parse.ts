@@ -8,25 +8,15 @@ export class Parse extends APIResource {
   /**
    * Parse
    */
-  run(params: ParseRunParams, options?: Core.RequestOptions): Core.APIPromise<Shared.ParseResponse> {
-    const { 'user-id': userId, ...body } = params;
-    return this._client.post('/parse', {
-      body,
-      ...options,
-      headers: { ...(userId != null ? { 'user-id': userId } : undefined), ...options?.headers },
-    });
+  run(body: ParseRunParams, options?: Core.RequestOptions): Core.APIPromise<Shared.ParseResponse> {
+    return this._client.post('/parse', { body, ...options });
   }
 
   /**
    * Async Parse
    */
-  runJob(params: ParseRunJobParams, options?: Core.RequestOptions): Core.APIPromise<ParseRunJobResponse> {
-    const { 'user-id': userId, ...body } = params;
-    return this._client.post('/parse_async', {
-      body,
-      ...options,
-      headers: { ...(userId != null ? { 'user-id': userId } : undefined), ...options?.headers },
-    });
+  runJob(body: ParseRunJobParams, options?: Core.RequestOptions): Core.APIPromise<ParseRunJobResponse> {
+    return this._client.post('/parse_async', { body, ...options });
   }
 }
 
@@ -36,8 +26,7 @@ export interface ParseRunJobResponse {
 
 export interface ParseRunParams {
   /**
-   * Body param: The URL of the document to be processed. You can provide one of the
-   * following:
+   * The URL of the document to be processed. You can provide one of the following:
    *
    * 1. A publicly available URL
    * 2. A presigned S3 URL
@@ -46,38 +35,23 @@ export interface ParseRunParams {
    */
   document_url: string | Shared.Upload;
 
-  /**
-   * Body param:
-   */
   advanced_options?: Shared.AdvancedProcessingOptions;
 
-  /**
-   * Body param:
-   */
   experimental_options?: Shared.ExperimentalProcessingOptions;
 
-  /**
-   * Body param:
-   */
   options?: Shared.BaseProcessingOptions;
 
   /**
-   * Body param: If True, attempts to process the job with priority if the user has
-   * priority processing budget available; by default, sync jobs are prioritized
-   * above async jobs.
+   * If True, attempts to process the job with priority if the user has priority
+   * processing budget available; by default, sync jobs are prioritized above async
+   * jobs.
    */
   priority?: boolean;
-
-  /**
-   * Header param:
-   */
-  'user-id'?: string;
 }
 
 export interface ParseRunJobParams {
   /**
-   * Body param: The URL of the document to be processed. You can provide one of the
-   * following:
+   * The URL of the document to be processed. You can provide one of the following:
    *
    * 1. A publicly available URL
    * 2. A presigned S3 URL
@@ -86,37 +60,20 @@ export interface ParseRunJobParams {
    */
   document_url: string | Shared.Upload;
 
-  /**
-   * Body param:
-   */
   advanced_options?: Shared.AdvancedProcessingOptions;
 
-  /**
-   * Body param:
-   */
   experimental_options?: Shared.ExperimentalProcessingOptions;
 
-  /**
-   * Body param:
-   */
   options?: Shared.BaseProcessingOptions;
 
   /**
-   * Body param: If True, attempts to process the job with priority if the user has
-   * priority processing budget available; by default, sync jobs are prioritized
-   * above async jobs.
+   * If True, attempts to process the job with priority if the user has priority
+   * processing budget available; by default, sync jobs are prioritized above async
+   * jobs.
    */
   priority?: boolean;
 
-  /**
-   * Body param:
-   */
   webhook?: Shared.WebhookConfigNew;
-
-  /**
-   * Header param:
-   */
-  'user-id'?: string;
 }
 
 export declare namespace Parse {
