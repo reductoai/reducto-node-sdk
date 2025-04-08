@@ -61,6 +61,7 @@ describe('resource parse', () => {
         ocr_mode: 'standard',
         table_summary: { enabled: true, prompt: 'prompt' },
       },
+      priority: true,
     });
   });
 

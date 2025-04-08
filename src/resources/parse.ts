@@ -40,6 +40,13 @@ export interface ParseRunParams {
   experimental_options?: Shared.ExperimentalProcessingOptions;
 
   options?: Shared.BaseProcessingOptions;
+
+  /**
+   * If True, attempts to process the job with priority if the user has priority
+   * processing budget available; by default, sync jobs are prioritized above async
+   * jobs.
+   */
+  priority?: boolean;
 }
 
 export interface ParseRunJobParams {

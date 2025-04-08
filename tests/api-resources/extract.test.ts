@@ -64,6 +64,7 @@ describe('resource extract', () => {
         ocr_mode: 'standard',
         table_summary: { enabled: true, prompt: 'prompt' },
       },
+      priority: true,
       system_prompt: 'system_prompt',
       use_chunking: true,
     });
