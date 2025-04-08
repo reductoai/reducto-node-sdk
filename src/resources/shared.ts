@@ -306,6 +306,8 @@ export interface ExperimentalProcessingOptions {
    * Use an orientation model to detect and rotate pages as needed, defaults to True
    */
   rotate_pages?: boolean;
+
+  [k: string]: unknown;
 }
 
 export namespace ExperimentalProcessingOptions {
