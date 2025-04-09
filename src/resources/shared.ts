@@ -10,6 +10,11 @@ export interface AdvancedProcessingOptions {
   add_page_markers?: boolean;
 
   /**
+   * The name of the bucket to use for the document.
+   */
+  bucket_name?: string;
+
+  /**
    * A flag to indicate if the hierarchy of the document should be continued from
    * chunk to chunk.
    */
@@ -34,6 +39,11 @@ export interface AdvancedProcessingOptions {
    * If line breaks should be preserved in the text.
    */
   keep_line_breaks?: boolean;
+
+  /**
+   * The AWS KMS key to use for the document.
+   */
+  kms_arn?: string;
 
   /**
    * The configuration options for large table chunking (currently only supported on
@@ -255,6 +265,8 @@ export interface BoundingBox {
 }
 
 export interface ExperimentalProcessingOptions {
+  custom_format?: 'aml' | 'ai_usage';
+
   /**
    * You probably shouldn't use this. If True, filter out boxes with width greater
    * than 50% of the document width. Defaults to False. You probably don't want to
@@ -290,6 +302,11 @@ export interface ExperimentalProcessingOptions {
    * The configuration options for enrichment.
    */
   enrich?: ExperimentalProcessingOptions.Enrich;
+
+  /**
+   * Extra metadata to be added to logs.
+   */
+  extra_metadata?: unknown;
 
   /**
    * Instead of using LibreOffice, when enabled, this flag uses a Windows VM to
