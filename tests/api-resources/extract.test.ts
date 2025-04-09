@@ -28,11 +28,13 @@ describe('resource extract', () => {
       schema: {},
       advanced_options: {
         add_page_markers: true,
+        bucket_name: 'bucket_name',
         continue_hierarchy: true,
         document_password: 'document_password',
         filter_line_numbers: true,
         force_file_extension: 'force_file_extension',
         keep_line_breaks: true,
+        kms_arn: 'kms_arn',
         large_table_chunking: { enabled: true, size: 0 },
         merge_tables: true,
         ocr_system: 'highres',
@@ -44,12 +46,14 @@ describe('resource extract', () => {
       },
       array_extract: { enabled: true, mode: 'auto', pages_per_segment: 0, streaming_extract_item_density: 0 },
       experimental_options: {
+        custom_format: 'aml',
         danger_filter_wide_boxes: true,
         enable_checkboxes: true,
         enable_equations: true,
         enable_scripts: true,
         enable_underlines: true,
         enrich: { enabled: true, mode: 'standard', prompt: 'prompt' },
+        extra_metadata: {},
         native_office_conversion: true,
         return_figure_images: true,
         return_table_images: true,
@@ -68,6 +72,7 @@ describe('resource extract', () => {
       priority: true,
       system_prompt: 'system_prompt',
       use_chunking: true,
+      'user-id': 'user-id',
     });
   });
 
@@ -90,11 +95,13 @@ describe('resource extract', () => {
       schema: {},
       advanced_options: {
         add_page_markers: true,
+        bucket_name: 'bucket_name',
         continue_hierarchy: true,
         document_password: 'document_password',
         filter_line_numbers: true,
         force_file_extension: 'force_file_extension',
         keep_line_breaks: true,
+        kms_arn: 'kms_arn',
         large_table_chunking: { enabled: true, size: 0 },
         merge_tables: true,
         ocr_system: 'highres',
@@ -106,12 +113,14 @@ describe('resource extract', () => {
       },
       array_extract: { enabled: true, mode: 'auto', pages_per_segment: 0, streaming_extract_item_density: 0 },
       experimental_options: {
+        custom_format: 'aml',
         danger_filter_wide_boxes: true,
         enable_checkboxes: true,
         enable_equations: true,
         enable_scripts: true,
         enable_underlines: true,
         enrich: { enabled: true, mode: 'standard', prompt: 'prompt' },
+        extra_metadata: {},
         native_office_conversion: true,
         return_figure_images: true,
         return_table_images: true,
@@ -131,6 +140,7 @@ describe('resource extract', () => {
       system_prompt: 'system_prompt',
       use_chunking: true,
       webhook: { channels: ['string'], metadata: {}, mode: 'disabled', url: 'url' },
+      'user-id': 'user-id',
     });
   });
 });
