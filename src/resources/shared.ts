@@ -21,6 +21,11 @@ export interface AdvancedProcessingOptions {
   document_password?: string;
 
   /**
+   * If True, filter out line numbers from the output. Defaults to False.
+   */
+  filter_line_numbers?: boolean;
+
+  /**
    * Force the URL to be downloaded as a specific file extension (e.g. .png).
    */
   force_file_extension?: string;
@@ -306,6 +311,8 @@ export interface ExperimentalProcessingOptions {
    * Use an orientation model to detect and rotate pages as needed, defaults to True
    */
   rotate_pages?: boolean;
+
+  [k: string]: unknown;
 }
 
 export namespace ExperimentalProcessingOptions {

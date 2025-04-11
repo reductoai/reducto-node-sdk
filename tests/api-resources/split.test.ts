@@ -33,6 +33,7 @@ describe('resource split', () => {
         add_page_markers: true,
         continue_hierarchy: true,
         document_password: 'document_password',
+        filter_line_numbers: true,
         force_file_extension: 'force_file_extension',
         keep_line_breaks: true,
         large_table_chunking: { enabled: true, size: 0 },
@@ -65,6 +66,7 @@ describe('resource split', () => {
         ocr_mode: 'standard',
         table_summary: { enabled: true, prompt: 'prompt' },
       },
+      priority: true,
       split_rules: 'split_rules',
     });
   });
@@ -93,6 +95,7 @@ describe('resource split', () => {
         add_page_markers: true,
         continue_hierarchy: true,
         document_password: 'document_password',
+        filter_line_numbers: true,
         force_file_extension: 'force_file_extension',
         keep_line_breaks: true,
         large_table_chunking: { enabled: true, size: 0 },
