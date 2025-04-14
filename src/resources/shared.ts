@@ -281,12 +281,6 @@ export interface ExperimentalProcessingOptions {
   enable_scripts?: boolean;
 
   /**
-   * Add <u> tag around text that's underlined and surround strikethroughs and
-   * underlines with <change> tags, defaults to False
-   */
-  enable_underlines?: boolean;
-
-  /**
    * The configuration options for enrichment.
    */
   enrich?: ExperimentalProcessingOptions.Enrich;
