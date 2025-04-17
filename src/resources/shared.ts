@@ -59,6 +59,11 @@ export interface AdvancedProcessingOptions {
   page_range?: PageRange | Array<PageRange>;
 
   /**
+   * If True, pull in PDF comments from the document. Defaults to False.
+   */
+  read_comments?: boolean;
+
+  /**
    * If True, remove text formatting from the output (e.g. hyphens for list items).
    * Defaults to False.
    */
@@ -157,7 +162,6 @@ export interface BaseProcessingOptions {
     | 'Key Value'
     | 'Text'
     | 'Comment'
-    | 'Discard'
   >;
 
   /**
@@ -458,8 +462,7 @@ export namespace ParseResponse {
           | 'Table'
           | 'Key Value'
           | 'Text'
-          | 'Comment'
-          | 'Discard';
+          | 'Comment';
 
         /**
          * (Experimental) The URL of the image associated with the block.
