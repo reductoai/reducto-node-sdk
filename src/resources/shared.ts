@@ -255,7 +255,7 @@ export interface BoundingBox {
   /**
    * The page number in the original document of the bounding box (1-indexed).
    */
-  original_page?: number | null;
+  original_page?: number;
 }
 
 export interface ExperimentalProcessingOptions {
