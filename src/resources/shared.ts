@@ -21,6 +21,11 @@ export interface AdvancedProcessingOptions {
   document_password?: string;
 
   /**
+   * If True, filter out line numbers from the output. Defaults to False.
+   */
+  filter_line_numbers?: boolean;
+
+  /**
    * Force the URL to be downloaded as a specific file extension (e.g. .png).
    */
   force_file_extension?: string;
@@ -52,6 +57,11 @@ export interface AdvancedProcessingOptions {
    * The page range to process. By default, the entire document is processed.
    */
   page_range?: PageRange | Array<PageRange>;
+
+  /**
+   * If True, pull in PDF comments from the document. Defaults to False.
+   */
+  read_comments?: boolean;
 
   /**
    * If True, remove text formatting from the output (e.g. hyphens for list items).
@@ -152,7 +162,6 @@ export interface BaseProcessingOptions {
     | 'Key Value'
     | 'Text'
     | 'Comment'
-    | 'Discard'
   >;
 
   /**
@@ -246,7 +255,7 @@ export interface BoundingBox {
   /**
    * The page number in the original document of the bounding box (1-indexed).
    */
-  original_page?: number | null;
+  original_page?: number;
 }
 
 export interface ExperimentalProcessingOptions {
@@ -276,12 +285,6 @@ export interface ExperimentalProcessingOptions {
   enable_scripts?: boolean;
 
   /**
-   * Add <u> tag around text that's underlined and surround strikethroughs and
-   * underlines with <change> tags, defaults to False
-   */
-  enable_underlines?: boolean;
-
-  /**
    * The configuration options for enrichment.
    */
   enrich?: ExperimentalProcessingOptions.Enrich;
@@ -306,6 +309,8 @@ export interface ExperimentalProcessingOptions {
    * Use an orientation model to detect and rotate pages as needed, defaults to True
    */
   rotate_pages?: boolean;
+
+  [k: string]: unknown;
 }
 
 export namespace ExperimentalProcessingOptions {
@@ -323,7 +328,7 @@ export namespace ExperimentalProcessingOptions {
     /**
      * The mode to use for enrichment. Defaults to standard
      */
-    mode?: 'standard' | 'page';
+    mode?: 'standard' | 'page' | 'table';
 
     /**
      * Add information to the prompt for enrichment.
@@ -457,8 +462,7 @@ export namespace ParseResponse {
           | 'Table'
           | 'Key Value'
           | 'Text'
-          | 'Comment'
-          | 'Discard';
+          | 'Comment';
 
         /**
          * (Experimental) The URL of the image associated with the block.

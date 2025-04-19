@@ -47,6 +47,13 @@ export interface SplitRunParams {
   options?: Shared.BaseProcessingOptions;
 
   /**
+   * If True, attempts to process the job with priority if the user has priority
+   * processing budget available; by default, sync jobs are prioritized above async
+   * jobs.
+   */
+  priority?: boolean;
+
+  /**
    * The rules for splitting the document.
    */
   split_rules?: string;

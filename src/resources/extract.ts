@@ -58,6 +58,13 @@ export interface ExtractRunParams {
   options?: Shared.BaseProcessingOptions;
 
   /**
+   * If True, attempts to process the job with priority if the user has priority
+   * processing budget available; by default, sync jobs are prioritized above async
+   * jobs.
+   */
+  priority?: boolean;
+
+  /**
    * A system prompt to use for the extraction. This is a general prompt that is
    * applied to the entire document before any other prompts.
    */
