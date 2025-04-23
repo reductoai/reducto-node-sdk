@@ -43,7 +43,7 @@ export interface AdvancedProcessingOptions {
 
   /**
    * A flag to indicate if consecutive tables with the same number of columns should
-   * be merged.
+   * be merged across breaks and spaces.
    */
   merge_tables?: boolean;
 
@@ -54,7 +54,8 @@ export interface AdvancedProcessingOptions {
   ocr_system?: 'highres' | 'multilingual' | 'combined';
 
   /**
-   * The page range to process. By default, the entire document is processed.
+   * The page range to process (1-indexed). By default, the entire document is
+   * processed.
    */
   page_range?: PageRange | Array<PageRange>;
 
@@ -75,8 +76,8 @@ export interface AdvancedProcessingOptions {
   return_ocr_data?: boolean;
 
   /**
-   * On a spreadsheet, the algorithm that is used to split up sheets into multiple
-   * tables.
+   * In a spreadsheet with different tables inside, we enable splitting up the tables
+   * by default. Disabling will register as one large table.
    */
   spreadsheet_table_clustering?: 'default' | 'disabled';
 
@@ -133,12 +134,14 @@ export interface ArrayExtractConfig {
 
 export interface BaseProcessingOptions {
   /**
-   * The configuration options for chunking.
+   * The configuration options for chunking. Chunking is commonly used for RAG
+   * usecases.
    */
   chunking?: BaseProcessingOptions.Chunking;
 
   /**
-   * The mode to use for extraction.
+   * The mode to use for extraction. Metadata/hybrid are only recommended with high
+   * quality metadata embeddings.
    */
   extraction_mode?: 'ocr' | 'metadata' | 'hybrid';
 
@@ -148,7 +151,8 @@ export interface BaseProcessingOptions {
   figure_summary?: BaseProcessingOptions.FigureSummary;
 
   /**
-   * A list of block types to filter from chunk content.
+   * A list of block types to filter from chunk content. By default, Header, Footer,
+   * Page Number, and Comment blocks are filtered out.
    */
   filter_blocks?: Array<
     | 'Header'
@@ -171,8 +175,8 @@ export interface BaseProcessingOptions {
   force_url_result?: boolean;
 
   /**
-   * The mode to use for OCR. If agentic is enabled, at a small cost table OCR will
-   * be automatically edited.
+   * The mode to use for OCR. Agentic mode adds an extra pass, correcting any
+   * table/text mistakes at a small cost.
    */
   ocr_mode?: 'standard' | 'agentic';
 
@@ -184,13 +188,15 @@ export interface BaseProcessingOptions {
 
 export namespace BaseProcessingOptions {
   /**
-   * The configuration options for chunking.
+   * The configuration options for chunking. Chunking is commonly used for RAG
+   * usecases.
    */
   export interface Chunking {
     /**
-     * The mode to use for chunking. Section chunks according to sections in the
-     * document. Page chunks according to pages. Page sections chunks according to both
-     * pages and sections. Disabled returns a single chunk.
+     * Choose how to partition chunks. Variable mode chunks by character length and
+     * visual context. Section mode chunks by section headers. Page mode chunks
+     * according to pages. Page sections mode chunks first by page, then by sections
+     * within each page. Disabled returns one single chunk.
      */
     chunk_mode?: 'variable' | 'section' | 'page' | 'block' | 'disabled' | 'page_sections';
 
@@ -217,7 +223,9 @@ export namespace BaseProcessingOptions {
     override?: boolean;
 
     /**
-     * Add information to the prompt for figure summarization.
+     * Add information to the prompt for figure summarization. Note any visual cues
+     * that should be incorporated. Example: 'When provided a diagram, extract all of
+     * the figure content verbatim.'
      */
     prompt?: string;
   }
@@ -288,6 +296,11 @@ export interface ExperimentalProcessingOptions {
    * The configuration options for enrichment.
    */
   enrich?: ExperimentalProcessingOptions.Enrich;
+
+  /**
+   * The layout model to use for the document. This will be deprecated in the future.
+   */
+  layout_model?: 'default' | 'beta';
 
   /**
    * Instead of using LibreOffice, when enabled, this flag uses a Windows VM to

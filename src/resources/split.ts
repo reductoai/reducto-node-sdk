@@ -32,8 +32,10 @@ export interface SplitRunParams {
    * 2. A presigned S3 URL
    * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
    *    uploading a document
+   * 4. A job_id (jobid://) or a list of job_ids (jobid://) obtained from a previous
+   *    /parse endpoint
    */
-  document_url: string | Shared.Upload;
+  document_url: string | Array<string> | Shared.Upload;
 
   /**
    * The configuration options for processing the document.
@@ -54,7 +56,7 @@ export interface SplitRunParams {
   priority?: boolean;
 
   /**
-   * The rules for splitting the document.
+   * The prompt that describes rules for splitting the document.
    */
   split_rules?: string;
 }
@@ -67,8 +69,10 @@ export interface SplitRunJobParams {
    * 2. A presigned S3 URL
    * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
    *    uploading a document
+   * 4. A job_id (jobid://) or a list of job_ids (jobid://) obtained from a previous
+   *    /parse endpoint
    */
-  document_url: string | Shared.Upload;
+  document_url: string | Array<string> | Shared.Upload;
 
   /**
    * The configuration options for processing the document.
@@ -89,7 +93,7 @@ export interface SplitRunJobParams {
   priority?: boolean;
 
   /**
-   * The rules for splitting the document.
+   * The prompt that describes rules for splitting the document.
    */
   split_rules?: string;
 
