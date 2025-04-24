@@ -32,7 +32,8 @@ export interface ExtractRunParams {
    * 2. A presigned S3 URL
    * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
    *    uploading a document
-   * 4. A job_id (jobid://) or a list of job_ids (jobid://)
+   * 4. A job_id (jobid://) or a list of job_ids (jobid://) obtained from a previous
+   *    /parse endpoint
    */
   document_url: string | Array<string> | Shared.Upload;
 
@@ -84,7 +85,8 @@ export interface ExtractRunJobParams {
    * 2. A presigned S3 URL
    * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
    *    uploading a document
-   * 4. A job_id (jobid://) or a list of job_ids (jobid://)
+   * 4. A job_id (jobid://) or a list of job_ids (jobid://) obtained from a previous
+   *    /parse endpoint
    */
   document_url: string | Array<string> | Shared.Upload;
 
