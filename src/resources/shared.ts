@@ -478,6 +478,12 @@ export namespace ParseResponse {
           | 'Comment';
 
         /**
+         * The confidence for the block. It is either low or high and takes into account
+         * factors like OCR and table structure
+         */
+        confidence?: string | null;
+
+        /**
          * (Experimental) The URL of the image associated with the block.
          */
         image_url?: string | null;
