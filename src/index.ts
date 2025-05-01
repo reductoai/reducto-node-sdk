@@ -16,11 +16,28 @@ import { Parse, ParseRunJobParams, ParseRunJobResponse, ParseRunParams } from '.
 import { Split, SplitRunJobParams, SplitRunJobResponse, SplitRunParams } from './resources/split';
 import { Webhook, WebhookRunResponse } from './resources/webhook';
 
+const environments = {
+  production: 'https://platform.reducto.ai',
+  eu: 'https://eu.platform.reducto.ai',
+  au: 'https://au.platform.reducto.ai',
+};
+type Environment = keyof typeof environments;
+
 export interface ClientOptions {
   /**
    * Defaults to process.env['REDUCTO_API_KEY'].
    */
   apiKey?: string | undefined;
+
+  /**
+   * Specifies the environment to use for the API.
+   *
+   * Each environment maps to a different base URL:
+   * - `production` corresponds to `https://platform.reducto.ai`
+   * - `eu` corresponds to `https://eu.platform.reducto.ai`
+   * - `au` corresponds to `https://au.platform.reducto.ai`
+   */
+  environment?: Environment | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -91,6 +108,7 @@ export class Reducto extends Core.APIClient {
    * API Client for interfacing with the Reducto API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['REDUCTO_API_KEY'] ?? undefined]
+   * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
    * @param {string} [opts.baseURL=process.env['REDUCTO_BASE_URL'] ?? https://platform.reducto.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=15 minutes] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -113,11 +131,18 @@ export class Reducto extends Core.APIClient {
     const options: ClientOptions = {
       apiKey,
       ...opts,
-      baseURL: baseURL || `https://platform.reducto.ai`,
+      baseURL,
+      environment: opts.environment ?? 'production',
     };
 
+    if (baseURL && opts.environment) {
+      throw new Errors.ReductoError(
+        'Ambiguous URL; The `baseURL` option (or REDUCTO_BASE_URL env var) and the `environment` option are given. If you want to use the environment you must pass baseURL: null',
+      );
+    }
+
     super({
-      baseURL: options.baseURL!,
+      baseURL: options.baseURL || environments[options.environment || 'production'],
       timeout: options.timeout ?? 900000 /* 15 minutes */,
       httpAgent: options.httpAgent,
       maxRetries: options.maxRetries,

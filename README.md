@@ -24,6 +24,7 @@ import Reducto from 'reductoai';
 
 const client = new Reducto({
   apiKey: process.env['REDUCTO_API_KEY'], // This is the default and can be omitted
+  environment: 'eu', // or 'production' | 'au'; defaults to 'production'
 });
 
 async function main() {
@@ -45,6 +46,7 @@ import Reducto from 'reductoai';
 
 const client = new Reducto({
   apiKey: process.env['REDUCTO_API_KEY'], // This is the default and can be omitted
+  environment: 'eu', // or 'production' | 'au'; defaults to 'production'
 });
 
 async function main() {

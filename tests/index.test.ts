@@ -181,6 +181,19 @@ describe('instantiate client', () => {
       const client = new Reducto({ apiKey: 'My API Key' });
       expect(client.baseURL).toEqual('https://platform.reducto.ai');
     });
+
+    test('env variable with environment', () => {
+      process.env['REDUCTO_BASE_URL'] = 'https://example.com/from_env';
+
+      expect(
+        () => new Reducto({ apiKey: 'My API Key', environment: 'production' }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"Ambiguous URL; The \`baseURL\` option (or REDUCTO_BASE_URL env var) and the \`environment\` option are given. If you want to use the environment you must pass baseURL: null"`,
+      );
+
+      const client = new Reducto({ apiKey: 'My API Key', baseURL: null, environment: 'production' });
+      expect(client.baseURL).toEqual('https://platform.reducto.ai');
+    });
   });
 
   test('maxRetries option is correctly set', () => {
