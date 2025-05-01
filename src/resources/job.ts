@@ -29,7 +29,18 @@ export interface JobGetResponse {
 
   reason?: string | null;
 
-  result?: Shared.ParseResponse | Shared.ExtractResponse | Shared.SplitResponse | null;
+  result?:
+    | Shared.ParseResponse
+    | Shared.ExtractResponse
+    | Shared.SplitResponse
+    | JobGetResponse.EditResponse
+    | null;
+}
+
+export namespace JobGetResponse {
+  export interface EditResponse {
+    document_url: string;
+  }
 }
 
 export declare namespace Job {
