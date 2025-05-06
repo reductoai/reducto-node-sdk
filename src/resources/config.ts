@@ -13,7 +13,8 @@ export interface ExtractConfig {
    * 2. A presigned S3 URL
    * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
    *    uploading a document
-   * 4. A job_id (jobid://) or a list of job_ids (jobid://)
+   * 4. A job_id (jobid://) or a list of job_ids (jobid://) obtained from a previous
+   *    /parse endpoint
    */
   document_url: string | Array<string> | Shared.Upload;
 
@@ -37,6 +38,13 @@ export interface ExtractConfig {
   generate_citations?: boolean;
 
   options?: Shared.BaseProcessingOptions;
+
+  /**
+   * If True, attempts to process the job with priority if the user has priority
+   * processing budget available; by default, sync jobs are prioritized above async
+   * jobs.
+   */
+  priority?: boolean;
 
   /**
    * A system prompt to use for the extraction. This is a general prompt that is
@@ -66,6 +74,13 @@ export interface ParseConfig {
   experimental_options?: Shared.ExperimentalProcessingOptions;
 
   options?: Shared.BaseProcessingOptions;
+
+  /**
+   * If True, attempts to process the job with priority if the user has priority
+   * processing budget available; by default, sync jobs are prioritized above async
+   * jobs.
+   */
+  priority?: boolean;
 }
 
 export declare namespace Config {

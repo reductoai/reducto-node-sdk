@@ -24,6 +24,7 @@ import Reducto from 'reductoai';
 
 const client = new Reducto({
   apiKey: process.env['REDUCTO_API_KEY'], // This is the default and can be omitted
+  environment: 'eu', // or 'production' | 'au'; defaults to 'production'
 });
 
 async function main() {
@@ -45,6 +46,7 @@ import Reducto from 'reductoai';
 
 const client = new Reducto({
   apiKey: process.env['REDUCTO_API_KEY'], // This is the default and can be omitted
+  environment: 'eu', // or 'production' | 'au'; defaults to 'production'
 });
 
 async function main() {
@@ -112,7 +114,7 @@ async function main() {
 main();
 ```
 
-Error codes are as followed:
+Error codes are as follows:
 
 | Status Code | Error Type                 |
 | ----------- | -------------------------- |
@@ -148,13 +150,13 @@ await client.parse.run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' },
 
 ### Timeouts
 
-Requests time out after 1 minute by default. You can configure this with a `timeout` option:
+Requests time out after 15 minutes by default. You can configure this with a `timeout` option:
 
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
 const client = new Reducto({
-  timeout: 20 * 1000, // 20 seconds (default is 1 minute)
+  timeout: 20 * 1000, // 20 seconds (default is 15 minutes)
 });
 
 // Override per-request:

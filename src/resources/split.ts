@@ -32,36 +32,10 @@ export interface SplitRunParams {
    * 2. A presigned S3 URL
    * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
    *    uploading a document
+   * 4. A job_id (jobid://) or a list of job_ids (jobid://) obtained from a previous
+   *    /parse endpoint
    */
-  document_url: string | Shared.Upload;
-
-  /**
-   * The configuration options for processing the document.
-   */
-  split_description: Array<Shared.SplitCategory>;
-
-  advanced_options?: Shared.AdvancedProcessingOptions;
-
-  experimental_options?: Shared.ExperimentalProcessingOptions;
-
-  options?: Shared.BaseProcessingOptions;
-
-  /**
-   * The rules for splitting the document.
-   */
-  split_rules?: string;
-}
-
-export interface SplitRunJobParams {
-  /**
-   * The URL of the document to be processed. You can provide one of the following:
-   *
-   * 1. A publicly available URL
-   * 2. A presigned S3 URL
-   * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
-   *    uploading a document
-   */
-  document_url: string | Shared.Upload;
+  document_url: string | Array<string> | Shared.Upload;
 
   /**
    * The configuration options for processing the document.
@@ -82,7 +56,44 @@ export interface SplitRunJobParams {
   priority?: boolean;
 
   /**
-   * The rules for splitting the document.
+   * The prompt that describes rules for splitting the document.
+   */
+  split_rules?: string;
+}
+
+export interface SplitRunJobParams {
+  /**
+   * The URL of the document to be processed. You can provide one of the following:
+   *
+   * 1. A publicly available URL
+   * 2. A presigned S3 URL
+   * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
+   *    uploading a document
+   * 4. A job_id (jobid://) or a list of job_ids (jobid://) obtained from a previous
+   *    /parse endpoint
+   */
+  document_url: string | Array<string> | Shared.Upload;
+
+  /**
+   * The configuration options for processing the document.
+   */
+  split_description: Array<Shared.SplitCategory>;
+
+  advanced_options?: Shared.AdvancedProcessingOptions;
+
+  experimental_options?: Shared.ExperimentalProcessingOptions;
+
+  options?: Shared.BaseProcessingOptions;
+
+  /**
+   * If True, attempts to process the job with priority if the user has priority
+   * processing budget available; by default, sync jobs are prioritized above async
+   * jobs.
+   */
+  priority?: boolean;
+
+  /**
+   * The prompt that describes rules for splitting the document.
    */
   split_rules?: string;
 

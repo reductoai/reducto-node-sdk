@@ -21,6 +21,11 @@ export interface AdvancedProcessingOptions {
   document_password?: string;
 
   /**
+   * If True, filter out line numbers from the output. Defaults to False.
+   */
+  filter_line_numbers?: boolean;
+
+  /**
    * Force the URL to be downloaded as a specific file extension (e.g. .png).
    */
   force_file_extension?: string;
@@ -38,7 +43,7 @@ export interface AdvancedProcessingOptions {
 
   /**
    * A flag to indicate if consecutive tables with the same number of columns should
-   * be merged.
+   * be merged across breaks and spaces.
    */
   merge_tables?: boolean;
 
@@ -49,9 +54,15 @@ export interface AdvancedProcessingOptions {
   ocr_system?: 'highres' | 'multilingual' | 'combined';
 
   /**
-   * The page range to process. By default, the entire document is processed.
+   * The page range to process (1-indexed). By default, the entire document is
+   * processed.
    */
   page_range?: PageRange | Array<PageRange>;
+
+  /**
+   * If True, pull in PDF comments from the document. Defaults to False.
+   */
+  read_comments?: boolean;
 
   /**
    * If True, remove text formatting from the output (e.g. hyphens for list items).
@@ -65,8 +76,8 @@ export interface AdvancedProcessingOptions {
   return_ocr_data?: boolean;
 
   /**
-   * On a spreadsheet, the algorithm that is used to split up sheets into multiple
-   * tables.
+   * In a spreadsheet with different tables inside, we enable splitting up the tables
+   * by default. Disabling will register as one large table.
    */
   spreadsheet_table_clustering?: 'default' | 'disabled';
 
@@ -123,12 +134,14 @@ export interface ArrayExtractConfig {
 
 export interface BaseProcessingOptions {
   /**
-   * The configuration options for chunking.
+   * The configuration options for chunking. Chunking is commonly used for RAG
+   * usecases.
    */
   chunking?: BaseProcessingOptions.Chunking;
 
   /**
-   * The mode to use for extraction.
+   * The mode to use for extraction. Metadata/hybrid are only recommended with high
+   * quality metadata embeddings.
    */
   extraction_mode?: 'ocr' | 'metadata' | 'hybrid';
 
@@ -138,7 +151,8 @@ export interface BaseProcessingOptions {
   figure_summary?: BaseProcessingOptions.FigureSummary;
 
   /**
-   * A list of block types to filter from chunk content.
+   * A list of block types to filter from chunk content. By default, Header, Footer,
+   * Page Number, and Comment blocks are filtered out.
    */
   filter_blocks?: Array<
     | 'Header'
@@ -152,7 +166,6 @@ export interface BaseProcessingOptions {
     | 'Key Value'
     | 'Text'
     | 'Comment'
-    | 'Discard'
   >;
 
   /**
@@ -162,8 +175,8 @@ export interface BaseProcessingOptions {
   force_url_result?: boolean;
 
   /**
-   * The mode to use for OCR. If agentic is enabled, at a small cost table OCR will
-   * be automatically edited.
+   * The mode to use for OCR. Agentic mode adds an extra pass, correcting any
+   * table/text mistakes at a small cost.
    */
   ocr_mode?: 'standard' | 'agentic';
 
@@ -175,13 +188,15 @@ export interface BaseProcessingOptions {
 
 export namespace BaseProcessingOptions {
   /**
-   * The configuration options for chunking.
+   * The configuration options for chunking. Chunking is commonly used for RAG
+   * usecases.
    */
   export interface Chunking {
     /**
-     * The mode to use for chunking. Section chunks according to sections in the
-     * document. Page chunks according to pages. Page sections chunks according to both
-     * pages and sections. Disabled returns a single chunk.
+     * Choose how to partition chunks. Variable mode chunks by character length and
+     * visual context. Section mode chunks by section headers. Page mode chunks
+     * according to pages. Page sections mode chunks first by page, then by sections
+     * within each page. Disabled returns one single chunk.
      */
     chunk_mode?: 'variable' | 'section' | 'page' | 'block' | 'disabled' | 'page_sections';
 
@@ -208,7 +223,9 @@ export namespace BaseProcessingOptions {
     override?: boolean;
 
     /**
-     * Add information to the prompt for figure summarization.
+     * Add information to the prompt for figure summarization. Note any visual cues
+     * that should be incorporated. Example: 'When provided a diagram, extract all of
+     * the figure content verbatim.'
      */
     prompt?: string;
   }
@@ -246,7 +263,7 @@ export interface BoundingBox {
   /**
    * The page number in the original document of the bounding box (1-indexed).
    */
-  original_page?: number | null;
+  original_page?: number;
 }
 
 export interface ExperimentalProcessingOptions {
@@ -276,15 +293,14 @@ export interface ExperimentalProcessingOptions {
   enable_scripts?: boolean;
 
   /**
-   * Add <u> tag around text that's underlined and surround strikethroughs and
-   * underlines with <change> tags, defaults to False
-   */
-  enable_underlines?: boolean;
-
-  /**
    * The configuration options for enrichment.
    */
   enrich?: ExperimentalProcessingOptions.Enrich;
+
+  /**
+   * The layout model to use for the document. This will be deprecated in the future.
+   */
+  layout_model?: 'default' | 'beta';
 
   /**
    * Instead of using LibreOffice, when enabled, this flag uses a Windows VM to
@@ -306,6 +322,8 @@ export interface ExperimentalProcessingOptions {
    * Use an orientation model to detect and rotate pages as needed, defaults to True
    */
   rotate_pages?: boolean;
+
+  [k: string]: unknown;
 }
 
 export namespace ExperimentalProcessingOptions {
@@ -323,7 +341,7 @@ export namespace ExperimentalProcessingOptions {
     /**
      * The mode to use for enrichment. Defaults to standard
      */
-    mode?: 'standard' | 'page';
+    mode?: 'standard' | 'page' | 'table';
 
     /**
      * Add information to the prompt for enrichment.
@@ -457,8 +475,13 @@ export namespace ParseResponse {
           | 'Table'
           | 'Key Value'
           | 'Text'
-          | 'Comment'
-          | 'Discard';
+          | 'Comment';
+
+        /**
+         * The confidence for the block. It is either low or high and takes into account
+         * factors like OCR and table structure
+         */
+        confidence?: string | null;
 
         /**
          * (Experimental) The URL of the image associated with the block.

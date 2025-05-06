@@ -180,7 +180,7 @@ export abstract class APIClient {
   constructor({
     baseURL,
     maxRetries = 2,
-    timeout = 60000, // 1 minute
+    timeout = 900000, // 15 minutes
     httpAgent,
     fetch: overriddenFetch,
   }: {
@@ -296,10 +296,10 @@ export abstract class APIClient {
   }
 
   buildRequest<Req>(
-    options: FinalRequestOptions<Req>,
+    inputOptions: FinalRequestOptions<Req>,
     { retryCount = 0 }: { retryCount?: number } = {},
   ): { req: RequestInit; url: string; timeout: number } {
-    options = { ...options };
+    const options = { ...inputOptions };
     const { method, path, query, headers: headers = {} } = options;
 
     const body =
@@ -327,8 +327,8 @@ export abstract class APIClient {
     }
 
     if (this.idempotencyHeader && method !== 'get') {
-      if (!options.idempotencyKey) options.idempotencyKey = this.defaultIdempotencyKey();
-      headers[this.idempotencyHeader] = options.idempotencyKey;
+      if (!inputOptions.idempotencyKey) inputOptions.idempotencyKey = this.defaultIdempotencyKey();
+      headers[this.idempotencyHeader] = inputOptions.idempotencyKey;
     }
 
     const reqHeaders = this.buildHeaders({ options, headers, contentLength, retryCount });
