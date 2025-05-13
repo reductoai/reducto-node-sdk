@@ -57,7 +57,7 @@ export interface AdvancedProcessingOptions {
    * The page range to process (1-indexed). By default, the entire document is
    * processed.
    */
-  page_range?: PageRange | Array<PageRange>;
+  page_range?: PageRange | Array<PageRange> | Array<number>;
 
   /**
    * If True, pull in PDF comments from the document. Defaults to False.
