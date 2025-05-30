@@ -60,6 +60,11 @@ export interface AdvancedProcessingOptions {
   page_range?: PageRange | Array<PageRange> | Array<number>;
 
   /**
+   * If True, persist the results indefinitely. Defaults to False.
+   */
+  persist_results?: boolean;
+
+  /**
    * If True, pull in PDF comments from the document. Defaults to False.
    */
   read_comments?: boolean;
