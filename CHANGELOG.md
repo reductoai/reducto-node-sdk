@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.6.0 (2025-05-31)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** api update ([0d42cf7](https://github.com/reductoai/reducto-node-sdk/commit/0d42cf7509b4250d9fe18690715a2ac032cdd015))
+* **api:** api update ([aa09344](https://github.com/reductoai/reducto-node-sdk/commit/aa093446e70d954d59246ea1c892706536887462))
+* **api:** api update ([b87a753](https://github.com/reductoai/reducto-node-sdk/commit/b87a753978425d5e582486b3c6a4bee1ebb62107))
+
+
+### Chores
+
+* **ci:** bump node version for release workflows ([9957ba6](https://github.com/reductoai/reducto-node-sdk/commit/9957ba637b63db6db26b8097064ecb243f4240bf))
+* **docs:** grammar improvements ([a5b81a4](https://github.com/reductoai/reducto-node-sdk/commit/a5b81a4b6a62266882146335c93ac26e1d8bab60))
+* improve publish-npm script --latest tag logic ([ce0a0a1](https://github.com/reductoai/reducto-node-sdk/commit/ce0a0a1513fcc575c60d51840d5b54cdb812dcd0))
+
 ## 0.5.0 (2025-05-06)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.4.0...v0.5.0)
