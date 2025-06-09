@@ -28,6 +28,16 @@ export interface AdvancedProcessingOptions {
   enable_change_tracking?: boolean;
 
   /**
+   * Skip hidden rows and cols in Excel files. Defaults to False.
+   */
+  exclude_hidden_rows_cols?: boolean;
+
+  /**
+   * Skip hidden sheets in Excel files. Defaults to False.
+   */
+  exclude_hidden_sheets?: boolean;
+
+  /**
    * If True, filter out line numbers from the output. Defaults to False.
    */
   filter_line_numbers?: boolean;
