@@ -143,6 +143,7 @@ export class Reducto extends Core.APIClient {
 
     super({
       baseURL: options.baseURL || environments[options.environment || 'production'],
+      baseURLOverridden: baseURL ? baseURL !== environments[options.environment || 'production'] : false,
       timeout: options.timeout ?? 900000 /* 15 minutes */,
       httpAgent: options.httpAgent,
       maxRetries: options.maxRetries,
@@ -160,6 +161,13 @@ export class Reducto extends Core.APIClient {
   extract: API.Extract = new API.Extract(this);
   webhook: API.Webhook = new API.Webhook(this);
   config: API.Config = new API.Config(this);
+
+  /**
+   * Check whether the base URL is set to its default.
+   */
+  #baseURLOverridden(): boolean {
+    return this.baseURL !== environments[this._options.environment || 'production'];
+  }
 
   /**
    * Get Version
