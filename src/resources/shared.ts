@@ -392,6 +392,8 @@ export namespace ExtractResponse {
     num_fields: number;
 
     num_pages: number;
+
+    credits?: number | null;
   }
 }
 
@@ -547,6 +549,8 @@ export namespace ParseResponse {
 
 export interface ParseUsage {
   num_pages: number;
+
+  credits?: number | null;
 }
 
 export interface SplitCategory {
