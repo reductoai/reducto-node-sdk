@@ -341,6 +341,12 @@ export interface ExperimentalProcessingOptions {
   return_table_images?: boolean;
 
   /**
+   * Use an orientation model to detect and rotate figures as needed, defaults to
+   * False
+   */
+  rotate_figures?: boolean;
+
+  /**
    * Use an orientation model to detect and rotate pages as needed, defaults to True
    */
   rotate_pages?: boolean;
@@ -577,7 +583,9 @@ export namespace SplitResponse {
    * If disbale_chunking is True (default), then it will be a list of length one.
    */
   export interface Result {
-    section_mapping: Record<string, Array<number>>;
+    section_mapping: Record<string, Array<number>> | null;
+
+    splits: Array<unknown>;
   }
 }
 

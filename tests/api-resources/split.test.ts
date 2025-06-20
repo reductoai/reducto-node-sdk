@@ -60,6 +60,7 @@ describe('resource split', () => {
         native_office_conversion: true,
         return_figure_images: true,
         return_table_images: true,
+        rotate_figures: true,
         rotate_pages: true,
       },
       options: {
@@ -127,6 +128,7 @@ describe('resource split', () => {
         native_office_conversion: true,
         return_figure_images: true,
         return_table_images: true,
+        rotate_figures: true,
         rotate_pages: true,
       },
       options: {
