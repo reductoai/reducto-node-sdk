@@ -21,6 +21,23 @@ export interface AdvancedProcessingOptions {
   document_password?: string;
 
   /**
+   * Add <u> tags around underlined text, <s> tags around strikethrough text, and
+   * <change> tags to surround both underlines and strikethroughs for change
+   * detection. Defaults to False.
+   */
+  enable_change_tracking?: boolean;
+
+  /**
+   * Skip hidden rows and cols in Excel files. Defaults to False.
+   */
+  exclude_hidden_rows_cols?: boolean;
+
+  /**
+   * Skip hidden sheets in Excel files. Defaults to False.
+   */
+  exclude_hidden_sheets?: boolean;
+
+  /**
    * If True, filter out line numbers from the output. Defaults to False.
    */
   filter_line_numbers?: boolean;
@@ -57,7 +74,12 @@ export interface AdvancedProcessingOptions {
    * The page range to process (1-indexed). By default, the entire document is
    * processed.
    */
-  page_range?: PageRange | Array<PageRange>;
+  page_range?: PageRange | Array<PageRange> | Array<number>;
+
+  /**
+   * If True, persist the results indefinitely. Defaults to False.
+   */
+  persist_results?: boolean;
 
   /**
    * If True, pull in PDF comments from the document. Defaults to False.
@@ -151,8 +173,8 @@ export interface BaseProcessingOptions {
   figure_summary?: BaseProcessingOptions.FigureSummary;
 
   /**
-   * A list of block types to filter from chunk content. By default, Header, Footer,
-   * Page Number, and Comment blocks are filtered out.
+   * A list of block types to filter from chunk content. Pass blocks to filter them
+   * from content. By default, no blocks are filtered.
    */
   filter_blocks?: Array<
     | 'Header'
@@ -319,6 +341,12 @@ export interface ExperimentalProcessingOptions {
   return_table_images?: boolean;
 
   /**
+   * Use an orientation model to detect and rotate figures as needed, defaults to
+   * False
+   */
+  rotate_figures?: boolean;
+
+  /**
    * Use an orientation model to detect and rotate pages as needed, defaults to True
    */
   rotate_pages?: boolean;
@@ -370,6 +398,8 @@ export namespace ExtractResponse {
     num_fields: number;
 
     num_pages: number;
+
+    credits?: number | null;
   }
 }
 
@@ -525,6 +555,8 @@ export namespace ParseResponse {
 
 export interface ParseUsage {
   num_pages: number;
+
+  credits?: number | null;
 }
 
 export interface SplitCategory {
@@ -551,7 +583,9 @@ export namespace SplitResponse {
    * If disbale_chunking is True (default), then it will be a list of length one.
    */
   export interface Result {
-    section_mapping: Record<string, Array<number>>;
+    section_mapping: Record<string, Array<number>> | null;
+
+    splits: Array<unknown>;
   }
 }
 

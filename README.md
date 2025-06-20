@@ -27,13 +27,9 @@ const client = new Reducto({
   environment: 'eu', // or 'production' | 'au'; defaults to 'production'
 });
 
-async function main() {
-  const parseResponse = await client.parse.run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' });
+const parseResponse = await client.parse.run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' });
 
-  console.log(parseResponse.job_id);
-}
-
-main();
+console.log(parseResponse.job_id);
 ```
 
 ### Request & Response types
@@ -49,12 +45,8 @@ const client = new Reducto({
   environment: 'eu', // or 'production' | 'au'; defaults to 'production'
 });
 
-async function main() {
-  const params: Reducto.ParseRunParams = { document_url: 'https://pdfobject.com/pdf/sample.pdf' };
-  const parseResponse: Reducto.ParseResponse = await client.parse.run(params);
-}
-
-main();
+const params: Reducto.ParseRunParams = { document_url: 'https://pdfobject.com/pdf/sample.pdf' };
+const parseResponse: Reducto.ParseResponse = await client.parse.run(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -97,21 +89,17 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-async function main() {
-  const parseResponse = await client.parse
-    .run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' })
-    .catch(async (err) => {
-      if (err instanceof Reducto.APIError) {
-        console.log(err.status); // 400
-        console.log(err.name); // BadRequestError
-        console.log(err.headers); // {server: 'nginx', ...}
-      } else {
-        throw err;
-      }
-    });
-}
-
-main();
+const parseResponse = await client.parse
+  .run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' })
+  .catch(async (err) => {
+    if (err instanceof Reducto.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:

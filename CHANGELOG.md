@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.6.0 (2025-06-20)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** api update ([4b3a1e5](https://github.com/reductoai/reducto-node-sdk/commit/4b3a1e5652321b07f5fed4dd10d4ccbaeb741e62))
+* **api:** api update ([d8cff4f](https://github.com/reductoai/reducto-node-sdk/commit/d8cff4fe24b0c50f3af8d90a3d0c7d53c403e837))
+* **api:** api update ([dd18cd8](https://github.com/reductoai/reducto-node-sdk/commit/dd18cd81ea95ba9491f4a6574d97d516516f0d4b))
+* **api:** api update ([212b9c4](https://github.com/reductoai/reducto-node-sdk/commit/212b9c467a8e1e9919e3e566fa856e0d4d65c4a5))
+* **api:** api update ([0d42cf7](https://github.com/reductoai/reducto-node-sdk/commit/0d42cf7509b4250d9fe18690715a2ac032cdd015))
+* **api:** api update ([aa09344](https://github.com/reductoai/reducto-node-sdk/commit/aa093446e70d954d59246ea1c892706536887462))
+* **api:** api update ([b87a753](https://github.com/reductoai/reducto-node-sdk/commit/b87a753978425d5e582486b3c6a4bee1ebb62107))
+* **client:** add support for endpoint-specific base URLs ([3103d3f](https://github.com/reductoai/reducto-node-sdk/commit/3103d3f9296c15c88804563671e07049c7f4e63b))
+
+
+### Bug Fixes
+
+* publish script — handle NPM errors correctly ([5078b43](https://github.com/reductoai/reducto-node-sdk/commit/5078b4384a2ba082d68c6d6ebd097c450a8fab34))
+
+
+### Chores
+
+* **ci:** bump node version for release workflows ([9957ba6](https://github.com/reductoai/reducto-node-sdk/commit/9957ba637b63db6db26b8097064ecb243f4240bf))
+* **ci:** enable for pull requests ([afa06b0](https://github.com/reductoai/reducto-node-sdk/commit/afa06b09dc213f54011e8ae2126145e8c6fbc665))
+* **docs:** grammar improvements ([a5b81a4](https://github.com/reductoai/reducto-node-sdk/commit/a5b81a4b6a62266882146335c93ac26e1d8bab60))
+* **docs:** use top-level-await in example snippets ([c88700b](https://github.com/reductoai/reducto-node-sdk/commit/c88700b9a90da2b56d63e13e48c6c6baccb87015))
+* improve publish-npm script --latest tag logic ([ce0a0a1](https://github.com/reductoai/reducto-node-sdk/commit/ce0a0a1513fcc575c60d51840d5b54cdb812dcd0))
+* **internal:** make base APIResource abstract ([b8858f3](https://github.com/reductoai/reducto-node-sdk/commit/b8858f3648968f847ea29c2f4632021469e67d75))
+
 ## 0.5.0 (2025-05-06)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.4.0...v0.5.0)
