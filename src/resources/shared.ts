@@ -386,7 +386,7 @@ export interface ExtractResponse {
 
   /**
    * The extracted response in your provided schema. This is a list of dictionaries.
-   * If disbale_chunking is True (default), then it will be a list of length one.
+   * If disable_chunking is True (default), then it will be a list of length one.
    */
   result: Array<unknown>;
 
@@ -569,8 +569,7 @@ export interface SplitCategory {
 
 export interface SplitResponse {
   /**
-   * The extracted response in your provided schema. This is a list of dictionaries.
-   * If disbale_chunking is True (default), then it will be a list of length one.
+   * The split result.
    */
   result: SplitResponse.Result;
 
@@ -579,8 +578,7 @@ export interface SplitResponse {
 
 export namespace SplitResponse {
   /**
-   * The extracted response in your provided schema. This is a list of dictionaries.
-   * If disbale_chunking is True (default), then it will be a list of length one.
+   * The split result.
    */
   export interface Result {
     section_mapping: { [key: string]: Array<number> } | null;
