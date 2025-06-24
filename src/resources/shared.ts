@@ -583,7 +583,7 @@ export namespace SplitResponse {
    * If disbale_chunking is True (default), then it will be a list of length one.
    */
   export interface Result {
-    section_mapping: Record<string, Array<number>> | null;
+    section_mapping: { [key: string]: Array<number> } | null;
 
     splits: Array<unknown>;
   }
