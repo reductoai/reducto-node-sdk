@@ -50,6 +50,7 @@ describe('resource extract', () => {
       array_extract: { enabled: true, mode: 'auto', pages_per_segment: 0, streaming_extract_item_density: 0 },
       experimental_options: {
         danger_filter_wide_boxes: true,
+        embed_text_metadata_pdf: true,
         enable_checkboxes: true,
         enable_equations: true,
         enable_scripts: true,
@@ -118,6 +119,7 @@ describe('resource extract', () => {
       array_extract: { enabled: true, mode: 'auto', pages_per_segment: 0, streaming_extract_item_density: 0 },
       experimental_options: {
         danger_filter_wide_boxes: true,
+        embed_text_metadata_pdf: true,
         enable_checkboxes: true,
         enable_equations: true,
         enable_scripts: true,
