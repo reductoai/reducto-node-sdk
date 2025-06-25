@@ -297,6 +297,12 @@ export interface ExperimentalProcessingOptions {
   danger_filter_wide_boxes?: boolean;
 
   /**
+   * If extracted OCR text metadata should be embedded back into the returned PDF,
+   * overwriting any existing text. Defaults to False.
+   */
+  embed_text_metadata_pdf?: boolean;
+
+  /**
    * Use an experimental checkbox detection model to add checkboxes to the output,
    * defaults to False
    */
