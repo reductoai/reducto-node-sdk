@@ -63,6 +63,7 @@ describe('resource extract', () => {
         rotate_pages: true,
       },
       generate_citations: true,
+      include_images: true,
       options: {
         chunking: { chunk_mode: 'variable', chunk_size: 0 },
         extraction_mode: 'ocr',
@@ -132,6 +133,7 @@ describe('resource extract', () => {
         rotate_pages: true,
       },
       generate_citations: true,
+      include_images: true,
       options: {
         chunking: { chunk_mode: 'variable', chunk_size: 0 },
         extraction_mode: 'ocr',
