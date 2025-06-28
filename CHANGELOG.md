@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.7.0 (2025-06-28)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** api update ([201a41e](https://github.com/reductoai/reducto-node-sdk/commit/201a41ea965ab234f72841aedd94233e0dc5dd30))
+* **api:** api update ([299aee7](https://github.com/reductoai/reducto-node-sdk/commit/299aee70294d5a7f5ef4d5096aec9962bc2832d2))
+* **api:** api update ([c5eaf24](https://github.com/reductoai/reducto-node-sdk/commit/c5eaf240b7859de3339efee6b93067603ed78e32))
+
+
+### Bug Fixes
+
+* **ci:** release-doctor — report correct token name ([d00050d](https://github.com/reductoai/reducto-node-sdk/commit/d00050d9e13575b5674580cb51a5368ee4d2c4f9))
+
+
+### Chores
+
+* **ci:** only run for pushes and fork pull requests ([4f6f864](https://github.com/reductoai/reducto-node-sdk/commit/4f6f8647e1e496987685f2153008213092c353f2))
+
+
+### Refactors
+
+* **types:** replace Record with mapped types ([468f46f](https://github.com/reductoai/reducto-node-sdk/commit/468f46f5a4f054f266baf22f8ce66092adb3a210))
+
 ## 0.6.0 (2025-06-20)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.5.0...v0.6.0)
