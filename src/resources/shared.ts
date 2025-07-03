@@ -589,7 +589,29 @@ export namespace SplitResponse {
   export interface Result {
     section_mapping: { [key: string]: Array<number> } | null;
 
-    splits: Array<unknown>;
+    splits: Array<Result.Split>;
+  }
+
+  export namespace Result {
+    export interface Split {
+      name: string;
+
+      pages: Array<number>;
+
+      conf?: 'high' | 'low';
+
+      partitions?: Array<Split.Partition> | null;
+    }
+
+    export namespace Split {
+      export interface Partition {
+        name: string;
+
+        pages: Array<number>;
+
+        conf?: 'high' | 'low';
+      }
+    }
   }
 }
 
