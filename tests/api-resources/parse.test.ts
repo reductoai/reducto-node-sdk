@@ -48,6 +48,7 @@ describe('resource parse', () => {
       },
       experimental_options: {
         danger_filter_wide_boxes: true,
+        embed_text_metadata_pdf: true,
         enable_checkboxes: true,
         enable_equations: true,
         enable_scripts: true,
@@ -111,6 +112,7 @@ describe('resource parse', () => {
       },
       experimental_options: {
         danger_filter_wide_boxes: true,
+        embed_text_metadata_pdf: true,
         enable_checkboxes: true,
         enable_equations: true,
         enable_scripts: true,

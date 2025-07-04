@@ -297,6 +297,12 @@ export interface ExperimentalProcessingOptions {
   danger_filter_wide_boxes?: boolean;
 
   /**
+   * If extracted OCR text metadata should be embedded back into the returned PDF,
+   * overwriting any existing text. Defaults to False.
+   */
+  embed_text_metadata_pdf?: boolean;
+
+  /**
    * Use an experimental checkbox detection model to add checkboxes to the output,
    * defaults to False
    */
@@ -386,7 +392,7 @@ export interface ExtractResponse {
 
   /**
    * The extracted response in your provided schema. This is a list of dictionaries.
-   * If disbale_chunking is True (default), then it will be a list of length one.
+   * If disable_chunking is True (default), then it will be a list of length one.
    */
   result: Array<unknown>;
 
@@ -569,8 +575,7 @@ export interface SplitCategory {
 
 export interface SplitResponse {
   /**
-   * The extracted response in your provided schema. This is a list of dictionaries.
-   * If disbale_chunking is True (default), then it will be a list of length one.
+   * The split result.
    */
   result: SplitResponse.Result;
 
@@ -579,13 +584,34 @@ export interface SplitResponse {
 
 export namespace SplitResponse {
   /**
-   * The extracted response in your provided schema. This is a list of dictionaries.
-   * If disbale_chunking is True (default), then it will be a list of length one.
+   * The split result.
    */
   export interface Result {
-    section_mapping: Record<string, Array<number>> | null;
+    section_mapping: { [key: string]: Array<number> } | null;
 
-    splits: Array<unknown>;
+    splits: Array<Result.Split>;
+  }
+
+  export namespace Result {
+    export interface Split {
+      name: string;
+
+      pages: Array<number>;
+
+      conf?: 'high' | 'low';
+
+      partitions?: Array<Split.Partition> | null;
+    }
+
+    export namespace Split {
+      export interface Partition {
+        name: string;
+
+        pages: Array<number>;
+
+        conf?: 'high' | 'low';
+      }
+    }
   }
 }
 

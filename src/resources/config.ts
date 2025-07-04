@@ -37,6 +37,12 @@ export interface ExtractConfig {
    */
   generate_citations?: boolean;
 
+  /**
+   * If images should be passed directly for extractions. Can only be enabled for
+   * documents with less than 10 pages. Defaults to False.
+   */
+  include_images?: boolean;
+
   options?: Shared.BaseProcessingOptions;
 
   /**
