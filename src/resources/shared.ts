@@ -537,12 +537,22 @@ export namespace ParseResponse {
         bbox: Shared.BoundingBox;
 
         text: string;
+
+        /**
+         * OCR confidence score between 0 and 1, where 1 indicates highest confidence
+         */
+        confidence?: number | null;
       }
 
       export interface Word {
         bbox: Shared.BoundingBox;
 
         text: string;
+
+        /**
+         * OCR confidence score between 0 and 1, where 1 indicates highest confidence
+         */
+        confidence?: number | null;
       }
     }
   }
