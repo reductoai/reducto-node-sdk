@@ -74,6 +74,7 @@ describe('resource extract', () => {
         table_summary: { enabled: true, prompt: 'prompt' },
       },
       priority: true,
+      spreadsheet_agent: true,
       system_prompt: 'system_prompt',
       use_chunking: true,
     });
@@ -144,6 +145,7 @@ describe('resource extract', () => {
         table_summary: { enabled: true, prompt: 'prompt' },
       },
       priority: true,
+      spreadsheet_agent: true,
       system_prompt: 'system_prompt',
       use_chunking: true,
       webhook: { channels: ['string'], metadata: {}, mode: 'disabled', url: 'url' },

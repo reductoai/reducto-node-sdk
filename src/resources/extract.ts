@@ -72,6 +72,11 @@ export interface ExtractRunParams {
   priority?: boolean;
 
   /**
+   * If spreadsheet agent should be used for extraction.
+   */
+  spreadsheet_agent?: boolean;
+
+  /**
    * A system prompt to use for the extraction. This is a general prompt that is
    * applied to the entire document before any other prompts.
    */
@@ -129,6 +134,11 @@ export interface ExtractRunJobParams {
    * jobs.
    */
   priority?: boolean;
+
+  /**
+   * If spreadsheet agent should be used for extraction.
+   */
+  spreadsheet_agent?: boolean;
 
   /**
    * A system prompt to use for the extraction. This is a general prompt that is
