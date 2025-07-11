@@ -21,9 +21,8 @@ export interface AdvancedProcessingOptions {
   document_password?: string;
 
   /**
-   * Add <u> tags around underlined text, <s> tags around strikethrough text, and
-   * <change> tags to surround both underlines and strikethroughs for change
-   * detection. Defaults to False.
+   * Enables model-based detection of underlines and strikethroughs, adding <u>/<s>
+   * tags to OCR text. Works with any extraction mode. Defaults to False.
    */
   enable_change_tracking?: boolean;
 
