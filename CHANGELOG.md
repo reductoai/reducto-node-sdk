@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.8.0 (2025-07-21)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** add edit endpoint ([d51a8ee](https://github.com/reductoai/reducto-node-sdk/commit/d51a8ee7c267b9df116aeecd07f376f6dfbb4d5a))
+* **api:** api update ([0a329f4](https://github.com/reductoai/reducto-node-sdk/commit/0a329f49d8a9cbc7c7fcfccc2bf9b0021ae5b843))
+* **api:** api update ([0c996b1](https://github.com/reductoai/reducto-node-sdk/commit/0c996b1ebb1f23ab1fb5c8c9ca2a06a7bb3ce6e3))
+* **api:** api update ([51cd060](https://github.com/reductoai/reducto-node-sdk/commit/51cd060195538ae217434cc52750e374128778cd))
+
+
+### Chores
+
+* make some internal functions async ([610244a](https://github.com/reductoai/reducto-node-sdk/commit/610244a962c0e0333eb0ada6413bdc6b1a813d2d))
+
 ## 0.7.0 (2025-07-04)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.6.0...v0.7.0)

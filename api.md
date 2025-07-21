@@ -72,6 +72,18 @@ Methods:
 - <code title="post /extract">client.extract.<a href="./src/resources/extract.ts">run</a>({ ...params }) -> ExtractResponse</code>
 - <code title="post /extract_async">client.extract.<a href="./src/resources/extract.ts">runJob</a>({ ...params }) -> ExtractRunJobResponse</code>
 
+# Edit
+
+Types:
+
+- <code><a href="./src/resources/edit.ts">EditRunResponse</a></code>
+- <code><a href="./src/resources/edit.ts">EditRunJobResponse</a></code>
+
+Methods:
+
+- <code title="post /edit">client.edit.<a href="./src/resources/edit.ts">run</a>({ ...params }) -> EditRunResponse</code>
+- <code title="post /edit_async">client.edit.<a href="./src/resources/edit.ts">runJob</a>({ ...params }) -> EditRunJobResponse</code>
+
 # Webhook
 
 Types:
