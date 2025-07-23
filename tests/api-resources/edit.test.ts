@@ -31,7 +31,6 @@ describe('resource edit', () => {
       edit_instructions: 'edit_instructions',
       edit_options: { color: '#e1cb97' },
       priority: true,
-      snippets: ['string'],
     });
   });
 
@@ -57,7 +56,6 @@ describe('resource edit', () => {
       edit_instructions: 'edit_instructions',
       edit_options: { color: '#e1cb97' },
       priority: true,
-      snippets: ['string'],
       webhook: { channels: ['string'], metadata: {}, mode: 'disabled', url: 'url' },
     });
   });

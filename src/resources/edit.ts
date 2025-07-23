@@ -52,11 +52,6 @@ export interface EditRunParams {
    * jobs.
    */
   priority?: boolean;
-
-  /**
-   * List of text snippets that can be reused throughout the document.
-   */
-  snippets?: Array<string>;
 }
 
 export namespace EditRunParams {
@@ -92,11 +87,6 @@ export interface EditRunJobParams {
    * jobs.
    */
   priority?: boolean;
-
-  /**
-   * List of text snippets that can be reused throughout the document.
-   */
-  snippets?: Array<string>;
 
   webhook?: Shared.WebhookConfigNew;
 }

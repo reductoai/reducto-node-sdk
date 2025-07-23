@@ -22,24 +22,59 @@ export class Job extends APIResource {
 
 export type JobCancelResponse = unknown;
 
-export interface JobGetResponse {
-  status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
-
-  progress?: number | null;
-
-  reason?: string | null;
-
-  result?:
-    | Shared.ParseResponse
-    | Shared.ExtractResponse
-    | Shared.SplitResponse
-    | JobGetResponse.EditResponse
-    | null;
-}
+export type JobGetResponse = JobGetResponse.AsyncJobResponse | JobGetResponse.EnhancedAsyncJobResponse;
 
 export namespace JobGetResponse {
-  export interface EditResponse {
-    document_url: string;
+  export interface AsyncJobResponse {
+    status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
+
+    progress?: number | null;
+
+    reason?: string | null;
+
+    result?:
+      | Shared.ParseResponse
+      | Shared.ExtractResponse
+      | Shared.SplitResponse
+      | AsyncJobResponse.EditResponse
+      | null;
+  }
+
+  export namespace AsyncJobResponse {
+    export interface EditResponse {
+      document_url: string;
+    }
+  }
+
+  export interface EnhancedAsyncJobResponse {
+    status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
+
+    created_at?: string | null;
+
+    duration?: number | null;
+
+    num_pages?: number | null;
+
+    progress?: number | null;
+
+    reason?: string | null;
+
+    result?:
+      | Shared.ParseResponse
+      | Shared.ExtractResponse
+      | Shared.SplitResponse
+      | EnhancedAsyncJobResponse.EditResponse
+      | null;
+
+    source?: unknown;
+
+    type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | null;
+  }
+
+  export namespace EnhancedAsyncJobResponse {
+    export interface EditResponse {
+      document_url: string;
+    }
   }
 }
 
