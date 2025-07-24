@@ -57,6 +57,8 @@ export namespace JobGetResponse {
 
     progress?: number | null;
 
+    raw_config?: string | null;
+
     reason?: string | null;
 
     result?:
