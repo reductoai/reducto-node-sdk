@@ -396,6 +396,11 @@ export interface ExtractResponse {
   result: Array<unknown>;
 
   usage: ExtractResponse.Usage;
+
+  /**
+   * The link to the studio pipeline for the document.
+   */
+  studio_link?: string | null;
 }
 
 export namespace ExtractResponse {
@@ -443,6 +448,11 @@ export interface ParseResponse {
    * The storage URL of the converted PDF file.
    */
   pdf_url?: string | null;
+
+  /**
+   * The link to the studio pipeline for the document.
+   */
+  studio_link?: string | null;
 }
 
 export namespace ParseResponse {
