@@ -47,6 +47,12 @@ export interface AdvancedProcessingOptions {
   force_file_extension?: string;
 
   /**
+   * If True, preserve Excel cell colours in the extracted spreadsheet text using
+   * LaTeX colour commands.
+   */
+  include_color_information?: boolean;
+
+  /**
    * If line breaks should be preserved in the text.
    */
   keep_line_breaks?: boolean;
