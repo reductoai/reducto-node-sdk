@@ -43,6 +43,18 @@ export namespace JobGetResponse {
   export namespace AsyncJobResponse {
     export interface EditResponse {
       document_url: string;
+
+      form_schema?: Array<EditResponse.FormSchema> | null;
+    }
+
+    export namespace EditResponse {
+      export interface FormSchema {
+        bbox: Shared.BoundingBox;
+
+        description: string;
+
+        type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
+      }
     }
   }
 
@@ -76,6 +88,18 @@ export namespace JobGetResponse {
   export namespace EnhancedAsyncJobResponse {
     export interface EditResponse {
       document_url: string;
+
+      form_schema?: Array<EditResponse.FormSchema> | null;
+    }
+
+    export namespace EditResponse {
+      export interface FormSchema {
+        bbox: Shared.BoundingBox;
+
+        description: string;
+
+        type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
+      }
     }
   }
 }

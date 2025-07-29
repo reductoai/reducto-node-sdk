@@ -30,6 +30,13 @@ describe('resource edit', () => {
       document_url: 'string',
       edit_instructions: 'edit_instructions',
       edit_options: { color: '#e1cb97' },
+      form_schema: [
+        {
+          bbox: { height: 0, left: 0, page: 0, top: 0, width: 0, original_page: 0 },
+          description: 'description',
+          type: 'text',
+        },
+      ],
       priority: true,
     });
   });
@@ -55,6 +62,13 @@ describe('resource edit', () => {
       document_url: 'string',
       edit_instructions: 'edit_instructions',
       edit_options: { color: '#e1cb97' },
+      form_schema: [
+        {
+          bbox: { height: 0, left: 0, page: 0, top: 0, width: 0, original_page: 0 },
+          description: 'description',
+          type: 'text',
+        },
+      ],
       priority: true,
       webhook: { channels: ['string'], metadata: {}, mode: 'disabled', url: 'url' },
     });
