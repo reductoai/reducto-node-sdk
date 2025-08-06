@@ -193,7 +193,10 @@ export class Reducto extends Core.APIClient {
       return this.upload({}, params);
     }
     const { extension, ...body } = params;
-    return this.post('/upload', Core.multipartFormRequestOptions({ query: { extension }, body, ...options }));
+    return this.post(
+      '/upload',
+      Core.maybeMultipartFormRequestOptions({ query: { extension }, body, ...options }),
+    );
   }
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
