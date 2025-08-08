@@ -29,7 +29,7 @@ describe('resource edit', () => {
     const response = await client.edit.run({
       document_url: 'string',
       edit_instructions: 'edit_instructions',
-      edit_options: { color: '#e1cb97' },
+      edit_options: { color: '#e1cb97', llm_provider_preference: 'openai' },
       form_schema: [
         {
           bbox: { height: 0, left: 0, page: 0, top: 0, width: 0, original_page: 0 },
@@ -61,7 +61,7 @@ describe('resource edit', () => {
     const response = await client.edit.runJob({
       document_url: 'string',
       edit_instructions: 'edit_instructions',
-      edit_options: { color: '#e1cb97' },
+      edit_options: { color: '#e1cb97', llm_provider_preference: 'openai' },
       form_schema: [
         {
           bbox: { height: 0, left: 0, page: 0, top: 0, width: 0, original_page: 0 },

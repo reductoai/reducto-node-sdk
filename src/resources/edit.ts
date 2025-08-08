@@ -78,6 +78,8 @@ export namespace EditRunParams {
      * The color to use for edits, in hex format.
      */
     color?: string;
+
+    llm_provider_preference?: 'openai' | 'anthropic' | 'gemini';
   }
 
   export interface FormSchema {
@@ -138,6 +140,8 @@ export namespace EditRunJobParams {
      * The color to use for edits, in hex format.
      */
     color?: string;
+
+    llm_provider_preference?: 'openai' | 'anthropic' | 'gemini';
   }
 
   export interface FormSchema {
