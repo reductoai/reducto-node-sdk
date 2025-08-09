@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.9.0 (2025-08-09)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.8.0...v0.9.0)
+
+### Features
+
+* **api:** api update ([257fea1](https://github.com/reductoai/reducto-node-sdk/commit/257fea13bcfedf853085ebb702ecd91387139e3d))
+* **api:** api update ([22d9d51](https://github.com/reductoai/reducto-node-sdk/commit/22d9d51300e4c7b2f8675e54839010f1bd6fe702))
+* **api:** api update ([9f6f491](https://github.com/reductoai/reducto-node-sdk/commit/9f6f49146a6640fb66267eff812b3a641f5758d2))
+* **api:** api update ([c0c703b](https://github.com/reductoai/reducto-node-sdk/commit/c0c703bac0c80d9203371ddba69086053f413ed4))
+* **api:** api update ([4d0203b](https://github.com/reductoai/reducto-node-sdk/commit/4d0203b9c66b36776f8c0548b9d39ed241c85ec7))
+* **api:** api update ([03e6cd5](https://github.com/reductoai/reducto-node-sdk/commit/03e6cd5a53cf176a32a22b132afdfd1b6aae830c))
+* **api:** api update ([61de1dc](https://github.com/reductoai/reducto-node-sdk/commit/61de1dc0b4c4fe382506a8d114d2eec081d9df52))
+* **api:** manual updates ([0b7ccc1](https://github.com/reductoai/reducto-node-sdk/commit/0b7ccc1696a52b9b109c708bc5443dc4ee10ec8d))
+* **api:** manual updates ([f1d8077](https://github.com/reductoai/reducto-node-sdk/commit/f1d8077e576c6ab251129d8700de37f5b88dea05))
+
+
+### Chores
+
+* **internal:** move publish config ([bb34e69](https://github.com/reductoai/reducto-node-sdk/commit/bb34e697efac2f86a13e000d23632fefb903399c))
+* **internal:** remove redundant imports config ([12a3ef3](https://github.com/reductoai/reducto-node-sdk/commit/12a3ef313dd2a2eddab6cbe76d4916d5e5deb5dd))
+* **internal:** update comment in script ([a93f300](https://github.com/reductoai/reducto-node-sdk/commit/a93f30088f1fbd24ec33ed615e9902bf7b84fc3d))
+* update @stainless-api/prism-cli to v5.15.0 ([2f0dc96](https://github.com/reductoai/reducto-node-sdk/commit/2f0dc96a601bf8274a410afdbc802abbaeefdff8))
+
 ## 0.8.0 (2025-07-21)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.7.0...v0.8.0)
