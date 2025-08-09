@@ -47,6 +47,12 @@ export interface AdvancedProcessingOptions {
   force_file_extension?: string;
 
   /**
+   * If True, preserve Excel cell colours in the extracted spreadsheet text using
+   * LaTeX colour commands.
+   */
+  include_color_information?: boolean;
+
+  /**
    * If line breaks should be preserved in the text.
    */
   keep_line_breaks?: boolean;
@@ -396,6 +402,11 @@ export interface ExtractResponse {
   result: Array<unknown>;
 
   usage: ExtractResponse.Usage;
+
+  /**
+   * The link to the studio pipeline for the document.
+   */
+  studio_link?: string | null;
 }
 
 export namespace ExtractResponse {
@@ -443,6 +454,11 @@ export interface ParseResponse {
    * The storage URL of the converted PDF file.
    */
   pdf_url?: string | null;
+
+  /**
+   * The link to the studio pipeline for the document.
+   */
+  studio_link?: string | null;
 }
 
 export namespace ParseResponse {

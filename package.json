@@ -1,6 +1,6 @@
 {
   "name": "reductoai",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "The official TypeScript library for the Reducto API",
   "author": "Reducto <dev-feedback@reductoai.com>",
   "types": "dist/index.d.ts",
@@ -13,6 +13,9 @@
     "**/*"
   ],
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "./scripts/test",
     "build": "./scripts/build",
@@ -58,10 +61,6 @@
     "./shims/web.js",
     "./shims/web.mjs"
   ],
-  "imports": {
-    "reductoai": ".",
-    "reductoai/*": "./src/*"
-  },
   "exports": {
     "./_shims/auto/*": {
       "deno": {
