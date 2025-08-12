@@ -9,7 +9,7 @@ const client = new Reducto({
 });
 
 describe('resource webhook', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('run', async () => {
     const responsePromise = client.webhook.run();
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource webhook', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('run: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.webhook.run({ path: '/_stainless_unknown_path' })).rejects.toThrow(

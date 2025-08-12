@@ -9,7 +9,7 @@ const client = new Reducto({
 });
 
 describe('top level methods', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('apiVersion', async () => {
     const responsePromise = client.apiVersion();
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('top level methods', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('apiVersion: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.apiVersion({ path: '/_stainless_unknown_path' })).rejects.toThrow(
@@ -29,7 +29,7 @@ describe('top level methods', () => {
     );
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('upload', async () => {
     const responsePromise = client.upload();
     const rawResponse = await responsePromise.asResponse();
@@ -41,13 +41,13 @@ describe('top level methods', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('upload: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.upload({ path: '/_stainless_unknown_path' })).rejects.toThrow(Reducto.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('upload: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
