@@ -9,7 +9,7 @@ const client = new Reducto({
 });
 
 describe('resource job', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('cancel', async () => {
     const responsePromise = client.job.cancel('job_id');
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource job', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('cancel: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.job.cancel('job_id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
@@ -29,7 +29,7 @@ describe('resource job', () => {
     );
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.job.get('job_id');
     const rawResponse = await responsePromise.asResponse();
@@ -41,7 +41,7 @@ describe('resource job', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('get: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.job.get('job_id', { path: '/_stainless_unknown_path' })).rejects.toThrow(

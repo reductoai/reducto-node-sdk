@@ -9,7 +9,7 @@ const client = new Reducto({
 });
 
 describe('resource split', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('run: only required params', async () => {
     const responsePromise = client.split.run({
       document_url: 'string',
@@ -24,7 +24,7 @@ describe('resource split', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('run: required and optional params', async () => {
     const response = await client.split.run({
       document_url: 'string',
@@ -79,7 +79,7 @@ describe('resource split', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('runJob: only required params', async () => {
     const responsePromise = client.split.runJob({
       document_url: 'string',
@@ -94,7 +94,7 @@ describe('resource split', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('runJob: required and optional params', async () => {
     const response = await client.split.runJob({
       document_url: 'string',
