@@ -53,6 +53,12 @@ export interface AdvancedProcessingOptions {
   include_color_information?: boolean;
 
   /**
+   * If True, preserve formula information in spreadsheet cells by wrapping text with
+   * LaTeX formula commands during parsing.
+   */
+  include_formula_information?: boolean;
+
+  /**
    * If line breaks should be preserved in the text.
    */
   keep_line_breaks?: boolean;

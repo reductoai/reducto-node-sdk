@@ -54,6 +54,12 @@ export namespace JobGetResponse {
         description: string;
 
         type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
+
+        /**
+         * If True (default), the system will attempt to fill this widget. If False, the
+         * widget will be created but intentionally left unfilled.
+         */
+        fill?: boolean;
       }
     }
   }
@@ -101,6 +107,12 @@ export namespace JobGetResponse {
         description: string;
 
         type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
+
+        /**
+         * If True (default), the system will attempt to fill this widget. If False, the
+         * widget will be created but intentionally left unfilled.
+         */
+        fill?: boolean;
       }
     }
   }
