@@ -30,7 +30,17 @@ export interface ExtractConfig {
    */
   array_extract?: Shared.ArrayExtractConfig;
 
+  /**
+   * The configuration options for citations.
+   */
+  citations_options?: ExtractConfig.CitationsOptions;
+
   experimental_options?: Shared.ExperimentalProcessingOptions;
+
+  /**
+   * If table citations should be generated for the extracted content.
+   */
+  experimental_table_citations?: boolean;
 
   /**
    * If citations should be generated for the extracted content.
@@ -67,6 +77,18 @@ export interface ExtractConfig {
    * If chunking should be used for the extraction. Defaults to False.
    */
   use_chunking?: boolean;
+}
+
+export namespace ExtractConfig {
+  /**
+   * The configuration options for citations.
+   */
+  export interface CitationsOptions {
+    /**
+     * If True, enable numeric citation confidence scores. Defaults to False.
+     */
+    numerical_confidence?: boolean;
+  }
 }
 
 export interface ParseConfig {
