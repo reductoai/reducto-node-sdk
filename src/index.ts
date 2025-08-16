@@ -242,6 +242,7 @@ Reducto.Extract = Extract;
 Reducto.Edit = Edit;
 Reducto.Webhook = Webhook;
 Reducto.Config = Config;
+
 export declare namespace Reducto {
   export type RequestOptions = Core.RequestOptions;
 
