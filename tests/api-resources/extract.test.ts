@@ -50,6 +50,7 @@ describe('resource extract', () => {
         table_output_format: 'html',
       },
       array_extract: { enabled: true, mode: 'auto', pages_per_segment: 0, streaming_extract_item_density: 0 },
+      citations_options: { numerical_confidence: true },
       experimental_options: {
         danger_filter_wide_boxes: true,
         embed_text_metadata_pdf: true,
@@ -64,6 +65,7 @@ describe('resource extract', () => {
         rotate_figures: true,
         rotate_pages: true,
       },
+      experimental_table_citations: true,
       generate_citations: true,
       include_images: true,
       options: {
@@ -123,6 +125,7 @@ describe('resource extract', () => {
         table_output_format: 'html',
       },
       array_extract: { enabled: true, mode: 'auto', pages_per_segment: 0, streaming_extract_item_density: 0 },
+      citations_options: { numerical_confidence: true },
       experimental_options: {
         danger_filter_wide_boxes: true,
         embed_text_metadata_pdf: true,
@@ -137,6 +140,7 @@ describe('resource extract', () => {
         rotate_figures: true,
         rotate_pages: true,
       },
+      experimental_table_citations: true,
       generate_citations: true,
       include_images: true,
       options: {

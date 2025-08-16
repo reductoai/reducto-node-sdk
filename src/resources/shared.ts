@@ -544,6 +544,12 @@ export namespace ParseResponse {
          * (Experimental) The URL of the image associated with the block.
          */
         image_url?: string | null;
+
+        /**
+         * Numeric confidence score based on logprobs and OCR confidence (when
+         * numeric_confidence_scores is enabled)
+         */
+        logprobs_confidence?: number | null;
       }
     }
 

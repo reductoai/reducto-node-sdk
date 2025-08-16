@@ -49,7 +49,17 @@ export interface ExtractRunParams {
    */
   array_extract?: Shared.ArrayExtractConfig;
 
+  /**
+   * The configuration options for citations.
+   */
+  citations_options?: ExtractRunParams.CitationsOptions;
+
   experimental_options?: Shared.ExperimentalProcessingOptions;
+
+  /**
+   * If table citations should be generated for the extracted content.
+   */
+  experimental_table_citations?: boolean;
 
   /**
    * If citations should be generated for the extracted content.
@@ -88,6 +98,18 @@ export interface ExtractRunParams {
   use_chunking?: boolean;
 }
 
+export namespace ExtractRunParams {
+  /**
+   * The configuration options for citations.
+   */
+  export interface CitationsOptions {
+    /**
+     * If True, enable numeric citation confidence scores. Defaults to False.
+     */
+    numerical_confidence?: boolean;
+  }
+}
+
 export interface ExtractRunJobParams {
   /**
    * The URL of the document to be processed. You can provide one of the following:
@@ -113,7 +135,17 @@ export interface ExtractRunJobParams {
    */
   array_extract?: Shared.ArrayExtractConfig;
 
+  /**
+   * The configuration options for citations.
+   */
+  citations_options?: ExtractRunJobParams.CitationsOptions;
+
   experimental_options?: Shared.ExperimentalProcessingOptions;
+
+  /**
+   * If table citations should be generated for the extracted content.
+   */
+  experimental_table_citations?: boolean;
 
   /**
    * If citations should be generated for the extracted content.
@@ -152,6 +184,18 @@ export interface ExtractRunJobParams {
   use_chunking?: boolean;
 
   webhook?: Shared.WebhookConfigNew;
+}
+
+export namespace ExtractRunJobParams {
+  /**
+   * The configuration options for citations.
+   */
+  export interface CitationsOptions {
+    /**
+     * If True, enable numeric citation confidence scores. Defaults to False.
+     */
+    numerical_confidence?: boolean;
+  }
 }
 
 export declare namespace Extract {
