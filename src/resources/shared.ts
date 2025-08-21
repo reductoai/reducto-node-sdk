@@ -541,15 +541,15 @@ export namespace ParseResponse {
         confidence?: string | null;
 
         /**
+         * Granular confidence scores for the block. It is a dictionary of confidence
+         * scores for the block.
+         */
+        granular_confidence?: { [key: string]: number } | null;
+
+        /**
          * (Experimental) The URL of the image associated with the block.
          */
         image_url?: string | null;
-
-        /**
-         * Numeric confidence score based on logprobs and OCR confidence (when
-         * numeric_confidence_scores is enabled)
-         */
-        logprobs_confidence?: number | null;
       }
     }
 
