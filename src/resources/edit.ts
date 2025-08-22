@@ -22,6 +22,24 @@ export class Edit extends APIResource {
 
 export interface EditRunResponse {
   document_url: string;
+
+  form_schema?: Array<EditRunResponse.FormSchema> | null;
+}
+
+export namespace EditRunResponse {
+  export interface FormSchema {
+    bbox: Shared.BoundingBox;
+
+    description: string;
+
+    type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
+
+    /**
+     * If True (default), the system will attempt to fill this widget. If False, the
+     * widget will be created but intentionally left unfilled.
+     */
+    fill?: boolean;
+  }
 }
 
 export interface EditRunJobResponse {
@@ -47,16 +65,17 @@ export interface EditRunParams {
   edit_options?: EditRunParams.EditOptions;
 
   /**
+   * Form schema for PDF forms. List of widgets with their types, descriptions, and
+   * bounding boxes. Only works for PDFs.
+   */
+  form_schema?: Array<EditRunParams.FormSchema> | null;
+
+  /**
    * If True, attempts to process the job with priority if the user has priority
    * processing budget available; by default, sync jobs are prioritized above async
    * jobs.
    */
   priority?: boolean;
-
-  /**
-   * List of text snippets that can be reused throughout the document.
-   */
-  snippets?: Array<string>;
 }
 
 export namespace EditRunParams {
@@ -65,6 +84,31 @@ export namespace EditRunParams {
      * The color to use for edits, in hex format.
      */
     color?: string;
+
+    llm_provider_preference?: 'openai' | 'anthropic' | 'gemini';
+  }
+
+  export interface FormSchema {
+    /**
+     * Bounding box coordinates of the widget
+     */
+    bbox: Shared.BoundingBox;
+
+    /**
+     * Description of the widget extracted from the document
+     */
+    description: string;
+
+    /**
+     * Type of the form widget
+     */
+    type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
+
+    /**
+     * If True (default), the system will attempt to fill this widget. If False, the
+     * widget will be created but intentionally left unfilled.
+     */
+    fill?: boolean;
   }
 }
 
@@ -87,16 +131,17 @@ export interface EditRunJobParams {
   edit_options?: EditRunJobParams.EditOptions;
 
   /**
+   * Form schema for PDF forms. List of widgets with their types, descriptions, and
+   * bounding boxes. Only works for PDFs.
+   */
+  form_schema?: Array<EditRunJobParams.FormSchema> | null;
+
+  /**
    * If True, attempts to process the job with priority if the user has priority
    * processing budget available; by default, sync jobs are prioritized above async
    * jobs.
    */
   priority?: boolean;
-
-  /**
-   * List of text snippets that can be reused throughout the document.
-   */
-  snippets?: Array<string>;
 
   webhook?: Shared.WebhookConfigNew;
 }
@@ -107,6 +152,31 @@ export namespace EditRunJobParams {
      * The color to use for edits, in hex format.
      */
     color?: string;
+
+    llm_provider_preference?: 'openai' | 'anthropic' | 'gemini';
+  }
+
+  export interface FormSchema {
+    /**
+     * Bounding box coordinates of the widget
+     */
+    bbox: Shared.BoundingBox;
+
+    /**
+     * Description of the widget extracted from the document
+     */
+    description: string;
+
+    /**
+     * Type of the form widget
+     */
+    type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
+
+    /**
+     * If True (default), the system will attempt to fill this widget. If False, the
+     * widget will be created but intentionally left unfilled.
+     */
+    fill?: boolean;
   }
 }
 

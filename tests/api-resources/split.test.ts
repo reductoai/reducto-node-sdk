@@ -9,7 +9,7 @@ const client = new Reducto({
 });
 
 describe('resource split', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('run: only required params', async () => {
     const responsePromise = client.split.run({
       document_url: 'string',
@@ -24,7 +24,7 @@ describe('resource split', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('run: required and optional params', async () => {
     const response = await client.split.run({
       document_url: 'string',
@@ -38,6 +38,8 @@ describe('resource split', () => {
         exclude_hidden_sheets: true,
         filter_line_numbers: true,
         force_file_extension: 'force_file_extension',
+        include_color_information: true,
+        include_formula_information: true,
         keep_line_breaks: true,
         large_table_chunking: { enabled: true, size: 0 },
         merge_tables: true,
@@ -78,7 +80,7 @@ describe('resource split', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('runJob: only required params', async () => {
     const responsePromise = client.split.runJob({
       document_url: 'string',
@@ -93,7 +95,7 @@ describe('resource split', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('runJob: required and optional params', async () => {
     const response = await client.split.runJob({
       document_url: 'string',
@@ -107,6 +109,8 @@ describe('resource split', () => {
         exclude_hidden_sheets: true,
         filter_line_numbers: true,
         force_file_extension: 'force_file_extension',
+        include_color_information: true,
+        include_formula_information: true,
         keep_line_breaks: true,
         large_table_chunking: { enabled: true, size: 0 },
         merge_tables: true,

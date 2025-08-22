@@ -9,7 +9,7 @@ const client = new Reducto({
 });
 
 describe('resource edit', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('run: only required params', async () => {
     const responsePromise = client.edit.run({
       document_url: 'string',
@@ -24,18 +24,25 @@ describe('resource edit', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('run: required and optional params', async () => {
     const response = await client.edit.run({
       document_url: 'string',
       edit_instructions: 'edit_instructions',
-      edit_options: { color: '#e1cb97' },
+      edit_options: { color: '#e1cb97', llm_provider_preference: 'openai' },
+      form_schema: [
+        {
+          bbox: { height: 0, left: 0, page: 0, top: 0, width: 0, original_page: 0 },
+          description: 'description',
+          type: 'text',
+          fill: true,
+        },
+      ],
       priority: true,
-      snippets: ['string'],
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('runJob: only required params', async () => {
     const responsePromise = client.edit.runJob({
       document_url: 'string',
@@ -50,14 +57,21 @@ describe('resource edit', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('runJob: required and optional params', async () => {
     const response = await client.edit.runJob({
       document_url: 'string',
       edit_instructions: 'edit_instructions',
-      edit_options: { color: '#e1cb97' },
+      edit_options: { color: '#e1cb97', llm_provider_preference: 'openai' },
+      form_schema: [
+        {
+          bbox: { height: 0, left: 0, page: 0, top: 0, width: 0, original_page: 0 },
+          description: 'description',
+          type: 'text',
+          fill: true,
+        },
+      ],
       priority: true,
-      snippets: ['string'],
       webhook: { channels: ['string'], metadata: {}, mode: 'disabled', url: 'url' },
     });
   });

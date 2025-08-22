@@ -9,7 +9,7 @@ const client = new Reducto({
 });
 
 describe('resource extract', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('run: only required params', async () => {
     const responsePromise = client.extract.run({ document_url: 'string', schema: {} });
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource extract', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('run: required and optional params', async () => {
     const response = await client.extract.run({
       document_url: 'string',
@@ -35,6 +35,8 @@ describe('resource extract', () => {
         exclude_hidden_sheets: true,
         filter_line_numbers: true,
         force_file_extension: 'force_file_extension',
+        include_color_information: true,
+        include_formula_information: true,
         keep_line_breaks: true,
         large_table_chunking: { enabled: true, size: 0 },
         merge_tables: true,
@@ -48,6 +50,7 @@ describe('resource extract', () => {
         table_output_format: 'html',
       },
       array_extract: { enabled: true, mode: 'auto', pages_per_segment: 0, streaming_extract_item_density: 0 },
+      citations_options: { numerical_confidence: true },
       experimental_options: {
         danger_filter_wide_boxes: true,
         embed_text_metadata_pdf: true,
@@ -62,6 +65,7 @@ describe('resource extract', () => {
         rotate_figures: true,
         rotate_pages: true,
       },
+      experimental_table_citations: true,
       generate_citations: true,
       include_images: true,
       options: {
@@ -80,7 +84,7 @@ describe('resource extract', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('runJob: only required params', async () => {
     const responsePromise = client.extract.runJob({ document_url: 'string', schema: {} });
     const rawResponse = await responsePromise.asResponse();
@@ -92,7 +96,7 @@ describe('resource extract', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('runJob: required and optional params', async () => {
     const response = await client.extract.runJob({
       document_url: 'string',
@@ -106,6 +110,8 @@ describe('resource extract', () => {
         exclude_hidden_sheets: true,
         filter_line_numbers: true,
         force_file_extension: 'force_file_extension',
+        include_color_information: true,
+        include_formula_information: true,
         keep_line_breaks: true,
         large_table_chunking: { enabled: true, size: 0 },
         merge_tables: true,
@@ -119,6 +125,7 @@ describe('resource extract', () => {
         table_output_format: 'html',
       },
       array_extract: { enabled: true, mode: 'auto', pages_per_segment: 0, streaming_extract_item_density: 0 },
+      citations_options: { numerical_confidence: true },
       experimental_options: {
         danger_filter_wide_boxes: true,
         embed_text_metadata_pdf: true,
@@ -133,6 +140,7 @@ describe('resource extract', () => {
         rotate_figures: true,
         rotate_pages: true,
       },
+      experimental_table_citations: true,
       generate_citations: true,
       include_images: true,
       options: {

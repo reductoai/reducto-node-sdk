@@ -22,24 +22,99 @@ export class Job extends APIResource {
 
 export type JobCancelResponse = unknown;
 
-export interface JobGetResponse {
-  status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
-
-  progress?: number | null;
-
-  reason?: string | null;
-
-  result?:
-    | Shared.ParseResponse
-    | Shared.ExtractResponse
-    | Shared.SplitResponse
-    | JobGetResponse.EditResponse
-    | null;
-}
+export type JobGetResponse = JobGetResponse.AsyncJobResponse | JobGetResponse.EnhancedAsyncJobResponse;
 
 export namespace JobGetResponse {
-  export interface EditResponse {
-    document_url: string;
+  export interface AsyncJobResponse {
+    status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
+
+    progress?: number | null;
+
+    reason?: string | null;
+
+    result?:
+      | Shared.ParseResponse
+      | Shared.ExtractResponse
+      | Shared.SplitResponse
+      | AsyncJobResponse.EditResponse
+      | null;
+  }
+
+  export namespace AsyncJobResponse {
+    export interface EditResponse {
+      document_url: string;
+
+      form_schema?: Array<EditResponse.FormSchema> | null;
+    }
+
+    export namespace EditResponse {
+      export interface FormSchema {
+        bbox: Shared.BoundingBox;
+
+        description: string;
+
+        type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
+
+        /**
+         * If True (default), the system will attempt to fill this widget. If False, the
+         * widget will be created but intentionally left unfilled.
+         */
+        fill?: boolean;
+      }
+    }
+  }
+
+  export interface EnhancedAsyncJobResponse {
+    status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
+
+    created_at?: string | null;
+
+    duration?: number | null;
+
+    num_pages?: number | null;
+
+    progress?: number | null;
+
+    raw_config?: string | null;
+
+    reason?: string | null;
+
+    result?:
+      | Shared.ParseResponse
+      | Shared.ExtractResponse
+      | Shared.SplitResponse
+      | EnhancedAsyncJobResponse.EditResponse
+      | null;
+
+    source?: unknown;
+
+    total_pages?: number | null;
+
+    type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | null;
+  }
+
+  export namespace EnhancedAsyncJobResponse {
+    export interface EditResponse {
+      document_url: string;
+
+      form_schema?: Array<EditResponse.FormSchema> | null;
+    }
+
+    export namespace EditResponse {
+      export interface FormSchema {
+        bbox: Shared.BoundingBox;
+
+        description: string;
+
+        type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
+
+        /**
+         * If True (default), the system will attempt to fill this widget. If False, the
+         * widget will be created but intentionally left unfilled.
+         */
+        fill?: boolean;
+      }
+    }
   }
 }
 

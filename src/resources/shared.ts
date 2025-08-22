@@ -47,6 +47,18 @@ export interface AdvancedProcessingOptions {
   force_file_extension?: string;
 
   /**
+   * If True, preserve Excel cell colours in the extracted spreadsheet text using
+   * LaTeX colour commands.
+   */
+  include_color_information?: boolean;
+
+  /**
+   * If True, preserve formula information in spreadsheet cells by wrapping text with
+   * LaTeX formula commands during parsing.
+   */
+  include_formula_information?: boolean;
+
+  /**
    * If line breaks should be preserved in the text.
    */
   keep_line_breaks?: boolean;
@@ -65,9 +77,9 @@ export interface AdvancedProcessingOptions {
 
   /**
    * The OCR system to use. Highres is recommended for documents with English
-   * characters.
+   * characters. Legacy uses an alternative OCR backend.
    */
-  ocr_system?: 'highres' | 'multilingual' | 'combined';
+  ocr_system?: 'highres' | 'multilingual' | 'combined' | 'legacy';
 
   /**
    * The page range to process (1-indexed). By default, the entire document is
@@ -396,6 +408,11 @@ export interface ExtractResponse {
   result: Array<unknown>;
 
   usage: ExtractResponse.Usage;
+
+  /**
+   * The link to the studio pipeline for the document.
+   */
+  studio_link?: string | null;
 }
 
 export namespace ExtractResponse {
@@ -443,6 +460,11 @@ export interface ParseResponse {
    * The storage URL of the converted PDF file.
    */
   pdf_url?: string | null;
+
+  /**
+   * The link to the studio pipeline for the document.
+   */
+  studio_link?: string | null;
 }
 
 export namespace ParseResponse {
@@ -517,6 +539,12 @@ export namespace ParseResponse {
          * factors like OCR and table structure
          */
         confidence?: string | null;
+
+        /**
+         * Granular confidence scores for the block. It is a dictionary of confidence
+         * scores for the block.
+         */
+        granular_confidence?: { [key: string]: number } | null;
 
         /**
          * (Experimental) The URL of the image associated with the block.

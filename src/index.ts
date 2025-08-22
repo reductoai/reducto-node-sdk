@@ -113,7 +113,7 @@ export class Reducto extends Core.APIClient {
    * @param {string | undefined} [opts.apiKey=process.env['REDUCTO_API_KEY'] ?? undefined]
    * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
    * @param {string} [opts.baseURL=process.env['REDUCTO_BASE_URL'] ?? https://platform.reducto.ai] - Override the default base URL for the API.
-   * @param {number} [opts.timeout=15 minutes] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
+   * @param {number} [opts.timeout=487 days] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
    * @param {Core.Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
    * @param {number} [opts.maxRetries=2] - The maximum number of times the client will retry a request.
@@ -147,7 +147,7 @@ export class Reducto extends Core.APIClient {
     super({
       baseURL: options.baseURL || environments[options.environment || 'production'],
       baseURLOverridden: baseURL ? baseURL !== environments[options.environment || 'production'] : false,
-      timeout: options.timeout ?? 900000 /* 15 minutes */,
+      timeout: options.timeout ?? 42076800000 /* 487 days */,
       httpAgent: options.httpAgent,
       maxRetries: options.maxRetries,
       fetch: options.fetch,
@@ -193,7 +193,10 @@ export class Reducto extends Core.APIClient {
       return this.upload({}, params);
     }
     const { extension, ...body } = params;
-    return this.post('/upload', Core.multipartFormRequestOptions({ query: { extension }, body, ...options }));
+    return this.post(
+      '/upload',
+      Core.maybeMultipartFormRequestOptions({ query: { extension }, body, ...options }),
+    );
   }
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
@@ -212,7 +215,7 @@ export class Reducto extends Core.APIClient {
   }
 
   static Reducto = this;
-  static DEFAULT_TIMEOUT = 900000; // 15 minutes
+  static DEFAULT_TIMEOUT = 42076800000; // 487 days
 
   static ReductoError = Errors.ReductoError;
   static APIError = Errors.APIError;
@@ -239,6 +242,7 @@ Reducto.Extract = Extract;
 Reducto.Edit = Edit;
 Reducto.Webhook = Webhook;
 Reducto.Config = Config;
+
 export declare namespace Reducto {
   export type RequestOptions = Core.RequestOptions;
 

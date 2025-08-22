@@ -9,7 +9,7 @@ const client = new Reducto({
 });
 
 describe('resource parse', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('run: only required params', async () => {
     const responsePromise = client.parse.run({ document_url: 'string' });
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource parse', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('run: required and optional params', async () => {
     const response = await client.parse.run({
       document_url: 'string',
@@ -34,6 +34,8 @@ describe('resource parse', () => {
         exclude_hidden_sheets: true,
         filter_line_numbers: true,
         force_file_extension: 'force_file_extension',
+        include_color_information: true,
+        include_formula_information: true,
         keep_line_breaks: true,
         large_table_chunking: { enabled: true, size: 0 },
         merge_tables: true,
@@ -73,7 +75,7 @@ describe('resource parse', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('runJob: only required params', async () => {
     const responsePromise = client.parse.runJob({ document_url: 'string' });
     const rawResponse = await responsePromise.asResponse();
@@ -85,7 +87,7 @@ describe('resource parse', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('runJob: required and optional params', async () => {
     const response = await client.parse.runJob({
       document_url: 'string',
@@ -98,6 +100,8 @@ describe('resource parse', () => {
         exclude_hidden_sheets: true,
         filter_line_numbers: true,
         force_file_extension: 'force_file_extension',
+        include_color_information: true,
+        include_formula_information: true,
         keep_line_breaks: true,
         large_table_chunking: { enabled: true, size: 0 },
         merge_tables: true,
