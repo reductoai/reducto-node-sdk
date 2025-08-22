@@ -299,6 +299,28 @@ export interface BoundingBox {
   original_page?: number;
 }
 
+export interface EditResponse {
+  document_url: string;
+
+  form_schema?: Array<EditResponse.FormSchema> | null;
+}
+
+export namespace EditResponse {
+  export interface FormSchema {
+    bbox: Shared.BoundingBox;
+
+    description: string;
+
+    type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
+
+    /**
+     * If True (default), the system will attempt to fill this widget. If False, the
+     * widget will be created but intentionally left unfilled.
+     */
+    fill?: boolean;
+  }
+}
+
 export interface ExperimentalProcessingOptions {
   /**
    * You probably shouldn't use this. If True, filter out boxes with width greater

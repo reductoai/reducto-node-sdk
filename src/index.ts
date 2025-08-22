@@ -10,7 +10,7 @@ import * as Shared from './resources/shared';
 import * as TopLevelAPI from './resources/top-level';
 import { APIVersionResponse, UploadParams } from './resources/top-level';
 import { Config, ExtractConfig, ParseConfig } from './resources/config';
-import { Edit, EditRunJobParams, EditRunJobResponse, EditRunParams, EditRunResponse } from './resources/edit';
+import { Edit, EditRunJobParams, EditRunJobResponse, EditRunParams } from './resources/edit';
 import { Extract, ExtractRunJobParams, ExtractRunJobResponse, ExtractRunParams } from './resources/extract';
 import { Job, JobCancelResponse, JobGetResponse } from './resources/job';
 import { Parse, ParseRunJobParams, ParseRunJobResponse, ParseRunParams } from './resources/parse';
@@ -273,7 +273,6 @@ export declare namespace Reducto {
 
   export {
     Edit as Edit,
-    type EditRunResponse as EditRunResponse,
     type EditRunJobResponse as EditRunJobResponse,
     type EditRunParams as EditRunParams,
     type EditRunJobParams as EditRunJobParams,
@@ -287,6 +286,7 @@ export declare namespace Reducto {
   export type ArrayExtractConfig = API.ArrayExtractConfig;
   export type BaseProcessingOptions = API.BaseProcessingOptions;
   export type BoundingBox = API.BoundingBox;
+  export type EditResponse = API.EditResponse;
   export type ExperimentalProcessingOptions = API.ExperimentalProcessingOptions;
   export type ExtractResponse = API.ExtractResponse;
   export type PageRange = API.PageRange;
