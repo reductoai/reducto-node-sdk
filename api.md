@@ -17,6 +17,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">ArrayExtractConfig</a></code>
 - <code><a href="./src/resources/shared.ts">BaseProcessingOptions</a></code>
 - <code><a href="./src/resources/shared.ts">BoundingBox</a></code>
+- <code><a href="./src/resources/shared.ts">EditResponse</a></code>
 - <code><a href="./src/resources/shared.ts">ExperimentalProcessingOptions</a></code>
 - <code><a href="./src/resources/shared.ts">ExtractResponse</a></code>
 - <code><a href="./src/resources/shared.ts">PageRange</a></code>
@@ -76,12 +77,11 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/edit.ts">EditRunResponse</a></code>
 - <code><a href="./src/resources/edit.ts">EditRunJobResponse</a></code>
 
 Methods:
 
-- <code title="post /edit">client.edit.<a href="./src/resources/edit.ts">run</a>({ ...params }) -> EditRunResponse</code>
+- <code title="post /edit">client.edit.<a href="./src/resources/edit.ts">run</a>({ ...params }) -> EditResponse</code>
 - <code title="post /edit_async">client.edit.<a href="./src/resources/edit.ts">runJob</a>({ ...params }) -> EditRunJobResponse</code>
 
 # Webhook
