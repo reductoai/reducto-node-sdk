@@ -110,9 +110,10 @@ export interface AdvancedProcessingOptions {
 
   /**
    * In a spreadsheet with different tables inside, we enable splitting up the tables
-   * by default. Disabling will register as one large table.
+   * by default. Intelligent mode applies more powerful models for superior accuracy,
+   * at 5× the default per-cell rate. Disabling will register as one large table.
    */
-  spreadsheet_table_clustering?: 'default' | 'disabled';
+  spreadsheet_table_clustering?: 'default' | 'disabled' | 'intelligent';
 
   /**
    * The mode to use for table output. Dynamic returns md for simpler tables and html
