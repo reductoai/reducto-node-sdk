@@ -609,6 +609,11 @@ export namespace ParseResponse {
         text: string;
 
         /**
+         * The index of the chunk that the line belongs to.
+         */
+        chunk_index?: number | null;
+
+        /**
          * OCR confidence score between 0 and 1, where 1 indicates highest confidence
          */
         confidence?: number | null;
@@ -618,6 +623,11 @@ export namespace ParseResponse {
         bbox: Shared.BoundingBox;
 
         text: string;
+
+        /**
+         * The index of the chunk that the word belongs to.
+         */
+        chunk_index?: number | null;
 
         /**
          * OCR confidence score between 0 and 1, where 1 indicates highest confidence
