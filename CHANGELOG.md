@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.10.0 (2025-08-25)
+
+Full Changelog: [v0.9.0...v0.10.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.9.0...v0.10.0)
+
+### Features
+
+* **api:** api update ([4cc9a0c](https://github.com/reductoai/reducto-node-sdk/commit/4cc9a0c5ea48e1268a2448406e36d337bc74bfb6))
+* **api:** api update ([96d88ce](https://github.com/reductoai/reducto-node-sdk/commit/96d88ceea7f3ff195e065009073b4fffecb501fb))
+* **api:** api update ([edfcbe4](https://github.com/reductoai/reducto-node-sdk/commit/edfcbe42f128f352f9518495248aa601c36a0305))
+* **api:** manual updates ([bbedc3b](https://github.com/reductoai/reducto-node-sdk/commit/bbedc3b803d15e0326375b775ea5fc4486bbf1da))
+
+
+### Chores
+
+* update CI script ([4f2c094](https://github.com/reductoai/reducto-node-sdk/commit/4f2c0941d3ccb58d9fb25939e995defc33ed40ad))
+
 ## 0.9.0 (2025-08-22)
 
 Full Changelog: [v0.8.0...v0.9.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.8.0...v0.9.0)

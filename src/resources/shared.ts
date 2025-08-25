@@ -110,9 +110,10 @@ export interface AdvancedProcessingOptions {
 
   /**
    * In a spreadsheet with different tables inside, we enable splitting up the tables
-   * by default. Disabling will register as one large table.
+   * by default. Intelligent mode applies more powerful models for superior accuracy,
+   * at 5× the default per-cell rate. Disabling will register as one large table.
    */
-  spreadsheet_table_clustering?: 'default' | 'disabled';
+  spreadsheet_table_clustering?: 'default' | 'disabled' | 'intelligent';
 
   /**
    * The mode to use for table output. Dynamic returns md for simpler tables and html
@@ -299,6 +300,28 @@ export interface BoundingBox {
   original_page?: number;
 }
 
+export interface EditResponse {
+  document_url: string;
+
+  form_schema?: Array<EditResponse.FormSchema> | null;
+}
+
+export namespace EditResponse {
+  export interface FormSchema {
+    bbox: Shared.BoundingBox;
+
+    description: string;
+
+    type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
+
+    /**
+     * If True (default), the system will attempt to fill this widget. If False, the
+     * widget will be created but intentionally left unfilled.
+     */
+    fill?: boolean;
+  }
+}
+
 export interface ExperimentalProcessingOptions {
   /**
    * You probably shouldn't use this. If True, filter out boxes with width greater
@@ -346,6 +369,12 @@ export interface ExperimentalProcessingOptions {
    * convert files. This is slower but more accurate.
    */
   native_office_conversion?: boolean;
+
+  /**
+   * If True, enable numeric parse confidence scores in granular_confidence
+   * dictionary. Defaults to False.
+   */
+  numerical_parse_confidence?: boolean;
 
   /**
    * If figure images should be returned in the result. Defaults to False.
@@ -542,14 +571,28 @@ export namespace ParseResponse {
 
         /**
          * Granular confidence scores for the block. It is a dictionary of confidence
-         * scores for the block.
+         * scores for the block. The confidence scores will not be None if the user has
+         * enabled numeric confidence scores.
          */
-        granular_confidence?: { [key: string]: number } | null;
+        granular_confidence?: Block.GranularConfidence | null;
 
         /**
          * (Experimental) The URL of the image associated with the block.
          */
         image_url?: string | null;
+      }
+
+      export namespace Block {
+        /**
+         * Granular confidence scores for the block. It is a dictionary of confidence
+         * scores for the block. The confidence scores will not be None if the user has
+         * enabled numeric confidence scores.
+         */
+        export interface GranularConfidence {
+          extract_confidence?: number | null;
+
+          parse_confidence?: number | null;
+        }
       }
     }
 
@@ -566,6 +609,11 @@ export namespace ParseResponse {
         text: string;
 
         /**
+         * The index of the chunk that the line belongs to.
+         */
+        chunk_index?: number | null;
+
+        /**
          * OCR confidence score between 0 and 1, where 1 indicates highest confidence
          */
         confidence?: number | null;
@@ -575,6 +623,11 @@ export namespace ParseResponse {
         bbox: Shared.BoundingBox;
 
         text: string;
+
+        /**
+         * The index of the chunk that the word belongs to.
+         */
+        chunk_index?: number | null;
 
         /**
          * OCR confidence score between 0 and 1, where 1 indicates highest confidence

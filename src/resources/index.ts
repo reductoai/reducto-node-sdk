@@ -2,13 +2,7 @@
 
 export * from './shared';
 export { Config, type ExtractConfig, type ParseConfig } from './config';
-export {
-  Edit,
-  type EditRunResponse,
-  type EditRunJobResponse,
-  type EditRunParams,
-  type EditRunJobParams,
-} from './edit';
+export { Edit, type EditRunJobResponse, type EditRunParams, type EditRunJobParams } from './edit';
 export {
   Extract,
   type ExtractRunJobResponse,
