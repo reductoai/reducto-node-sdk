@@ -371,6 +371,12 @@ export interface ExperimentalProcessingOptions {
   native_office_conversion?: boolean;
 
   /**
+   * If True, enable numeric parse confidence scores in granular_confidence
+   * dictionary. Defaults to False.
+   */
+  numerical_parse_confidence?: boolean;
+
+  /**
    * If figure images should be returned in the result. Defaults to False.
    */
   return_figure_images?: boolean;
@@ -565,14 +571,28 @@ export namespace ParseResponse {
 
         /**
          * Granular confidence scores for the block. It is a dictionary of confidence
-         * scores for the block.
+         * scores for the block. The confidence scores will not be None if the user has
+         * enabled numeric confidence scores.
          */
-        granular_confidence?: { [key: string]: number } | null;
+        granular_confidence?: Block.GranularConfidence | null;
 
         /**
          * (Experimental) The URL of the image associated with the block.
          */
         image_url?: string | null;
+      }
+
+      export namespace Block {
+        /**
+         * Granular confidence scores for the block. It is a dictionary of confidence
+         * scores for the block. The confidence scores will not be None if the user has
+         * enabled numeric confidence scores.
+         */
+        export interface GranularConfidence {
+          extract_confidence?: number | null;
+
+          parse_confidence?: number | null;
+        }
       }
     }
 
