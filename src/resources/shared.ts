@@ -27,6 +27,12 @@ export interface AdvancedProcessingOptions {
   enable_change_tracking?: boolean;
 
   /**
+   * If True, enable highlight detection. Highlighted text will be surrounded by
+   * <mark> tags in the output. Defaults to False.
+   */
+  enable_highlight_detection?: boolean;
+
+  /**
    * Skip hidden rows and cols in Excel files. Defaults to False.
    */
   exclude_hidden_rows_cols?: boolean;
