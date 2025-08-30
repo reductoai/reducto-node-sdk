@@ -87,6 +87,12 @@ export namespace EditRunParams {
      * widget will be created but intentionally left unfilled.
      */
     fill?: boolean;
+
+    /**
+     * If provided, this value will be used directly instead of attempting to
+     * intelligently determine the field value.
+     */
+    value?: string | null;
   }
 }
 
@@ -155,6 +161,12 @@ export namespace EditRunJobParams {
      * widget will be created but intentionally left unfilled.
      */
     fill?: boolean;
+
+    /**
+     * If provided, this value will be used directly instead of attempting to
+     * intelligently determine the field value.
+     */
+    value?: string | null;
   }
 }
 
