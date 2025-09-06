@@ -67,6 +67,7 @@ describe('resource split', () => {
         return_table_images: true,
         rotate_figures: true,
         rotate_pages: true,
+        user_specified_timeout_seconds: 0,
       },
       options: {
         chunking: { chunk_mode: 'variable', chunk_size: 0 },
@@ -140,6 +141,7 @@ describe('resource split', () => {
         return_table_images: true,
         rotate_figures: true,
         rotate_pages: true,
+        user_specified_timeout_seconds: 0,
       },
       options: {
         chunking: { chunk_mode: 'variable', chunk_size: 0 },

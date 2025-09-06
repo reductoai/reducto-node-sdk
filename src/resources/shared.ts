@@ -206,6 +206,7 @@ export interface BaseProcessingOptions {
     | 'Key Value'
     | 'Text'
     | 'Comment'
+    | 'Signature'
   >;
 
   /**
@@ -403,6 +404,11 @@ export interface ExperimentalProcessingOptions {
    */
   rotate_pages?: boolean;
 
+  /**
+   * A user specified timeout, defaults to None
+   */
+  user_specified_timeout_seconds?: number | null;
+
   [k: string]: unknown;
 }
 
@@ -567,7 +573,8 @@ export namespace ParseResponse {
           | 'Table'
           | 'Key Value'
           | 'Text'
-          | 'Comment';
+          | 'Comment'
+          | 'Signature';
 
         /**
          * The confidence for the block. It is either low or high and takes into account
