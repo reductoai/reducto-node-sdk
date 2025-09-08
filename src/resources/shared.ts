@@ -308,17 +308,33 @@ export interface BoundingBox {
 }
 
 export interface EditResponse {
+  /**
+   * Presigned URL to download the edited document.
+   */
   document_url: string;
 
+  /**
+   * Form schema for PDF forms. List of widgets with their types, descriptions, and
+   * bounding boxes.
+   */
   form_schema?: Array<EditResponse.FormSchema> | null;
 }
 
 export namespace EditResponse {
   export interface FormSchema {
+    /**
+     * Bounding box coordinates of the widget
+     */
     bbox: Shared.BoundingBox;
 
+    /**
+     * Description of the widget extracted from the document
+     */
     description: string;
 
+    /**
+     * Type of the form widget
+     */
     type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
 
     /**
@@ -326,6 +342,12 @@ export namespace EditResponse {
      * widget will be created but intentionally left unfilled.
      */
     fill?: boolean;
+
+    /**
+     * If provided, this value will be used directly instead of attempting to
+     * intelligently determine the field value.
+     */
+    value?: string | null;
   }
 }
 
