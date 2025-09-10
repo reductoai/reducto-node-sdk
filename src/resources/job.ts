@@ -43,6 +43,8 @@ export namespace JobGetResponse {
   export interface EnhancedAsyncJobResponse {
     status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
 
+    bucket?: unknown;
+
     created_at?: string | null;
 
     duration?: number | null;
