@@ -79,6 +79,7 @@ describe('resource split', () => {
         table_summary: { enabled: true, prompt: 'prompt' },
       },
       priority: true,
+      split_options: { table_cutoff: 'truncate' },
       split_rules: 'split_rules',
     });
   });
@@ -153,6 +154,7 @@ describe('resource split', () => {
         table_summary: { enabled: true, prompt: 'prompt' },
       },
       priority: true,
+      split_options: { table_cutoff: 'truncate' },
       split_rules: 'split_rules',
       webhook: { channels: ['string'], metadata: {}, mode: 'disabled', url: 'url' },
     });
