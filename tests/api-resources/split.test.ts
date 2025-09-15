@@ -55,6 +55,7 @@ describe('resource split', () => {
       },
       experimental_options: {
         danger_filter_wide_boxes: true,
+        detect_signatures: true,
         embed_text_metadata_pdf: true,
         enable_checkboxes: true,
         enable_equations: true,
@@ -130,6 +131,7 @@ describe('resource split', () => {
       },
       experimental_options: {
         danger_filter_wide_boxes: true,
+        detect_signatures: true,
         embed_text_metadata_pdf: true,
         enable_checkboxes: true,
         enable_equations: true,
