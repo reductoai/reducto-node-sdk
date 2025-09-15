@@ -360,6 +360,11 @@ export interface ExperimentalProcessingOptions {
   danger_filter_wide_boxes?: boolean;
 
   /**
+   * If True, detect signatures in the document. Defaults to False.
+   */
+  detect_signatures?: boolean;
+
+  /**
    * If extracted OCR text metadata should be embedded back into the returned PDF,
    * overwriting any existing text. Defaults to False.
    */
