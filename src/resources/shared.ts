@@ -477,6 +477,8 @@ export interface ExtractResponse {
 
   usage: ExtractResponse.Usage;
 
+  job_id?: string | null;
+
   /**
    * The link to the studio pipeline for the document.
    */
