@@ -27,6 +27,12 @@ export interface AdvancedProcessingOptions {
   enable_change_tracking?: boolean;
 
   /**
+   * If True, enable highlight detection. Highlighted text will be surrounded by
+   * <mark> tags in the output. Defaults to False.
+   */
+  enable_highlight_detection?: boolean;
+
+  /**
    * Skip hidden rows and cols in Excel files. Defaults to False.
    */
   exclude_hidden_rows_cols?: boolean;
@@ -110,9 +116,10 @@ export interface AdvancedProcessingOptions {
 
   /**
    * In a spreadsheet with different tables inside, we enable splitting up the tables
-   * by default. Disabling will register as one large table.
+   * by default. Intelligent mode applies more powerful models for superior accuracy,
+   * at 5× the default per-cell rate. Disabling will register as one large table.
    */
-  spreadsheet_table_clustering?: 'default' | 'disabled';
+  spreadsheet_table_clustering?: 'default' | 'disabled' | 'intelligent';
 
   /**
    * The mode to use for table output. Dynamic returns md for simpler tables and html
@@ -199,6 +206,7 @@ export interface BaseProcessingOptions {
     | 'Key Value'
     | 'Text'
     | 'Comment'
+    | 'Signature'
   >;
 
   /**
@@ -299,6 +307,50 @@ export interface BoundingBox {
   original_page?: number;
 }
 
+export interface EditResponse {
+  /**
+   * Presigned URL to download the edited document.
+   */
+  document_url: string;
+
+  /**
+   * Form schema for PDF forms. List of widgets with their types, descriptions, and
+   * bounding boxes.
+   */
+  form_schema?: Array<EditResponse.FormSchema> | null;
+}
+
+export namespace EditResponse {
+  export interface FormSchema {
+    /**
+     * Bounding box coordinates of the widget
+     */
+    bbox: Shared.BoundingBox;
+
+    /**
+     * Description of the widget extracted from the document
+     */
+    description: string;
+
+    /**
+     * Type of the form widget
+     */
+    type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
+
+    /**
+     * If True (default), the system will attempt to fill this widget. If False, the
+     * widget will be created but intentionally left unfilled.
+     */
+    fill?: boolean;
+
+    /**
+     * If provided, this value will be used directly instead of attempting to
+     * intelligently determine the field value.
+     */
+    value?: string | null;
+  }
+}
+
 export interface ExperimentalProcessingOptions {
   /**
    * You probably shouldn't use this. If True, filter out boxes with width greater
@@ -306,6 +358,11 @@ export interface ExperimentalProcessingOptions {
    * use this.
    */
   danger_filter_wide_boxes?: boolean;
+
+  /**
+   * If True, detect signatures in the document. Defaults to False.
+   */
+  detect_signatures?: boolean;
 
   /**
    * If extracted OCR text metadata should be embedded back into the returned PDF,
@@ -348,6 +405,12 @@ export interface ExperimentalProcessingOptions {
   native_office_conversion?: boolean;
 
   /**
+   * If True, enable numeric parse confidence scores in granular_confidence
+   * dictionary. Defaults to False.
+   */
+  numerical_parse_confidence?: boolean;
+
+  /**
    * If figure images should be returned in the result. Defaults to False.
    */
   return_figure_images?: boolean;
@@ -367,6 +430,11 @@ export interface ExperimentalProcessingOptions {
    * Use an orientation model to detect and rotate pages as needed, defaults to True
    */
   rotate_pages?: boolean;
+
+  /**
+   * A user specified timeout, defaults to None
+   */
+  user_specified_timeout_seconds?: number | null;
 
   [k: string]: unknown;
 }
@@ -408,6 +476,8 @@ export interface ExtractResponse {
   result: Array<unknown>;
 
   usage: ExtractResponse.Usage;
+
+  job_id?: string | null;
 
   /**
    * The link to the studio pipeline for the document.
@@ -532,7 +602,8 @@ export namespace ParseResponse {
           | 'Table'
           | 'Key Value'
           | 'Text'
-          | 'Comment';
+          | 'Comment'
+          | 'Signature';
 
         /**
          * The confidence for the block. It is either low or high and takes into account
@@ -542,14 +613,28 @@ export namespace ParseResponse {
 
         /**
          * Granular confidence scores for the block. It is a dictionary of confidence
-         * scores for the block.
+         * scores for the block. The confidence scores will not be None if the user has
+         * enabled numeric confidence scores.
          */
-        granular_confidence?: { [key: string]: number } | null;
+        granular_confidence?: Block.GranularConfidence | null;
 
         /**
          * (Experimental) The URL of the image associated with the block.
          */
         image_url?: string | null;
+      }
+
+      export namespace Block {
+        /**
+         * Granular confidence scores for the block. It is a dictionary of confidence
+         * scores for the block. The confidence scores will not be None if the user has
+         * enabled numeric confidence scores.
+         */
+        export interface GranularConfidence {
+          extract_confidence?: number | null;
+
+          parse_confidence?: number | null;
+        }
       }
     }
 
@@ -566,6 +651,11 @@ export namespace ParseResponse {
         text: string;
 
         /**
+         * The index of the chunk that the line belongs to.
+         */
+        chunk_index?: number | null;
+
+        /**
          * OCR confidence score between 0 and 1, where 1 indicates highest confidence
          */
         confidence?: number | null;
@@ -575,6 +665,11 @@ export namespace ParseResponse {
         bbox: Shared.BoundingBox;
 
         text: string;
+
+        /**
+         * The index of the chunk that the word belongs to.
+         */
+        chunk_index?: number | null;
 
         /**
          * OCR confidence score between 0 and 1, where 1 indicates highest confidence
@@ -600,6 +695,39 @@ export interface ParseUsage {
   num_pages: number;
 
   credits?: number | null;
+}
+
+export interface PipelineResponse {
+  job_id: string;
+
+  result: PipelineResponse.Result;
+
+  usage: ParseUsage;
+}
+
+export namespace PipelineResponse {
+  export interface Result {
+    extract: Array<Result.UnionMember0> | Shared.ExtractResponse | null;
+
+    parse: Shared.ParseResponse | null;
+
+    split: Shared.SplitResponse | null;
+  }
+
+  export namespace Result {
+    /**
+     * This is the response format for Extract -> Split Pipelines
+     */
+    export interface UnionMember0 {
+      page_range: Array<number>;
+
+      result: Shared.ExtractResponse;
+
+      split_name: string;
+
+      partition?: string | null;
+    }
+  }
 }
 
 export interface SplitCategory {

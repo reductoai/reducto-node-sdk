@@ -34,6 +34,7 @@ describe('resource split', () => {
         continue_hierarchy: true,
         document_password: 'document_password',
         enable_change_tracking: true,
+        enable_highlight_detection: true,
         exclude_hidden_rows_cols: true,
         exclude_hidden_sheets: true,
         filter_line_numbers: true,
@@ -54,6 +55,7 @@ describe('resource split', () => {
       },
       experimental_options: {
         danger_filter_wide_boxes: true,
+        detect_signatures: true,
         embed_text_metadata_pdf: true,
         enable_checkboxes: true,
         enable_equations: true,
@@ -61,10 +63,12 @@ describe('resource split', () => {
         enrich: { enabled: true, mode: 'standard', prompt: 'prompt' },
         layout_model: 'default',
         native_office_conversion: true,
+        numerical_parse_confidence: true,
         return_figure_images: true,
         return_table_images: true,
         rotate_figures: true,
         rotate_pages: true,
+        user_specified_timeout_seconds: 0,
       },
       options: {
         chunking: { chunk_mode: 'variable', chunk_size: 0 },
@@ -76,6 +80,7 @@ describe('resource split', () => {
         table_summary: { enabled: true, prompt: 'prompt' },
       },
       priority: true,
+      split_options: { table_cutoff: 'truncate' },
       split_rules: 'split_rules',
     });
   });
@@ -105,6 +110,7 @@ describe('resource split', () => {
         continue_hierarchy: true,
         document_password: 'document_password',
         enable_change_tracking: true,
+        enable_highlight_detection: true,
         exclude_hidden_rows_cols: true,
         exclude_hidden_sheets: true,
         filter_line_numbers: true,
@@ -125,6 +131,7 @@ describe('resource split', () => {
       },
       experimental_options: {
         danger_filter_wide_boxes: true,
+        detect_signatures: true,
         embed_text_metadata_pdf: true,
         enable_checkboxes: true,
         enable_equations: true,
@@ -132,10 +139,12 @@ describe('resource split', () => {
         enrich: { enabled: true, mode: 'standard', prompt: 'prompt' },
         layout_model: 'default',
         native_office_conversion: true,
+        numerical_parse_confidence: true,
         return_figure_images: true,
         return_table_images: true,
         rotate_figures: true,
         rotate_pages: true,
+        user_specified_timeout_seconds: 0,
       },
       options: {
         chunking: { chunk_mode: 'variable', chunk_size: 0 },
@@ -147,6 +156,7 @@ describe('resource split', () => {
         table_summary: { enabled: true, prompt: 'prompt' },
       },
       priority: true,
+      split_options: { table_cutoff: 'truncate' },
       split_rules: 'split_rules',
       webhook: { channels: ['string'], metadata: {}, mode: 'disabled', url: 'url' },
     });

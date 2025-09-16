@@ -55,10 +55,24 @@ export interface SplitRunParams {
    */
   priority?: boolean;
 
+  split_options?: SplitRunParams.SplitOptions;
+
   /**
    * The prompt that describes rules for splitting the document.
    */
   split_rules?: string;
+}
+
+export namespace SplitRunParams {
+  export interface SplitOptions {
+    /**
+     * If tables should be truncated to the first few rows or if all content should be
+     * preserved. truncate improves latency, preserve is recommended for cases where
+     * partition_key is being used and the partition_key may be included within the
+     * table. Defaults to truncate
+     */
+    table_cutoff?: 'truncate' | 'preserve';
+  }
 }
 
 export interface SplitRunJobParams {
@@ -92,12 +106,26 @@ export interface SplitRunJobParams {
    */
   priority?: boolean;
 
+  split_options?: SplitRunJobParams.SplitOptions;
+
   /**
    * The prompt that describes rules for splitting the document.
    */
   split_rules?: string;
 
   webhook?: Shared.WebhookConfigNew;
+}
+
+export namespace SplitRunJobParams {
+  export interface SplitOptions {
+    /**
+     * If tables should be truncated to the first few rows or if all content should be
+     * preserved. truncate improves latency, preserve is recommended for cases where
+     * partition_key is being used and the partition_key may be included within the
+     * table. Defaults to truncate
+     */
+    table_cutoff?: 'truncate' | 'preserve';
+  }
 }
 
 export declare namespace Split {

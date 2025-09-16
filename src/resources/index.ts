@@ -2,13 +2,7 @@
 
 export * from './shared';
 export { Config, type ExtractConfig, type ParseConfig } from './config';
-export {
-  Edit,
-  type EditRunResponse,
-  type EditRunJobResponse,
-  type EditRunParams,
-  type EditRunJobParams,
-} from './edit';
+export { Edit, type EditRunJobResponse, type EditRunParams, type EditRunJobParams } from './edit';
 export {
   Extract,
   type ExtractRunJobResponse,
@@ -17,6 +11,12 @@ export {
 } from './extract';
 export { Job, type JobCancelResponse, type JobGetResponse } from './job';
 export { Parse, type ParseRunJobResponse, type ParseRunParams, type ParseRunJobParams } from './parse';
+export {
+  Pipeline,
+  type PipelineRunJobResponse,
+  type PipelineRunParams,
+  type PipelineRunJobParams,
+} from './pipeline';
 export { Split, type SplitRunJobResponse, type SplitRunParams, type SplitRunJobParams } from './split';
 export { Webhook, type WebhookRunResponse } from './webhook';
 export { type APIVersionResponse, type UploadParams } from './top-level';

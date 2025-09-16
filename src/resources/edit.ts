@@ -8,7 +8,7 @@ export class Edit extends APIResource {
   /**
    * Edit
    */
-  run(body: EditRunParams, options?: Core.RequestOptions): Core.APIPromise<EditRunResponse> {
+  run(body: EditRunParams, options?: Core.RequestOptions): Core.APIPromise<Shared.EditResponse> {
     return this._client.post('/edit', { body, ...options });
   }
 
@@ -17,28 +17,6 @@ export class Edit extends APIResource {
    */
   runJob(body: EditRunJobParams, options?: Core.RequestOptions): Core.APIPromise<EditRunJobResponse> {
     return this._client.post('/edit_async', { body, ...options });
-  }
-}
-
-export interface EditRunResponse {
-  document_url: string;
-
-  form_schema?: Array<EditRunResponse.FormSchema> | null;
-}
-
-export namespace EditRunResponse {
-  export interface FormSchema {
-    bbox: Shared.BoundingBox;
-
-    description: string;
-
-    type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
-
-    /**
-     * If True (default), the system will attempt to fill this widget. If False, the
-     * widget will be created but intentionally left unfilled.
-     */
-    fill?: boolean;
   }
 }
 
@@ -109,6 +87,12 @@ export namespace EditRunParams {
      * widget will be created but intentionally left unfilled.
      */
     fill?: boolean;
+
+    /**
+     * If provided, this value will be used directly instead of attempting to
+     * intelligently determine the field value.
+     */
+    value?: string | null;
   }
 }
 
@@ -177,12 +161,17 @@ export namespace EditRunJobParams {
      * widget will be created but intentionally left unfilled.
      */
     fill?: boolean;
+
+    /**
+     * If provided, this value will be used directly instead of attempting to
+     * intelligently determine the field value.
+     */
+    value?: string | null;
   }
 }
 
 export declare namespace Edit {
   export {
-    type EditRunResponse as EditRunResponse,
     type EditRunJobResponse as EditRunJobResponse,
     type EditRunParams as EditRunParams,
     type EditRunJobParams as EditRunJobParams,

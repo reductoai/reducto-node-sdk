@@ -8,13 +8,10 @@ const client = new Reducto({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource edit', () => {
+describe('resource pipeline', () => {
   // Prism tests are disabled
   test.skip('run: only required params', async () => {
-    const responsePromise = client.edit.run({
-      document_url: 'string',
-      edit_instructions: 'edit_instructions',
-    });
+    const responsePromise = client.pipeline.run({ document_url: 'string', pipeline_id: 'pipeline_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -26,29 +23,12 @@ describe('resource edit', () => {
 
   // Prism tests are disabled
   test.skip('run: required and optional params', async () => {
-    const response = await client.edit.run({
-      document_url: 'string',
-      edit_instructions: 'edit_instructions',
-      edit_options: { color: '#e1cb97', llm_provider_preference: 'openai' },
-      form_schema: [
-        {
-          bbox: { height: 0, left: 0, page: 0, top: 0, width: 0, original_page: 0 },
-          description: 'description',
-          type: 'text',
-          fill: true,
-          value: 'value',
-        },
-      ],
-      priority: true,
-    });
+    const response = await client.pipeline.run({ document_url: 'string', pipeline_id: 'pipeline_id' });
   });
 
   // Prism tests are disabled
   test.skip('runJob: only required params', async () => {
-    const responsePromise = client.edit.runJob({
-      document_url: 'string',
-      edit_instructions: 'edit_instructions',
-    });
+    const responsePromise = client.pipeline.runJob({ document_url: 'string', pipeline_id: 'pipeline_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -60,19 +40,9 @@ describe('resource edit', () => {
 
   // Prism tests are disabled
   test.skip('runJob: required and optional params', async () => {
-    const response = await client.edit.runJob({
+    const response = await client.pipeline.runJob({
       document_url: 'string',
-      edit_instructions: 'edit_instructions',
-      edit_options: { color: '#e1cb97', llm_provider_preference: 'openai' },
-      form_schema: [
-        {
-          bbox: { height: 0, left: 0, page: 0, top: 0, width: 0, original_page: 0 },
-          description: 'description',
-          type: 'text',
-          fill: true,
-          value: 'value',
-        },
-      ],
+      pipeline_id: 'pipeline_id',
       priority: true,
       webhook: { channels: ['string'], metadata: {}, mode: 'disabled', url: 'url' },
     });

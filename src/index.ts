@@ -10,10 +10,16 @@ import * as Shared from './resources/shared';
 import * as TopLevelAPI from './resources/top-level';
 import { APIVersionResponse, UploadParams } from './resources/top-level';
 import { Config, ExtractConfig, ParseConfig } from './resources/config';
-import { Edit, EditRunJobParams, EditRunJobResponse, EditRunParams, EditRunResponse } from './resources/edit';
+import { Edit, EditRunJobParams, EditRunJobResponse, EditRunParams } from './resources/edit';
 import { Extract, ExtractRunJobParams, ExtractRunJobResponse, ExtractRunParams } from './resources/extract';
 import { Job, JobCancelResponse, JobGetResponse } from './resources/job';
 import { Parse, ParseRunJobParams, ParseRunJobResponse, ParseRunParams } from './resources/parse';
+import {
+  Pipeline,
+  PipelineRunJobParams,
+  PipelineRunJobResponse,
+  PipelineRunParams,
+} from './resources/pipeline';
 import { Split, SplitRunJobParams, SplitRunJobResponse, SplitRunParams } from './resources/split';
 import { Webhook, WebhookRunResponse } from './resources/webhook';
 
@@ -163,6 +169,7 @@ export class Reducto extends Core.APIClient {
   parse: API.Parse = new API.Parse(this);
   extract: API.Extract = new API.Extract(this);
   edit: API.Edit = new API.Edit(this);
+  pipeline: API.Pipeline = new API.Pipeline(this);
   webhook: API.Webhook = new API.Webhook(this);
   config: API.Config = new API.Config(this);
 
@@ -240,6 +247,7 @@ Reducto.Split = Split;
 Reducto.Parse = Parse;
 Reducto.Extract = Extract;
 Reducto.Edit = Edit;
+Reducto.Pipeline = Pipeline;
 Reducto.Webhook = Webhook;
 Reducto.Config = Config;
 
@@ -273,10 +281,16 @@ export declare namespace Reducto {
 
   export {
     Edit as Edit,
-    type EditRunResponse as EditRunResponse,
     type EditRunJobResponse as EditRunJobResponse,
     type EditRunParams as EditRunParams,
     type EditRunJobParams as EditRunJobParams,
+  };
+
+  export {
+    Pipeline as Pipeline,
+    type PipelineRunJobResponse as PipelineRunJobResponse,
+    type PipelineRunParams as PipelineRunParams,
+    type PipelineRunJobParams as PipelineRunJobParams,
   };
 
   export { Webhook as Webhook, type WebhookRunResponse as WebhookRunResponse };
@@ -287,11 +301,13 @@ export declare namespace Reducto {
   export type ArrayExtractConfig = API.ArrayExtractConfig;
   export type BaseProcessingOptions = API.BaseProcessingOptions;
   export type BoundingBox = API.BoundingBox;
+  export type EditResponse = API.EditResponse;
   export type ExperimentalProcessingOptions = API.ExperimentalProcessingOptions;
   export type ExtractResponse = API.ExtractResponse;
   export type PageRange = API.PageRange;
   export type ParseResponse = API.ParseResponse;
   export type ParseUsage = API.ParseUsage;
+  export type PipelineResponse = API.PipelineResponse;
   export type SplitCategory = API.SplitCategory;
   export type SplitResponse = API.SplitResponse;
   export type Upload = API.Upload;

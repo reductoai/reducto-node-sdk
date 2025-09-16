@@ -36,36 +36,15 @@ export namespace JobGetResponse {
       | Shared.ParseResponse
       | Shared.ExtractResponse
       | Shared.SplitResponse
-      | AsyncJobResponse.EditResponse
+      | Shared.EditResponse
+      | Shared.PipelineResponse
       | null;
-  }
-
-  export namespace AsyncJobResponse {
-    export interface EditResponse {
-      document_url: string;
-
-      form_schema?: Array<EditResponse.FormSchema> | null;
-    }
-
-    export namespace EditResponse {
-      export interface FormSchema {
-        bbox: Shared.BoundingBox;
-
-        description: string;
-
-        type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
-
-        /**
-         * If True (default), the system will attempt to fill this widget. If False, the
-         * widget will be created but intentionally left unfilled.
-         */
-        fill?: boolean;
-      }
-    }
   }
 
   export interface EnhancedAsyncJobResponse {
     status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
+
+    bucket?: unknown;
 
     created_at?: string | null;
 
@@ -83,7 +62,8 @@ export namespace JobGetResponse {
       | Shared.ParseResponse
       | Shared.ExtractResponse
       | Shared.SplitResponse
-      | EnhancedAsyncJobResponse.EditResponse
+      | Shared.EditResponse
+      | Shared.PipelineResponse
       | null;
 
     source?: unknown;
@@ -91,30 +71,6 @@ export namespace JobGetResponse {
     total_pages?: number | null;
 
     type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | null;
-  }
-
-  export namespace EnhancedAsyncJobResponse {
-    export interface EditResponse {
-      document_url: string;
-
-      form_schema?: Array<EditResponse.FormSchema> | null;
-    }
-
-    export namespace EditResponse {
-      export interface FormSchema {
-        bbox: Shared.BoundingBox;
-
-        description: string;
-
-        type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
-
-        /**
-         * If True (default), the system will attempt to fill this widget. If False, the
-         * widget will be created but intentionally left unfilled.
-         */
-        fill?: boolean;
-      }
-    }
   }
 }
 
