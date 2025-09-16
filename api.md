@@ -84,6 +84,18 @@ Methods:
 - <code title="post /edit">client.edit.<a href="./src/resources/edit.ts">run</a>({ ...params }) -> EditResponse</code>
 - <code title="post /edit_async">client.edit.<a href="./src/resources/edit.ts">runJob</a>({ ...params }) -> EditRunJobResponse</code>
 
+# Pipeline
+
+Types:
+
+- <code><a href="./src/resources/pipeline.ts">PipelineRunResponse</a></code>
+- <code><a href="./src/resources/pipeline.ts">PipelineRunJobResponse</a></code>
+
+Methods:
+
+- <code title="post /pipeline">client.pipeline.<a href="./src/resources/pipeline.ts">run</a>({ ...params }) -> PipelineRunResponse</code>
+- <code title="post /pipeline_async">client.pipeline.<a href="./src/resources/pipeline.ts">runJob</a>({ ...params }) -> PipelineRunJobResponse</code>
+
 # Webhook
 
 Types:

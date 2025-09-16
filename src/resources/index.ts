@@ -11,6 +11,13 @@ export {
 } from './extract';
 export { Job, type JobCancelResponse, type JobGetResponse } from './job';
 export { Parse, type ParseRunJobResponse, type ParseRunParams, type ParseRunJobParams } from './parse';
+export {
+  Pipeline,
+  type PipelineRunResponse,
+  type PipelineRunJobResponse,
+  type PipelineRunParams,
+  type PipelineRunJobParams,
+} from './pipeline';
 export { Split, type SplitRunJobResponse, type SplitRunParams, type SplitRunJobParams } from './split';
 export { Webhook, type WebhookRunResponse } from './webhook';
 export { type APIVersionResponse, type UploadParams } from './top-level';
