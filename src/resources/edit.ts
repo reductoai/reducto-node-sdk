@@ -63,7 +63,11 @@ export namespace EditRunParams {
      */
     color?: string;
 
-    llm_provider_preference?: 'openai' | 'anthropic' | 'gemini';
+    /**
+     * The LLM provider to use for edit processing. If not specified, defaults to
+     * 'google'
+     */
+    llm_provider_preference?: 'openai' | 'anthropic' | 'google' | null;
   }
 
   export interface FormSchema {
@@ -137,7 +141,11 @@ export namespace EditRunJobParams {
      */
     color?: string;
 
-    llm_provider_preference?: 'openai' | 'anthropic' | 'gemini';
+    /**
+     * The LLM provider to use for edit processing. If not specified, defaults to
+     * 'google'
+     */
+    llm_provider_preference?: 'openai' | 'anthropic' | 'google' | null;
   }
 
   export interface FormSchema {
