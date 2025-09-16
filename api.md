@@ -23,6 +23,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">PageRange</a></code>
 - <code><a href="./src/resources/shared.ts">ParseResponse</a></code>
 - <code><a href="./src/resources/shared.ts">ParseUsage</a></code>
+- <code><a href="./src/resources/shared.ts">PipelineResponse</a></code>
 - <code><a href="./src/resources/shared.ts">SplitCategory</a></code>
 - <code><a href="./src/resources/shared.ts">SplitResponse</a></code>
 - <code><a href="./src/resources/shared.ts">Upload</a></code>
@@ -88,12 +89,11 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/pipeline.ts">PipelineRunResponse</a></code>
 - <code><a href="./src/resources/pipeline.ts">PipelineRunJobResponse</a></code>
 
 Methods:
 
-- <code title="post /pipeline">client.pipeline.<a href="./src/resources/pipeline.ts">run</a>({ ...params }) -> PipelineRunResponse</code>
+- <code title="post /pipeline">client.pipeline.<a href="./src/resources/pipeline.ts">run</a>({ ...params }) -> PipelineResponse</code>
 - <code title="post /pipeline_async">client.pipeline.<a href="./src/resources/pipeline.ts">runJob</a>({ ...params }) -> PipelineRunJobResponse</code>
 
 # Webhook

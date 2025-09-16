@@ -37,43 +37,8 @@ export namespace JobGetResponse {
       | Shared.ExtractResponse
       | Shared.SplitResponse
       | Shared.EditResponse
-      | AsyncJobResponse.PipelineResponse
+      | Shared.PipelineResponse
       | null;
-  }
-
-  export namespace AsyncJobResponse {
-    export interface PipelineResponse {
-      job_id: string;
-
-      result: PipelineResponse.Result;
-
-      usage: Shared.ParseUsage;
-    }
-
-    export namespace PipelineResponse {
-      export interface Result {
-        extract: Array<Result.UnionMember0> | Shared.ExtractResponse | null;
-
-        parse: Shared.ParseResponse | null;
-
-        split: Shared.SplitResponse | null;
-      }
-
-      export namespace Result {
-        /**
-         * This is the response format for Extract -> Split Pipelines
-         */
-        export interface UnionMember0 {
-          page_range: Array<number>;
-
-          result: Shared.ExtractResponse;
-
-          split_name: string;
-
-          partition?: string | null;
-        }
-      }
-    }
   }
 
   export interface EnhancedAsyncJobResponse {
@@ -98,7 +63,7 @@ export namespace JobGetResponse {
       | Shared.ExtractResponse
       | Shared.SplitResponse
       | Shared.EditResponse
-      | EnhancedAsyncJobResponse.PipelineResponse
+      | Shared.PipelineResponse
       | null;
 
     source?: unknown;
@@ -106,41 +71,6 @@ export namespace JobGetResponse {
     total_pages?: number | null;
 
     type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | null;
-  }
-
-  export namespace EnhancedAsyncJobResponse {
-    export interface PipelineResponse {
-      job_id: string;
-
-      result: PipelineResponse.Result;
-
-      usage: Shared.ParseUsage;
-    }
-
-    export namespace PipelineResponse {
-      export interface Result {
-        extract: Array<Result.UnionMember0> | Shared.ExtractResponse | null;
-
-        parse: Shared.ParseResponse | null;
-
-        split: Shared.SplitResponse | null;
-      }
-
-      export namespace Result {
-        /**
-         * This is the response format for Extract -> Split Pipelines
-         */
-        export interface UnionMember0 {
-          page_range: Array<number>;
-
-          result: Shared.ExtractResponse;
-
-          split_name: string;
-
-          partition?: string | null;
-        }
-      }
-    }
   }
 }
 

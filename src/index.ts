@@ -19,7 +19,6 @@ import {
   PipelineRunJobParams,
   PipelineRunJobResponse,
   PipelineRunParams,
-  PipelineRunResponse,
 } from './resources/pipeline';
 import { Split, SplitRunJobParams, SplitRunJobResponse, SplitRunParams } from './resources/split';
 import { Webhook, WebhookRunResponse } from './resources/webhook';
@@ -289,7 +288,6 @@ export declare namespace Reducto {
 
   export {
     Pipeline as Pipeline,
-    type PipelineRunResponse as PipelineRunResponse,
     type PipelineRunJobResponse as PipelineRunJobResponse,
     type PipelineRunParams as PipelineRunParams,
     type PipelineRunJobParams as PipelineRunJobParams,
@@ -309,6 +307,7 @@ export declare namespace Reducto {
   export type PageRange = API.PageRange;
   export type ParseResponse = API.ParseResponse;
   export type ParseUsage = API.ParseUsage;
+  export type PipelineResponse = API.PipelineResponse;
   export type SplitCategory = API.SplitCategory;
   export type SplitResponse = API.SplitResponse;
   export type Upload = API.Upload;
