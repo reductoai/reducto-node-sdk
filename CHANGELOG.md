@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.10.0 (2025-09-16)
+
+Full Changelog: [v0.9.0...v0.10.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.9.0...v0.10.0)
+
+### Features
+
+* **api:** api update ([cac89dd](https://github.com/reductoai/reducto-node-sdk/commit/cac89dd3197e4a2e514423afddbb320fa0a79e52))
+* **api:** api update ([1864c06](https://github.com/reductoai/reducto-node-sdk/commit/1864c0615abe65547050b2fde3af41dc175689dd))
+* **api:** api update ([17d570d](https://github.com/reductoai/reducto-node-sdk/commit/17d570dcd42fb41c76b271867341535c29461a65))
+* **api:** api update ([fe2f9ad](https://github.com/reductoai/reducto-node-sdk/commit/fe2f9ad88e99b641f94531729d7fb20b4ecb4f4c))
+* **api:** api update ([ce00024](https://github.com/reductoai/reducto-node-sdk/commit/ce0002410c55cb98bc7ab036df84343dfa26107a))
+* **api:** api update ([9fa16c6](https://github.com/reductoai/reducto-node-sdk/commit/9fa16c614b943914af02d4b4e261ecf07634367c))
+* **api:** api update ([e3fe421](https://github.com/reductoai/reducto-node-sdk/commit/e3fe4218832626f7fe12b90be2585b4c46459bd3))
+* **api:** api update ([a965dc1](https://github.com/reductoai/reducto-node-sdk/commit/a965dc19863fb6c22747280f6650a78a065512db))
+* **api:** api update ([4cc9a0c](https://github.com/reductoai/reducto-node-sdk/commit/4cc9a0c5ea48e1268a2448406e36d337bc74bfb6))
+* **api:** api update ([96d88ce](https://github.com/reductoai/reducto-node-sdk/commit/96d88ceea7f3ff195e065009073b4fffecb501fb))
+* **api:** api update ([edfcbe4](https://github.com/reductoai/reducto-node-sdk/commit/edfcbe42f128f352f9518495248aa601c36a0305))
+* **api:** manual updates ([afe71a6](https://github.com/reductoai/reducto-node-sdk/commit/afe71a6a681e5d4d8d809e242bf898dbd6ac2447))
+* **api:** manual updates ([219aabf](https://github.com/reductoai/reducto-node-sdk/commit/219aabff7d08f535ac2d413d218c45620cb3c883))
+* **api:** manual updates ([bbedc3b](https://github.com/reductoai/reducto-node-sdk/commit/bbedc3b803d15e0326375b775ea5fc4486bbf1da))
+
+
+### Bug Fixes
+
+* coerce nullable values to undefined ([906d867](https://github.com/reductoai/reducto-node-sdk/commit/906d867184e6d72fa3662be389f30b407988a730))
+
+
+### Chores
+
+* ci build action ([e8a5ca1](https://github.com/reductoai/reducto-node-sdk/commit/e8a5ca103774a6dacef4c7170132528c782f0f2f))
+* update CI script ([4f2c094](https://github.com/reductoai/reducto-node-sdk/commit/4f2c0941d3ccb58d9fb25939e995defc33ed40ad))
+
 ## 0.9.0 (2025-08-22)
 
 Full Changelog: [v0.8.0...v0.9.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.8.0...v0.9.0)
