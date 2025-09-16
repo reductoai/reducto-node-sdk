@@ -697,6 +697,39 @@ export interface ParseUsage {
   credits?: number | null;
 }
 
+export interface PipelineResponse {
+  job_id: string;
+
+  result: PipelineResponse.Result;
+
+  usage: ParseUsage;
+}
+
+export namespace PipelineResponse {
+  export interface Result {
+    extract: Array<Result.UnionMember0> | Shared.ExtractResponse | null;
+
+    parse: Shared.ParseResponse | null;
+
+    split: Shared.SplitResponse | null;
+  }
+
+  export namespace Result {
+    /**
+     * This is the response format for Extract -> Split Pipelines
+     */
+    export interface UnionMember0 {
+      page_range: Array<number>;
+
+      result: Shared.ExtractResponse;
+
+      split_name: string;
+
+      partition?: string | null;
+    }
+  }
+}
+
 export interface SplitCategory {
   description: string;
 

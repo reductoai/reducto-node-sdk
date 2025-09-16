@@ -13,7 +13,6 @@ export { Job, type JobCancelResponse, type JobGetResponse } from './job';
 export { Parse, type ParseRunJobResponse, type ParseRunParams, type ParseRunJobParams } from './parse';
 export {
   Pipeline,
-  type PipelineRunResponse,
   type PipelineRunJobResponse,
   type PipelineRunParams,
   type PipelineRunJobParams,

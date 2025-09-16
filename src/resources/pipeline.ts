@@ -8,7 +8,7 @@ export class Pipeline extends APIResource {
   /**
    * Pipeline
    */
-  run(body: PipelineRunParams, options?: Core.RequestOptions): Core.APIPromise<PipelineRunResponse> {
+  run(body: PipelineRunParams, options?: Core.RequestOptions): Core.APIPromise<Shared.PipelineResponse> {
     return this._client.post('/pipeline', { body, ...options });
   }
 
@@ -17,39 +17,6 @@ export class Pipeline extends APIResource {
    */
   runJob(body: PipelineRunJobParams, options?: Core.RequestOptions): Core.APIPromise<PipelineRunJobResponse> {
     return this._client.post('/pipeline_async', { body, ...options });
-  }
-}
-
-export interface PipelineRunResponse {
-  job_id: string;
-
-  result: PipelineRunResponse.Result;
-
-  usage: Shared.ParseUsage;
-}
-
-export namespace PipelineRunResponse {
-  export interface Result {
-    extract: Array<Result.UnionMember0> | Shared.ExtractResponse | null;
-
-    parse: Shared.ParseResponse | null;
-
-    split: Shared.SplitResponse | null;
-  }
-
-  export namespace Result {
-    /**
-     * This is the response format for Extract -> Split Pipelines
-     */
-    export interface UnionMember0 {
-      page_range: Array<number>;
-
-      result: Shared.ExtractResponse;
-
-      split_name: string;
-
-      partition?: string | null;
-    }
   }
 }
 
@@ -98,7 +65,6 @@ export interface PipelineRunJobParams {
 
 export declare namespace Pipeline {
   export {
-    type PipelineRunResponse as PipelineRunResponse,
     type PipelineRunJobResponse as PipelineRunJobResponse,
     type PipelineRunParams as PipelineRunParams,
     type PipelineRunJobParams as PipelineRunJobParams,
