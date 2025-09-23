@@ -138,13 +138,13 @@ await client.parse.run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' },
 
 ### Timeouts
 
-Requests time out after 487 days by default. You can configure this with a `timeout` option:
+Requests time out after 1 hour by default. You can configure this with a `timeout` option:
 
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
 const client = new Reducto({
-  timeout: 20 * 1000, // 20 seconds (default is 487 days)
+  timeout: 20 * 1000, // 20 seconds (default is 1 hour)
 });
 
 // Override per-request:
