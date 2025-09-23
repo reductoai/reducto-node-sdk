@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.11.0 (2025-09-23)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.10.0...v0.11.0)
+
+### Features
+
+* **api:** api update ([17dd92c](https://github.com/reductoai/reducto-node-sdk/commit/17dd92c70706201ae549e6979605c4a55910ebbd))
+* **api:** api update ([3b5b671](https://github.com/reductoai/reducto-node-sdk/commit/3b5b671683d0674296cabd58cb1adda3b73ba707))
+* **api:** manual updates ([a711eaa](https://github.com/reductoai/reducto-node-sdk/commit/a711eaa4a79e1ee2affd785b8c1de3f27fee83f6))
+
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([925289e](https://github.com/reductoai/reducto-node-sdk/commit/925289e47a462431f2ecb364c9c9489bda2a8208))
+
 ## 0.10.0 (2025-09-16)
 
 Full Changelog: [v0.9.0...v0.10.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.9.0...v0.10.0)
