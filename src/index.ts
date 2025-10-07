@@ -12,7 +12,7 @@ import { APIVersionResponse, UploadParams } from './resources/top-level';
 import { Config, ExtractConfig, ParseConfig } from './resources/config';
 import { Edit, EditRunJobParams, EditRunJobResponse, EditRunParams } from './resources/edit';
 import { Extract, ExtractRunJobParams, ExtractRunJobResponse, ExtractRunParams } from './resources/extract';
-import { Job, JobCancelResponse, JobGetResponse } from './resources/job';
+import { JobCancelResponse, JobGetResponse, JobListParams, JobListResponse, Jobs } from './resources/jobs';
 import { Parse, ParseRunJobParams, ParseRunJobResponse, ParseRunParams } from './resources/parse';
 import {
   Pipeline,
@@ -164,7 +164,7 @@ export class Reducto extends Core.APIClient {
     this.apiKey = apiKey;
   }
 
-  job: API.Job = new API.Job(this);
+  jobs: API.Jobs = new API.Jobs(this);
   split: API.Split = new API.Split(this);
   parse: API.Parse = new API.Parse(this);
   extract: API.Extract = new API.Extract(this);
@@ -242,7 +242,7 @@ export class Reducto extends Core.APIClient {
   static fileFromPath = Uploads.fileFromPath;
 }
 
-Reducto.Job = Job;
+Reducto.Jobs = Jobs;
 Reducto.Split = Split;
 Reducto.Parse = Parse;
 Reducto.Extract = Extract;
@@ -256,7 +256,13 @@ export declare namespace Reducto {
 
   export { type APIVersionResponse as APIVersionResponse, type UploadParams as UploadParams };
 
-  export { Job as Job, type JobCancelResponse as JobCancelResponse, type JobGetResponse as JobGetResponse };
+  export {
+    Jobs as Jobs,
+    type JobListResponse as JobListResponse,
+    type JobCancelResponse as JobCancelResponse,
+    type JobGetResponse as JobGetResponse,
+    type JobListParams as JobListParams,
+  };
 
   export {
     Split as Split,
@@ -297,19 +303,25 @@ export declare namespace Reducto {
 
   export { Config as Config, type ExtractConfig as ExtractConfig, type ParseConfig as ParseConfig };
 
+  export type AdvancedCitationsConfig = API.AdvancedCitationsConfig;
   export type AdvancedProcessingOptions = API.AdvancedProcessingOptions;
   export type ArrayExtractConfig = API.ArrayExtractConfig;
   export type BaseProcessingOptions = API.BaseProcessingOptions;
   export type BoundingBox = API.BoundingBox;
+  export type ChunkingConfig = API.ChunkingConfig;
   export type EditResponse = API.EditResponse;
+  export type EnrichConfig = API.EnrichConfig;
   export type ExperimentalProcessingOptions = API.ExperimentalProcessingOptions;
   export type ExtractResponse = API.ExtractResponse;
+  export type FigureSummaryConfig = API.FigureSummaryConfig;
+  export type LargeTableChunkingConfig = API.LargeTableChunkingConfig;
   export type PageRange = API.PageRange;
   export type ParseResponse = API.ParseResponse;
   export type ParseUsage = API.ParseUsage;
   export type PipelineResponse = API.PipelineResponse;
   export type SplitCategory = API.SplitCategory;
   export type SplitResponse = API.SplitResponse;
+  export type TableSummaryConfig = API.TableSummaryConfig;
   export type Upload = API.Upload;
   export type WebhookConfigNew = API.WebhookConfigNew;
 }

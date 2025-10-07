@@ -13,33 +13,41 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/shared.ts">AdvancedCitationsConfig</a></code>
 - <code><a href="./src/resources/shared.ts">AdvancedProcessingOptions</a></code>
 - <code><a href="./src/resources/shared.ts">ArrayExtractConfig</a></code>
 - <code><a href="./src/resources/shared.ts">BaseProcessingOptions</a></code>
 - <code><a href="./src/resources/shared.ts">BoundingBox</a></code>
+- <code><a href="./src/resources/shared.ts">ChunkingConfig</a></code>
 - <code><a href="./src/resources/shared.ts">EditResponse</a></code>
+- <code><a href="./src/resources/shared.ts">EnrichConfig</a></code>
 - <code><a href="./src/resources/shared.ts">ExperimentalProcessingOptions</a></code>
 - <code><a href="./src/resources/shared.ts">ExtractResponse</a></code>
+- <code><a href="./src/resources/shared.ts">FigureSummaryConfig</a></code>
+- <code><a href="./src/resources/shared.ts">LargeTableChunkingConfig</a></code>
 - <code><a href="./src/resources/shared.ts">PageRange</a></code>
 - <code><a href="./src/resources/shared.ts">ParseResponse</a></code>
 - <code><a href="./src/resources/shared.ts">ParseUsage</a></code>
 - <code><a href="./src/resources/shared.ts">PipelineResponse</a></code>
 - <code><a href="./src/resources/shared.ts">SplitCategory</a></code>
 - <code><a href="./src/resources/shared.ts">SplitResponse</a></code>
+- <code><a href="./src/resources/shared.ts">TableSummaryConfig</a></code>
 - <code><a href="./src/resources/shared.ts">Upload</a></code>
 - <code><a href="./src/resources/shared.ts">WebhookConfigNew</a></code>
 
-# Job
+# Jobs
 
 Types:
 
-- <code><a href="./src/resources/job.ts">JobCancelResponse</a></code>
-- <code><a href="./src/resources/job.ts">JobGetResponse</a></code>
+- <code><a href="./src/resources/jobs.ts">JobListResponse</a></code>
+- <code><a href="./src/resources/jobs.ts">JobCancelResponse</a></code>
+- <code><a href="./src/resources/jobs.ts">JobGetResponse</a></code>
 
 Methods:
 
-- <code title="post /cancel/{job_id}">client.job.<a href="./src/resources/job.ts">cancel</a>(jobId) -> unknown</code>
-- <code title="get /job/{job_id}">client.job.<a href="./src/resources/job.ts">get</a>(jobId) -> JobGetResponse</code>
+- <code title="get /jobs">client.jobs.<a href="./src/resources/jobs.ts">list</a>({ ...params }) -> JobListResponse</code>
+- <code title="post /cancel/{job_id}">client.jobs.<a href="./src/resources/jobs.ts">cancel</a>(jobId) -> unknown</code>
+- <code title="get /job/{job_id}">client.jobs.<a href="./src/resources/jobs.ts">get</a>(jobId) -> JobGetResponse</code>
 
 # Split
 

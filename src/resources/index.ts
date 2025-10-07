@@ -9,7 +9,13 @@ export {
   type ExtractRunParams,
   type ExtractRunJobParams,
 } from './extract';
-export { Job, type JobCancelResponse, type JobGetResponse } from './job';
+export {
+  Jobs,
+  type JobListResponse,
+  type JobCancelResponse,
+  type JobGetResponse,
+  type JobListParams,
+} from './jobs';
 export { Parse, type ParseRunJobResponse, type ParseRunParams, type ParseRunJobParams } from './parse';
 export {
   Pipeline,
