@@ -12,7 +12,7 @@ import { APIVersionResponse, UploadParams } from './resources/top-level';
 import { Config, ExtractConfig, ParseConfig } from './resources/config';
 import { Edit, EditRunJobParams, EditRunJobResponse, EditRunParams } from './resources/edit';
 import { Extract, ExtractRunJobParams, ExtractRunJobResponse, ExtractRunParams } from './resources/extract';
-import { JobCancelResponse, JobGetResponse, JobListParams, JobListResponse, Jobs } from './resources/jobs';
+import { Job, JobCancelResponse, JobGetResponse, JobListParams, JobListResponse } from './resources/job';
 import { Parse, ParseRunJobParams, ParseRunJobResponse, ParseRunParams } from './resources/parse';
 import {
   Pipeline,
@@ -164,7 +164,7 @@ export class Reducto extends Core.APIClient {
     this.apiKey = apiKey;
   }
 
-  jobs: API.Jobs = new API.Jobs(this);
+  job: API.Job = new API.Job(this);
   split: API.Split = new API.Split(this);
   parse: API.Parse = new API.Parse(this);
   extract: API.Extract = new API.Extract(this);
@@ -242,7 +242,7 @@ export class Reducto extends Core.APIClient {
   static fileFromPath = Uploads.fileFromPath;
 }
 
-Reducto.Jobs = Jobs;
+Reducto.Job = Job;
 Reducto.Split = Split;
 Reducto.Parse = Parse;
 Reducto.Extract = Extract;
@@ -257,7 +257,7 @@ export declare namespace Reducto {
   export { type APIVersionResponse as APIVersionResponse, type UploadParams as UploadParams };
 
   export {
-    Jobs as Jobs,
+    Job as Job,
     type JobListResponse as JobListResponse,
     type JobCancelResponse as JobCancelResponse,
     type JobGetResponse as JobGetResponse,

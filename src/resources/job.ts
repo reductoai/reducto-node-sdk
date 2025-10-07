@@ -5,7 +5,7 @@ import { isRequestOptions } from '../core';
 import * as Core from '../core';
 import * as Shared from './shared';
 
-export class Jobs extends APIResource {
+export class Job extends APIResource {
   /**
    * Get Jobs
    */
@@ -145,7 +145,7 @@ export interface JobListParams {
   limit?: number;
 }
 
-export declare namespace Jobs {
+export declare namespace Job {
   export {
     type JobListResponse as JobListResponse,
     type JobCancelResponse as JobCancelResponse,

@@ -35,19 +35,19 @@ Types:
 - <code><a href="./src/resources/shared.ts">Upload</a></code>
 - <code><a href="./src/resources/shared.ts">WebhookConfigNew</a></code>
 
-# Jobs
+# Job
 
 Types:
 
-- <code><a href="./src/resources/jobs.ts">JobListResponse</a></code>
-- <code><a href="./src/resources/jobs.ts">JobCancelResponse</a></code>
-- <code><a href="./src/resources/jobs.ts">JobGetResponse</a></code>
+- <code><a href="./src/resources/job.ts">JobListResponse</a></code>
+- <code><a href="./src/resources/job.ts">JobCancelResponse</a></code>
+- <code><a href="./src/resources/job.ts">JobGetResponse</a></code>
 
 Methods:
 
-- <code title="get /jobs">client.jobs.<a href="./src/resources/jobs.ts">list</a>({ ...params }) -> JobListResponse</code>
-- <code title="post /cancel/{job_id}">client.jobs.<a href="./src/resources/jobs.ts">cancel</a>(jobId) -> unknown</code>
-- <code title="get /job/{job_id}">client.jobs.<a href="./src/resources/jobs.ts">get</a>(jobId) -> JobGetResponse</code>
+- <code title="get /jobs">client.job.<a href="./src/resources/job.ts">list</a>({ ...params }) -> JobListResponse</code>
+- <code title="post /cancel/{job_id}">client.job.<a href="./src/resources/job.ts">cancel</a>(jobId) -> unknown</code>
+- <code title="get /job/{job_id}">client.job.<a href="./src/resources/job.ts">get</a>(jobId) -> JobGetResponse</code>
 
 # Split
 

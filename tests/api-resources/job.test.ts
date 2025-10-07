@@ -8,10 +8,10 @@ const client = new Reducto({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource jobs', () => {
+describe('resource job', () => {
   // Prism tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.jobs.list();
+    const responsePromise = client.job.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,7 +24,7 @@ describe('resource jobs', () => {
   // Prism tests are disabled
   test.skip('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.jobs.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(client.job.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       Reducto.NotFoundError,
     );
   });
@@ -33,7 +33,7 @@ describe('resource jobs', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.jobs.list(
+      client.job.list(
         { cursor: 'cursor', exclude_configs: true, limit: 1 },
         { path: '/_stainless_unknown_path' },
       ),
@@ -42,7 +42,7 @@ describe('resource jobs', () => {
 
   // Prism tests are disabled
   test.skip('cancel', async () => {
-    const responsePromise = client.jobs.cancel('job_id');
+    const responsePromise = client.job.cancel('job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -55,14 +55,14 @@ describe('resource jobs', () => {
   // Prism tests are disabled
   test.skip('cancel: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.jobs.cancel('job_id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(client.job.cancel('job_id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
       Reducto.NotFoundError,
     );
   });
 
   // Prism tests are disabled
   test.skip('get', async () => {
-    const responsePromise = client.jobs.get('job_id');
+    const responsePromise = client.job.get('job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -75,7 +75,7 @@ describe('resource jobs', () => {
   // Prism tests are disabled
   test.skip('get: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.jobs.get('job_id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(client.job.get('job_id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
       Reducto.NotFoundError,
     );
   });
