@@ -52,7 +52,7 @@ export interface ExtractRunParams {
   /**
    * The configuration options for citations.
    */
-  citations_options?: ExtractRunParams.CitationsOptions;
+  citations_options?: Shared.AdvancedCitationsConfig;
 
   experimental_options?: Shared.ExperimentalProcessingOptions;
 
@@ -98,18 +98,6 @@ export interface ExtractRunParams {
   use_chunking?: boolean;
 }
 
-export namespace ExtractRunParams {
-  /**
-   * The configuration options for citations.
-   */
-  export interface CitationsOptions {
-    /**
-     * If True, enable numeric citation confidence scores. Defaults to False.
-     */
-    numerical_confidence?: boolean;
-  }
-}
-
 export interface ExtractRunJobParams {
   /**
    * The URL of the document to be processed. You can provide one of the following:
@@ -138,7 +126,7 @@ export interface ExtractRunJobParams {
   /**
    * The configuration options for citations.
    */
-  citations_options?: ExtractRunJobParams.CitationsOptions;
+  citations_options?: Shared.AdvancedCitationsConfig;
 
   experimental_options?: Shared.ExperimentalProcessingOptions;
 
@@ -184,18 +172,6 @@ export interface ExtractRunJobParams {
   use_chunking?: boolean;
 
   webhook?: Shared.WebhookConfigNew;
-}
-
-export namespace ExtractRunJobParams {
-  /**
-   * The configuration options for citations.
-   */
-  export interface CitationsOptions {
-    /**
-     * If True, enable numeric citation confidence scores. Defaults to False.
-     */
-    numerical_confidence?: boolean;
-  }
 }
 
 export declare namespace Extract {

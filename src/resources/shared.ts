@@ -2,6 +2,13 @@
 
 import * as Shared from './shared';
 
+export interface AdvancedCitationsConfig {
+  /**
+   * If True, enable numeric citation confidence scores. Defaults to False.
+   */
+  numerical_confidence?: boolean;
+}
+
 export interface AdvancedProcessingOptions {
   /**
    * If True, add page markers to the output (e.g. [[PAGE 1 BEGINS HERE]] and
@@ -73,7 +80,7 @@ export interface AdvancedProcessingOptions {
    * The configuration options for large table chunking (currently only supported on
    * spreadsheet and CSV files).
    */
-  large_table_chunking?: AdvancedProcessingOptions.LargeTableChunking;
+  large_table_chunking?: LargeTableChunkingConfig;
 
   /**
    * A flag to indicate if consecutive tables with the same number of columns should
@@ -128,26 +135,6 @@ export interface AdvancedProcessingOptions {
   table_output_format?: 'html' | 'json' | 'md' | 'jsonbbox' | 'dynamic' | 'ai_json' | 'csv';
 }
 
-export namespace AdvancedProcessingOptions {
-  /**
-   * The configuration options for large table chunking (currently only supported on
-   * spreadsheet and CSV files).
-   */
-  export interface LargeTableChunking {
-    /**
-     * If large tables should be chunked into smaller tables, currently only supported
-     * on spreadsheet and CSV files.
-     */
-    enabled?: boolean;
-
-    /**
-     * The max row/column size for a table to be chunked. Defaults to 50. Header
-     * rows/columns are persisted based on heuristics.
-     */
-    size?: number;
-  }
-}
-
 export interface ArrayExtractConfig {
   /**
    * Array extraction allows you to extract long lists of information from lengthy
@@ -177,7 +164,7 @@ export interface BaseProcessingOptions {
    * The configuration options for chunking. Chunking is commonly used for RAG
    * usecases.
    */
-  chunking?: BaseProcessingOptions.Chunking;
+  chunking?: ChunkingConfig;
 
   /**
    * The mode to use for extraction. Metadata/hybrid are only recommended with high
@@ -188,7 +175,7 @@ export interface BaseProcessingOptions {
   /**
    * The configuration options for figure summarization.
    */
-  figure_summary?: BaseProcessingOptions.FigureSummary;
+  figure_summary?: FigureSummaryConfig;
 
   /**
    * A list of block types to filter from chunk content. Pass blocks to filter them
@@ -224,67 +211,7 @@ export interface BaseProcessingOptions {
   /**
    * The configuration options for table summarization.
    */
-  table_summary?: BaseProcessingOptions.TableSummary;
-}
-
-export namespace BaseProcessingOptions {
-  /**
-   * The configuration options for chunking. Chunking is commonly used for RAG
-   * usecases.
-   */
-  export interface Chunking {
-    /**
-     * Choose how to partition chunks. Variable mode chunks by character length and
-     * visual context. Section mode chunks by section headers. Page mode chunks
-     * according to pages. Page sections mode chunks first by page, then by sections
-     * within each page. Disabled returns one single chunk.
-     */
-    chunk_mode?: 'variable' | 'section' | 'page' | 'block' | 'disabled' | 'page_sections';
-
-    /**
-     * The approximate size of chunks (in characters) that the document will be split
-     * into. Defaults to None, in which case the chunk size is variable between 250 -
-     * 1500 characters.
-     */
-    chunk_size?: number;
-  }
-
-  /**
-   * The configuration options for figure summarization.
-   */
-  export interface FigureSummary {
-    /**
-     * If figure summarization should be performed.
-     */
-    enabled?: boolean;
-
-    /**
-     * If the figure summary prompt should override our default prompt.
-     */
-    override?: boolean;
-
-    /**
-     * Add information to the prompt for figure summarization. Note any visual cues
-     * that should be incorporated. Example: 'When provided a diagram, extract all of
-     * the figure content verbatim.'
-     */
-    prompt?: string;
-  }
-
-  /**
-   * The configuration options for table summarization.
-   */
-  export interface TableSummary {
-    /**
-     * If table summarization should be performed.
-     */
-    enabled?: boolean;
-
-    /**
-     * Add information to the prompt for table summarization.
-     */
-    prompt?: string;
-  }
+  table_summary?: TableSummaryConfig;
 }
 
 export interface BoundingBox {
@@ -305,6 +232,23 @@ export interface BoundingBox {
    * The page number in the original document of the bounding box (1-indexed).
    */
   original_page?: number;
+}
+
+export interface ChunkingConfig {
+  /**
+   * Choose how to partition chunks. Variable mode chunks by character length and
+   * visual context. Section mode chunks by section headers. Page mode chunks
+   * according to pages. Page sections mode chunks first by page, then by sections
+   * within each page. Disabled returns one single chunk.
+   */
+  chunk_mode?: 'variable' | 'section' | 'page' | 'block' | 'disabled' | 'page_sections';
+
+  /**
+   * The approximate size of chunks (in characters) that the document will be split
+   * into. Defaults to None, in which case the chunk size is variable between 250 -
+   * 1500 characters.
+   */
+  chunk_size?: number;
 }
 
 export interface EditResponse {
@@ -351,6 +295,25 @@ export namespace EditResponse {
   }
 }
 
+export interface EnrichConfig {
+  /**
+   * If enabled, a large language/vision model will be used to postprocess the
+   * extracted content. Note: enabling enrich requires tables be outputted in
+   * markdown format. Defaults to False.
+   */
+  enabled?: boolean;
+
+  /**
+   * The mode to use for enrichment. Defaults to standard
+   */
+  mode?: 'standard' | 'page' | 'table';
+
+  /**
+   * Add information to the prompt for enrichment.
+   */
+  prompt?: string;
+}
+
 export interface ExperimentalProcessingOptions {
   /**
    * You probably shouldn't use this. If True, filter out boxes with width greater
@@ -391,7 +354,7 @@ export interface ExperimentalProcessingOptions {
   /**
    * The configuration options for enrichment.
    */
-  enrich?: ExperimentalProcessingOptions.Enrich;
+  enrich?: EnrichConfig;
 
   /**
    * The layout model to use for the document. This will be deprecated in the future.
@@ -433,30 +396,6 @@ export interface ExperimentalProcessingOptions {
   [k: string]: unknown;
 }
 
-export namespace ExperimentalProcessingOptions {
-  /**
-   * The configuration options for enrichment.
-   */
-  export interface Enrich {
-    /**
-     * If enabled, a large language/vision model will be used to postprocess the
-     * extracted content. Note: enabling enrich requires tables be outputted in
-     * markdown format. Defaults to False.
-     */
-    enabled?: boolean;
-
-    /**
-     * The mode to use for enrichment. Defaults to standard
-     */
-    mode?: 'standard' | 'page' | 'table';
-
-    /**
-     * Add information to the prompt for enrichment.
-     */
-    prompt?: string;
-  }
-}
-
 export interface ExtractResponse {
   /**
    * The citations corresponding to the extracted response.
@@ -487,6 +426,39 @@ export namespace ExtractResponse {
 
     credits?: number | null;
   }
+}
+
+export interface FigureSummaryConfig {
+  /**
+   * If figure summarization should be performed.
+   */
+  enabled?: boolean;
+
+  /**
+   * If the figure summary prompt should override our default prompt.
+   */
+  override?: boolean;
+
+  /**
+   * Add information to the prompt for figure summarization. Note any visual cues
+   * that should be incorporated. Example: 'When provided a diagram, extract all of
+   * the figure content verbatim.'
+   */
+  prompt?: string;
+}
+
+export interface LargeTableChunkingConfig {
+  /**
+   * If large tables should be chunked into smaller tables, currently only supported
+   * on spreadsheet and CSV files.
+   */
+  enabled?: boolean;
+
+  /**
+   * The max row/column size for a table to be chunked. Defaults to 50. Header
+   * rows/columns are persisted based on heuristics.
+   */
+  size?: number;
 }
 
 export interface PageRange {
@@ -772,6 +744,18 @@ export namespace SplitResponse {
       }
     }
   }
+}
+
+export interface TableSummaryConfig {
+  /**
+   * If table summarization should be performed.
+   */
+  enabled?: boolean;
+
+  /**
+   * Add information to the prompt for table summarization.
+   */
+  prompt?: string;
 }
 
 export interface Upload {
