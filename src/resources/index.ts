@@ -10,12 +10,12 @@ export {
   type ExtractRunJobParams,
 } from './extract';
 export {
-  Jobs,
+  Job,
   type JobListResponse,
   type JobCancelResponse,
   type JobGetResponse,
   type JobListParams,
-} from './jobs';
+} from './job';
 export { Parse, type ParseRunJobResponse, type ParseRunParams, type ParseRunJobParams } from './parse';
 export {
   Pipeline,
