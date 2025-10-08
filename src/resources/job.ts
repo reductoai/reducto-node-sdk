@@ -7,21 +7,6 @@ import * as Shared from './shared';
 
 export class Job extends APIResource {
   /**
-   * Get Jobs
-   */
-  list(query?: JobListParams, options?: Core.RequestOptions): Core.APIPromise<JobListResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<JobListResponse>;
-  list(
-    query: JobListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<JobListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.get('/jobs', { query, ...options });
-  }
-
-  /**
    * Cancel Job
    */
   cancel(jobId: string, options?: Core.RequestOptions): Core.APIPromise<unknown> {
@@ -34,42 +19,20 @@ export class Job extends APIResource {
   get(jobId: string, options?: Core.RequestOptions): Core.APIPromise<JobGetResponse> {
     return this._client.get(`/job/${jobId}`, options);
   }
-}
-
-export interface JobListResponse {
-  /**
-   * List of jobs with their job_id, status, type, raw_config, created_at, num_pages
-   * and duration
-   */
-  jobs: Array<JobListResponse.Job>;
 
   /**
-   * Cursor to fetch the next page of results. If null, there are no more results.
+   * Get Jobs
    */
-  next_cursor?: string | null;
-}
-
-export namespace JobListResponse {
-  export interface Job {
-    created_at: string;
-
-    duration: number | null;
-
-    job_id: string;
-
-    num_pages: number | null;
-
-    raw_config: string;
-
-    status: 'Pending' | 'Completed' | 'Failed' | 'Idle' | 'InProgress' | 'Completing' | 'Cancelled';
-
-    total_pages: number | null;
-
-    type: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline';
-
-    bucket?: unknown;
-
-    source?: unknown;
+  getAll(query?: JobGetAllParams, options?: Core.RequestOptions): Core.APIPromise<JobGetAllResponse>;
+  getAll(options?: Core.RequestOptions): Core.APIPromise<JobGetAllResponse>;
+  getAll(
+    query: JobGetAllParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<JobGetAllResponse> {
+    if (isRequestOptions(query)) {
+      return this.getAll({}, query);
+    }
+    return this._client.get('/jobs', { query, ...options });
   }
 }
 
@@ -127,7 +90,44 @@ export namespace JobGetResponse {
   }
 }
 
-export interface JobListParams {
+export interface JobGetAllResponse {
+  /**
+   * List of jobs with their job_id, status, type, raw_config, created_at, num_pages
+   * and duration
+   */
+  jobs: Array<JobGetAllResponse.Job>;
+
+  /**
+   * Cursor to fetch the next page of results. If null, there are no more results.
+   */
+  next_cursor?: string | null;
+}
+
+export namespace JobGetAllResponse {
+  export interface Job {
+    created_at: string;
+
+    duration: number | null;
+
+    job_id: string;
+
+    num_pages: number | null;
+
+    raw_config: string;
+
+    status: 'Pending' | 'Completed' | 'Failed' | 'Idle' | 'InProgress' | 'Completing' | 'Cancelled';
+
+    total_pages: number | null;
+
+    type: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline';
+
+    bucket?: unknown;
+
+    source?: unknown;
+  }
+}
+
+export interface JobGetAllParams {
   /**
    * Cursor for pagination. Use the next_cursor from the previous response to fetch
    * the next page.
@@ -147,9 +147,9 @@ export interface JobListParams {
 
 export declare namespace Job {
   export {
-    type JobListResponse as JobListResponse,
     type JobCancelResponse as JobCancelResponse,
     type JobGetResponse as JobGetResponse,
-    type JobListParams as JobListParams,
+    type JobGetAllResponse as JobGetAllResponse,
+    type JobGetAllParams as JobGetAllParams,
   };
 }

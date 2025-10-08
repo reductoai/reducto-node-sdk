@@ -39,15 +39,15 @@ Types:
 
 Types:
 
-- <code><a href="./src/resources/job.ts">JobListResponse</a></code>
 - <code><a href="./src/resources/job.ts">JobCancelResponse</a></code>
 - <code><a href="./src/resources/job.ts">JobGetResponse</a></code>
+- <code><a href="./src/resources/job.ts">JobGetAllResponse</a></code>
 
 Methods:
 
-- <code title="get /jobs">client.job.<a href="./src/resources/job.ts">list</a>({ ...params }) -> JobListResponse</code>
 - <code title="post /cancel/{job_id}">client.job.<a href="./src/resources/job.ts">cancel</a>(jobId) -> unknown</code>
 - <code title="get /job/{job_id}">client.job.<a href="./src/resources/job.ts">get</a>(jobId) -> JobGetResponse</code>
+- <code title="get /jobs">client.job.<a href="./src/resources/job.ts">getAll</a>({ ...params }) -> JobGetAllResponse</code>
 
 # Split
 
