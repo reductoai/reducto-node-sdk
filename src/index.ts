@@ -12,7 +12,7 @@ import { APIVersionResponse, UploadParams } from './resources/top-level';
 import { Config, ExtractConfig, ParseConfig } from './resources/config';
 import { Edit, EditRunJobParams, EditRunJobResponse, EditRunParams } from './resources/edit';
 import { Extract, ExtractRunJobParams, ExtractRunJobResponse, ExtractRunParams } from './resources/extract';
-import { Job, JobCancelResponse, JobGetResponse, JobListParams, JobListResponse } from './resources/job';
+import { Job, JobCancelResponse, JobGetAllParams, JobGetAllResponse, JobGetResponse } from './resources/job';
 import { Parse, ParseRunJobParams, ParseRunJobResponse, ParseRunParams } from './resources/parse';
 import {
   Pipeline,
@@ -258,10 +258,10 @@ export declare namespace Reducto {
 
   export {
     Job as Job,
-    type JobListResponse as JobListResponse,
     type JobCancelResponse as JobCancelResponse,
     type JobGetResponse as JobGetResponse,
-    type JobListParams as JobListParams,
+    type JobGetAllResponse as JobGetAllResponse,
+    type JobGetAllParams as JobGetAllParams,
   };
 
   export {

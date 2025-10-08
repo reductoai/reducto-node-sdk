@@ -11,10 +11,10 @@ export {
 } from './extract';
 export {
   Job,
-  type JobListResponse,
   type JobCancelResponse,
   type JobGetResponse,
-  type JobListParams,
+  type JobGetAllResponse,
+  type JobGetAllParams,
 } from './job';
 export { Parse, type ParseRunJobResponse, type ParseRunParams, type ParseRunJobParams } from './parse';
 export {
