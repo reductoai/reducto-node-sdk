@@ -86,7 +86,7 @@ export namespace JobGetResponse {
 
     total_pages?: number | null;
 
-    type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | null;
+    type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | null;
   }
 }
 
