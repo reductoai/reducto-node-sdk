@@ -92,7 +92,7 @@ export interface AdvancedProcessingOptions {
    * The OCR system to use. Highres is recommended for documents with English
    * characters. Legacy uses an alternative OCR backend.
    */
-  ocr_system?: 'highres' | 'multilingual' | 'combined' | 'legacy';
+  ocr_system?: 'highres' | 'multilingual' | 'combined' | 'reducto' | 'legacy';
 
   /**
    * The page range to process (1-indexed). By default, the entire document is
@@ -355,6 +355,12 @@ export interface ExperimentalProcessingOptions {
    * The configuration options for enrichment.
    */
   enrich?: EnrichConfig;
+
+  /**
+   * Layout enrichment is a beta feature that improves our layout and reading order
+   * performance at the cost of increased latency. Defaults to False.
+   */
+  layout_enrichment?: boolean;
 
   /**
    * The layout model to use for the document. This will be deprecated in the future.

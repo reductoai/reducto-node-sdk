@@ -16,8 +16,17 @@ export class Job extends APIResource {
   /**
    * Retrieve Parse
    */
-  get(jobId: string, options?: Core.RequestOptions): Core.APIPromise<JobGetResponse> {
-    return this._client.get(`/job/${jobId}`, options);
+  get(jobId: string, query?: JobGetParams, options?: Core.RequestOptions): Core.APIPromise<JobGetResponse>;
+  get(jobId: string, options?: Core.RequestOptions): Core.APIPromise<JobGetResponse>;
+  get(
+    jobId: string,
+    query: JobGetParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<JobGetResponse> {
+    if (isRequestOptions(query)) {
+      return this.get(jobId, {}, query);
+    }
+    return this._client.get(`/job/${jobId}`, { query, ...options });
   }
 
   /**
@@ -54,7 +63,37 @@ export namespace JobGetResponse {
       | Shared.SplitResponse
       | Shared.EditResponse
       | Shared.PipelineResponse
+      | AsyncJobResponse.V3ExtractResponse
       | null;
+  }
+
+  export namespace AsyncJobResponse {
+    export interface V3ExtractResponse {
+      /**
+       * The extracted response in your provided schema. This is a list of dictionaries.
+       * If disable_chunking is True (default), then it will be a list of length one.
+       */
+      result: unknown | Array<unknown>;
+
+      usage: V3ExtractResponse.Usage;
+
+      job_id?: string | null;
+
+      /**
+       * The link to the studio pipeline for the document.
+       */
+      studio_link?: string | null;
+    }
+
+    export namespace V3ExtractResponse {
+      export interface Usage {
+        num_fields: number;
+
+        num_pages: number;
+
+        credits?: number | null;
+      }
+    }
   }
 
   export interface EnhancedAsyncJobResponse {
@@ -80,6 +119,7 @@ export namespace JobGetResponse {
       | Shared.SplitResponse
       | Shared.EditResponse
       | Shared.PipelineResponse
+      | EnhancedAsyncJobResponse.V3ExtractResponse
       | null;
 
     source?: unknown;
@@ -87,6 +127,35 @@ export namespace JobGetResponse {
     total_pages?: number | null;
 
     type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | null;
+  }
+
+  export namespace EnhancedAsyncJobResponse {
+    export interface V3ExtractResponse {
+      /**
+       * The extracted response in your provided schema. This is a list of dictionaries.
+       * If disable_chunking is True (default), then it will be a list of length one.
+       */
+      result: unknown | Array<unknown>;
+
+      usage: V3ExtractResponse.Usage;
+
+      job_id?: string | null;
+
+      /**
+       * The link to the studio pipeline for the document.
+       */
+      studio_link?: string | null;
+    }
+
+    export namespace V3ExtractResponse {
+      export interface Usage {
+        num_fields: number;
+
+        num_pages: number;
+
+        credits?: number | null;
+      }
+    }
   }
 }
 
@@ -127,6 +196,10 @@ export namespace JobGetAllResponse {
   }
 }
 
+export interface JobGetParams {
+  bucket_name?: string | null;
+}
+
 export interface JobGetAllParams {
   /**
    * Cursor for pagination. Use the next_cursor from the previous response to fetch
@@ -150,6 +223,7 @@ export declare namespace Job {
     type JobCancelResponse as JobCancelResponse,
     type JobGetResponse as JobGetResponse,
     type JobGetAllResponse as JobGetAllResponse,
+    type JobGetParams as JobGetParams,
     type JobGetAllParams as JobGetAllParams,
   };
 }

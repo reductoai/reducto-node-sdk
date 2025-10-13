@@ -11,9 +11,28 @@ import * as TopLevelAPI from './resources/top-level';
 import { APIVersionResponse, UploadParams } from './resources/top-level';
 import { Config, ExtractConfig, ParseConfig } from './resources/config';
 import { Edit, EditRunJobParams, EditRunJobResponse, EditRunParams } from './resources/edit';
-import { Extract, ExtractRunJobParams, ExtractRunJobResponse, ExtractRunParams } from './resources/extract';
-import { Job, JobCancelResponse, JobGetAllParams, JobGetAllResponse, JobGetResponse } from './resources/job';
-import { Parse, ParseRunJobParams, ParseRunJobResponse, ParseRunParams } from './resources/parse';
+import {
+  Extract,
+  ExtractRunJobParams,
+  ExtractRunJobResponse,
+  ExtractRunParams,
+  ExtractRunResponse,
+} from './resources/extract';
+import {
+  Job,
+  JobCancelResponse,
+  JobGetAllParams,
+  JobGetAllResponse,
+  JobGetParams,
+  JobGetResponse,
+} from './resources/job';
+import {
+  Parse,
+  ParseRunJobParams,
+  ParseRunJobResponse,
+  ParseRunParams,
+  ParseRunResponse,
+} from './resources/parse';
 import {
   Pipeline,
   PipelineRunJobParams,
@@ -261,6 +280,7 @@ export declare namespace Reducto {
     type JobCancelResponse as JobCancelResponse,
     type JobGetResponse as JobGetResponse,
     type JobGetAllResponse as JobGetAllResponse,
+    type JobGetParams as JobGetParams,
     type JobGetAllParams as JobGetAllParams,
   };
 
@@ -273,6 +293,7 @@ export declare namespace Reducto {
 
   export {
     Parse as Parse,
+    type ParseRunResponse as ParseRunResponse,
     type ParseRunJobResponse as ParseRunJobResponse,
     type ParseRunParams as ParseRunParams,
     type ParseRunJobParams as ParseRunJobParams,
@@ -280,6 +301,7 @@ export declare namespace Reducto {
 
   export {
     Extract as Extract,
+    type ExtractRunResponse as ExtractRunResponse,
     type ExtractRunJobResponse as ExtractRunJobResponse,
     type ExtractRunParams as ExtractRunParams,
     type ExtractRunJobParams as ExtractRunJobParams,

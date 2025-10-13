@@ -46,7 +46,7 @@ Types:
 Methods:
 
 - <code title="post /cancel/{job_id}">client.job.<a href="./src/resources/job.ts">cancel</a>(jobId) -> unknown</code>
-- <code title="get /job/{job_id}">client.job.<a href="./src/resources/job.ts">get</a>(jobId) -> JobGetResponse</code>
+- <code title="get /job/{job_id}">client.job.<a href="./src/resources/job.ts">get</a>(jobId, { ...params }) -> JobGetResponse</code>
 - <code title="get /jobs">client.job.<a href="./src/resources/job.ts">getAll</a>({ ...params }) -> JobGetAllResponse</code>
 
 # Split
@@ -64,22 +64,24 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/parse.ts">ParseRunResponse</a></code>
 - <code><a href="./src/resources/parse.ts">ParseRunJobResponse</a></code>
 
 Methods:
 
-- <code title="post /parse">client.parse.<a href="./src/resources/parse.ts">run</a>({ ...params }) -> ParseResponse</code>
+- <code title="post /parse">client.parse.<a href="./src/resources/parse.ts">run</a>({ ...params }) -> ParseRunResponse</code>
 - <code title="post /parse_async">client.parse.<a href="./src/resources/parse.ts">runJob</a>({ ...params }) -> ParseRunJobResponse</code>
 
 # Extract
 
 Types:
 
+- <code><a href="./src/resources/extract.ts">ExtractRunResponse</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractRunJobResponse</a></code>
 
 Methods:
 
-- <code title="post /extract">client.extract.<a href="./src/resources/extract.ts">run</a>({ ...params }) -> ExtractResponse</code>
+- <code title="post /extract">client.extract.<a href="./src/resources/extract.ts">run</a>({ ...params }) -> ExtractRunResponse</code>
 - <code title="post /extract_async">client.extract.<a href="./src/resources/extract.ts">runJob</a>({ ...params }) -> ExtractRunJobResponse</code>
 
 # Edit
