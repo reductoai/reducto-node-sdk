@@ -27,9 +27,7 @@ const client = new Reducto({
   environment: 'eu', // or 'production' | 'au'; defaults to 'production'
 });
 
-const parseResponse = await client.parse.run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' });
-
-console.log(parseResponse.job_id);
+const response = await client.parse.run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' });
 ```
 
 ### Request & Response types
@@ -46,7 +44,7 @@ const client = new Reducto({
 });
 
 const params: Reducto.ParseRunParams = { document_url: 'https://pdfobject.com/pdf/sample.pdf' };
-const parseResponse: Reducto.ParseResponse = await client.parse.run(params);
+const response: Reducto.ParseRunResponse = await client.parse.run(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -89,7 +87,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const parseResponse = await client.parse
+const response = await client.parse
   .run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' })
   .catch(async (err) => {
     if (err instanceof Reducto.APIError) {
@@ -175,11 +173,11 @@ const response = await client.parse
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: parseResponse, response: raw } = await client.parse
+const { data: response, response: raw } = await client.parse
   .run({ document_url: 'https://pdfobject.com/pdf/sample.pdf' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(parseResponse.job_id);
+console.log(response);
 ```
 
 ### Making custom/undocumented requests

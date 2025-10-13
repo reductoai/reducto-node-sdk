@@ -50,6 +50,7 @@ describe('resource extract', () => {
         spreadsheet_table_clustering: 'default',
         table_output_format: 'html',
       },
+      agent_extract: { enabled: true },
       array_extract: { enabled: true, mode: 'auto', pages_per_segment: 0, streaming_extract_item_density: 0 },
       citations_options: { numerical_confidence: true },
       experimental_options: {
@@ -60,6 +61,7 @@ describe('resource extract', () => {
         enable_equations: true,
         enable_scripts: true,
         enrich: { enabled: true, mode: 'standard', prompt: 'prompt' },
+        layout_enrichment: true,
         layout_model: 'default',
         native_office_conversion: true,
         return_figure_images: true,
@@ -71,6 +73,7 @@ describe('resource extract', () => {
       experimental_table_citations: true,
       generate_citations: true,
       include_images: true,
+      latency_sensitive: true,
       options: {
         chunking: { chunk_mode: 'variable', chunk_size: 0 },
         extraction_mode: 'ocr',
@@ -128,6 +131,7 @@ describe('resource extract', () => {
         spreadsheet_table_clustering: 'default',
         table_output_format: 'html',
       },
+      agent_extract: { enabled: true },
       array_extract: { enabled: true, mode: 'auto', pages_per_segment: 0, streaming_extract_item_density: 0 },
       citations_options: { numerical_confidence: true },
       experimental_options: {
@@ -138,6 +142,7 @@ describe('resource extract', () => {
         enable_equations: true,
         enable_scripts: true,
         enrich: { enabled: true, mode: 'standard', prompt: 'prompt' },
+        layout_enrichment: true,
         layout_model: 'default',
         native_office_conversion: true,
         return_figure_images: true,
@@ -149,6 +154,7 @@ describe('resource extract', () => {
       experimental_table_citations: true,
       generate_citations: true,
       include_images: true,
+      latency_sensitive: true,
       options: {
         chunking: { chunk_mode: 'variable', chunk_size: 0 },
         extraction_mode: 'ocr',

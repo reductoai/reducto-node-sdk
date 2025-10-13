@@ -26,6 +26,11 @@ export interface ExtractConfig {
   advanced_options?: Shared.AdvancedProcessingOptions;
 
   /**
+   * The configuration options for agent extract
+   */
+  agent_extract?: ExtractConfig.AgentExtract;
+
+  /**
    * The configuration options for array extract
    */
   array_extract?: Shared.ArrayExtractConfig;
@@ -53,6 +58,12 @@ export interface ExtractConfig {
    */
   include_images?: boolean;
 
+  /**
+   * If True, the job will be processed with lower latency and higher priority. Uses
+   * 2x the cost of a regular job. Defaults to False.
+   */
+  latency_sensitive?: boolean;
+
   options?: Shared.BaseProcessingOptions;
 
   /**
@@ -77,6 +88,18 @@ export interface ExtractConfig {
    * If chunking should be used for the extraction. Defaults to False.
    */
   use_chunking?: boolean;
+}
+
+export namespace ExtractConfig {
+  /**
+   * The configuration options for agent extract
+   */
+  export interface AgentExtract {
+    /**
+     * If agent extraction should be used for extraction.
+     */
+    enabled?: boolean;
+  }
 }
 
 export interface ParseConfig {
