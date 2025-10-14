@@ -11,7 +11,7 @@ const client = new Reducto({
 describe('resource parse', () => {
   // Prism tests are disabled
   test.skip('run: only required params', async () => {
-    const responsePromise = client.parse.run({ document_url: 'string' });
+    const responsePromise = client.parse.run({ input: 'string' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,63 +24,43 @@ describe('resource parse', () => {
   // Prism tests are disabled
   test.skip('run: required and optional params', async () => {
     const response = await client.parse.run({
-      document_url: 'string',
-      advanced_options: {
+      input: 'string',
+      enhance: { agentic: [{ scope: 'table', prompt: 'prompt' }], summarize_figures: true },
+      formatting: {
         add_page_markers: true,
-        continue_hierarchy: true,
-        document_password: 'document_password',
-        enable_change_tracking: true,
-        enable_highlight_detection: true,
-        exclude_hidden_rows_cols: true,
-        exclude_hidden_sheets: true,
-        filter_line_numbers: true,
-        force_file_extension: 'force_file_extension',
-        include_color_information: true,
-        include_formula_information: true,
-        keep_line_breaks: true,
-        large_table_chunking: { enabled: true, size: 0 },
+        include: ['change_tracking'],
         merge_tables: true,
-        ocr_system: 'highres',
-        page_range: { end: 0, start: 0 },
-        persist_results: true,
-        read_comments: true,
-        remove_text_formatting: true,
-        return_ocr_data: true,
-        spreadsheet_table_clustering: 'default',
         table_output_format: 'html',
       },
-      experimental_options: {
-        danger_filter_wide_boxes: true,
-        detect_signatures: true,
-        embed_text_metadata_pdf: true,
-        enable_checkboxes: true,
-        enable_equations: true,
-        enable_scripts: true,
-        enrich: { enabled: true, mode: 'standard', prompt: 'prompt' },
-        layout_model: 'default',
-        native_office_conversion: true,
-        return_figure_images: true,
-        return_table_images: true,
-        rotate_figures: true,
-        rotate_pages: true,
-        user_specified_timeout_seconds: 0,
-      },
-      options: {
+      retrieval: {
         chunking: { chunk_mode: 'variable', chunk_size: 0 },
-        extraction_mode: 'ocr',
-        figure_summary: { enabled: true, override: true, prompt: 'prompt' },
+        embedding_optimized: true,
         filter_blocks: ['Header'],
-        force_url_result: true,
-        ocr_mode: 'standard',
-        table_summary: { enabled: true, prompt: 'prompt' },
       },
-      priority: true,
+      settings: {
+        document_password: 'document_password',
+        embed_pdf_metadata: true,
+        force_file_extension: 'force_file_extension',
+        force_url_result: true,
+        ocr_system: 'standard',
+        page_range: { end: 0, start: 0 },
+        persist_results: true,
+        return_images: ['figure'],
+        return_ocr_data: true,
+        timeout: 0,
+      },
+      spreadsheet: {
+        clustering: 'accurate',
+        exclude: ['hidden_sheets'],
+        include: ['cell_colors'],
+        split_large_tables: { enabled: true, size: 0 },
+      },
     });
   });
 
   // Prism tests are disabled
   test.skip('runJob: only required params', async () => {
-    const responsePromise = client.parse.runJob({ document_url: 'string' });
+    const responsePromise = client.parse.runJob({ input: 'string' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -93,58 +73,38 @@ describe('resource parse', () => {
   // Prism tests are disabled
   test.skip('runJob: required and optional params', async () => {
     const response = await client.parse.runJob({
-      document_url: 'string',
-      advanced_options: {
+      input: 'string',
+      async: { metadata: {}, priority: true, webhook: { channels: ['string'], mode: 'svix' } },
+      enhance: { agentic: [{ scope: 'table', prompt: 'prompt' }], summarize_figures: true },
+      formatting: {
         add_page_markers: true,
-        continue_hierarchy: true,
-        document_password: 'document_password',
-        enable_change_tracking: true,
-        enable_highlight_detection: true,
-        exclude_hidden_rows_cols: true,
-        exclude_hidden_sheets: true,
-        filter_line_numbers: true,
-        force_file_extension: 'force_file_extension',
-        include_color_information: true,
-        include_formula_information: true,
-        keep_line_breaks: true,
-        large_table_chunking: { enabled: true, size: 0 },
+        include: ['change_tracking'],
         merge_tables: true,
-        ocr_system: 'highres',
-        page_range: { end: 0, start: 0 },
-        persist_results: true,
-        read_comments: true,
-        remove_text_formatting: true,
-        return_ocr_data: true,
-        spreadsheet_table_clustering: 'default',
         table_output_format: 'html',
       },
-      experimental_options: {
-        danger_filter_wide_boxes: true,
-        detect_signatures: true,
-        embed_text_metadata_pdf: true,
-        enable_checkboxes: true,
-        enable_equations: true,
-        enable_scripts: true,
-        enrich: { enabled: true, mode: 'standard', prompt: 'prompt' },
-        layout_model: 'default',
-        native_office_conversion: true,
-        return_figure_images: true,
-        return_table_images: true,
-        rotate_figures: true,
-        rotate_pages: true,
-        user_specified_timeout_seconds: 0,
-      },
-      options: {
+      retrieval: {
         chunking: { chunk_mode: 'variable', chunk_size: 0 },
-        extraction_mode: 'ocr',
-        figure_summary: { enabled: true, override: true, prompt: 'prompt' },
+        embedding_optimized: true,
         filter_blocks: ['Header'],
-        force_url_result: true,
-        ocr_mode: 'standard',
-        table_summary: { enabled: true, prompt: 'prompt' },
       },
-      priority: true,
-      webhook: { channels: ['string'], metadata: {}, mode: 'disabled', url: 'url' },
+      settings: {
+        document_password: 'document_password',
+        embed_pdf_metadata: true,
+        force_file_extension: 'force_file_extension',
+        force_url_result: true,
+        ocr_system: 'standard',
+        page_range: { end: 0, start: 0 },
+        persist_results: true,
+        return_images: ['figure'],
+        return_ocr_data: true,
+        timeout: 0,
+      },
+      spreadsheet: {
+        clustering: 'accurate',
+        exclude: ['hidden_sheets'],
+        include: ['cell_colors'],
+        split_large_tables: { enabled: true, size: 0 },
+      },
     });
   });
 });

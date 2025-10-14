@@ -26,36 +26,28 @@ export interface SplitRunJobResponse {
 
 export interface SplitRunParams {
   /**
-   * The URL of the document to be processed. You can provide one of the following:
-   *
-   * 1. A publicly available URL
-   * 2. A presigned S3 URL
-   * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
-   *    uploading a document
-   * 4. A job_id (jobid://) or a list of job_ids (jobid://) obtained from a previous
-   *    /parse endpoint
+   * The URL of the document to be processed. You can provide one of the
+   * following: 1. A publicly available URL 2. A presigned S3 URL 3. A reducto://
+   * prefixed URL obtained from the /upload endpoint after directly uploading a
+   * document 4. A jobid:// prefixed URL obtained from a previous /parse invocation
    */
-  document_url: string | Array<string> | Shared.Upload;
+  input: string | Shared.Upload;
 
   /**
    * The configuration options for processing the document.
    */
   split_description: Array<Shared.SplitCategory>;
 
-  advanced_options?: Shared.AdvancedProcessingOptions;
-
-  experimental_options?: Shared.ExperimentalProcessingOptions;
-
-  options?: Shared.BaseProcessingOptions;
+  /**
+   * The configuration options for parsing the document. If you are passing in a
+   * jobid:// URL for the file, then this configuration will be ignored.
+   */
+  parsing?: Shared.ParseOptions;
 
   /**
-   * If True, attempts to process the job with priority if the user has priority
-   * processing budget available; by default, sync jobs are prioritized above async
-   * jobs.
+   * The settings for split processing.
    */
-  priority?: boolean;
-
-  split_options?: SplitRunParams.SplitOptions;
+  settings?: SplitRunParams.Settings;
 
   /**
    * The prompt that describes rules for splitting the document.
@@ -64,7 +56,10 @@ export interface SplitRunParams {
 }
 
 export namespace SplitRunParams {
-  export interface SplitOptions {
+  /**
+   * The settings for split processing.
+   */
+  export interface Settings {
     /**
      * If tables should be truncated to the first few rows or if all content should be
      * preserved. truncate improves latency, preserve is recommended for cases where
@@ -75,58 +70,7 @@ export namespace SplitRunParams {
   }
 }
 
-export interface SplitRunJobParams {
-  /**
-   * The URL of the document to be processed. You can provide one of the following:
-   *
-   * 1. A publicly available URL
-   * 2. A presigned S3 URL
-   * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
-   *    uploading a document
-   * 4. A job_id (jobid://) or a list of job_ids (jobid://) obtained from a previous
-   *    /parse endpoint
-   */
-  document_url: string | Array<string> | Shared.Upload;
-
-  /**
-   * The configuration options for processing the document.
-   */
-  split_description: Array<Shared.SplitCategory>;
-
-  advanced_options?: Shared.AdvancedProcessingOptions;
-
-  experimental_options?: Shared.ExperimentalProcessingOptions;
-
-  options?: Shared.BaseProcessingOptions;
-
-  /**
-   * If True, attempts to process the job with priority if the user has priority
-   * processing budget available; by default, sync jobs are prioritized above async
-   * jobs.
-   */
-  priority?: boolean;
-
-  split_options?: SplitRunJobParams.SplitOptions;
-
-  /**
-   * The prompt that describes rules for splitting the document.
-   */
-  split_rules?: string;
-
-  webhook?: Shared.WebhookConfigNew;
-}
-
-export namespace SplitRunJobParams {
-  export interface SplitOptions {
-    /**
-     * If tables should be truncated to the first few rows or if all content should be
-     * preserved. truncate improves latency, preserve is recommended for cases where
-     * partition_key is being used and the partition_key may be included within the
-     * table. Defaults to truncate
-     */
-    table_cutoff?: 'truncate' | 'preserve';
-  }
-}
+export type SplitRunJobParams = unknown;
 
 export declare namespace Split {
   export {

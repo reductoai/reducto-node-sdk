@@ -8,7 +8,7 @@ export class Extract extends APIResource {
   /**
    * Extract
    */
-  run(body: ExtractRunParams, options?: Core.RequestOptions): Core.APIPromise<Shared.ExtractResponse> {
+  run(body: ExtractRunParams, options?: Core.RequestOptions): Core.APIPromise<ExtractRunResponse> {
     return this._client.post('/extract', { body, ...options });
   }
 
@@ -20,186 +20,293 @@ export class Extract extends APIResource {
   }
 }
 
+export type ExtractRunResponse = Shared.V3ExtractResponse | ExtractRunResponse.AsyncExtractResponse;
+
+export namespace ExtractRunResponse {
+  export interface AsyncExtractResponse {
+    job_id: string;
+  }
+}
+
 export interface ExtractRunJobResponse {
   job_id: string;
 }
 
-export interface ExtractRunParams {
-  /**
-   * The URL of the document to be processed. You can provide one of the following:
-   *
-   * 1. A publicly available URL
-   * 2. A presigned S3 URL
-   * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
-   *    uploading a document
-   * 4. A job_id (jobid://) or a list of job_ids (jobid://) obtained from a previous
-   *    /parse endpoint
-   */
-  document_url: string | Array<string> | Shared.Upload;
+export type ExtractRunParams = ExtractRunParams.SyncExtractConfig | ExtractRunParams.AsyncExtractConfig;
 
-  /**
-   * The JSON schema to use for extraction.
-   */
-  schema: unknown;
-
-  advanced_options?: Shared.AdvancedProcessingOptions;
-
-  /**
-   * The configuration options for array extract
-   */
-  array_extract?: Shared.ArrayExtractConfig;
-
-  /**
-   * The configuration options for citations.
-   */
-  citations_options?: ExtractRunParams.CitationsOptions;
-
-  experimental_options?: Shared.ExperimentalProcessingOptions;
-
-  /**
-   * If table citations should be generated for the extracted content.
-   */
-  experimental_table_citations?: boolean;
-
-  /**
-   * If citations should be generated for the extracted content.
-   */
-  generate_citations?: boolean;
-
-  /**
-   * If images should be passed directly for extractions. Can only be enabled for
-   * documents with less than 10 pages. Defaults to False.
-   */
-  include_images?: boolean;
-
-  options?: Shared.BaseProcessingOptions;
-
-  /**
-   * If True, attempts to process the job with priority if the user has priority
-   * processing budget available; by default, sync jobs are prioritized above async
-   * jobs.
-   */
-  priority?: boolean;
-
-  /**
-   * If spreadsheet agent should be used for extraction.
-   */
-  spreadsheet_agent?: boolean;
-
-  /**
-   * A system prompt to use for the extraction. This is a general prompt that is
-   * applied to the entire document before any other prompts.
-   */
-  system_prompt?: string;
-
-  /**
-   * If chunking should be used for the extraction. Defaults to False.
-   */
-  use_chunking?: boolean;
-}
-
-export namespace ExtractRunParams {
-  /**
-   * The configuration options for citations.
-   */
-  export interface CitationsOptions {
+export declare namespace ExtractRunParams {
+  export interface SyncExtractConfig {
     /**
-     * If True, enable numeric citation confidence scores. Defaults to False.
+     * The URL of the document to be processed. You can provide one of the
+     * following: 1. A publicly available URL 2. A presigned S3 URL 3. A reducto://
+     * prefixed URL obtained from the /upload endpoint after directly uploading a
+     * document 4. A jobid:// prefixed URL obtained from a previous /parse invocation
      */
-    numerical_confidence?: boolean;
+    input: string | Shared.Upload;
+
+    /**
+     * The instructions to use for the extraction.
+     */
+    instructions?: SyncExtractConfig.Instructions;
+
+    /**
+     * The configuration options for parsing the document. If you are passing in a
+     * jobid:// URL for the file, then this configuration will be ignored.
+     */
+    parsing?: Shared.ParseOptions;
+
+    /**
+     * The settings to use for the extraction.
+     */
+    settings?: SyncExtractConfig.Settings;
+  }
+
+  export namespace SyncExtractConfig {
+    /**
+     * The instructions to use for the extraction.
+     */
+    export interface Instructions {
+      /**
+       * The JSON schema to use for the extraction.
+       */
+      schema?: unknown;
+
+      /**
+       * The system prompt to use for the extraction.
+       */
+      system_prompt?: string;
+    }
+
+    /**
+     * The settings to use for the extraction.
+     */
+    export interface Settings {
+      /**
+       * If True, use array extraction.
+       */
+      array_extract?: boolean;
+
+      /**
+       * The citations to use for the extraction.
+       */
+      citations?: Settings.Citations;
+
+      /**
+       * If True, include images in the extraction.
+       */
+      include_images?: boolean;
+
+      /**
+       * If True, jobs will be processed with a higher throughput and priority at a
+       * higher cost. Defaults to False.
+       */
+      optimize_for_latency?: boolean;
+    }
+
+    export namespace Settings {
+      /**
+       * The citations to use for the extraction.
+       */
+      export interface Citations {
+        /**
+         * If True, include citations in the extraction.
+         */
+        enabled?: boolean;
+
+        /**
+         * If True, enable numeric citation confidence scores. Defaults to True.
+         */
+        numerical_confidence?: boolean;
+      }
+    }
+  }
+
+  export interface AsyncExtractConfig {
+    /**
+     * The URL of the document to be processed. You can provide one of the
+     * following: 1. A publicly available URL 2. A presigned S3 URL 3. A reducto://
+     * prefixed URL obtained from the /upload endpoint after directly uploading a
+     * document 4. A jobid:// prefixed URL obtained from a previous /parse invocation
+     */
+    input: string | Shared.Upload;
+
+    /**
+     * The configuration options for asynchronous processing (default synchronous).
+     */
+    async?: Shared.ConfigV3AsyncConfig;
+
+    /**
+     * The instructions to use for the extraction.
+     */
+    instructions?: AsyncExtractConfig.Instructions;
+
+    /**
+     * The configuration options for parsing the document. If you are passing in a
+     * jobid:// URL for the file, then this configuration will be ignored.
+     */
+    parsing?: Shared.ParseOptions;
+
+    /**
+     * The settings to use for the extraction.
+     */
+    settings?: AsyncExtractConfig.Settings;
+  }
+
+  export namespace AsyncExtractConfig {
+    /**
+     * The instructions to use for the extraction.
+     */
+    export interface Instructions {
+      /**
+       * The JSON schema to use for the extraction.
+       */
+      schema?: unknown;
+
+      /**
+       * The system prompt to use for the extraction.
+       */
+      system_prompt?: string;
+    }
+
+    /**
+     * The settings to use for the extraction.
+     */
+    export interface Settings {
+      /**
+       * If True, use array extraction.
+       */
+      array_extract?: boolean;
+
+      /**
+       * The citations to use for the extraction.
+       */
+      citations?: Settings.Citations;
+
+      /**
+       * If True, include images in the extraction.
+       */
+      include_images?: boolean;
+
+      /**
+       * If True, jobs will be processed with a higher throughput and priority at a
+       * higher cost. Defaults to False.
+       */
+      optimize_for_latency?: boolean;
+    }
+
+    export namespace Settings {
+      /**
+       * The citations to use for the extraction.
+       */
+      export interface Citations {
+        /**
+         * If True, include citations in the extraction.
+         */
+        enabled?: boolean;
+
+        /**
+         * If True, enable numeric citation confidence scores. Defaults to True.
+         */
+        numerical_confidence?: boolean;
+      }
+    }
   }
 }
 
 export interface ExtractRunJobParams {
   /**
-   * The URL of the document to be processed. You can provide one of the following:
-   *
-   * 1. A publicly available URL
-   * 2. A presigned S3 URL
-   * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
-   *    uploading a document
-   * 4. A job_id (jobid://) or a list of job_ids (jobid://) obtained from a previous
-   *    /parse endpoint
+   * The URL of the document to be processed. You can provide one of the
+   * following: 1. A publicly available URL 2. A presigned S3 URL 3. A reducto://
+   * prefixed URL obtained from the /upload endpoint after directly uploading a
+   * document 4. A jobid:// prefixed URL obtained from a previous /parse invocation
    */
-  document_url: string | Array<string> | Shared.Upload;
+  input: string | Shared.Upload;
 
   /**
-   * The JSON schema to use for extraction.
+   * The configuration options for asynchronous processing (default synchronous).
    */
-  schema: unknown;
-
-  advanced_options?: Shared.AdvancedProcessingOptions;
+  async?: Shared.ConfigV3AsyncConfig;
 
   /**
-   * The configuration options for array extract
+   * The instructions to use for the extraction.
    */
-  array_extract?: Shared.ArrayExtractConfig;
+  instructions?: ExtractRunJobParams.Instructions;
 
   /**
-   * The configuration options for citations.
+   * The configuration options for parsing the document. If you are passing in a
+   * jobid:// URL for the file, then this configuration will be ignored.
    */
-  citations_options?: ExtractRunJobParams.CitationsOptions;
-
-  experimental_options?: Shared.ExperimentalProcessingOptions;
+  parsing?: Shared.ParseOptions;
 
   /**
-   * If table citations should be generated for the extracted content.
+   * The settings to use for the extraction.
    */
-  experimental_table_citations?: boolean;
-
-  /**
-   * If citations should be generated for the extracted content.
-   */
-  generate_citations?: boolean;
-
-  /**
-   * If images should be passed directly for extractions. Can only be enabled for
-   * documents with less than 10 pages. Defaults to False.
-   */
-  include_images?: boolean;
-
-  options?: Shared.BaseProcessingOptions;
-
-  /**
-   * If True, attempts to process the job with priority if the user has priority
-   * processing budget available; by default, sync jobs are prioritized above async
-   * jobs.
-   */
-  priority?: boolean;
-
-  /**
-   * If spreadsheet agent should be used for extraction.
-   */
-  spreadsheet_agent?: boolean;
-
-  /**
-   * A system prompt to use for the extraction. This is a general prompt that is
-   * applied to the entire document before any other prompts.
-   */
-  system_prompt?: string;
-
-  /**
-   * If chunking should be used for the extraction. Defaults to False.
-   */
-  use_chunking?: boolean;
-
-  webhook?: Shared.WebhookConfigNew;
+  settings?: ExtractRunJobParams.Settings;
 }
 
 export namespace ExtractRunJobParams {
   /**
-   * The configuration options for citations.
+   * The instructions to use for the extraction.
    */
-  export interface CitationsOptions {
+  export interface Instructions {
     /**
-     * If True, enable numeric citation confidence scores. Defaults to False.
+     * The JSON schema to use for the extraction.
      */
-    numerical_confidence?: boolean;
+    schema?: unknown;
+
+    /**
+     * The system prompt to use for the extraction.
+     */
+    system_prompt?: string;
+  }
+
+  /**
+   * The settings to use for the extraction.
+   */
+  export interface Settings {
+    /**
+     * If True, use array extraction.
+     */
+    array_extract?: boolean;
+
+    /**
+     * The citations to use for the extraction.
+     */
+    citations?: Settings.Citations;
+
+    /**
+     * If True, include images in the extraction.
+     */
+    include_images?: boolean;
+
+    /**
+     * If True, jobs will be processed with a higher throughput and priority at a
+     * higher cost. Defaults to False.
+     */
+    optimize_for_latency?: boolean;
+  }
+
+  export namespace Settings {
+    /**
+     * The citations to use for the extraction.
+     */
+    export interface Citations {
+      /**
+       * If True, include citations in the extraction.
+       */
+      enabled?: boolean;
+
+      /**
+       * If True, enable numeric citation confidence scores. Defaults to True.
+       */
+      numerical_confidence?: boolean;
+    }
   }
 }
 
 export declare namespace Extract {
   export {
+    type ExtractRunResponse as ExtractRunResponse,
     type ExtractRunJobResponse as ExtractRunJobResponse,
     type ExtractRunParams as ExtractRunParams,
     type ExtractRunJobParams as ExtractRunJobParams,

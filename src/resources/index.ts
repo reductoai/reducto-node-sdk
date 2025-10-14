@@ -5,12 +5,25 @@ export { Config, type ExtractConfig, type ParseConfig } from './config';
 export { Edit, type EditRunJobResponse, type EditRunParams, type EditRunJobParams } from './edit';
 export {
   Extract,
+  type ExtractRunResponse,
   type ExtractRunJobResponse,
   type ExtractRunParams,
   type ExtractRunJobParams,
 } from './extract';
-export { Job, type JobCancelResponse, type JobGetResponse } from './job';
-export { Parse, type ParseRunJobResponse, type ParseRunParams, type ParseRunJobParams } from './parse';
+export {
+  Job,
+  type JobCancelResponse,
+  type JobGetResponse,
+  type JobGetAllResponse,
+  type JobGetAllParams,
+} from './job';
+export {
+  Parse,
+  type ParseRunResponse,
+  type ParseRunJobResponse,
+  type ParseRunParams,
+  type ParseRunJobParams,
+} from './parse';
 export {
   Pipeline,
   type PipelineRunJobResponse,

@@ -26,6 +26,11 @@ export interface ExtractConfig {
   advanced_options?: Shared.AdvancedProcessingOptions;
 
   /**
+   * The configuration options for agent extract
+   */
+  agent_extract?: ExtractConfig.AgentExtract;
+
+  /**
    * The configuration options for array extract
    */
   array_extract?: Shared.ArrayExtractConfig;
@@ -33,7 +38,7 @@ export interface ExtractConfig {
   /**
    * The configuration options for citations.
    */
-  citations_options?: ExtractConfig.CitationsOptions;
+  citations_options?: Shared.AdvancedCitationsConfig;
 
   experimental_options?: Shared.ExperimentalProcessingOptions;
 
@@ -52,6 +57,12 @@ export interface ExtractConfig {
    * documents with less than 10 pages. Defaults to False.
    */
   include_images?: boolean;
+
+  /**
+   * If True, the job will be processed with lower latency and higher priority. Uses
+   * 2x the cost of a regular job. Defaults to False.
+   */
+  latency_sensitive?: boolean;
 
   options?: Shared.BaseProcessingOptions;
 
@@ -81,13 +92,13 @@ export interface ExtractConfig {
 
 export namespace ExtractConfig {
   /**
-   * The configuration options for citations.
+   * The configuration options for agent extract
    */
-  export interface CitationsOptions {
+  export interface AgentExtract {
     /**
-     * If True, enable numeric citation confidence scores. Defaults to False.
+     * If agent extraction should be used for extraction.
      */
-    numerical_confidence?: boolean;
+    enabled?: boolean;
   }
 }
 

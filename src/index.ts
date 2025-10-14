@@ -11,9 +11,21 @@ import * as TopLevelAPI from './resources/top-level';
 import { APIVersionResponse, UploadParams } from './resources/top-level';
 import { Config, ExtractConfig, ParseConfig } from './resources/config';
 import { Edit, EditRunJobParams, EditRunJobResponse, EditRunParams } from './resources/edit';
-import { Extract, ExtractRunJobParams, ExtractRunJobResponse, ExtractRunParams } from './resources/extract';
-import { Job, JobCancelResponse, JobGetResponse } from './resources/job';
-import { Parse, ParseRunJobParams, ParseRunJobResponse, ParseRunParams } from './resources/parse';
+import {
+  Extract,
+  ExtractRunJobParams,
+  ExtractRunJobResponse,
+  ExtractRunParams,
+  ExtractRunResponse,
+} from './resources/extract';
+import { Job, JobCancelResponse, JobGetAllParams, JobGetAllResponse, JobGetResponse } from './resources/job';
+import {
+  Parse,
+  ParseRunJobParams,
+  ParseRunJobResponse,
+  ParseRunParams,
+  ParseRunResponse,
+} from './resources/parse';
 import {
   Pipeline,
   PipelineRunJobParams,
@@ -256,7 +268,13 @@ export declare namespace Reducto {
 
   export { type APIVersionResponse as APIVersionResponse, type UploadParams as UploadParams };
 
-  export { Job as Job, type JobCancelResponse as JobCancelResponse, type JobGetResponse as JobGetResponse };
+  export {
+    Job as Job,
+    type JobCancelResponse as JobCancelResponse,
+    type JobGetResponse as JobGetResponse,
+    type JobGetAllResponse as JobGetAllResponse,
+    type JobGetAllParams as JobGetAllParams,
+  };
 
   export {
     Split as Split,
@@ -267,6 +285,7 @@ export declare namespace Reducto {
 
   export {
     Parse as Parse,
+    type ParseRunResponse as ParseRunResponse,
     type ParseRunJobResponse as ParseRunJobResponse,
     type ParseRunParams as ParseRunParams,
     type ParseRunJobParams as ParseRunJobParams,
@@ -274,6 +293,7 @@ export declare namespace Reducto {
 
   export {
     Extract as Extract,
+    type ExtractRunResponse as ExtractRunResponse,
     type ExtractRunJobResponse as ExtractRunJobResponse,
     type ExtractRunParams as ExtractRunParams,
     type ExtractRunJobParams as ExtractRunJobParams,
@@ -297,20 +317,42 @@ export declare namespace Reducto {
 
   export { Config as Config, type ExtractConfig as ExtractConfig, type ParseConfig as ParseConfig };
 
+  export type AdvancedCitationsConfig = API.AdvancedCitationsConfig;
   export type AdvancedProcessingOptions = API.AdvancedProcessingOptions;
   export type ArrayExtractConfig = API.ArrayExtractConfig;
   export type BaseProcessingOptions = API.BaseProcessingOptions;
   export type BoundingBox = API.BoundingBox;
+  export type Chunking = API.Chunking;
+  export type ChunkingConfig = API.ChunkingConfig;
+  export type ConfigV3AsyncConfig = API.ConfigV3AsyncConfig;
+  export type DirectWebhookConfig = API.DirectWebhookConfig;
   export type EditResponse = API.EditResponse;
+  export type Enhance = API.Enhance;
+  export type EnrichConfig = API.EnrichConfig;
   export type ExperimentalProcessingOptions = API.ExperimentalProcessingOptions;
   export type ExtractResponse = API.ExtractResponse;
+  export type ExtractUsage = API.ExtractUsage;
+  export type FigureAgentic = API.FigureAgentic;
+  export type FigureSummaryConfig = API.FigureSummaryConfig;
+  export type Formatting = API.Formatting;
+  export type LargeTableChunkingConfig = API.LargeTableChunkingConfig;
   export type PageRange = API.PageRange;
+  export type ParseOptions = API.ParseOptions;
   export type ParseResponse = API.ParseResponse;
   export type ParseUsage = API.ParseUsage;
   export type PipelineResponse = API.PipelineResponse;
+  export type Retrieval = API.Retrieval;
+  export type Settings = API.Settings;
   export type SplitCategory = API.SplitCategory;
+  export type SplitLargeTables = API.SplitLargeTables;
   export type SplitResponse = API.SplitResponse;
+  export type Spreadsheet = API.Spreadsheet;
+  export type SvixWebhookConfig = API.SvixWebhookConfig;
+  export type TableAgentic = API.TableAgentic;
+  export type TableSummaryConfig = API.TableSummaryConfig;
+  export type TextAgentic = API.TextAgentic;
   export type Upload = API.Upload;
+  export type V3ExtractResponse = API.V3ExtractResponse;
   export type WebhookConfigNew = API.WebhookConfigNew;
 }
 

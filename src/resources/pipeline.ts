@@ -29,9 +29,9 @@ export interface PipelineRunParams {
    * The URL of the document to be processed. You can provide one of the
    * following: 1. A publicly available URL 2. A presigned S3 URL 3. A reducto://
    * prefixed URL obtained from the /upload endpoint after directly uploading a
-   * document
+   * document 4. A jobid:// prefixed URL obtained from a previous /parse invocation
    */
-  document_url: string | Shared.Upload;
+  input: string | Shared.Upload;
 
   /**
    * The ID of the pipeline to use for the document.
@@ -44,9 +44,9 @@ export interface PipelineRunJobParams {
    * The URL of the document to be processed. You can provide one of the
    * following: 1. A publicly available URL 2. A presigned S3 URL 3. A reducto://
    * prefixed URL obtained from the /upload endpoint after directly uploading a
-   * document
+   * document 4. A jobid:// prefixed URL obtained from a previous /parse invocation
    */
-  document_url: string | Shared.Upload;
+  input: string | Shared.Upload;
 
   /**
    * The ID of the pipeline to use for the document.
@@ -54,13 +54,9 @@ export interface PipelineRunJobParams {
   pipeline_id: string;
 
   /**
-   * If True, attempts to process the job with priority if the user has priority
-   * processing budget available; by default, sync jobs are prioritized above async
-   * jobs.
+   * The configuration options for asynchronous processing (default synchronous).
    */
-  priority?: boolean;
-
-  webhook?: Shared.WebhookConfigNew;
+  async?: Shared.ConfigV3AsyncConfig;
 }
 
 export declare namespace Pipeline {

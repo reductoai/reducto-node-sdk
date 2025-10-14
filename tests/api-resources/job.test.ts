@@ -48,4 +48,35 @@ describe('resource job', () => {
       Reducto.NotFoundError,
     );
   });
+
+  // Prism tests are disabled
+  test.skip('getAll', async () => {
+    const responsePromise = client.job.getAll();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getAll: request options instead of params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(client.job.getAll({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      Reducto.NotFoundError,
+    );
+  });
+
+  // Prism tests are disabled
+  test.skip('getAll: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.job.getAll(
+        { cursor: 'cursor', exclude_configs: true, limit: 1 },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Reducto.NotFoundError);
+  });
 });

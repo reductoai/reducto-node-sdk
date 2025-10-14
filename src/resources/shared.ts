@@ -2,6 +2,13 @@
 
 import * as Shared from './shared';
 
+export interface AdvancedCitationsConfig {
+  /**
+   * If True, enable numeric citation confidence scores. Defaults to False.
+   */
+  numerical_confidence?: boolean;
+}
+
 export interface AdvancedProcessingOptions {
   /**
    * If True, add page markers to the output (e.g. [[PAGE 1 BEGINS HERE]] and
@@ -73,7 +80,7 @@ export interface AdvancedProcessingOptions {
    * The configuration options for large table chunking (currently only supported on
    * spreadsheet and CSV files).
    */
-  large_table_chunking?: AdvancedProcessingOptions.LargeTableChunking;
+  large_table_chunking?: LargeTableChunkingConfig;
 
   /**
    * A flag to indicate if consecutive tables with the same number of columns should
@@ -85,7 +92,7 @@ export interface AdvancedProcessingOptions {
    * The OCR system to use. Highres is recommended for documents with English
    * characters. Legacy uses an alternative OCR backend.
    */
-  ocr_system?: 'highres' | 'multilingual' | 'combined' | 'legacy';
+  ocr_system?: 'highres' | 'multilingual' | 'combined' | 'reducto' | 'legacy';
 
   /**
    * The page range to process (1-indexed). By default, the entire document is
@@ -128,26 +135,6 @@ export interface AdvancedProcessingOptions {
   table_output_format?: 'html' | 'json' | 'md' | 'jsonbbox' | 'dynamic' | 'ai_json' | 'csv';
 }
 
-export namespace AdvancedProcessingOptions {
-  /**
-   * The configuration options for large table chunking (currently only supported on
-   * spreadsheet and CSV files).
-   */
-  export interface LargeTableChunking {
-    /**
-     * If large tables should be chunked into smaller tables, currently only supported
-     * on spreadsheet and CSV files.
-     */
-    enabled?: boolean;
-
-    /**
-     * The max row/column size for a table to be chunked. Defaults to 50. Header
-     * rows/columns are persisted based on heuristics.
-     */
-    size?: number;
-  }
-}
-
 export interface ArrayExtractConfig {
   /**
    * Array extraction allows you to extract long lists of information from lengthy
@@ -177,7 +164,7 @@ export interface BaseProcessingOptions {
    * The configuration options for chunking. Chunking is commonly used for RAG
    * usecases.
    */
-  chunking?: BaseProcessingOptions.Chunking;
+  chunking?: ChunkingConfig;
 
   /**
    * The mode to use for extraction. Metadata/hybrid are only recommended with high
@@ -188,7 +175,7 @@ export interface BaseProcessingOptions {
   /**
    * The configuration options for figure summarization.
    */
-  figure_summary?: BaseProcessingOptions.FigureSummary;
+  figure_summary?: FigureSummaryConfig;
 
   /**
    * A list of block types to filter from chunk content. Pass blocks to filter them
@@ -224,67 +211,7 @@ export interface BaseProcessingOptions {
   /**
    * The configuration options for table summarization.
    */
-  table_summary?: BaseProcessingOptions.TableSummary;
-}
-
-export namespace BaseProcessingOptions {
-  /**
-   * The configuration options for chunking. Chunking is commonly used for RAG
-   * usecases.
-   */
-  export interface Chunking {
-    /**
-     * Choose how to partition chunks. Variable mode chunks by character length and
-     * visual context. Section mode chunks by section headers. Page mode chunks
-     * according to pages. Page sections mode chunks first by page, then by sections
-     * within each page. Disabled returns one single chunk.
-     */
-    chunk_mode?: 'variable' | 'section' | 'page' | 'block' | 'disabled' | 'page_sections';
-
-    /**
-     * The approximate size of chunks (in characters) that the document will be split
-     * into. Defaults to None, in which case the chunk size is variable between 250 -
-     * 1500 characters.
-     */
-    chunk_size?: number;
-  }
-
-  /**
-   * The configuration options for figure summarization.
-   */
-  export interface FigureSummary {
-    /**
-     * If figure summarization should be performed.
-     */
-    enabled?: boolean;
-
-    /**
-     * If the figure summary prompt should override our default prompt.
-     */
-    override?: boolean;
-
-    /**
-     * Add information to the prompt for figure summarization. Note any visual cues
-     * that should be incorporated. Example: 'When provided a diagram, extract all of
-     * the figure content verbatim.'
-     */
-    prompt?: string;
-  }
-
-  /**
-   * The configuration options for table summarization.
-   */
-  export interface TableSummary {
-    /**
-     * If table summarization should be performed.
-     */
-    enabled?: boolean;
-
-    /**
-     * Add information to the prompt for table summarization.
-     */
-    prompt?: string;
-  }
+  table_summary?: TableSummaryConfig;
 }
 
 export interface BoundingBox {
@@ -305,6 +232,65 @@ export interface BoundingBox {
    * The page number in the original document of the bounding box (1-indexed).
    */
   original_page?: number;
+}
+
+export interface Chunking {
+  /**
+   * Choose how to partition chunks. Variable mode chunks by character length and
+   * visual context. Section mode chunks by section headers. Page mode chunks
+   * according to pages. Page sections mode chunks first by page, then by sections
+   * within each page. Disabled returns one single chunk.
+   */
+  chunk_mode?: 'variable' | 'section' | 'page' | 'disabled' | 'block' | 'page_sections';
+
+  /**
+   * The approximate size of chunks (in characters) that the document will be split
+   * into. Defaults to null, in which case the chunk size is variable between 250 -
+   * 1500 characters.
+   */
+  chunk_size?: number | null;
+}
+
+export interface ChunkingConfig {
+  /**
+   * Choose how to partition chunks. Variable mode chunks by character length and
+   * visual context. Section mode chunks by section headers. Page mode chunks
+   * according to pages. Page sections mode chunks first by page, then by sections
+   * within each page. Disabled returns one single chunk.
+   */
+  chunk_mode?: 'variable' | 'section' | 'page' | 'block' | 'disabled' | 'page_sections';
+
+  /**
+   * The approximate size of chunks (in characters) that the document will be split
+   * into. Defaults to None, in which case the chunk size is variable between 250 -
+   * 1500 characters.
+   */
+  chunk_size?: number;
+}
+
+export interface ConfigV3AsyncConfig {
+  /**
+   * JSON metadata included in webhook request body. Defaults to None.
+   */
+  metadata?: unknown;
+
+  /**
+   * If True, attempts to process the job with priority if the user has priority
+   * processing budget available; by default, sync jobs are prioritized above async
+   * jobs.
+   */
+  priority?: boolean;
+
+  /**
+   * The webhook configuration for the asynchronous processing.
+   */
+  webhook?: SvixWebhookConfig | DirectWebhookConfig | null;
+}
+
+export interface DirectWebhookConfig {
+  url: string;
+
+  mode?: 'direct';
 }
 
 export interface EditResponse {
@@ -351,6 +337,39 @@ export namespace EditResponse {
   }
 }
 
+export interface Enhance {
+  /**
+   * Agentic uses vision language models to enhance the accuracy of the output of
+   * different types of extraction. This will incur a cost and latency increase.
+   */
+  agentic?: Array<TableAgentic | FigureAgentic | TextAgentic>;
+
+  /**
+   * If True, summarize figures using a small vision language model. Defaults to
+   * True.
+   */
+  summarize_figures?: boolean;
+}
+
+export interface EnrichConfig {
+  /**
+   * If enabled, a large language/vision model will be used to postprocess the
+   * extracted content. Note: enabling enrich requires tables be outputted in
+   * markdown format. Defaults to False.
+   */
+  enabled?: boolean;
+
+  /**
+   * The mode to use for enrichment. Defaults to standard
+   */
+  mode?: 'standard' | 'page' | 'table';
+
+  /**
+   * Add information to the prompt for enrichment.
+   */
+  prompt?: string;
+}
+
 export interface ExperimentalProcessingOptions {
   /**
    * You probably shouldn't use this. If True, filter out boxes with width greater
@@ -391,7 +410,13 @@ export interface ExperimentalProcessingOptions {
   /**
    * The configuration options for enrichment.
    */
-  enrich?: ExperimentalProcessingOptions.Enrich;
+  enrich?: EnrichConfig;
+
+  /**
+   * Layout enrichment is a beta feature that improves our layout and reading order
+   * performance at the cost of increased latency. Defaults to False.
+   */
+  layout_enrichment?: boolean;
 
   /**
    * The layout model to use for the document. This will be deprecated in the future.
@@ -433,30 +458,6 @@ export interface ExperimentalProcessingOptions {
   [k: string]: unknown;
 }
 
-export namespace ExperimentalProcessingOptions {
-  /**
-   * The configuration options for enrichment.
-   */
-  export interface Enrich {
-    /**
-     * If enabled, a large language/vision model will be used to postprocess the
-     * extracted content. Note: enabling enrich requires tables be outputted in
-     * markdown format. Defaults to False.
-     */
-    enabled?: boolean;
-
-    /**
-     * The mode to use for enrichment. Defaults to standard
-     */
-    mode?: 'standard' | 'page' | 'table';
-
-    /**
-     * Add information to the prompt for enrichment.
-     */
-    prompt?: string;
-  }
-}
-
 export interface ExtractResponse {
   /**
    * The citations corresponding to the extracted response.
@@ -469,7 +470,7 @@ export interface ExtractResponse {
    */
   result: Array<unknown>;
 
-  usage: ExtractResponse.Usage;
+  usage: ExtractUsage;
 
   job_id?: string | null;
 
@@ -479,14 +480,80 @@ export interface ExtractResponse {
   studio_link?: string | null;
 }
 
-export namespace ExtractResponse {
-  export interface Usage {
-    num_fields: number;
+export interface ExtractUsage {
+  num_fields: number;
 
-    num_pages: number;
+  num_pages: number;
 
-    credits?: number | null;
-  }
+  credits?: number | null;
+}
+
+export interface FigureAgentic {
+  scope: 'figure';
+
+  /**
+   * Custom prompt for figure agentic.
+   */
+  prompt?: string | null;
+}
+
+export interface FigureSummaryConfig {
+  /**
+   * If figure summarization should be performed.
+   */
+  enabled?: boolean;
+
+  /**
+   * If the figure summary prompt should override our default prompt.
+   */
+  override?: boolean;
+
+  /**
+   * Add information to the prompt for figure summarization. Note any visual cues
+   * that should be incorporated. Example: 'When provided a diagram, extract all of
+   * the figure content verbatim.'
+   */
+  prompt?: string;
+}
+
+export interface Formatting {
+  /**
+   * If True, add page markers to the output. Defaults to False. Useful for
+   * extracting data with page specific information.
+   */
+  add_page_markers?: boolean;
+
+  /**
+   * A list of formatting to include in the output. [insert description of each
+   * option here later]
+   */
+  include?: Array<'change_tracking' | 'highlight' | 'comments'>;
+
+  /**
+   * A flag to indicate if consecutive tables with the same number of columns should
+   * be merged. Defaults to False.
+   */
+  merge_tables?: boolean;
+
+  /**
+   * The mode to use for table output. Defaults to dynamic, which returns md for
+   * simpler tables and html for more complex tables.
+   */
+  table_output_format?: 'html' | 'json' | 'md' | 'jsonbbox' | 'dynamic' | 'csv';
+}
+
+export interface LargeTableChunkingConfig {
+  /**
+   * If large tables should be chunked into smaller tables, currently only supported
+   * on spreadsheet and CSV files.
+   */
+  enabled?: boolean;
+
+  /**
+   * The max row/column size for a table to be chunked. Defaults to 50. Header
+   * rows/columns are persisted based on heuristics.
+   */
+  size?: number;
 }
 
 export interface PageRange {
@@ -499,6 +566,18 @@ export interface PageRange {
    * The page number to start processing from (1-indexed).
    */
   start?: number | null;
+}
+
+export interface ParseOptions {
+  enhance?: Enhance;
+
+  formatting?: Formatting;
+
+  retrieval?: Retrieval;
+
+  settings?: Settings;
+
+  spreadsheet?: Spreadsheet;
 }
 
 export interface ParseResponse {
@@ -701,11 +780,13 @@ export interface PipelineResponse {
 
 export namespace PipelineResponse {
   export interface Result {
-    extract: Array<Result.UnionMember0> | Shared.ExtractResponse | null;
+    extract: Array<Result.UnionMember0> | Shared.ExtractResponse | Shared.V3ExtractResponse | null;
 
     parse: Shared.ParseResponse | null;
 
     split: Shared.SplitResponse | null;
+
+    edit?: Shared.EditResponse | null;
   }
 
   export namespace Result {
@@ -715,7 +796,7 @@ export namespace PipelineResponse {
     export interface UnionMember0 {
       page_range: Array<number>;
 
-      result: Shared.ExtractResponse;
+      result: Shared.ExtractResponse | Shared.V3ExtractResponse;
 
       split_name: string;
 
@@ -724,12 +805,107 @@ export namespace PipelineResponse {
   }
 }
 
+export interface Retrieval {
+  chunking?: Chunking;
+
+  /**
+   * If True, use embedding optimized mode. Defaults to False.
+   */
+  embedding_optimized?: boolean;
+
+  /**
+   * A list of block types to filter out from 'content' and 'embed' fields. By
+   * default, no blocks are filtered.
+   */
+  filter_blocks?: Array<
+    | 'Header'
+    | 'Footer'
+    | 'Title'
+    | 'Section Header'
+    | 'Page Number'
+    | 'List Item'
+    | 'Figure'
+    | 'Table'
+    | 'Key Value'
+    | 'Text'
+    | 'Comment'
+    | 'Signature'
+  >;
+}
+
+export interface Settings {
+  /**
+   * Password to decrypt password-protected documents.
+   */
+  document_password?: string | null;
+
+  /**
+   * If True, embed OCR metadata into the returned PDF. Defaults to False.
+   */
+  embed_pdf_metadata?: boolean;
+
+  /**
+   * Force the URL to be downloaded as a specific file extension (e.g. `.png`).
+   */
+  force_file_extension?: string | null;
+
+  /**
+   * Force the result to be returned in URL form.
+   */
+  force_url_result?: boolean;
+
+  /**
+   * Standard is our best multilingual OCR system. Legacy only supports germanic
+   * languages and is available for backwards compatibility.
+   */
+  ocr_system?: 'standard' | 'legacy';
+
+  /**
+   * The page range to process (1-indexed). By default, the entire document is
+   * processed.
+   */
+  page_range?: PageRange | Array<PageRange> | Array<number> | null;
+
+  /**
+   * If True, persist the results indefinitely. Defaults to False.
+   */
+  persist_results?: boolean;
+
+  /**
+   * Whether to return images for the specified block types. By default, no images
+   * are returned.
+   */
+  return_images?: Array<'figure' | 'table'>;
+
+  /**
+   * If True, return OCR data in the result. Defaults to False.
+   */
+  return_ocr_data?: boolean;
+
+  /**
+   * The timeout for the job in seconds. Defaults to 900.
+   */
+  timeout?: number;
+}
+
 export interface SplitCategory {
   description: string;
 
   name: string;
 
   partition_key?: string | null;
+}
+
+export interface SplitLargeTables {
+  /**
+   * If True, split large tables into smaller tables. Defaults to True.
+   */
+  enabled?: boolean;
+
+  /**
+   * The size of the tables to split into. Defaults to 50.
+   */
+  size?: number;
 }
 
 export interface SplitResponse {
@@ -774,10 +950,83 @@ export namespace SplitResponse {
   }
 }
 
+export interface Spreadsheet {
+  /**
+   * In a spreadsheet with different tables inside, we enable splitting up the tables
+   * by default. Accurate mode applies more powerful models for superior accuracy, at
+   * 5× the default per-cell rate. Disabling will register as one large table.
+   */
+  clustering?: 'accurate' | 'fast' | 'disabled';
+
+  /**
+   * Whether to exclude hidden sheets, rows, or columns in the output.
+   */
+  exclude?: Array<'hidden_sheets' | 'hidden_rows' | 'hidden_cols'>;
+
+  /**
+   * Whether to include cell color and formula information in the output.
+   */
+  include?: Array<'cell_colors' | 'formula'>;
+
+  split_large_tables?: SplitLargeTables;
+}
+
+export interface SvixWebhookConfig {
+  /**
+   * A list of Svix channels the message will be delivered down, omit to send to all
+   * channels.
+   */
+  channels?: Array<string>;
+
+  mode?: 'svix';
+}
+
+export interface TableAgentic {
+  scope: 'table';
+
+  /**
+   * Custom prompt for table agentic.
+   */
+  prompt?: string | null;
+}
+
+export interface TableSummaryConfig {
+  /**
+   * If table summarization should be performed.
+   */
+  enabled?: boolean;
+
+  /**
+   * Add information to the prompt for table summarization.
+   */
+  prompt?: string;
+}
+
+export interface TextAgentic {
+  scope: 'text';
+}
+
 export interface Upload {
   file_id: string;
 
   presigned_url?: string | null;
+}
+
+export interface V3ExtractResponse {
+  /**
+   * The extracted response in your provided schema. This is a list of dictionaries.
+   * If disable_chunking is True (default), then it will be a list of length one.
+   */
+  result: unknown | Array<unknown>;
+
+  usage: ExtractUsage;
+
+  job_id?: string | null;
+
+  /**
+   * The link to the studio pipeline for the document.
+   */
+  studio_link?: string | null;
 }
 
 export interface WebhookConfigNew {

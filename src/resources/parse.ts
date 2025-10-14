@@ -8,7 +8,7 @@ export class Parse extends APIResource {
   /**
    * Parse
    */
-  run(body: ParseRunParams, options?: Core.RequestOptions): Core.APIPromise<Shared.ParseResponse> {
+  run(body: ParseRunParams, options?: Core.RequestOptions): Core.APIPromise<ParseRunResponse> {
     return this._client.post('/parse', { body, ...options });
   }
 
@@ -20,64 +20,95 @@ export class Parse extends APIResource {
   }
 }
 
+export type ParseRunResponse = Shared.ParseResponse | ParseRunResponse.AsyncParseResponse;
+
+export namespace ParseRunResponse {
+  export interface AsyncParseResponse {
+    job_id: string;
+  }
+}
+
 export interface ParseRunJobResponse {
   job_id: string;
 }
 
-export interface ParseRunParams {
-  /**
-   * The URL of the document to be processed. You can provide one of the following:
-   *
-   * 1. A publicly available URL
-   * 2. A presigned S3 URL
-   * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
-   *    uploading a document
-   */
-  document_url: string | Shared.Upload;
+export type ParseRunParams = ParseRunParams.SyncParseConfig | ParseRunParams.AsyncParseConfig;
 
-  advanced_options?: Shared.AdvancedProcessingOptions;
+export declare namespace ParseRunParams {
+  export interface SyncParseConfig {
+    /**
+     * The URL of the document to be processed. You can provide one of the
+     * following: 1. A publicly available URL 2. A presigned S3 URL 3. A reducto://
+     * prefixed URL obtained from the /upload endpoint after directly uploading a
+     * document 4. A jobid:// prefixed URL obtained from a previous /parse invocation
+     */
+    input: string | Shared.Upload;
 
-  experimental_options?: Shared.ExperimentalProcessingOptions;
+    enhance?: Shared.Enhance;
 
-  options?: Shared.BaseProcessingOptions;
+    formatting?: Shared.Formatting;
 
-  /**
-   * If True, attempts to process the job with priority if the user has priority
-   * processing budget available; by default, sync jobs are prioritized above async
-   * jobs.
-   */
-  priority?: boolean;
+    retrieval?: Shared.Retrieval;
+
+    settings?: Shared.Settings;
+
+    spreadsheet?: Shared.Spreadsheet;
+  }
+
+  export interface AsyncParseConfig {
+    /**
+     * The URL of the document to be processed. You can provide one of the
+     * following: 1. A publicly available URL 2. A presigned S3 URL 3. A reducto://
+     * prefixed URL obtained from the /upload endpoint after directly uploading a
+     * document 4. A jobid:// prefixed URL obtained from a previous /parse invocation
+     */
+    input: string | Shared.Upload;
+
+    /**
+     * The configuration options for asynchronous processing (default synchronous).
+     */
+    async?: Shared.ConfigV3AsyncConfig;
+
+    enhance?: Shared.Enhance;
+
+    formatting?: Shared.Formatting;
+
+    retrieval?: Shared.Retrieval;
+
+    settings?: Shared.Settings;
+
+    spreadsheet?: Shared.Spreadsheet;
+  }
 }
 
 export interface ParseRunJobParams {
   /**
-   * The URL of the document to be processed. You can provide one of the following:
-   *
-   * 1. A publicly available URL
-   * 2. A presigned S3 URL
-   * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
-   *    uploading a document
+   * The URL of the document to be processed. You can provide one of the
+   * following: 1. A publicly available URL 2. A presigned S3 URL 3. A reducto://
+   * prefixed URL obtained from the /upload endpoint after directly uploading a
+   * document 4. A jobid:// prefixed URL obtained from a previous /parse invocation
    */
-  document_url: string | Shared.Upload;
-
-  advanced_options?: Shared.AdvancedProcessingOptions;
-
-  experimental_options?: Shared.ExperimentalProcessingOptions;
-
-  options?: Shared.BaseProcessingOptions;
+  input: string | Shared.Upload;
 
   /**
-   * If True, attempts to process the job with priority if the user has priority
-   * processing budget available; by default, sync jobs are prioritized above async
-   * jobs.
+   * The configuration options for asynchronous processing (default synchronous).
    */
-  priority?: boolean;
+  async?: Shared.ConfigV3AsyncConfig;
 
-  webhook?: Shared.WebhookConfigNew;
+  enhance?: Shared.Enhance;
+
+  formatting?: Shared.Formatting;
+
+  retrieval?: Shared.Retrieval;
+
+  settings?: Shared.Settings;
+
+  spreadsheet?: Shared.Spreadsheet;
 }
 
 export declare namespace Parse {
   export {
+    type ParseRunResponse as ParseRunResponse,
     type ParseRunJobResponse as ParseRunJobResponse,
     type ParseRunParams as ParseRunParams,
     type ParseRunJobParams as ParseRunJobParams,

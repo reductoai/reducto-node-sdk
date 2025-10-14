@@ -13,20 +13,42 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/shared.ts">AdvancedCitationsConfig</a></code>
 - <code><a href="./src/resources/shared.ts">AdvancedProcessingOptions</a></code>
 - <code><a href="./src/resources/shared.ts">ArrayExtractConfig</a></code>
 - <code><a href="./src/resources/shared.ts">BaseProcessingOptions</a></code>
 - <code><a href="./src/resources/shared.ts">BoundingBox</a></code>
+- <code><a href="./src/resources/shared.ts">Chunking</a></code>
+- <code><a href="./src/resources/shared.ts">ChunkingConfig</a></code>
+- <code><a href="./src/resources/shared.ts">ConfigV3AsyncConfig</a></code>
+- <code><a href="./src/resources/shared.ts">DirectWebhookConfig</a></code>
 - <code><a href="./src/resources/shared.ts">EditResponse</a></code>
+- <code><a href="./src/resources/shared.ts">Enhance</a></code>
+- <code><a href="./src/resources/shared.ts">EnrichConfig</a></code>
 - <code><a href="./src/resources/shared.ts">ExperimentalProcessingOptions</a></code>
 - <code><a href="./src/resources/shared.ts">ExtractResponse</a></code>
+- <code><a href="./src/resources/shared.ts">ExtractUsage</a></code>
+- <code><a href="./src/resources/shared.ts">FigureAgentic</a></code>
+- <code><a href="./src/resources/shared.ts">FigureSummaryConfig</a></code>
+- <code><a href="./src/resources/shared.ts">Formatting</a></code>
+- <code><a href="./src/resources/shared.ts">LargeTableChunkingConfig</a></code>
 - <code><a href="./src/resources/shared.ts">PageRange</a></code>
+- <code><a href="./src/resources/shared.ts">ParseOptions</a></code>
 - <code><a href="./src/resources/shared.ts">ParseResponse</a></code>
 - <code><a href="./src/resources/shared.ts">ParseUsage</a></code>
 - <code><a href="./src/resources/shared.ts">PipelineResponse</a></code>
+- <code><a href="./src/resources/shared.ts">Retrieval</a></code>
+- <code><a href="./src/resources/shared.ts">Settings</a></code>
 - <code><a href="./src/resources/shared.ts">SplitCategory</a></code>
+- <code><a href="./src/resources/shared.ts">SplitLargeTables</a></code>
 - <code><a href="./src/resources/shared.ts">SplitResponse</a></code>
+- <code><a href="./src/resources/shared.ts">Spreadsheet</a></code>
+- <code><a href="./src/resources/shared.ts">SvixWebhookConfig</a></code>
+- <code><a href="./src/resources/shared.ts">TableAgentic</a></code>
+- <code><a href="./src/resources/shared.ts">TableSummaryConfig</a></code>
+- <code><a href="./src/resources/shared.ts">TextAgentic</a></code>
 - <code><a href="./src/resources/shared.ts">Upload</a></code>
+- <code><a href="./src/resources/shared.ts">V3ExtractResponse</a></code>
 - <code><a href="./src/resources/shared.ts">WebhookConfigNew</a></code>
 
 # Job
@@ -35,11 +57,13 @@ Types:
 
 - <code><a href="./src/resources/job.ts">JobCancelResponse</a></code>
 - <code><a href="./src/resources/job.ts">JobGetResponse</a></code>
+- <code><a href="./src/resources/job.ts">JobGetAllResponse</a></code>
 
 Methods:
 
 - <code title="post /cancel/{job_id}">client.job.<a href="./src/resources/job.ts">cancel</a>(jobId) -> unknown</code>
 - <code title="get /job/{job_id}">client.job.<a href="./src/resources/job.ts">get</a>(jobId) -> JobGetResponse</code>
+- <code title="get /jobs">client.job.<a href="./src/resources/job.ts">getAll</a>({ ...params }) -> JobGetAllResponse</code>
 
 # Split
 
@@ -56,22 +80,24 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/parse.ts">ParseRunResponse</a></code>
 - <code><a href="./src/resources/parse.ts">ParseRunJobResponse</a></code>
 
 Methods:
 
-- <code title="post /parse">client.parse.<a href="./src/resources/parse.ts">run</a>({ ...params }) -> ParseResponse</code>
+- <code title="post /parse">client.parse.<a href="./src/resources/parse.ts">run</a>({ ...params }) -> ParseRunResponse</code>
 - <code title="post /parse_async">client.parse.<a href="./src/resources/parse.ts">runJob</a>({ ...params }) -> ParseRunJobResponse</code>
 
 # Extract
 
 Types:
 
+- <code><a href="./src/resources/extract.ts">ExtractRunResponse</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractRunJobResponse</a></code>
 
 Methods:
 
-- <code title="post /extract">client.extract.<a href="./src/resources/extract.ts">run</a>({ ...params }) -> ExtractResponse</code>
+- <code title="post /extract">client.extract.<a href="./src/resources/extract.ts">run</a>({ ...params }) -> ExtractRunResponse</code>
 - <code title="post /extract_async">client.extract.<a href="./src/resources/extract.ts">runJob</a>({ ...params }) -> ExtractRunJobResponse</code>
 
 # Edit
