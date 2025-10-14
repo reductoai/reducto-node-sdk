@@ -68,7 +68,10 @@ describe('resource split', () => {
 
   // Prism tests are disabled
   test.skip('runJob: only required params', async () => {
-    const responsePromise = client.split.runJob({});
+    const responsePromise = client.split.runJob({
+      input: 'string',
+      split_description: [{ description: 'description', name: 'name' }],
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -80,6 +83,44 @@ describe('resource split', () => {
 
   // Prism tests are disabled
   test.skip('runJob: required and optional params', async () => {
-    const response = await client.split.runJob({});
+    const response = await client.split.runJob({
+      input: 'string',
+      split_description: [{ description: 'description', name: 'name', partition_key: 'partition_key' }],
+      async: { metadata: {}, priority: true, webhook: { channels: ['string'], mode: 'svix' } },
+      parsing: {
+        enhance: { agentic: [{ scope: 'table', prompt: 'prompt' }], summarize_figures: true },
+        formatting: {
+          add_page_markers: true,
+          include: ['change_tracking'],
+          merge_tables: true,
+          table_output_format: 'html',
+        },
+        retrieval: {
+          chunking: { chunk_mode: 'variable', chunk_size: 0 },
+          embedding_optimized: true,
+          filter_blocks: ['Header'],
+        },
+        settings: {
+          document_password: 'document_password',
+          embed_pdf_metadata: true,
+          force_file_extension: 'force_file_extension',
+          force_url_result: true,
+          ocr_system: 'standard',
+          page_range: { end: 0, start: 0 },
+          persist_results: true,
+          return_images: ['figure'],
+          return_ocr_data: true,
+          timeout: 0,
+        },
+        spreadsheet: {
+          clustering: 'accurate',
+          exclude: ['hidden_sheets'],
+          include: ['cell_colors'],
+          split_large_tables: { enabled: true, size: 0 },
+        },
+      },
+      settings: { table_cutoff: 'truncate' },
+      split_rules: 'split_rules',
+    });
   });
 });
