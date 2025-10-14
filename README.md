@@ -27,7 +27,7 @@ const client = new Reducto({
   environment: 'eu', // or 'production' | 'au'; defaults to 'production'
 });
 
-const response = await client.parse.run({ input: 'string' });
+const response = await client.parse.run({ input: 'https://pdfobject.com/pdf/sample.pdf' });
 ```
 
 ### Request & Response types
@@ -43,7 +43,7 @@ const client = new Reducto({
   environment: 'eu', // or 'production' | 'au'; defaults to 'production'
 });
 
-const params: Reducto.ParseRunParams = { input: 'string' };
+const params: Reducto.ParseRunParams = { input: 'https://pdfobject.com/pdf/sample.pdf' };
 const response: Reducto.ParseRunResponse = await client.parse.run(params);
 ```
 
@@ -87,15 +87,17 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.parse.run({ input: 'string' }).catch(async (err) => {
-  if (err instanceof Reducto.APIError) {
-    console.log(err.status); // 400
-    console.log(err.name); // BadRequestError
-    console.log(err.headers); // {server: 'nginx', ...}
-  } else {
-    throw err;
-  }
-});
+const response = await client.parse
+  .run({ input: 'https://pdfobject.com/pdf/sample.pdf' })
+  .catch(async (err) => {
+    if (err instanceof Reducto.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:
@@ -127,7 +129,7 @@ const client = new Reducto({
 });
 
 // Or, configure per-request:
-await client.parse.run({ input: 'string' }, {
+await client.parse.run({ input: 'https://pdfobject.com/pdf/sample.pdf' }, {
   maxRetries: 5,
 });
 ```
@@ -144,7 +146,7 @@ const client = new Reducto({
 });
 
 // Override per-request:
-await client.parse.run({ input: 'string' }, {
+await client.parse.run({ input: 'https://pdfobject.com/pdf/sample.pdf' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -165,11 +167,13 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new Reducto();
 
-const response = await client.parse.run({ input: 'string' }).asResponse();
+const response = await client.parse.run({ input: 'https://pdfobject.com/pdf/sample.pdf' }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.parse.run({ input: 'string' }).withResponse();
+const { data: response, response: raw } = await client.parse
+  .run({ input: 'https://pdfobject.com/pdf/sample.pdf' })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response);
 ```
@@ -276,7 +280,7 @@ const client = new Reducto({
 
 // Override per-request:
 await client.parse.run(
-  { input: 'string' },
+  { input: 'https://pdfobject.com/pdf/sample.pdf' },
   {
     httpAgent: new http.Agent({ keepAlive: false }),
   },
