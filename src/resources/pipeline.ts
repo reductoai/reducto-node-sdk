@@ -29,9 +29,9 @@ export interface PipelineRunParams {
    * The URL of the document to be processed. You can provide one of the
    * following: 1. A publicly available URL 2. A presigned S3 URL 3. A reducto://
    * prefixed URL obtained from the /upload endpoint after directly uploading a
-   * document
+   * document 4. A jobid:// prefixed URL obtained from a previous /parse invocation
    */
-  document_url: string | Shared.Upload;
+  input: string | Shared.Upload;
 
   /**
    * The ID of the pipeline to use for the document.
@@ -44,9 +44,9 @@ export interface PipelineRunJobParams {
    * The URL of the document to be processed. You can provide one of the
    * following: 1. A publicly available URL 2. A presigned S3 URL 3. A reducto://
    * prefixed URL obtained from the /upload endpoint after directly uploading a
-   * document
+   * document 4. A jobid:// prefixed URL obtained from a previous /parse invocation
    */
-  document_url: string | Shared.Upload;
+  input: string | Shared.Upload;
 
   /**
    * The ID of the pipeline to use for the document.
@@ -54,13 +54,51 @@ export interface PipelineRunJobParams {
   pipeline_id: string;
 
   /**
-   * If True, attempts to process the job with priority if the user has priority
-   * processing budget available; by default, sync jobs are prioritized above async
-   * jobs.
+   * The configuration options for asynchronous processing (default synchronous).
    */
-  priority?: boolean;
+  async?: PipelineRunJobParams.Async;
+}
 
-  webhook?: Shared.WebhookConfigNew;
+export namespace PipelineRunJobParams {
+  /**
+   * The configuration options for asynchronous processing (default synchronous).
+   */
+  export interface Async {
+    /**
+     * JSON metadata included in webhook request body. Defaults to None.
+     */
+    metadata?: unknown;
+
+    /**
+     * If True, attempts to process the job with priority if the user has priority
+     * processing budget available; by default, sync jobs are prioritized above async
+     * jobs.
+     */
+    priority?: boolean;
+
+    /**
+     * The webhook configuration for the asynchronous processing.
+     */
+    webhook?: Async.SvixWebhookConfig | Async.DirectWebhookConfig | null;
+  }
+
+  export namespace Async {
+    export interface SvixWebhookConfig {
+      /**
+       * A list of Svix channels the message will be delivered down, omit to send to all
+       * channels.
+       */
+      channels?: Array<string>;
+
+      mode?: 'svix';
+    }
+
+    export interface DirectWebhookConfig {
+      url: string;
+
+      mode?: 'direct';
+    }
+  }
 }
 
 export declare namespace Pipeline {
