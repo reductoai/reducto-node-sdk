@@ -322,21 +322,37 @@ export declare namespace Reducto {
   export type ArrayExtractConfig = API.ArrayExtractConfig;
   export type BaseProcessingOptions = API.BaseProcessingOptions;
   export type BoundingBox = API.BoundingBox;
+  export type Chunking = API.Chunking;
   export type ChunkingConfig = API.ChunkingConfig;
+  export type ConfigV3AsyncConfig = API.ConfigV3AsyncConfig;
+  export type DirectWebhookConfig = API.DirectWebhookConfig;
   export type EditResponse = API.EditResponse;
+  export type Enhance = API.Enhance;
   export type EnrichConfig = API.EnrichConfig;
   export type ExperimentalProcessingOptions = API.ExperimentalProcessingOptions;
   export type ExtractResponse = API.ExtractResponse;
+  export type ExtractUsage = API.ExtractUsage;
+  export type FigureAgentic = API.FigureAgentic;
   export type FigureSummaryConfig = API.FigureSummaryConfig;
+  export type Formatting = API.Formatting;
   export type LargeTableChunkingConfig = API.LargeTableChunkingConfig;
   export type PageRange = API.PageRange;
+  export type ParseOptions = API.ParseOptions;
   export type ParseResponse = API.ParseResponse;
   export type ParseUsage = API.ParseUsage;
   export type PipelineResponse = API.PipelineResponse;
+  export type Retrieval = API.Retrieval;
+  export type Settings = API.Settings;
   export type SplitCategory = API.SplitCategory;
+  export type SplitLargeTables = API.SplitLargeTables;
   export type SplitResponse = API.SplitResponse;
+  export type Spreadsheet = API.Spreadsheet;
+  export type SvixWebhookConfig = API.SvixWebhookConfig;
+  export type TableAgentic = API.TableAgentic;
   export type TableSummaryConfig = API.TableSummaryConfig;
+  export type TextAgentic = API.TextAgentic;
   export type Upload = API.Upload;
+  export type V3ExtractResponse = API.V3ExtractResponse;
   export type WebhookConfigNew = API.WebhookConfigNew;
 }
 

@@ -56,49 +56,7 @@ export interface PipelineRunJobParams {
   /**
    * The configuration options for asynchronous processing (default synchronous).
    */
-  async?: PipelineRunJobParams.Async;
-}
-
-export namespace PipelineRunJobParams {
-  /**
-   * The configuration options for asynchronous processing (default synchronous).
-   */
-  export interface Async {
-    /**
-     * JSON metadata included in webhook request body. Defaults to None.
-     */
-    metadata?: unknown;
-
-    /**
-     * If True, attempts to process the job with priority if the user has priority
-     * processing budget available; by default, sync jobs are prioritized above async
-     * jobs.
-     */
-    priority?: boolean;
-
-    /**
-     * The webhook configuration for the asynchronous processing.
-     */
-    webhook?: Async.SvixWebhookConfig | Async.DirectWebhookConfig | null;
-  }
-
-  export namespace Async {
-    export interface SvixWebhookConfig {
-      /**
-       * A list of Svix channels the message will be delivered down, omit to send to all
-       * channels.
-       */
-      channels?: Array<string>;
-
-      mode?: 'svix';
-    }
-
-    export interface DirectWebhookConfig {
-      url: string;
-
-      mode?: 'direct';
-    }
-  }
+  async?: Shared.ConfigV3AsyncConfig;
 }
 
 export declare namespace Pipeline {
