@@ -54,37 +54,8 @@ export namespace JobGetResponse {
       | Shared.SplitResponse
       | Shared.EditResponse
       | Shared.PipelineResponse
-      | AsyncJobResponse.V3ExtractResponse
+      | Shared.V3ExtractResponse
       | null;
-  }
-
-  export namespace AsyncJobResponse {
-    export interface V3ExtractResponse {
-      /**
-       * The extracted response in your provided schema. This is a list of dictionaries.
-       * If disable_chunking is True (default), then it will be a list of length one.
-       */
-      result: unknown | Array<unknown>;
-
-      usage: V3ExtractResponse.Usage;
-
-      job_id?: string | null;
-
-      /**
-       * The link to the studio pipeline for the document.
-       */
-      studio_link?: string | null;
-    }
-
-    export namespace V3ExtractResponse {
-      export interface Usage {
-        num_fields: number;
-
-        num_pages: number;
-
-        credits?: number | null;
-      }
-    }
   }
 
   export interface EnhancedAsyncJobResponse {
@@ -110,7 +81,7 @@ export namespace JobGetResponse {
       | Shared.SplitResponse
       | Shared.EditResponse
       | Shared.PipelineResponse
-      | EnhancedAsyncJobResponse.V3ExtractResponse
+      | Shared.V3ExtractResponse
       | null;
 
     source?: unknown;
@@ -118,35 +89,6 @@ export namespace JobGetResponse {
     total_pages?: number | null;
 
     type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | null;
-  }
-
-  export namespace EnhancedAsyncJobResponse {
-    export interface V3ExtractResponse {
-      /**
-       * The extracted response in your provided schema. This is a list of dictionaries.
-       * If disable_chunking is True (default), then it will be a list of length one.
-       */
-      result: unknown | Array<unknown>;
-
-      usage: V3ExtractResponse.Usage;
-
-      job_id?: string | null;
-
-      /**
-       * The link to the studio pipeline for the document.
-       */
-      studio_link?: string | null;
-    }
-
-    export namespace V3ExtractResponse {
-      export interface Usage {
-        num_fields: number;
-
-        num_pages: number;
-
-        credits?: number | null;
-      }
-    }
   }
 }
 

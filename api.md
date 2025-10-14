@@ -18,21 +18,37 @@ Types:
 - <code><a href="./src/resources/shared.ts">ArrayExtractConfig</a></code>
 - <code><a href="./src/resources/shared.ts">BaseProcessingOptions</a></code>
 - <code><a href="./src/resources/shared.ts">BoundingBox</a></code>
+- <code><a href="./src/resources/shared.ts">Chunking</a></code>
 - <code><a href="./src/resources/shared.ts">ChunkingConfig</a></code>
+- <code><a href="./src/resources/shared.ts">ConfigV3AsyncConfig</a></code>
+- <code><a href="./src/resources/shared.ts">DirectWebhookConfig</a></code>
 - <code><a href="./src/resources/shared.ts">EditResponse</a></code>
+- <code><a href="./src/resources/shared.ts">Enhance</a></code>
 - <code><a href="./src/resources/shared.ts">EnrichConfig</a></code>
 - <code><a href="./src/resources/shared.ts">ExperimentalProcessingOptions</a></code>
 - <code><a href="./src/resources/shared.ts">ExtractResponse</a></code>
+- <code><a href="./src/resources/shared.ts">ExtractUsage</a></code>
+- <code><a href="./src/resources/shared.ts">FigureAgentic</a></code>
 - <code><a href="./src/resources/shared.ts">FigureSummaryConfig</a></code>
+- <code><a href="./src/resources/shared.ts">Formatting</a></code>
 - <code><a href="./src/resources/shared.ts">LargeTableChunkingConfig</a></code>
 - <code><a href="./src/resources/shared.ts">PageRange</a></code>
+- <code><a href="./src/resources/shared.ts">ParseOptions</a></code>
 - <code><a href="./src/resources/shared.ts">ParseResponse</a></code>
 - <code><a href="./src/resources/shared.ts">ParseUsage</a></code>
 - <code><a href="./src/resources/shared.ts">PipelineResponse</a></code>
+- <code><a href="./src/resources/shared.ts">Retrieval</a></code>
+- <code><a href="./src/resources/shared.ts">Settings</a></code>
 - <code><a href="./src/resources/shared.ts">SplitCategory</a></code>
+- <code><a href="./src/resources/shared.ts">SplitLargeTables</a></code>
 - <code><a href="./src/resources/shared.ts">SplitResponse</a></code>
+- <code><a href="./src/resources/shared.ts">Spreadsheet</a></code>
+- <code><a href="./src/resources/shared.ts">SvixWebhookConfig</a></code>
+- <code><a href="./src/resources/shared.ts">TableAgentic</a></code>
 - <code><a href="./src/resources/shared.ts">TableSummaryConfig</a></code>
+- <code><a href="./src/resources/shared.ts">TextAgentic</a></code>
 - <code><a href="./src/resources/shared.ts">Upload</a></code>
+- <code><a href="./src/resources/shared.ts">V3ExtractResponse</a></code>
 - <code><a href="./src/resources/shared.ts">WebhookConfigNew</a></code>
 
 # Job
