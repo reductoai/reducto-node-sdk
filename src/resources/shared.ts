@@ -679,11 +679,13 @@ export interface PipelineResponse {
 
 export namespace PipelineResponse {
   export interface Result {
-    extract: Array<Result.UnionMember0> | Shared.ExtractResponse | null;
+    extract: Array<Result.UnionMember0> | Shared.ExtractResponse | Result.V3ExtractResponse | null;
 
     parse: Shared.ParseResponse | null;
 
     split: Shared.SplitResponse | null;
+
+    edit?: Shared.EditResponse | null;
   }
 
   export namespace Result {
@@ -693,11 +695,67 @@ export namespace PipelineResponse {
     export interface UnionMember0 {
       page_range: Array<number>;
 
-      result: Shared.ExtractResponse;
+      result: Shared.ExtractResponse | UnionMember0.V3ExtractResponse;
 
       split_name: string;
 
       partition?: string | null;
+    }
+
+    export namespace UnionMember0 {
+      export interface V3ExtractResponse {
+        /**
+         * The extracted response in your provided schema. This is a list of dictionaries.
+         * If disable_chunking is True (default), then it will be a list of length one.
+         */
+        result: unknown | Array<unknown>;
+
+        usage: V3ExtractResponse.Usage;
+
+        job_id?: string | null;
+
+        /**
+         * The link to the studio pipeline for the document.
+         */
+        studio_link?: string | null;
+      }
+
+      export namespace V3ExtractResponse {
+        export interface Usage {
+          num_fields: number;
+
+          num_pages: number;
+
+          credits?: number | null;
+        }
+      }
+    }
+
+    export interface V3ExtractResponse {
+      /**
+       * The extracted response in your provided schema. This is a list of dictionaries.
+       * If disable_chunking is True (default), then it will be a list of length one.
+       */
+      result: unknown | Array<unknown>;
+
+      usage: V3ExtractResponse.Usage;
+
+      job_id?: string | null;
+
+      /**
+       * The link to the studio pipeline for the document.
+       */
+      studio_link?: string | null;
+    }
+
+    export namespace V3ExtractResponse {
+      export interface Usage {
+        num_fields: number;
+
+        num_pages: number;
+
+        credits?: number | null;
+      }
     }
   }
 }

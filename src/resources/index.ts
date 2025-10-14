@@ -15,7 +15,6 @@ export {
   type JobCancelResponse,
   type JobGetResponse,
   type JobGetAllResponse,
-  type JobGetParams,
   type JobGetAllParams,
 } from './job';
 export {

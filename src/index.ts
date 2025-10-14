@@ -18,14 +18,7 @@ import {
   ExtractRunParams,
   ExtractRunResponse,
 } from './resources/extract';
-import {
-  Job,
-  JobCancelResponse,
-  JobGetAllParams,
-  JobGetAllResponse,
-  JobGetParams,
-  JobGetResponse,
-} from './resources/job';
+import { Job, JobCancelResponse, JobGetAllParams, JobGetAllResponse, JobGetResponse } from './resources/job';
 import {
   Parse,
   ParseRunJobParams,
@@ -280,7 +273,6 @@ export declare namespace Reducto {
     type JobCancelResponse as JobCancelResponse,
     type JobGetResponse as JobGetResponse,
     type JobGetAllResponse as JobGetAllResponse,
-    type JobGetParams as JobGetParams,
     type JobGetAllParams as JobGetAllParams,
   };
 

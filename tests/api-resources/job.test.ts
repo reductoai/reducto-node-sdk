@@ -50,14 +50,6 @@ describe('resource job', () => {
   });
 
   // Prism tests are disabled
-  test.skip('get: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.job.get('job_id', { bucket_name: 'bucket_name' }, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Reducto.NotFoundError);
-  });
-
-  // Prism tests are disabled
   test.skip('getAll', async () => {
     const responsePromise = client.job.getAll();
     const rawResponse = await responsePromise.asResponse();

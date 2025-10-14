@@ -16,17 +16,8 @@ export class Job extends APIResource {
   /**
    * Retrieve Parse
    */
-  get(jobId: string, query?: JobGetParams, options?: Core.RequestOptions): Core.APIPromise<JobGetResponse>;
-  get(jobId: string, options?: Core.RequestOptions): Core.APIPromise<JobGetResponse>;
-  get(
-    jobId: string,
-    query: JobGetParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<JobGetResponse> {
-    if (isRequestOptions(query)) {
-      return this.get(jobId, {}, query);
-    }
-    return this._client.get(`/job/${jobId}`, { query, ...options });
+  get(jobId: string, options?: Core.RequestOptions): Core.APIPromise<JobGetResponse> {
+    return this._client.get(`/job/${jobId}`, options);
   }
 
   /**
@@ -196,10 +187,6 @@ export namespace JobGetAllResponse {
   }
 }
 
-export interface JobGetParams {
-  bucket_name?: string | null;
-}
-
 export interface JobGetAllParams {
   /**
    * Cursor for pagination. Use the next_cursor from the previous response to fetch
@@ -223,7 +210,6 @@ export declare namespace Job {
     type JobCancelResponse as JobCancelResponse,
     type JobGetResponse as JobGetResponse,
     type JobGetAllResponse as JobGetAllResponse,
-    type JobGetParams as JobGetParams,
     type JobGetAllParams as JobGetAllParams,
   };
 }
