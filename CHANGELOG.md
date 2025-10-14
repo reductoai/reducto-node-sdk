@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.12.0 (2025-10-14)
+
+Full Changelog: [v0.11.0...v0.12.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.11.0...v0.12.0)
+
+### Features
+
+* **api:** api update ([fb928e2](https://github.com/reductoai/reducto-node-sdk/commit/fb928e2f36190a9c735607f878fbadfed97c0404))
+* **api:** api update ([2b3f201](https://github.com/reductoai/reducto-node-sdk/commit/2b3f20129ed20dd73c77cb6b521efaf4ad026b05))
+* **api:** api update ([9381481](https://github.com/reductoai/reducto-node-sdk/commit/9381481cad3b859c58727a8d55f197ae84d4487b))
+* **api:** change sdk to factor in /job/[id] and /jobs ([703df7d](https://github.com/reductoai/reducto-node-sdk/commit/703df7d60e8605e3a6bd1624e2cdc50d07a9f004))
+* **api:** manual updates ([e5e541c](https://github.com/reductoai/reducto-node-sdk/commit/e5e541cdff35ff48dafe7310829dda689a81346f))
+* **api:** manual updates ([65d27c4](https://github.com/reductoai/reducto-node-sdk/commit/65d27c44371d9f1c0482756d33b80b7fc38a5045))
+* **api:** rename /jobs ([48d5c76](https://github.com/reductoai/reducto-node-sdk/commit/48d5c76fb282a92d7cc04b1f73bcb887c9108989))
+* **api:** switch jobs back to job to be backwards compatible ([e9ecb37](https://github.com/reductoai/reducto-node-sdk/commit/e9ecb3757305145c42bb38193e4b5130c7fbf457))
+
+
+### Performance Improvements
+
+* faster formatting ([972dd3b](https://github.com/reductoai/reducto-node-sdk/commit/972dd3bb6ee28675039043bfc1f5d5808d0d7530))
+
+
+### Chores
+
+* **internal:** codegen related update ([42e9d85](https://github.com/reductoai/reducto-node-sdk/commit/42e9d851aaf0f815cd77c66349ada728dca83f6c))
+* **internal:** fix incremental formatting in some cases ([b227316](https://github.com/reductoai/reducto-node-sdk/commit/b227316584b4f7b6652ccf8aa78b0860ae0dea06))
+* **internal:** ignore .eslintcache ([1bd8c17](https://github.com/reductoai/reducto-node-sdk/commit/1bd8c173eb41b48d3f4cad4fa22d1e241e998d12))
+* **internal:** remove .eslintcache ([6d9cc40](https://github.com/reductoai/reducto-node-sdk/commit/6d9cc409f24ec95c55ba48e0f4838d384f27af73))
+* **internal:** remove deprecated `compilerOptions.baseUrl` from tsconfig.json ([40ff880](https://github.com/reductoai/reducto-node-sdk/commit/40ff880136c792a47125a279e091321fac240145))
+* **internal:** use npm pack for build uploads ([730ece1](https://github.com/reductoai/reducto-node-sdk/commit/730ece1787a9ea464da1135dc4a3e9c86f4276bf))
+
 ## 0.11.0 (2025-09-23)
 
 Full Changelog: [v0.10.0...v0.11.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.10.0...v0.11.0)
