@@ -64,6 +64,12 @@ export namespace EditRunParams {
     color?: string;
 
     /**
+     * If True, creates overflow pages for text that doesn't fit in form fields.
+     * Defaults to False.
+     */
+    enable_overflow_pages?: boolean;
+
+    /**
      * The LLM provider to use for edit processing. If not specified, defaults to
      * 'google'
      */
@@ -140,6 +146,12 @@ export namespace EditRunJobParams {
      * The color to use for edits, in hex format.
      */
     color?: string;
+
+    /**
+     * If True, creates overflow pages for text that doesn't fit in form fields.
+     * Defaults to False.
+     */
+    enable_overflow_pages?: boolean;
 
     /**
      * The LLM provider to use for edit processing. If not specified, defaults to
