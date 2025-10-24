@@ -883,9 +883,9 @@ export interface Settings {
   return_ocr_data?: boolean;
 
   /**
-   * The timeout for the job in seconds. Defaults to 900.
+   * The timeout for the job in seconds.
    */
-  timeout?: number;
+  timeout?: number | null;
 }
 
 export interface SplitCategory {
