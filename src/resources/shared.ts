@@ -304,6 +304,12 @@ export interface EditResponse {
    * bounding boxes.
    */
   form_schema?: Array<EditResponse.FormSchema> | null;
+
+  /**
+   * Usage information for the edit operation, including number of pages and credits
+   * charged.
+   */
+  usage?: ParseUsage | null;
 }
 
 export namespace EditResponse {
@@ -527,7 +533,7 @@ export interface Formatting {
    * A list of formatting to include in the output. [insert description of each
    * option here later]
    */
-  include?: Array<'change_tracking' | 'highlight' | 'comments'>;
+  include?: Array<'change_tracking' | 'highlight' | 'comments' | 'hyperlinks'>;
 
   /**
    * A flag to indicate if consecutive tables with the same number of columns should
