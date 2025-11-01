@@ -967,7 +967,7 @@ export interface Spreadsheet {
   /**
    * Whether to exclude hidden sheets, rows, or columns in the output.
    */
-  exclude?: Array<'hidden_sheets' | 'hidden_rows' | 'hidden_cols'>;
+  exclude?: Array<'hidden_sheets' | 'hidden_rows' | 'hidden_cols' | 'styling' | 'spreadsheet_images'>;
 
   /**
    * Whether to include cell color and formula information in the output.
