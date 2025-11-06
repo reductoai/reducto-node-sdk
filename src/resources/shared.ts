@@ -378,6 +378,12 @@ export interface EnrichConfig {
 
 export interface ExperimentalProcessingOptions {
   /**
+   * If True, split table blocks into smaller chunks based on the specified chunk
+   * size in the chunking option. Defaults to False.
+   */
+  chunk_table_blocks?: boolean;
+
+  /**
    * You probably shouldn't use this. If True, filter out boxes with width greater
    * than 50% of the document width. Defaults to False. You probably don't want to
    * use this.
