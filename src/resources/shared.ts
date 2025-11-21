@@ -542,10 +542,9 @@ export interface Formatting {
   add_page_markers?: boolean;
 
   /**
-   * A list of formatting to include in the output. [insert description of each
-   * option here later]
+   * A list of formatting to include in the output.
    */
-  include?: Array<'change_tracking' | 'highlight' | 'comments' | 'hyperlinks'>;
+  include?: Array<'change_tracking' | 'highlight' | 'comments' | 'hyperlinks' | 'signatures'>;
 
   /**
    * A flag to indicate if consecutive tables with the same number of columns should
