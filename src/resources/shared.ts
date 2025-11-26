@@ -1021,6 +1021,12 @@ export interface TableSummaryConfig {
 
 export interface TextAgentic {
   scope: 'text';
+
+  /**
+   * Custom instructions for agentic text. Note: This only applies to form regions
+   * (key-value).
+   */
+  prompt?: string | null;
 }
 
 export interface Upload {
