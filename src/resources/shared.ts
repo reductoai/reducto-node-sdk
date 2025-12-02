@@ -696,6 +696,12 @@ export namespace ParseResponse {
           | 'Signature';
 
         /**
+         * (Experimental) The URL/link to chart data JSON for figure blocks processed by
+         * chart agent.
+         */
+        chart_data?: Array<string> | null;
+
+        /**
          * The confidence for the block. It is either low or high and takes into account
          * factors like OCR and table structure
          */
@@ -749,6 +755,11 @@ export namespace ParseResponse {
          * OCR confidence score between 0 and 1, where 1 indicates highest confidence
          */
         confidence?: number | null;
+
+        /**
+         * The rotation angle in degrees, from 0 to 360, counterclockwise.
+         */
+        rotation?: number | null;
       }
 
       export interface Word {
@@ -765,6 +776,11 @@ export namespace ParseResponse {
          * OCR confidence score between 0 and 1, where 1 indicates highest confidence
          */
         confidence?: number | null;
+
+        /**
+         * The rotation angle in degrees, from 0 to 360, counterclockwise.
+         */
+        rotation?: number | null;
       }
     }
   }
