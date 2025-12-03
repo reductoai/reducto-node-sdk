@@ -504,6 +504,11 @@ export interface FigureAgentic {
   scope: 'figure';
 
   /**
+   * If True, use the advanced chart agent. Defaults to False.
+   */
+  advanced_chart_agent?: boolean;
+
+  /**
    * Custom prompt for figure agentic.
    */
   prompt?: string | null;
@@ -516,6 +521,11 @@ export interface FigureAgentic {
 }
 
 export interface FigureSummaryConfig {
+  /**
+   * If True, use the advanced chart agent. Defaults to False.
+   */
+  advanced_chart_agent?: boolean;
+
   /**
    * If figure summarization should be performed.
    */
