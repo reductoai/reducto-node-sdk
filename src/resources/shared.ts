@@ -304,6 +304,12 @@ export interface EditResponse {
    * bounding boxes.
    */
   form_schema?: Array<EditResponse.FormSchema> | null;
+
+  /**
+   * Usage information for the edit operation, including number of pages and credits
+   * charged.
+   */
+  usage?: ParseUsage | null;
 }
 
 export namespace EditResponse {
@@ -371,6 +377,12 @@ export interface EnrichConfig {
 }
 
 export interface ExperimentalProcessingOptions {
+  /**
+   * If True, split table blocks into smaller chunks based on the specified chunk
+   * size in the chunking option. Defaults to False.
+   */
+  chunk_table_blocks?: boolean;
+
   /**
    * You probably shouldn't use this. If True, filter out boxes with width greater
    * than 50% of the document width. Defaults to False. You probably don't want to
@@ -495,6 +507,12 @@ export interface FigureAgentic {
    * Custom prompt for figure agentic.
    */
   prompt?: string | null;
+
+  /**
+   * If True, return overlays for the figure. This is so you can use the overlays to
+   * double check the quality of the extraction
+   */
+  return_overlays?: boolean;
 }
 
 export interface FigureSummaryConfig {
@@ -524,10 +542,9 @@ export interface Formatting {
   add_page_markers?: boolean;
 
   /**
-   * A list of formatting to include in the output. [insert description of each
-   * option here later]
+   * A list of formatting to include in the output.
    */
-  include?: Array<'change_tracking' | 'highlight' | 'comments'>;
+  include?: Array<'change_tracking' | 'highlight' | 'comments' | 'hyperlinks' | 'signatures'>;
 
   /**
    * A flag to indicate if consecutive tables with the same number of columns should
@@ -679,6 +696,12 @@ export namespace ParseResponse {
           | 'Signature';
 
         /**
+         * (Experimental) The URL/link to chart data JSON for figure blocks processed by
+         * chart agent.
+         */
+        chart_data?: Array<string> | null;
+
+        /**
          * The confidence for the block. It is either low or high and takes into account
          * factors like OCR and table structure
          */
@@ -732,6 +755,11 @@ export namespace ParseResponse {
          * OCR confidence score between 0 and 1, where 1 indicates highest confidence
          */
         confidence?: number | null;
+
+        /**
+         * The rotation angle in degrees, from 0 to 360, counterclockwise.
+         */
+        rotation?: number | null;
       }
 
       export interface Word {
@@ -748,6 +776,11 @@ export namespace ParseResponse {
          * OCR confidence score between 0 and 1, where 1 indicates highest confidence
          */
         confidence?: number | null;
+
+        /**
+         * The rotation angle in degrees, from 0 to 360, counterclockwise.
+         */
+        rotation?: number | null;
       }
     }
   }
@@ -883,9 +916,9 @@ export interface Settings {
   return_ocr_data?: boolean;
 
   /**
-   * The timeout for the job in seconds. Defaults to 900.
+   * The timeout for the job in seconds.
    */
-  timeout?: number;
+  timeout?: number | null;
 }
 
 export interface SplitCategory {
@@ -961,7 +994,7 @@ export interface Spreadsheet {
   /**
    * Whether to exclude hidden sheets, rows, or columns in the output.
    */
-  exclude?: Array<'hidden_sheets' | 'hidden_rows' | 'hidden_cols'>;
+  exclude?: Array<'hidden_sheets' | 'hidden_rows' | 'hidden_cols' | 'styling' | 'spreadsheet_images'>;
 
   /**
    * Whether to include cell color and formula information in the output.
@@ -1004,6 +1037,12 @@ export interface TableSummaryConfig {
 
 export interface TextAgentic {
   scope: 'text';
+
+  /**
+   * Custom instructions for agentic text. Note: This only applies to form regions
+   * (key-value).
+   */
+  prompt?: string | null;
 }
 
 export interface Upload {
