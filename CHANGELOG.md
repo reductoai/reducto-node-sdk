@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.14.0 (2025-12-06)
+
+Full Changelog: [v0.13.0...v0.14.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.13.0...v0.14.0)
+
+### Features
+
+* **api:** api update ([816ec6b](https://github.com/reductoai/reducto-node-sdk/commit/816ec6b489eed42d237f92431e3546145f7efa2f))
+
+
+### Bug Fixes
+
+* **mcp:** correct code tool API endpoint ([2c26c48](https://github.com/reductoai/reducto-node-sdk/commit/2c26c48cc5540089e4ca1717296638b4552784eb))
+* **mcp:** return correct lines on typescript errors ([497e0ee](https://github.com/reductoai/reducto-node-sdk/commit/497e0ee1cb2d898b7fbee174363573393995148d))
+
+
+### Chores
+
+* **internal:** codegen related update ([12de323](https://github.com/reductoai/reducto-node-sdk/commit/12de3239143efba43a97f884ab454a6f9bf2fdfd))
+* **internal:** codegen related update ([ba4aea5](https://github.com/reductoai/reducto-node-sdk/commit/ba4aea56bea1bc533d8c9dfa72fead39e214817c))
+
 ## 0.13.0 (2025-12-02)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.12.0...v0.13.0)
