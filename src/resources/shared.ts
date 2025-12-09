@@ -653,7 +653,7 @@ export namespace ParseResponse {
 
   export namespace FullResult {
     export interface Chunk {
-      blocks: Array<Chunk.Block>;
+      blocks: Array<{ [key: string]: unknown }>;
 
       /**
        * The content of the chunk extracted from the document.
@@ -674,74 +674,6 @@ export namespace ParseResponse {
        * Whether the enrichment was successful.
        */
       enrichment_success?: boolean;
-    }
-
-    export namespace Chunk {
-      export interface Block {
-        /**
-         * The bounding box of the block extracted from the document.
-         */
-        bbox: Shared.BoundingBox;
-
-        /**
-         * The content of the block extracted from the document.
-         */
-        content: string;
-
-        /**
-         * The type of block extracted from the document.
-         */
-        type:
-          | 'Header'
-          | 'Footer'
-          | 'Title'
-          | 'Section Header'
-          | 'Page Number'
-          | 'List Item'
-          | 'Figure'
-          | 'Table'
-          | 'Key Value'
-          | 'Text'
-          | 'Comment'
-          | 'Signature';
-
-        /**
-         * (Experimental) The URL/link to chart data JSON for figure blocks processed by
-         * chart agent.
-         */
-        chart_data?: Array<string> | null;
-
-        /**
-         * The confidence for the block. It is either low or high and takes into account
-         * factors like OCR and table structure
-         */
-        confidence?: string | null;
-
-        /**
-         * Granular confidence scores for the block. It is a dictionary of confidence
-         * scores for the block. The confidence scores will not be None if the user has
-         * enabled numeric confidence scores.
-         */
-        granular_confidence?: Block.GranularConfidence | null;
-
-        /**
-         * (Experimental) The URL of the image associated with the block.
-         */
-        image_url?: string | null;
-      }
-
-      export namespace Block {
-        /**
-         * Granular confidence scores for the block. It is a dictionary of confidence
-         * scores for the block. The confidence scores will not be None if the user has
-         * enabled numeric confidence scores.
-         */
-        export interface GranularConfidence {
-          extract_confidence?: number | null;
-
-          parse_confidence?: number | null;
-        }
-      }
     }
 
     export interface Ocr {
@@ -886,6 +818,13 @@ export interface Settings {
    * If True, embed OCR metadata into the returned PDF. Defaults to False.
    */
   embed_pdf_metadata?: boolean;
+
+  /**
+   * The mode to use for text extraction from PDFs. OCR mode uses optical character
+   * recognition only. Hybrid mode combines OCR with embedded PDF text for best
+   * accuracy (default).
+   */
+  extraction_mode?: 'ocr' | 'hybrid';
 
   /**
    * Force the URL to be downloaded as a specific file extension (e.g. `.png`).
