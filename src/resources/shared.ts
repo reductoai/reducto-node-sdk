@@ -425,6 +425,12 @@ export interface ExperimentalProcessingOptions {
   enrich?: EnrichConfig;
 
   /**
+   * If True, the job will be processed with lower latency and higher priority. Uses
+   * 2x the cost of a regular job. Defaults to False.
+   */
+  latency_sensitive?: boolean;
+
+  /**
    * Layout enrichment is a beta feature that improves our layout and reading order
    * performance at the cost of increased latency. Defaults to False.
    */
