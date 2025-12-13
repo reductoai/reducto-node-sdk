@@ -40,6 +40,23 @@ export interface PipelineRunParams {
    * The ID of the pipeline to use for the document.
    */
   pipeline_id: string;
+
+  /**
+   * Settings for pipeline execution that override pipeline defaults.
+   */
+  settings?: PipelineRunParams.Settings;
+}
+
+export namespace PipelineRunParams {
+  /**
+   * Settings for pipeline execution that override pipeline defaults.
+   */
+  export interface Settings {
+    /**
+     * Password to decrypt password-protected documents.
+     */
+    document_password?: string | null;
+  }
 }
 
 export interface PipelineRunJobParams {
@@ -63,6 +80,23 @@ export interface PipelineRunJobParams {
    * The configuration options for asynchronous processing (default synchronous).
    */
   async?: Shared.ConfigV3AsyncConfig;
+
+  /**
+   * Settings for pipeline execution that override pipeline defaults.
+   */
+  settings?: PipelineRunJobParams.Settings;
+}
+
+export namespace PipelineRunJobParams {
+  /**
+   * Settings for pipeline execution that override pipeline defaults.
+   */
+  export interface Settings {
+    /**
+     * Password to decrypt password-protected documents.
+     */
+    document_password?: string | null;
+  }
 }
 
 export declare namespace Pipeline {
