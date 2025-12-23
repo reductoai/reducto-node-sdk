@@ -837,7 +837,7 @@ export namespace PipelineResponse {
   export interface Result {
     extract: Array<Result.UnionMember0> | Shared.ExtractResponse | Shared.V3ExtractResponse | null;
 
-    parse: Shared.ParseResponse | null;
+    parse: Shared.ParseResponse | Array<Shared.ParseResponse> | null;
 
     split: Shared.SplitResponse | null;
 
