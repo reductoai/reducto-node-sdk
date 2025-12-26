@@ -425,6 +425,12 @@ export interface ExperimentalProcessingOptions {
   enrich?: EnrichConfig;
 
   /**
+   * If True, the job will be processed with lower latency and higher priority. Uses
+   * 2x the cost of a regular job. Defaults to False.
+   */
+  latency_sensitive?: boolean;
+
+  /**
    * Layout enrichment is a beta feature that improves our layout and reading order
    * performance at the cost of increased latency. Defaults to False.
    */
@@ -504,6 +510,11 @@ export interface FigureAgentic {
   scope: 'figure';
 
   /**
+   * If True, use the advanced chart agent. Defaults to False.
+   */
+  advanced_chart_agent?: boolean;
+
+  /**
    * Custom prompt for figure agentic.
    */
   prompt?: string | null;
@@ -516,6 +527,11 @@ export interface FigureAgentic {
 }
 
 export interface FigureSummaryConfig {
+  /**
+   * If True, use the advanced chart agent. Defaults to False.
+   */
+  advanced_chart_agent?: boolean;
+
   /**
    * If figure summarization should be performed.
    */
@@ -708,6 +724,12 @@ export namespace ParseResponse {
         confidence?: string | null;
 
         /**
+         * Extra metadata fields for the block. Fields like 'is_chart' will only appear
+         * when set to True.
+         */
+        extra?: { [key: string]: unknown } | null;
+
+        /**
          * Granular confidence scores for the block. It is a dictionary of confidence
          * scores for the block. The confidence scores will not be None if the user has
          * enabled numeric confidence scores.
@@ -815,7 +837,7 @@ export namespace PipelineResponse {
   export interface Result {
     extract: Array<Result.UnionMember0> | Shared.ExtractResponse | Shared.V3ExtractResponse | null;
 
-    parse: Shared.ParseResponse | null;
+    parse: Shared.ParseResponse | Array<Shared.ParseResponse> | null;
 
     split: Shared.SplitResponse | null;
 
@@ -876,6 +898,13 @@ export interface Settings {
    * If True, embed OCR metadata into the returned PDF. Defaults to False.
    */
   embed_pdf_metadata?: boolean;
+
+  /**
+   * The mode to use for text extraction from PDFs. OCR mode uses optical character
+   * recognition only. Hybrid mode combines OCR with embedded PDF text for best
+   * accuracy (default).
+   */
+  extraction_mode?: 'ocr' | 'hybrid';
 
   /**
    * Force the URL to be downloaded as a specific file extension (e.g. `.png`).
