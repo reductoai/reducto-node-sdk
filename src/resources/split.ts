@@ -30,11 +30,12 @@ export interface SplitRunParams {
    * can provide one of the following: 1. A publicly available URL 2. A presigned S3
    * URL 3. A reducto:// prefixed URL obtained from the /upload endpoint after
    * directly uploading a document 4. A jobid:// prefixed URL obtained from a
-   * previous /parse invocation
+   * previous /parse invocation 5. A list of URLs (for multi-document pipelines, V3
+   * API only)
    *
    *             For edit pipelines, this should be a string containing the edit instructions
    */
-  input: string | Shared.Upload;
+  input: string | Array<string> | Shared.Upload;
 
   /**
    * The configuration options for processing the document.
@@ -79,11 +80,12 @@ export interface SplitRunJobParams {
    * can provide one of the following: 1. A publicly available URL 2. A presigned S3
    * URL 3. A reducto:// prefixed URL obtained from the /upload endpoint after
    * directly uploading a document 4. A jobid:// prefixed URL obtained from a
-   * previous /parse invocation
+   * previous /parse invocation 5. A list of URLs (for multi-document pipelines, V3
+   * API only)
    *
    *             For edit pipelines, this should be a string containing the edit instructions
    */
-  input: string | Shared.Upload;
+  input: string | Array<string> | Shared.Upload;
 
   /**
    * The configuration options for processing the document.

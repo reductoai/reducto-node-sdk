@@ -45,6 +45,7 @@ describe('resource split', () => {
         settings: {
           document_password: 'document_password',
           embed_pdf_metadata: true,
+          extraction_mode: 'ocr',
           force_file_extension: 'force_file_extension',
           force_url_result: true,
           ocr_system: 'standard',
@@ -103,6 +104,7 @@ describe('resource split', () => {
         settings: {
           document_password: 'document_password',
           embed_pdf_metadata: true,
+          extraction_mode: 'ocr',
           force_file_extension: 'force_file_extension',
           force_url_result: true,
           ocr_system: 'standard',
