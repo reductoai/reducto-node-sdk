@@ -327,7 +327,7 @@ export namespace EditResponse {
     /**
      * Type of the form widget
      */
-    type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
+    type: 'text' | 'checkbox' | 'radio' | 'dropdown' | 'barcode';
 
     /**
      * If True (default), the system will attempt to fill this widget. If False, the
