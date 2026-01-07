@@ -28,7 +28,13 @@ describe('resource split', () => {
   test.skip('run: required and optional params', async () => {
     const response = await client.split.run({
       input: 'string',
-      split_description: [{ description: 'description', name: 'name', partition_key: 'partition_key' }],
+      split_description: [
+        {
+          description: 'description',
+          name: 'name',
+          partition_key: 'partition_key',
+        },
+      ],
       parsing: {
         enhance: { agentic: [{ scope: 'table', prompt: 'prompt' }], summarize_figures: true },
         formatting: {
@@ -86,8 +92,18 @@ describe('resource split', () => {
   test.skip('runJob: required and optional params', async () => {
     const response = await client.split.runJob({
       input: 'string',
-      split_description: [{ description: 'description', name: 'name', partition_key: 'partition_key' }],
-      async: { metadata: {}, priority: true, webhook: { channels: ['string'], mode: 'svix' } },
+      split_description: [
+        {
+          description: 'description',
+          name: 'name',
+          partition_key: 'partition_key',
+        },
+      ],
+      async: {
+        metadata: {},
+        priority: true,
+        webhook: { channels: ['string'], mode: 'svix' },
+      },
       parsing: {
         enhance: { agentic: [{ scope: 'table', prompt: 'prompt' }], summarize_figures: true },
         formatting: {

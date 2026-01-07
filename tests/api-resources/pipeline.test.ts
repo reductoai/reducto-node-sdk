@@ -47,7 +47,11 @@ describe('resource pipeline', () => {
     const response = await client.pipeline.runJob({
       input: 'string',
       pipeline_id: 'pipeline_id',
-      async: { metadata: {}, priority: true, webhook: { channels: ['string'], mode: 'svix' } },
+      async: {
+        metadata: {},
+        priority: true,
+        webhook: { channels: ['string'], mode: 'svix' },
+      },
       settings: { document_password: 'document_password' },
     });
   });

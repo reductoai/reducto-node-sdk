@@ -138,7 +138,11 @@ describe('instantiate client', () => {
       return new Response(JSON.stringify({}), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Reducto({ baseURL: 'http://localhost:5000/', apiKey: 'My API Key', fetch: testFetch });
+    const client = new Reducto({
+      baseURL: 'http://localhost:5000/',
+      apiKey: 'My API Key',
+      fetch: testFetch,
+    });
 
     await client.patch('/foo');
     expect(capturedRequest?.method).toEqual('PATCH');
@@ -191,7 +195,11 @@ describe('instantiate client', () => {
         `"Ambiguous URL; The \`baseURL\` option (or REDUCTO_BASE_URL env var) and the \`environment\` option are given. If you want to use the environment you must pass baseURL: null"`,
       );
 
-      const client = new Reducto({ apiKey: 'My API Key', baseURL: null, environment: 'production' });
+      const client = new Reducto({
+        apiKey: 'My API Key',
+        baseURL: null,
+        environment: 'production',
+      });
       expect(client.baseURL).toEqual('https://platform.reducto.ai');
     });
 
@@ -285,7 +293,11 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Reducto({ apiKey: 'My API Key', timeout: 10, fetch: testFetch });
+    const client = new Reducto({
+      apiKey: 'My API Key',
+      timeout: 10,
+      fetch: testFetch,
+    });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -315,7 +327,11 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Reducto({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
+    const client = new Reducto({
+      apiKey: 'My API Key',
+      fetch: testFetch,
+      maxRetries: 4,
+    });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
 
@@ -339,7 +355,11 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new Reducto({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
+    const client = new Reducto({
+      apiKey: 'My API Key',
+      fetch: testFetch,
+      maxRetries: 4,
+    });
 
     expect(
       await client.request({
@@ -401,7 +421,11 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new Reducto({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
+    const client = new Reducto({
+      apiKey: 'My API Key',
+      fetch: testFetch,
+      maxRetries: 4,
+    });
 
     expect(
       await client.request({
