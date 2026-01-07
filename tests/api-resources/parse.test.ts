@@ -75,7 +75,11 @@ describe('resource parse', () => {
   test.skip('runJob: required and optional params', async () => {
     const response = await client.parse.runJob({
       input: 'string',
-      async: { metadata: {}, priority: true, webhook: { channels: ['string'], mode: 'svix' } },
+      async: {
+        metadata: {},
+        priority: true,
+        webhook: { channels: ['string'], mode: 'svix' },
+      },
       enhance: { agentic: [{ scope: 'table', prompt: 'prompt' }], summarize_figures: true },
       formatting: {
         add_page_markers: true,
