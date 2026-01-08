@@ -965,9 +965,27 @@ export interface SplitLargeTables {
   enabled?: boolean;
 
   /**
-   * The size of the tables to split into. Defaults to 50.
+   * The size of the tables to split into. Defaults to 50. Use 'row' and 'column' to
+   * independently specify the number of rows and columns to include when splitting.
+   * If you only want to split by rows or columns, set the other value to None.
    */
-  size?: number;
+  size?: number | SplitLargeTables.SplitLargeTableSizes;
+}
+
+export namespace SplitLargeTables {
+  export interface SplitLargeTableSizes {
+    /**
+     * The number of columns to include in each chunk when splitting large tables. Does
+     * not chunk columns if set to None.
+     */
+    column?: number | null;
+
+    /**
+     * The number of rows to include in each chunk when splitting large tables. Does
+     * not chunk rows if set to None.
+     */
+    row?: number | null;
+  }
 }
 
 export interface SplitResponse {
