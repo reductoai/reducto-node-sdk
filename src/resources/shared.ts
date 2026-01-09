@@ -66,12 +66,6 @@ export interface AdvancedProcessingOptions {
   include_color_information?: boolean;
 
   /**
-   * If True, include dropdown options and the selected value when rendering
-   * spreadsheet cells.
-   */
-  include_dropdown_information?: boolean;
-
-  /**
    * If True, preserve formula information in spreadsheet cells by wrapping text with
    * LaTeX formula commands during parsing.
    */
@@ -1050,9 +1044,9 @@ export interface Spreadsheet {
   exclude?: Array<'hidden_sheets' | 'hidden_rows' | 'hidden_cols' | 'styling' | 'spreadsheet_images'>;
 
   /**
-   * Whether to include cell color, formula, and dropdown information in the output.
+   * Whether to include cell color and formula information in the output.
    */
-  include?: Array<'cell_colors' | 'formula' | 'dropdowns'>;
+  include?: Array<'cell_colors' | 'formula'>;
 
   split_large_tables?: SplitLargeTables;
 }
