@@ -40,6 +40,7 @@ describe('resource parse', () => {
       settings: {
         document_password: 'document_password',
         embed_pdf_metadata: true,
+        extraction_mode: 'ocr',
         force_file_extension: 'force_file_extension',
         force_url_result: true,
         ocr_system: 'standard',
@@ -74,7 +75,11 @@ describe('resource parse', () => {
   test.skip('runJob: required and optional params', async () => {
     const response = await client.parse.runJob({
       input: 'string',
-      async: { metadata: {}, priority: true, webhook: { channels: ['string'], mode: 'svix' } },
+      async: {
+        metadata: {},
+        priority: true,
+        webhook: { channels: ['string'], mode: 'svix' },
+      },
       enhance: { agentic: [{ scope: 'table', prompt: 'prompt' }], summarize_figures: true },
       formatting: {
         add_page_markers: true,
@@ -90,6 +95,7 @@ describe('resource parse', () => {
       settings: {
         document_password: 'document_password',
         embed_pdf_metadata: true,
+        extraction_mode: 'ocr',
         force_file_extension: 'force_file_extension',
         force_url_result: true,
         ocr_system: 'standard',

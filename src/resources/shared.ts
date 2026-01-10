@@ -66,6 +66,12 @@ export interface AdvancedProcessingOptions {
   include_color_information?: boolean;
 
   /**
+   * If True, include dropdown options and the selected value when rendering
+   * spreadsheet cells.
+   */
+  include_dropdown_information?: boolean;
+
+  /**
    * If True, preserve formula information in spreadsheet cells by wrapping text with
    * LaTeX formula commands during parsing.
    */
@@ -327,7 +333,7 @@ export namespace EditResponse {
     /**
      * Type of the form widget
      */
-    type: 'text' | 'checkbox' | 'dropdown' | 'barcode';
+    type: 'text' | 'checkbox' | 'radio' | 'dropdown' | 'barcode';
 
     /**
      * If True (default), the system will attempt to fill this widget. If False, the
@@ -425,6 +431,12 @@ export interface ExperimentalProcessingOptions {
   enrich?: EnrichConfig;
 
   /**
+   * If True, the job will be processed with lower latency and higher priority. Uses
+   * 2x the cost of a regular job. Defaults to False.
+   */
+  latency_sensitive?: boolean;
+
+  /**
    * Layout enrichment is a beta feature that improves our layout and reading order
    * performance at the cost of increased latency. Defaults to False.
    */
@@ -504,6 +516,11 @@ export interface FigureAgentic {
   scope: 'figure';
 
   /**
+   * If True, use the advanced chart agent. Defaults to False.
+   */
+  advanced_chart_agent?: boolean;
+
+  /**
    * Custom prompt for figure agentic.
    */
   prompt?: string | null;
@@ -516,6 +533,11 @@ export interface FigureAgentic {
 }
 
 export interface FigureSummaryConfig {
+  /**
+   * If True, use the advanced chart agent. Defaults to False.
+   */
+  advanced_chart_agent?: boolean;
+
   /**
    * If figure summarization should be performed.
    */
@@ -708,6 +730,12 @@ export namespace ParseResponse {
         confidence?: string | null;
 
         /**
+         * Extra metadata fields for the block. Fields like 'is_chart' will only appear
+         * when set to True.
+         */
+        extra?: { [key: string]: unknown } | null;
+
+        /**
          * Granular confidence scores for the block. It is a dictionary of confidence
          * scores for the block. The confidence scores will not be None if the user has
          * enabled numeric confidence scores.
@@ -815,7 +843,7 @@ export namespace PipelineResponse {
   export interface Result {
     extract: Array<Result.UnionMember0> | Shared.ExtractResponse | Shared.V3ExtractResponse | null;
 
-    parse: Shared.ParseResponse | null;
+    parse: Shared.ParseResponse | Array<Shared.ParseResponse> | null;
 
     split: Shared.SplitResponse | null;
 
@@ -878,6 +906,13 @@ export interface Settings {
   embed_pdf_metadata?: boolean;
 
   /**
+   * The mode to use for text extraction from PDFs. OCR mode uses optical character
+   * recognition only. Hybrid mode combines OCR with embedded PDF text for best
+   * accuracy (default).
+   */
+  extraction_mode?: 'ocr' | 'hybrid';
+
+  /**
    * Force the URL to be downloaded as a specific file extension (e.g. `.png`).
    */
   force_file_extension?: string | null;
@@ -936,9 +971,27 @@ export interface SplitLargeTables {
   enabled?: boolean;
 
   /**
-   * The size of the tables to split into. Defaults to 50.
+   * The size of the tables to split into. Defaults to 50. Use 'row' and 'column' to
+   * independently specify the number of rows and columns to include when splitting.
+   * If you only want to split by rows or columns, set the other value to None.
    */
-  size?: number;
+  size?: number | SplitLargeTables.SplitLargeTableSizes;
+}
+
+export namespace SplitLargeTables {
+  export interface SplitLargeTableSizes {
+    /**
+     * The number of columns to include in each chunk when splitting large tables. Does
+     * not chunk columns if set to None.
+     */
+    column?: number | null;
+
+    /**
+     * The number of rows to include in each chunk when splitting large tables. Does
+     * not chunk rows if set to None.
+     */
+    row?: number | null;
+  }
 }
 
 export interface SplitResponse {
@@ -997,9 +1050,9 @@ export interface Spreadsheet {
   exclude?: Array<'hidden_sheets' | 'hidden_rows' | 'hidden_cols' | 'styling' | 'spreadsheet_images'>;
 
   /**
-   * Whether to include cell color and formula information in the output.
+   * Whether to include cell color, formula, and dropdown information in the output.
    */
-  include?: Array<'cell_colors' | 'formula'>;
+  include?: Array<'cell_colors' | 'formula' | 'dropdowns'>;
 
   split_large_tables?: SplitLargeTables;
 }

@@ -167,7 +167,9 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new Reducto();
 
-const response = await client.parse.run({ input: 'https://pdfobject.com/pdf/sample.pdf' }).asResponse();
+const response = await client.parse
+  .run({ input: 'https://pdfobject.com/pdf/sample.pdf' })
+  .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 

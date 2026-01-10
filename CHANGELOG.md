@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.14.0 (2026-01-10)
+
+Full Changelog: [v0.13.0...v0.14.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.13.0...v0.14.0)
+
+### Features
+
+* **api:** api update ([95c7a86](https://github.com/reductoai/reducto-node-sdk/commit/95c7a86249bf78b6164d648e34c161213ef098dd))
+* **api:** api update ([1a746fc](https://github.com/reductoai/reducto-node-sdk/commit/1a746fc043c060a266bf87cd575945cb8077290f))
+* **api:** api update ([6398260](https://github.com/reductoai/reducto-node-sdk/commit/6398260030d99c5707906aa51e0574580001468c))
+* **api:** api update ([3104233](https://github.com/reductoai/reducto-node-sdk/commit/31042333c8bdb44df5be843d72a6ce73114ddbec))
+* **api:** api update ([31a32f1](https://github.com/reductoai/reducto-node-sdk/commit/31a32f15eed8d855d3f17794a6ba0a01a8c7bc37))
+* **api:** api update ([869f688](https://github.com/reductoai/reducto-node-sdk/commit/869f688baf43a76936766a10e2e39fb2d92730c5))
+* **api:** api update ([1bc5ebb](https://github.com/reductoai/reducto-node-sdk/commit/1bc5ebb13d723d2f2dd08b22cf9de56c2f1f581e))
+* **api:** api update ([de2dad4](https://github.com/reductoai/reducto-node-sdk/commit/de2dad4e85c0e2846737a1b282aea23529c33bc5))
+* **api:** api update ([21a0bc0](https://github.com/reductoai/reducto-node-sdk/commit/21a0bc0317272966c09e56229dc1b43c63b74e23))
+* **api:** api update ([816ec6b](https://github.com/reductoai/reducto-node-sdk/commit/816ec6b489eed42d237f92431e3546145f7efa2f))
+* **files:** add support for string alternative to file upload type ([6ab83a7](https://github.com/reductoai/reducto-node-sdk/commit/6ab83a76b2c240a44721ab2018c3af8cf94d7512))
+
+
+### Bug Fixes
+
+* **mcp:** correct code tool API endpoint ([2c26c48](https://github.com/reductoai/reducto-node-sdk/commit/2c26c48cc5540089e4ca1717296638b4552784eb))
+* **mcp:** return correct lines on typescript errors ([497e0ee](https://github.com/reductoai/reducto-node-sdk/commit/497e0ee1cb2d898b7fbee174363573393995148d))
+
+
+### Chores
+
+* break long lines in snippets into multiline ([9d52de4](https://github.com/reductoai/reducto-node-sdk/commit/9d52de4d7faa0b0a61a3ed55a0416270f26d2d51))
+* **internal:** codegen related update ([12de323](https://github.com/reductoai/reducto-node-sdk/commit/12de3239143efba43a97f884ab454a6f9bf2fdfd))
+* **internal:** codegen related update ([ba4aea5](https://github.com/reductoai/reducto-node-sdk/commit/ba4aea56bea1bc533d8c9dfa72fead39e214817c))
+
 ## 0.13.0 (2025-12-02)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.12.0...v0.13.0)

@@ -25,7 +25,10 @@ describe('resource extract', () => {
   test.skip('run: required and optional params', async () => {
     const response = await client.extract.run({
       input: 'string',
-      instructions: { schema: {}, system_prompt: 'system_prompt' },
+      instructions: {
+        schema: {},
+        system_prompt: 'system_prompt',
+      },
       parsing: {
         enhance: { agentic: [{ scope: 'table', prompt: 'prompt' }], summarize_figures: true },
         formatting: {
@@ -42,6 +45,7 @@ describe('resource extract', () => {
         settings: {
           document_password: 'document_password',
           embed_pdf_metadata: true,
+          extraction_mode: 'ocr',
           force_file_extension: 'force_file_extension',
           force_url_result: true,
           ocr_system: 'standard',
@@ -83,8 +87,15 @@ describe('resource extract', () => {
   test.skip('runJob: required and optional params', async () => {
     const response = await client.extract.runJob({
       input: 'string',
-      async: { metadata: {}, priority: true, webhook: { channels: ['string'], mode: 'svix' } },
-      instructions: { schema: {}, system_prompt: 'system_prompt' },
+      async: {
+        metadata: {},
+        priority: true,
+        webhook: { channels: ['string'], mode: 'svix' },
+      },
+      instructions: {
+        schema: {},
+        system_prompt: 'system_prompt',
+      },
       parsing: {
         enhance: { agentic: [{ scope: 'table', prompt: 'prompt' }], summarize_figures: true },
         formatting: {
@@ -101,6 +112,7 @@ describe('resource extract', () => {
         settings: {
           document_password: 'document_password',
           embed_pdf_metadata: true,
+          extraction_mode: 'ocr',
           force_file_extension: 'force_file_extension',
           force_url_result: true,
           ocr_system: 'standard',
