@@ -6,12 +6,12 @@ export type APIVersionResponse = unknown;
 
 export interface UploadParams {
   /**
-   * Query param:
+   * Query param
    */
   extension?: string | null;
 
   /**
-   * Body param:
+   * Body param
    */
   file?: Uploadable | string | null;
 }
