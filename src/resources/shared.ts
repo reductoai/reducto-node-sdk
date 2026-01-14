@@ -60,6 +60,11 @@ export interface AdvancedProcessingOptions {
   force_file_extension?: string;
 
   /**
+   * If True, ignore and remove watermarks from OCR output. Defaults to False.
+   */
+  ignore_watermarks?: boolean;
+
+  /**
    * If True, preserve Excel cell colours in the extracted spreadsheet text using
    * LaTeX colour commands.
    */
@@ -566,7 +571,9 @@ export interface Formatting {
   /**
    * A list of formatting to include in the output.
    */
-  include?: Array<'change_tracking' | 'highlight' | 'comments' | 'hyperlinks' | 'signatures'>;
+  include?: Array<
+    'change_tracking' | 'highlight' | 'comments' | 'hyperlinks' | 'signatures' | 'ignore_watermarks'
+  >;
 
   /**
    * A flag to indicate if consecutive tables with the same number of columns should
