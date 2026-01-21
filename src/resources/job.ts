@@ -48,6 +48,9 @@ export namespace JobGetResponse {
 
     reason?: string | null;
 
+    /**
+     * Response from classify job - returned when polling /job/{job_id}
+     */
     result?:
       | Shared.ParseResponse
       | Shared.ExtractResponse
@@ -55,7 +58,25 @@ export namespace JobGetResponse {
       | Shared.EditResponse
       | Shared.PipelineResponse
       | Shared.V3ExtractResponse
+      | AsyncJobResponse.ClassifyResponse
       | null;
+  }
+
+  export namespace AsyncJobResponse {
+    /**
+     * Response from classify job - returned when polling /job/{job_id}
+     */
+    export interface ClassifyResponse {
+      job_id: string;
+
+      result: ClassifyResponse.Result;
+    }
+
+    export namespace ClassifyResponse {
+      export interface Result {
+        category: string;
+      }
+    }
   }
 
   export interface EnhancedAsyncJobResponse {
@@ -75,6 +96,9 @@ export namespace JobGetResponse {
 
     reason?: string | null;
 
+    /**
+     * Response from classify job - returned when polling /job/{job_id}
+     */
     result?:
       | Shared.ParseResponse
       | Shared.ExtractResponse
@@ -82,13 +106,31 @@ export namespace JobGetResponse {
       | Shared.EditResponse
       | Shared.PipelineResponse
       | Shared.V3ExtractResponse
+      | EnhancedAsyncJobResponse.ClassifyResponse
       | null;
 
     source?: unknown;
 
     total_pages?: number | null;
 
-    type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | null;
+    type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | 'Classify' | null;
+  }
+
+  export namespace EnhancedAsyncJobResponse {
+    /**
+     * Response from classify job - returned when polling /job/{job_id}
+     */
+    export interface ClassifyResponse {
+      job_id: string;
+
+      result: ClassifyResponse.Result;
+    }
+
+    export namespace ClassifyResponse {
+      export interface Result {
+        category: string;
+      }
+    }
   }
 }
 
@@ -121,7 +163,7 @@ export namespace JobGetAllResponse {
 
     total_pages: number | null;
 
-    type: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline';
+    type: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | 'Classify';
 
     bucket?: unknown;
 
