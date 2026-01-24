@@ -362,6 +362,12 @@ export interface Enhance {
   agentic?: Array<TableAgentic | FigureAgentic | TextAgentic>;
 
   /**
+   * If True, use an advanced vision language model to improve reading order
+   * accuracy, with a small increase in latency. Defaults to False.
+   */
+  intelligent_ordering?: boolean;
+
+  /**
    * If True, summarize figures using a small vision language model. Defaults to
    * True.
    */

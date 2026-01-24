@@ -30,7 +30,11 @@ describe('resource extract', () => {
         system_prompt: 'system_prompt',
       },
       parsing: {
-        enhance: { agentic: [{ scope: 'table', prompt: 'prompt' }], summarize_figures: true },
+        enhance: {
+          agentic: [{ scope: 'table', prompt: 'prompt' }],
+          intelligent_ordering: true,
+          summarize_figures: true,
+        },
         formatting: {
           add_page_markers: true,
           include: ['change_tracking'],
@@ -97,7 +101,11 @@ describe('resource extract', () => {
         system_prompt: 'system_prompt',
       },
       parsing: {
-        enhance: { agentic: [{ scope: 'table', prompt: 'prompt' }], summarize_figures: true },
+        enhance: {
+          agentic: [{ scope: 'table', prompt: 'prompt' }],
+          intelligent_ordering: true,
+          summarize_figures: true,
+        },
         formatting: {
           add_page_markers: true,
           include: ['change_tracking'],

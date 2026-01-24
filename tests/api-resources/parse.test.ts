@@ -25,7 +25,11 @@ describe('resource parse', () => {
   test.skip('run: required and optional params', async () => {
     const response = await client.parse.run({
       input: 'string',
-      enhance: { agentic: [{ scope: 'table', prompt: 'prompt' }], summarize_figures: true },
+      enhance: {
+        agentic: [{ scope: 'table', prompt: 'prompt' }],
+        intelligent_ordering: true,
+        summarize_figures: true,
+      },
       formatting: {
         add_page_markers: true,
         include: ['change_tracking'],
@@ -80,7 +84,11 @@ describe('resource parse', () => {
         priority: true,
         webhook: { channels: ['string'], mode: 'svix' },
       },
-      enhance: { agentic: [{ scope: 'table', prompt: 'prompt' }], summarize_figures: true },
+      enhance: {
+        agentic: [{ scope: 'table', prompt: 'prompt' }],
+        intelligent_ordering: true,
+        summarize_figures: true,
+      },
       formatting: {
         add_page_markers: true,
         include: ['change_tracking'],
