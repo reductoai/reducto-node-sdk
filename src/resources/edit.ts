@@ -70,6 +70,12 @@ export namespace EditRunParams {
     enable_overflow_pages?: boolean;
 
     /**
+     * If True, flattens form fields after filling, converting them to static content.
+     * Defaults to False.
+     */
+    flatten?: boolean;
+
+    /**
      * The LLM provider to use for edit processing. If not specified, defaults to
      * 'google'
      */
@@ -152,6 +158,12 @@ export namespace EditRunJobParams {
      * Defaults to False.
      */
     enable_overflow_pages?: boolean;
+
+    /**
+     * If True, flattens form fields after filling, converting them to static content.
+     * Defaults to False.
+     */
+    flatten?: boolean;
 
     /**
      * The LLM provider to use for edit processing. If not specified, defaults to
