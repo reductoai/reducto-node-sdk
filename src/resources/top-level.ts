@@ -2,7 +2,7 @@
 
 import { type Uploadable } from '../core';
 
-export type APIVersionResponse = unknown;
+export type APIVersionResponse = string;
 
 export interface UploadParams {
   /**

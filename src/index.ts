@@ -195,7 +195,7 @@ export class Reducto extends Core.APIClient {
   /**
    * Get Version
    */
-  apiVersion(options?: Core.RequestOptions): Core.APIPromise<unknown> {
+  apiVersion(options?: Core.RequestOptions): Core.APIPromise<string> {
     return this.get('/version', options);
   }
 
