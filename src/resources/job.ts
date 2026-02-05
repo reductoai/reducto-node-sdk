@@ -70,11 +70,47 @@ export namespace JobGetResponse {
       job_id: string;
 
       result: ClassifyResponse.Result;
+
+      /**
+       * Overall confidence breakdown for classification response.
+       */
+      response_confidence?: ClassifyResponse.ResponseConfidence | null;
     }
 
     export namespace ClassifyResponse {
       export interface Result {
         category: string;
+      }
+
+      /**
+       * Overall confidence breakdown for classification response.
+       */
+      export interface ResponseConfidence {
+        categories: Array<ResponseConfidence.Category>;
+      }
+
+      export namespace ResponseConfidence {
+        /**
+         * Confidence result for a category.
+         */
+        export interface Category {
+          category: string;
+
+          confidence: number;
+
+          criteria_confidence: Array<Category.CriteriaConfidence>;
+        }
+
+        export namespace Category {
+          /**
+           * Confidence result for a single criterion.
+           */
+          export interface CriteriaConfidence {
+            confidence: 'high' | 'low';
+
+            criterion: string;
+          }
+        }
       }
     }
   }
@@ -124,11 +160,47 @@ export namespace JobGetResponse {
       job_id: string;
 
       result: ClassifyResponse.Result;
+
+      /**
+       * Overall confidence breakdown for classification response.
+       */
+      response_confidence?: ClassifyResponse.ResponseConfidence | null;
     }
 
     export namespace ClassifyResponse {
       export interface Result {
         category: string;
+      }
+
+      /**
+       * Overall confidence breakdown for classification response.
+       */
+      export interface ResponseConfidence {
+        categories: Array<ResponseConfidence.Category>;
+      }
+
+      export namespace ResponseConfidence {
+        /**
+         * Confidence result for a category.
+         */
+        export interface Category {
+          category: string;
+
+          confidence: number;
+
+          criteria_confidence: Array<Category.CriteriaConfidence>;
+        }
+
+        export namespace Category {
+          /**
+           * Confidence result for a single criterion.
+           */
+          export interface CriteriaConfidence {
+            confidence: 'high' | 'low';
+
+            criterion: string;
+          }
+        }
       }
     }
   }

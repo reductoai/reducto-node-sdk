@@ -6,7 +6,7 @@ Types:
 
 Methods:
 
-- <code title="get /version">client.<a href="./src/index.ts">apiVersion</a>() -> unknown</code>
+- <code title="get /version">client.<a href="./src/index.ts">apiVersion</a>() -> string</code>
 - <code title="post /upload">client.<a href="./src/index.ts">upload</a>({ ...params }) -> Upload</code>
 
 # Shared
