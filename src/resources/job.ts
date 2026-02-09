@@ -72,6 +72,11 @@ export namespace JobGetResponse {
       result: ClassifyResponse.Result;
 
       /**
+       * The duration of the classify request in seconds.
+       */
+      duration?: number | null;
+
+      /**
        * Overall confidence breakdown for classification response.
        */
       response_confidence?: ClassifyResponse.ResponseConfidence | null;
@@ -160,6 +165,11 @@ export namespace JobGetResponse {
       job_id: string;
 
       result: ClassifyResponse.Result;
+
+      /**
+       * The duration of the classify request in seconds.
+       */
+      duration?: number | null;
 
       /**
        * Overall confidence breakdown for classification response.
