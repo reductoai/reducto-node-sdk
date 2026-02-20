@@ -9,7 +9,7 @@ const client = new Reducto({
 });
 
 describe('resource edit', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('run: only required params', async () => {
     const responsePromise = client.edit.run({
       document_url: 'string',
@@ -24,7 +24,7 @@ describe('resource edit', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('run: required and optional params', async () => {
     const response = await client.edit.run({
       document_url: 'string',
@@ -55,7 +55,7 @@ describe('resource edit', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('runJob: only required params', async () => {
     const responsePromise = client.edit.runJob({
       document_url: 'string',
@@ -70,7 +70,7 @@ describe('resource edit', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('runJob: required and optional params', async () => {
     const response = await client.edit.runJob({
       document_url: 'string',
