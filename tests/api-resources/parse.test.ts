@@ -9,7 +9,7 @@ const client = new Reducto({
 });
 
 describe('resource parse', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('run: only required params', async () => {
     const responsePromise = client.parse.run({ input: 'string' });
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource parse', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('run: required and optional params', async () => {
     const response = await client.parse.run({
       input: 'string',
@@ -63,7 +63,7 @@ describe('resource parse', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('runJob: only required params', async () => {
     const responsePromise = client.parse.runJob({ input: 'string' });
     const rawResponse = await responsePromise.asResponse();
@@ -75,7 +75,7 @@ describe('resource parse', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('runJob: required and optional params', async () => {
     const response = await client.parse.runJob({
       input: 'string',
