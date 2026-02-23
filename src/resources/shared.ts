@@ -255,6 +255,11 @@ export interface Chunking {
   chunk_mode?: 'variable' | 'section' | 'page' | 'disabled' | 'block' | 'page_sections';
 
   /**
+   * Number of characters of overlap to include from adjacent chunks. Defaults to 0.
+   */
+  chunk_overlap?: number;
+
+  /**
    * The approximate size of chunks (in characters) that the document will be split
    * into. Defaults to null, in which case the chunk size is variable between 250 -
    * 1500 characters.
@@ -270,6 +275,11 @@ export interface ChunkingConfig {
    * within each page. Disabled returns one single chunk.
    */
   chunk_mode?: 'variable' | 'section' | 'page' | 'block' | 'disabled' | 'page_sections';
+
+  /**
+   * Number of characters of overlap to include from adjacent chunks. Defaults to 0.
+   */
+  chunk_overlap?: number;
 
   /**
    * The approximate size of chunks (in characters) that the document will be split
@@ -463,6 +473,12 @@ export interface ExperimentalProcessingOptions {
    * convert files. This is slower but more accurate.
    */
   native_office_conversion?: boolean;
+
+  /**
+   * If True, enable two-stage LLM pipeline for agentic text correction on regular
+   * text blocks. Defaults to False.
+   */
+  promptable_agentic_text_on_regular_blocks?: boolean;
 
   /**
    * If figure images should be returned in the result. Defaults to False.
