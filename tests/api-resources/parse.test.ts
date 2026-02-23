@@ -37,7 +37,11 @@ describe('resource parse', () => {
         table_output_format: 'html',
       },
       retrieval: {
-        chunking: { chunk_mode: 'variable', chunk_size: 0 },
+        chunking: {
+          chunk_mode: 'variable',
+          chunk_overlap: 0,
+          chunk_size: 0,
+        },
         embedding_optimized: true,
         filter_blocks: ['Header'],
       },
@@ -96,7 +100,11 @@ describe('resource parse', () => {
         table_output_format: 'html',
       },
       retrieval: {
-        chunking: { chunk_mode: 'variable', chunk_size: 0 },
+        chunking: {
+          chunk_mode: 'variable',
+          chunk_overlap: 0,
+          chunk_size: 0,
+        },
         embedding_optimized: true,
         filter_blocks: ['Header'],
       },
