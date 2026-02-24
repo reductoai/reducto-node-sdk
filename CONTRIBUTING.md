@@ -60,7 +60,7 @@ $ yarn link reductoai
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global reductoai
+$ pnpm link --global reductoai
 ```
 
 ## Running tests
