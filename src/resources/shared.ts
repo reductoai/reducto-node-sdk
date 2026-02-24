@@ -1027,22 +1027,19 @@ export interface SplitResponse {
   /**
    * The split result.
    */
-  result: SplitResponse.Result;
+  result: SplitResponse.SplitResult | SplitResponse.DeepSplitResult;
 
   usage: ParseUsage;
 }
 
 export namespace SplitResponse {
-  /**
-   * The split result.
-   */
-  export interface Result {
+  export interface SplitResult {
     section_mapping: { [key: string]: Array<number> } | null;
 
-    splits: Array<Result.Split>;
+    splits: Array<SplitResult.Split>;
   }
 
-  export namespace Result {
+  export namespace SplitResult {
     export interface Split {
       name: string;
 
@@ -1060,6 +1057,42 @@ export namespace SplitResponse {
         pages: Array<number>;
 
         conf?: 'high' | 'low';
+      }
+    }
+  }
+
+  export interface DeepSplitResult {
+    splits: Array<DeepSplitResult.Split>;
+  }
+
+  export namespace DeepSplitResult {
+    export interface Split {
+      name: string;
+
+      pages: Array<Split.Page>;
+
+      partitions?: Array<Split.Partition> | null;
+    }
+
+    export namespace Split {
+      export interface Page {
+        evidence: string;
+
+        page_number: number;
+      }
+
+      export interface Partition {
+        name: string;
+
+        pages: Array<Partition.Page>;
+      }
+
+      export namespace Partition {
+        export interface Page {
+          evidence: string;
+
+          page_number: number;
+        }
       }
     }
   }
