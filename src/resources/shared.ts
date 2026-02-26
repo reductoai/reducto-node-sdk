@@ -107,9 +107,9 @@ export interface AdvancedProcessingOptions {
 
   /**
    * The page range to process (1-indexed). By default, the entire document is
-   * processed.
+   * processed. For spreadsheets, you can also provide a list of sheet names.
    */
-  page_range?: PageRange | Array<PageRange> | Array<number>;
+  page_range?: PageRange | Array<PageRange> | Array<number> | Array<string>;
 
   /**
    * If True, persist the results indefinitely. Defaults to False.
@@ -959,9 +959,9 @@ export interface Settings {
 
   /**
    * The page range to process (1-indexed). By default, the entire document is
-   * processed.
+   * processed. For spreadsheets, you can also provide a list of sheet names.
    */
-  page_range?: PageRange | Array<PageRange> | Array<number> | null;
+  page_range?: PageRange | Array<PageRange> | Array<number> | Array<string> | null;
 
   /**
    * If True, persist the results indefinitely. Defaults to False.
