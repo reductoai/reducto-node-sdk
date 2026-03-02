@@ -466,7 +466,7 @@ export interface ExperimentalProcessingOptions {
   /**
    * The layout model to use for the document. This will be deprecated in the future.
    */
-  layout_model?: 'default' | 'beta';
+  layout_model?: 'default' | 'beta' | 'rfdetr';
 
   /**
    * Instead of using LibreOffice, when enabled, this flag uses a Windows VM to
