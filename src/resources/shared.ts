@@ -466,7 +466,7 @@ export interface ExperimentalProcessingOptions {
   /**
    * The layout model to use for the document. This will be deprecated in the future.
    */
-  layout_model?: 'default' | 'beta' | 'rfdetr';
+  layout_model?: 'default' | 'beta' | 'rfdetr' | 'rfdetr0302';
 
   /**
    * Instead of using LibreOffice, when enabled, this flag uses a Windows VM to
@@ -1079,6 +1079,8 @@ export namespace SplitResponse {
         evidence: string;
 
         page_number: number;
+
+        confidence?: 'high' | 'medium' | 'low' | null;
       }
 
       export interface Partition {
@@ -1092,6 +1094,8 @@ export namespace SplitResponse {
           evidence: string;
 
           page_number: number;
+
+          confidence?: 'high' | 'medium' | 'low' | null;
         }
       }
     }
