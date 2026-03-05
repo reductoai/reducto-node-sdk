@@ -466,7 +466,14 @@ export interface ExperimentalProcessingOptions {
   /**
    * The layout model to use for the document. This will be deprecated in the future.
    */
-  layout_model?: 'default' | 'beta' | 'rfdetr' | 'rfdetr0302' | 'rfdetr0303';
+  layout_model?:
+    | 'default'
+    | 'beta'
+    | 'rfdetr'
+    | 'rfdetr0302'
+    | 'rfdetr0303'
+    | 'rfdetrbase0218'
+    | 'rfdetr0304';
 
   /**
    * Instead of using LibreOffice, when enabled, this flag uses a Windows VM to
@@ -484,6 +491,11 @@ export interface ExperimentalProcessingOptions {
    * If figure images should be returned in the result. Defaults to False.
    */
   return_figure_images?: boolean;
+
+  /**
+   * If full page images should be returned in the result. Defaults to False.
+   */
+  return_page_images?: boolean;
 
   /**
    * If table images should be returned in the result. Defaults to False.
@@ -969,10 +981,10 @@ export interface Settings {
   persist_results?: boolean;
 
   /**
-   * Whether to return images for the specified block types. By default, no images
-   * are returned.
+   * Whether to return images for the specified block types. 'page' returns full page
+   * images. By default, no images are returned.
    */
-  return_images?: Array<'figure' | 'table'>;
+  return_images?: Array<'figure' | 'table' | 'page'>;
 
   /**
    * If True, return OCR data in the result. Defaults to False.
