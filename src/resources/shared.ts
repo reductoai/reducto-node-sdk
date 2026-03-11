@@ -423,6 +423,12 @@ export interface ExperimentalProcessingOptions {
   detect_signatures?: boolean;
 
   /**
+   * If True, configure LibreOffice conversion to block linked content from untrusted
+   * documents. Defaults to True on-prem and False elsewhere.
+   */
+  disable_office_external_links?: boolean;
+
+  /**
    * If extracted OCR text metadata should be embedded back into the returned PDF,
    * overwriting any existing text. Defaults to False.
    */
