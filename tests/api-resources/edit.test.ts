@@ -33,6 +33,7 @@ describe('resource edit', () => {
         color: '#e1cb97',
         enable_overflow_pages: true,
         flatten: true,
+        font_size: 1,
         llm_provider_preference: 'openai',
       },
       form_schema: [
@@ -79,6 +80,7 @@ describe('resource edit', () => {
         color: '#e1cb97',
         enable_overflow_pages: true,
         flatten: true,
+        font_size: 1,
         llm_provider_preference: 'openai',
       },
       form_schema: [
