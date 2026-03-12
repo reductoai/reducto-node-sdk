@@ -76,6 +76,12 @@ export namespace EditRunParams {
     flatten?: boolean;
 
     /**
+     * The font size (in points) to use for filled text fields. If not specified, font
+     * size is automatically calculated based on field dimensions.
+     */
+    font_size?: number | null;
+
+    /**
      * The LLM provider to use for edit processing. If not specified, defaults to
      * 'google'
      */
@@ -164,6 +170,12 @@ export namespace EditRunJobParams {
      * Defaults to False.
      */
     flatten?: boolean;
+
+    /**
+     * The font size (in points) to use for filled text fields. If not specified, font
+     * size is automatically calculated based on field dimensions.
+     */
+    font_size?: number | null;
 
     /**
      * The LLM provider to use for edit processing. If not specified, defaults to
