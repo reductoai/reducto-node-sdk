@@ -555,6 +555,8 @@ export interface ExtractUsage {
   num_pages: number;
 
   credits?: number | null;
+
+  extract_mode?: 'super_agent' | 'extract' | 'spreadsheet_agent' | null;
 }
 
 export interface FigureAgentic {
@@ -874,6 +876,8 @@ export namespace ParseResponse {
 
 export interface ParseUsage {
   num_pages: number;
+
+  credit_breakdown?: { [key: string]: number } | null;
 
   credits?: number | null;
 }
