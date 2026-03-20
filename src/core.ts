@@ -189,7 +189,7 @@ export abstract class APIClient {
     baseURL,
     baseURLOverridden,
     maxRetries = 2,
-    timeout = 3600000, // 1 hour
+    timeout = 60000, // 1 minute
     httpAgent,
     fetch: overriddenFetch,
   }: {
