@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export * from './shared';
+export { Classify, type ClassifyCreateResponse, type ClassifyCreateParams } from './classify';
 export { Config, type ExtractConfig, type ParseConfig } from './config';
 export { Edit, type EditRunJobResponse, type EditRunParams, type EditRunJobParams } from './edit';
 export {

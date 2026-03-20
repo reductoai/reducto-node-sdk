@@ -9,6 +9,7 @@ import * as API from './resources/index';
 import * as Shared from './resources/shared';
 import * as TopLevelAPI from './resources/top-level';
 import { APIVersionResponse, UploadParams } from './resources/top-level';
+import { Classify, ClassifyCreateParams, ClassifyCreateResponse } from './resources/classify';
 import { Config, ExtractConfig, ParseConfig } from './resources/config';
 import { Edit, EditRunJobParams, EditRunJobResponse, EditRunParams } from './resources/edit';
 import {
@@ -184,6 +185,7 @@ export class Reducto extends Core.APIClient {
   pipeline: API.Pipeline = new API.Pipeline(this);
   webhook: API.Webhook = new API.Webhook(this);
   config: API.Config = new API.Config(this);
+  classify: API.Classify = new API.Classify(this);
 
   /**
    * Check whether the base URL is set to its default.
@@ -262,6 +264,7 @@ Reducto.Edit = Edit;
 Reducto.Pipeline = Pipeline;
 Reducto.Webhook = Webhook;
 Reducto.Config = Config;
+Reducto.Classify = Classify;
 
 export declare namespace Reducto {
   export type RequestOptions = Core.RequestOptions;
@@ -316,6 +319,12 @@ export declare namespace Reducto {
   export { Webhook as Webhook, type WebhookRunResponse as WebhookRunResponse };
 
   export { Config as Config, type ExtractConfig as ExtractConfig, type ParseConfig as ParseConfig };
+
+  export {
+    Classify as Classify,
+    type ClassifyCreateResponse as ClassifyCreateResponse,
+    type ClassifyCreateParams as ClassifyCreateParams,
+  };
 
   export type AdvancedCitationsConfig = API.AdvancedCitationsConfig;
   export type AdvancedProcessingOptions = API.AdvancedProcessingOptions;
