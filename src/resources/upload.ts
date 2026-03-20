@@ -20,7 +20,7 @@ export class Upload extends APIResource {
     const { extension, ...body } = params;
     return this._client.post(
       '/upload',
-      Core.multipartFormRequestOptions({ query: { extension }, body, ...options }),
+      Core.maybeMultipartFormRequestOptions({ query: { extension }, body, ...options }),
     );
   }
 }

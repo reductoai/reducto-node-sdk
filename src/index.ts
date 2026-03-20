@@ -68,9 +68,9 @@ type Environment = keyof typeof environments;
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['REDUCTOAI_BEARER_TOKEN'].
+   * Defaults to process.env['REDUCTO_API_KEY'].
    */
-  bearerToken?: string | undefined;
+  apiKey?: string | undefined;
 
   /**
    * Specifies the environment to use for the API.
@@ -145,17 +145,17 @@ export interface ClientOptions {
  * API Client for interfacing with the Reducto API.
  */
 export class Reducto extends Core.APIClient {
-  bearerToken: string;
+  apiKey: string;
 
   private _options: ClientOptions;
 
   /**
    * API Client for interfacing with the Reducto API.
    *
-   * @param {string | undefined} [opts.bearerToken=process.env['REDUCTOAI_BEARER_TOKEN'] ?? undefined]
+   * @param {string | undefined} [opts.apiKey=process.env['REDUCTO_API_KEY'] ?? undefined]
    * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
    * @param {string} [opts.baseURL=process.env['REDUCTO_BASE_URL'] ?? https://platform.reducto.ai] - Override the default base URL for the API.
-   * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
+   * @param {number} [opts.timeout=1 hour] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
    * @param {Core.Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
    * @param {number} [opts.maxRetries=2] - The maximum number of times the client will retry a request.
@@ -164,17 +164,17 @@ export class Reducto extends Core.APIClient {
    */
   constructor({
     baseURL = Core.readEnv('REDUCTO_BASE_URL'),
-    bearerToken = Core.readEnv('REDUCTOAI_BEARER_TOKEN'),
+    apiKey = Core.readEnv('REDUCTO_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
-    if (bearerToken === undefined) {
+    if (apiKey === undefined) {
       throw new Errors.ReductoError(
-        "The REDUCTOAI_BEARER_TOKEN environment variable is missing or empty; either provide it, or instantiate the Reducto client with an bearerToken option, like new Reducto({ bearerToken: 'My Bearer Token' }).",
+        "The REDUCTO_API_KEY environment variable is missing or empty; either provide it, or instantiate the Reducto client with an apiKey option, like new Reducto({ apiKey: 'My API Key' }).",
       );
     }
 
     const options: ClientOptions = {
-      bearerToken,
+      apiKey,
       ...opts,
       baseURL,
       environment: opts.environment ?? 'production',
@@ -189,7 +189,7 @@ export class Reducto extends Core.APIClient {
     super({
       baseURL: options.baseURL || environments[options.environment || 'production'],
       baseURLOverridden: baseURL ? baseURL !== environments[options.environment || 'production'] : false,
-      timeout: options.timeout ?? 60000 /* 1 minute */,
+      timeout: options.timeout ?? 3600000 /* 1 hour */,
       httpAgent: options.httpAgent,
       maxRetries: options.maxRetries,
       fetch: options.fetch,
@@ -197,7 +197,7 @@ export class Reducto extends Core.APIClient {
 
     this._options = options;
 
-    this.bearerToken = bearerToken;
+    this.apiKey = apiKey;
   }
 
   parse: API.Parse = new API.Parse(this);
@@ -236,11 +236,11 @@ export class Reducto extends Core.APIClient {
   }
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
-    return { Authorization: `Bearer ${this.bearerToken}` };
+    return { Authorization: `Bearer ${this.apiKey}` };
   }
 
   static Reducto = this;
-  static DEFAULT_TIMEOUT = 60000; // 1 minute
+  static DEFAULT_TIMEOUT = 3600000; // 1 hour
 
   static ReductoError = Errors.ReductoError;
   static APIError = Errors.APIError;
