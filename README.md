@@ -23,7 +23,7 @@ The full API of this library can be found in [api.md](api.md).
 import Reducto from 'reductoai';
 
 const client = new Reducto({
-  bearerToken: process.env['REDUCTOAI_BEARER_TOKEN'], // This is the default and can be omitted
+  apiKey: process.env['REDUCTO_API_KEY'], // This is the default and can be omitted
   environment: 'eu', // or 'production' | 'au'; defaults to 'production'
 });
 
@@ -39,7 +39,7 @@ This library includes TypeScript definitions for all request params and response
 import Reducto from 'reductoai';
 
 const client = new Reducto({
-  bearerToken: process.env['REDUCTOAI_BEARER_TOKEN'], // This is the default and can be omitted
+  apiKey: process.env['REDUCTO_API_KEY'], // This is the default and can be omitted
   environment: 'eu', // or 'production' | 'au'; defaults to 'production'
 });
 
@@ -106,13 +106,13 @@ await client.parse.create({ input: 'https://pdfobject.com/pdf/sample.pdf' }, {
 
 ### Timeouts
 
-Requests time out after 1 minute by default. You can configure this with a `timeout` option:
+Requests time out after 1 hour by default. You can configure this with a `timeout` option:
 
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
 const client = new Reducto({
-  timeout: 20 * 1000, // 20 seconds (default is 1 minute)
+  timeout: 20 * 1000, // 20 seconds (default is 1 hour)
 });
 
 // Override per-request:

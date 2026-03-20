@@ -28,7 +28,7 @@ export interface PipelineResponse {
 
 export namespace PipelineResponse {
   export interface Result {
-    extract: Array<Result.UnionMember0> | JobAPI.ExtractResponse | ExtractAPI.V3Extract | null;
+    extract: Array<Result.ExtractVariant0> | JobAPI.ExtractResponse | ExtractAPI.V3Extract | null;
 
     parse: ParseAPI.ParseResponse | Array<ParseAPI.ParseResponse> | null;
 
@@ -41,7 +41,7 @@ export namespace PipelineResponse {
     /**
      * This is the response format for Extract -> Split Pipelines
      */
-    export interface UnionMember0 {
+    export interface ExtractVariant0 {
       page_range: Array<number>;
 
       result: JobAPI.ExtractResponse | ExtractAPI.V3Extract;
