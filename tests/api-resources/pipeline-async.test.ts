@@ -8,10 +8,10 @@ const client = new Reducto({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource pipeline', () => {
+describe('resource pipelineAsync', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.pipeline.create({ input: 'string', pipeline_id: 'pipeline_id' });
+    const responsePromise = client.pipelineAsync.create({ input: 'string', pipeline_id: 'pipeline_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,9 +23,14 @@ describe('resource pipeline', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.pipeline.create({
+    const response = await client.pipelineAsync.create({
       input: 'string',
       pipeline_id: 'pipeline_id',
+      async: {
+        metadata: {},
+        priority: true,
+        webhook: { channels: ['string'], mode: 'svix' },
+      },
       settings: { document_password: 'document_password' },
     });
   });

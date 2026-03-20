@@ -2,13 +2,13 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
-import * as Shared from './shared';
+import * as UploadAPI from './upload';
 
 export class Classify extends APIResource {
   /**
    * Classify
    */
-  create(body: ClassifyCreateParams, options?: Core.RequestOptions): Core.APIPromise<ClassifyCreateResponse> {
+  classify(body: ClassifyClassifyParams, options?: Core.RequestOptions): Core.APIPromise<ClassifyResponse> {
     return this._client.post('/classify', { body, ...options });
   }
 }
@@ -16,10 +16,10 @@ export class Classify extends APIResource {
 /**
  * Response from classify job - returned when polling /job/{job_id}
  */
-export interface ClassifyCreateResponse {
+export interface ClassifyResponse {
   job_id: string;
 
-  result: ClassifyCreateResponse.Result;
+  result: ClassifyResponse.Result;
 
   /**
    * The duration of the classify request in seconds.
@@ -29,10 +29,10 @@ export interface ClassifyCreateResponse {
   /**
    * Overall confidence breakdown for classification response.
    */
-  response_confidence?: ClassifyCreateResponse.ResponseConfidence | null;
+  response_confidence?: ClassifyResponse.ResponseConfidence | null;
 }
 
-export namespace ClassifyCreateResponse {
+export namespace ClassifyResponse {
   export interface Result {
     category: string;
   }
@@ -69,7 +69,19 @@ export namespace ClassifyCreateResponse {
   }
 }
 
-export interface ClassifyCreateParams {
+export interface PageRange {
+  /**
+   * The page number to stop processing at (1-indexed).
+   */
+  end?: number | null;
+
+  /**
+   * The page number to start processing from (1-indexed).
+   */
+  start?: number | null;
+}
+
+export interface ClassifyClassifyParams {
   /**
    * For parse/split/extract pipelines, the URL of the document to be processed. You
    * can provide one of the following: 1. A publicly available URL 2. A presigned S3
@@ -80,12 +92,12 @@ export interface ClassifyCreateParams {
    *
    *             For edit pipelines, this should be a string containing the edit instructions
    */
-  input: string | Array<string> | Shared.Upload;
+  input: string | Array<string> | UploadAPI.UploadResponse;
 
   /**
    * A list of classification categories and their matching criteria.
    */
-  classification_schema?: Array<ClassifyCreateParams.ClassificationSchema>;
+  classification_schema?: Array<ClassifyClassifyParams.ClassificationSchema>;
 
   /**
    * Optional document-level metadata to include in classification prompts.
@@ -97,7 +109,7 @@ export interface ClassifyCreateParams {
    * If more than 25 pages are selected, only the first 25 (after sorting) are used.
    * Only applies to PDFs; ignored for other document types.
    */
-  page_range?: Shared.PageRange | Array<Shared.PageRange> | Array<number> | null;
+  page_range?: PageRange | Array<PageRange> | Array<number> | null;
 
   /**
    * If True, persist the results indefinitely. Defaults to False.
@@ -105,7 +117,7 @@ export interface ClassifyCreateParams {
   persist_results?: boolean;
 }
 
-export namespace ClassifyCreateParams {
+export namespace ClassifyClassifyParams {
   /**
    * A single classification category with its matching criteria.
    */
@@ -127,7 +139,8 @@ export namespace ClassifyCreateParams {
 
 export declare namespace Classify {
   export {
-    type ClassifyCreateResponse as ClassifyCreateResponse,
-    type ClassifyCreateParams as ClassifyCreateParams,
+    type ClassifyResponse as ClassifyResponse,
+    type PageRange as PageRange,
+    type ClassifyClassifyParams as ClassifyClassifyParams,
   };
 }

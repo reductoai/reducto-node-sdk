@@ -8,10 +8,10 @@ const client = new Reducto({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource extract', () => {
+describe('resource extractAsync', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.extract.create({ input: 'string' });
+    const responsePromise = client.extractAsync.create({ input: 'string' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,8 +23,13 @@ describe('resource extract', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.extract.create({
+    const response = await client.extractAsync.create({
       input: 'string',
+      async: {
+        metadata: {},
+        priority: true,
+        webhook: { channels: ['string'], mode: 'svix' },
+      },
       instructions: {
         schema: {},
         system_prompt: 'system_prompt',

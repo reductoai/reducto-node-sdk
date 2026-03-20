@@ -4,14 +4,14 @@ import Reducto from 'reductoai';
 import { Response } from 'node-fetch';
 
 const client = new Reducto({
-  apiKey: 'My API Key',
+  bearerToken: 'My Bearer Token',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource classify', () => {
   // Mock server tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.classify.create({ input: 'string' });
+  test.skip('classify: only required params', async () => {
+    const responsePromise = client.classify.classify({ input: 'string' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,8 +22,8 @@ describe('resource classify', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.classify.create({
+  test.skip('classify: required and optional params', async () => {
+    const response = await client.classify.classify({
       input: 'string',
       classification_schema: [{ category: 'category', criteria: ['string'] }],
       document_metadata: 'document_metadata',

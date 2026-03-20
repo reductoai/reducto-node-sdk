@@ -23,11 +23,11 @@ The full API of this library can be found in [api.md](api.md).
 import Reducto from 'reductoai';
 
 const client = new Reducto({
-  apiKey: process.env['REDUCTO_API_KEY'], // This is the default and can be omitted
+  bearerToken: process.env['REDUCTOAI_BEARER_TOKEN'], // This is the default and can be omitted
   environment: 'eu', // or 'production' | 'au'; defaults to 'production'
 });
 
-const response = await client.parse.run({ input: 'https://pdfobject.com/pdf/sample.pdf' });
+const parse = await client.parse.create({ input: 'https://pdfobject.com/pdf/sample.pdf' });
 ```
 
 ### Request & Response types
@@ -39,12 +39,12 @@ This library includes TypeScript definitions for all request params and response
 import Reducto from 'reductoai';
 
 const client = new Reducto({
-  apiKey: process.env['REDUCTO_API_KEY'], // This is the default and can be omitted
+  bearerToken: process.env['REDUCTOAI_BEARER_TOKEN'], // This is the default and can be omitted
   environment: 'eu', // or 'production' | 'au'; defaults to 'production'
 });
 
-const params: Reducto.ParseRunParams = { input: 'https://pdfobject.com/pdf/sample.pdf' };
-const response: Reducto.ParseRunResponse = await client.parse.run(params);
+const params: Reducto.ParseCreateParams = { input: 'https://pdfobject.com/pdf/sample.pdf' };
+const parse: Reducto.ParseCreateResponse = await client.parse.create(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -57,8 +57,8 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.parse
-  .run({ input: 'https://pdfobject.com/pdf/sample.pdf' })
+const parse = await client.parse
+  .create({ input: 'https://pdfobject.com/pdf/sample.pdf' })
   .catch(async (err) => {
     if (err instanceof Reducto.APIError) {
       console.log(err.status); // 400
@@ -99,24 +99,24 @@ const client = new Reducto({
 });
 
 // Or, configure per-request:
-await client.parse.run({ input: 'https://pdfobject.com/pdf/sample.pdf' }, {
+await client.parse.create({ input: 'https://pdfobject.com/pdf/sample.pdf' }, {
   maxRetries: 5,
 });
 ```
 
 ### Timeouts
 
-Requests time out after 1 hour by default. You can configure this with a `timeout` option:
+Requests time out after 1 minute by default. You can configure this with a `timeout` option:
 
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
 const client = new Reducto({
-  timeout: 20 * 1000, // 20 seconds (default is 1 hour)
+  timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
 // Override per-request:
-await client.parse.run({ input: 'https://pdfobject.com/pdf/sample.pdf' }, {
+await client.parse.create({ input: 'https://pdfobject.com/pdf/sample.pdf' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -138,16 +138,16 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 const client = new Reducto();
 
 const response = await client.parse
-  .run({ input: 'https://pdfobject.com/pdf/sample.pdf' })
+  .create({ input: 'https://pdfobject.com/pdf/sample.pdf' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.parse
-  .run({ input: 'https://pdfobject.com/pdf/sample.pdf' })
+const { data: parse, response: raw } = await client.parse
+  .create({ input: 'https://pdfobject.com/pdf/sample.pdf' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(response);
+console.log(parse);
 ```
 
 ### Making custom/undocumented requests
@@ -251,7 +251,7 @@ const client = new Reducto({
 });
 
 // Override per-request:
-await client.parse.run(
+await client.parse.create(
   { input: 'https://pdfobject.com/pdf/sample.pdf' },
   {
     httpAgent: new http.Agent({ keepAlive: false }),
