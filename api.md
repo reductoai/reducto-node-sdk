@@ -138,3 +138,13 @@ Types:
 
 - <code><a href="./src/resources/config.ts">ExtractConfig</a></code>
 - <code><a href="./src/resources/config.ts">ParseConfig</a></code>
+
+# Classify
+
+Types:
+
+- <code><a href="./src/resources/classify.ts">ClassifyCreateResponse</a></code>
+
+Methods:
+
+- <code title="post /classify">client.classify.<a href="./src/resources/classify.ts">create</a>({ ...params }) -> ClassifyCreateResponse</code>
