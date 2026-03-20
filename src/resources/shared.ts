@@ -357,6 +357,13 @@ export namespace EditResponse {
     fill?: boolean;
 
     /**
+     * Font size in points for this specific field. Takes priority over the global
+     * font_size in EditOptions. If not set, falls back to the global font_size, then
+     * to auto-calculated sizing.
+     */
+    font_size?: number | null;
+
+    /**
      * If provided, this value will be used directly instead of attempting to
      * intelligently determine the field value.
      */
