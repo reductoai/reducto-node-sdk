@@ -273,6 +273,12 @@ export declare namespace ParseCreateParams {
 
     formatting?: ParseAsyncAPI.Formatting;
 
+    /**
+     * Queue priority. 'batch' for non-urgent work that processes when spare GPU
+     * capacity is available.
+     */
+    queue_priority?: 'auto' | 'batch';
+
     retrieval?: ParseAsyncAPI.Retrieval;
 
     settings?: ParseAsyncAPI.Settings;

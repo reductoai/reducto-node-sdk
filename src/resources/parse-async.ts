@@ -73,6 +73,12 @@ export interface AsyncParseConfig {
 
   formatting?: Formatting;
 
+  /**
+   * Queue priority. 'batch' for non-urgent work that processes when spare GPU
+   * capacity is available.
+   */
+  queue_priority?: 'auto' | 'batch';
+
   retrieval?: Retrieval;
 
   settings?: Settings;
@@ -360,6 +366,12 @@ export interface ParseAsyncCreateParams {
   enhance?: Enhance;
 
   formatting?: Formatting;
+
+  /**
+   * Queue priority. 'batch' for non-urgent work that processes when spare GPU
+   * capacity is available.
+   */
+  queue_priority?: 'auto' | 'batch';
 
   retrieval?: Retrieval;
 

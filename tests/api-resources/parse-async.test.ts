@@ -41,6 +41,7 @@ describe('resource parseAsync', () => {
         merge_tables: true,
         table_output_format: 'html',
       },
+      queue_priority: 'auto',
       retrieval: {
         chunking: {
           chunk_mode: 'variable',
