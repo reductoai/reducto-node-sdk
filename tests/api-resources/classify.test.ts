@@ -10,8 +10,8 @@ const client = new Reducto({
 
 describe('resource classify', () => {
   // Mock server tests are disabled
-  test.skip('classify: only required params', async () => {
-    const responsePromise = client.classify.classify({ input: 'string' });
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.classify.create({ input: 'string' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,8 +22,8 @@ describe('resource classify', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('classify: required and optional params', async () => {
-    const response = await client.classify.classify({
+  test.skip('create: required and optional params', async () => {
+    const response = await client.classify.create({
       input: 'string',
       classification_schema: [{ category: 'category', criteria: ['string'] }],
       document_metadata: 'document_metadata',
