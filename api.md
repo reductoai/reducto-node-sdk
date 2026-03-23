@@ -129,7 +129,7 @@ Types:
 
 Methods:
 
-- <code title="post /classify">client.classify.<a href="./src/resources/classify.ts">classify</a>({ ...params }) -> ClassifyResponse</code>
+- <code title="post /classify">client.classify.<a href="./src/resources/classify.ts">create</a>({ ...params }) -> ClassifyResponse</code>
 
 # Cancel
 

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export { Cancel, type CancelCancelJobResponse } from './cancel';
-export { Classify, type ClassifyResponse, type PageRange, type ClassifyClassifyParams } from './classify';
+export { Classify, type ClassifyResponse, type PageRange, type ClassifyCreateParams } from './classify';
 export { ConfigureWebhook, type ConfigureWebhookCreateResponse } from './configure-webhook';
 export {
   Edit,

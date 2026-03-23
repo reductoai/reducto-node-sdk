@@ -6,7 +6,7 @@ import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
 import { Cancel, CancelCancelJobResponse } from './resources/cancel';
-import { Classify, ClassifyClassifyParams, ClassifyResponse, PageRange } from './resources/classify';
+import { Classify, ClassifyCreateParams, ClassifyResponse, PageRange } from './resources/classify';
 import { ConfigureWebhook, ConfigureWebhookCreateResponse } from './resources/configure-webhook';
 import { BoundingBox, Edit, EditOptions, EditResponse, EditSubmitParams, EditWidget } from './resources/edit';
 import { EditAsync, EditAsyncCreateParams, EditAsyncCreateResponse } from './resources/edit-async';
@@ -366,7 +366,7 @@ export declare namespace Reducto {
     Classify as Classify,
     type ClassifyResponse as ClassifyResponse,
     type PageRange as PageRange,
-    type ClassifyClassifyParams as ClassifyClassifyParams,
+    type ClassifyCreateParams as ClassifyCreateParams,
   };
 
   export { Cancel as Cancel, type CancelCancelJobResponse as CancelCancelJobResponse };
