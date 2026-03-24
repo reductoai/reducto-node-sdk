@@ -8,10 +8,10 @@ const client = new Reducto({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource split', () => {
+describe('resource splitAsync', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.split.create({
+    const responsePromise = client.splitAsync.create({
       input: 'string',
       split_description: [{ description: 'description', name: 'name' }],
     });
@@ -26,7 +26,7 @@ describe('resource split', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.split.create({
+    const response = await client.splitAsync.create({
       input: 'string',
       split_description: [
         {
@@ -35,6 +35,11 @@ describe('resource split', () => {
           partition_key: 'partition_key',
         },
       ],
+      async: {
+        metadata: {},
+        priority: true,
+        webhook: { channels: ['string'], mode: 'svix' },
+      },
       parsing: {
         enhance: {
           agentic: [{ scope: 'table', prompt: 'prompt' }],

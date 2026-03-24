@@ -8,10 +8,10 @@ const client = new Reducto({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource parse', () => {
+describe('resource parseAsync', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.parse.create({ input: 'string' });
+    const responsePromise = client.parseAsync.create({ input: 'string' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,8 +23,13 @@ describe('resource parse', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.parse.create({
+    const response = await client.parseAsync.create({
       input: 'string',
+      async: {
+        metadata: {},
+        priority: true,
+        webhook: { channels: ['string'], mode: 'svix' },
+      },
       enhance: {
         agentic: [{ scope: 'table', prompt: 'prompt' }],
         intelligent_ordering: true,
@@ -36,6 +41,7 @@ describe('resource parse', () => {
         merge_tables: true,
         table_output_format: 'html',
       },
+      queue_priority: 'auto',
       retrieval: {
         chunking: {
           chunk_mode: 'variable',

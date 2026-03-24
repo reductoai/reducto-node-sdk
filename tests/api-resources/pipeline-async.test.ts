@@ -8,10 +8,10 @@ const client = new Reducto({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource webhook', () => {
-  // Prism tests are disabled
-  test.skip('run', async () => {
-    const responsePromise = client.webhook.run();
+describe('resource pipelineAsync', () => {
+  // Mock server tests are disabled
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.pipelineAsync.create({ input: 'string', pipeline_id: 'pipeline_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,11 +21,17 @@ describe('resource webhook', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('run: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.webhook.run({ path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Reducto.NotFoundError,
-    );
+  // Mock server tests are disabled
+  test.skip('create: required and optional params', async () => {
+    const response = await client.pipelineAsync.create({
+      input: 'string',
+      pipeline_id: 'pipeline_id',
+      async: {
+        metadata: {},
+        priority: true,
+        webhook: { channels: ['string'], mode: 'svix' },
+      },
+      settings: { document_password: 'document_password' },
+    });
   });
 });

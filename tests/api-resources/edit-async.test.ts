@@ -8,10 +8,10 @@ const client = new Reducto({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource edit', () => {
+describe('resource editAsync', () => {
   // Mock server tests are disabled
-  test.skip('submit: only required params', async () => {
-    const responsePromise = client.edit.submit({
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.editAsync.create({
       document_url: 'string',
       edit_instructions: 'edit_instructions',
     });
@@ -25,8 +25,8 @@ describe('resource edit', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('submit: required and optional params', async () => {
-    const response = await client.edit.submit({
+  test.skip('create: required and optional params', async () => {
+    const response = await client.editAsync.create({
       document_url: 'string',
       edit_instructions: 'edit_instructions',
       edit_options: {
@@ -54,6 +54,12 @@ describe('resource edit', () => {
         },
       ],
       priority: true,
+      webhook: {
+        channels: ['string'],
+        metadata: {},
+        mode: 'disabled',
+        url: 'url',
+      },
     });
   });
 });

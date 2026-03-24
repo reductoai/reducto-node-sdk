@@ -8,13 +8,10 @@ const client = new Reducto({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource split', () => {
+describe('resource extractAsync', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.split.create({
-      input: 'string',
-      split_description: [{ description: 'description', name: 'name' }],
-    });
+    const responsePromise = client.extractAsync.create({ input: 'string' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -26,15 +23,17 @@ describe('resource split', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.split.create({
+    const response = await client.extractAsync.create({
       input: 'string',
-      split_description: [
-        {
-          description: 'description',
-          name: 'name',
-          partition_key: 'partition_key',
-        },
-      ],
+      async: {
+        metadata: {},
+        priority: true,
+        webhook: { channels: ['string'], mode: 'svix' },
+      },
+      instructions: {
+        schema: {},
+        system_prompt: 'system_prompt',
+      },
       parsing: {
         enhance: {
           agentic: [{ scope: 'table', prompt: 'prompt' }],
@@ -76,8 +75,12 @@ describe('resource split', () => {
           split_large_tables: { enabled: true, size: 0 },
         },
       },
-      settings: { table_cutoff: 'truncate' },
-      split_rules: 'split_rules',
+      settings: {
+        array_extract: true,
+        citations: { enabled: true, numerical_confidence: true },
+        include_images: true,
+        optimize_for_latency: true,
+      },
     });
   });
 });
