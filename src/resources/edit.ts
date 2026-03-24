@@ -9,8 +9,15 @@ export class Edit extends APIResource {
   /**
    * Edit
    */
-  submit(body: EditSubmitParams, options?: Core.RequestOptions): Core.APIPromise<EditResponse> {
+  run(body: EditRunParams, options?: Core.RequestOptions): Core.APIPromise<EditResponse> {
     return this._client.post('/edit', { body, ...options });
+  }
+
+  /**
+   * Edit Async
+   */
+  runJob(body: EditRunJobParams, options?: Core.RequestOptions): Core.APIPromise<EditRunJobResponse> {
+    return this._client.post('/edit_async', { body, ...options });
   }
 }
 
@@ -120,7 +127,11 @@ export interface EditWidget {
   value?: string | null;
 }
 
-export interface EditSubmitParams {
+export interface EditRunJobResponse {
+  job_id: string;
+}
+
+export interface EditRunParams {
   /**
    * The URL of the document to be processed. You can provide one of the following:
    *
@@ -152,12 +163,74 @@ export interface EditSubmitParams {
   priority?: boolean;
 }
 
+export interface EditRunJobParams {
+  /**
+   * The URL of the document to be processed. You can provide one of the following:
+   *
+   * 1. A publicly available URL
+   * 2. A presigned S3 URL
+   * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
+   *    uploading a document
+   */
+  document_url: string | UploadAPI.UploadResponse;
+
+  /**
+   * The instructions for the edit.
+   */
+  edit_instructions: string;
+
+  edit_options?: EditOptions;
+
+  /**
+   * Form schema for PDF forms. List of widgets with their types, descriptions, and
+   * bounding boxes. Only works for PDFs.
+   */
+  form_schema?: Array<EditWidget> | null;
+
+  /**
+   * If True, attempts to process the job with priority if the user has priority
+   * processing budget available; by default, sync jobs are prioritized above async
+   * jobs.
+   */
+  priority?: boolean;
+
+  webhook?: EditRunJobParams.Webhook;
+}
+
+export namespace EditRunJobParams {
+  export interface Webhook {
+    /**
+     * A list of Svix channels the message will be delivered down, omit to send to all
+     * channels.
+     */
+    channels?: Array<string>;
+
+    /**
+     * JSON metadata included in webhook request body
+     */
+    metadata?: unknown;
+
+    /**
+     * The mode to use for webhook delivery. Defaults to 'disabled'. We recommend using
+     * 'svix' for production environments.
+     */
+    mode?: 'disabled' | 'svix' | 'direct';
+
+    /**
+     * The URL to send the webhook to (if using direct webhoook).
+     */
+    url?: string;
+  }
+}
+
 export declare namespace Edit {
   export {
     type BoundingBox as BoundingBox,
     type EditOptions as EditOptions,
     type EditResponse as EditResponse,
     type EditWidget as EditWidget,
-    type EditSubmitParams as EditSubmitParams,
+    type EditRunJobResponse as EditRunJobResponse,
+    type EditRunParams as EditRunParams,
+    type EditRunJobParams as EditRunJobParams,
   };
 }

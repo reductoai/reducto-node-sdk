@@ -6,56 +6,66 @@ import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
 import { Cancel, CancelCancelJobResponse } from './resources/cancel';
-import { Classify, ClassifyCreateParams, ClassifyResponse, PageRange } from './resources/classify';
+import { Classify, ClassifyResponse, ClassifyRunParams, PageRange } from './resources/classify';
 import { ConfigureWebhook, ConfigureWebhookCreateResponse } from './resources/configure-webhook';
-import { BoundingBox, Edit, EditOptions, EditResponse, EditSubmitParams, EditWidget } from './resources/edit';
-import { EditAsync, EditAsyncCreateParams, EditAsyncCreateResponse } from './resources/edit-async';
 import {
-  Extract,
-  ExtractCreateParams,
-  ExtractCreateResponse,
-  ExtractUsage,
-  V3Extract,
-} from './resources/extract';
+  BoundingBox,
+  Edit,
+  EditOptions,
+  EditResponse,
+  EditRunJobParams,
+  EditRunJobResponse,
+  EditRunParams,
+  EditWidget,
+} from './resources/edit';
 import {
   AsyncExtractConfig,
   AsyncExtractResponse,
-  ExtractAsync,
-  ExtractAsyncCreateParams,
+  Extract,
+  ExtractRunJobParams,
+  ExtractRunParams,
+  ExtractRunResponse,
   ExtractSettings,
+  ExtractUsage,
   Instructions,
   ParseOptions,
-} from './resources/extract-async';
+  V3Extract,
+} from './resources/extract';
 import { ExtractResponse, Job, JobListParams, JobListResponse, JobRetrieveResponse } from './resources/job';
-import { Parse, ParseCreateParams, ParseCreateResponse, ParseResponse } from './resources/parse';
 import {
   AsyncConfigV3,
   AsyncParseConfig,
   AsyncParseResponse,
   Enhance,
   Formatting,
-  ParseAsync,
-  ParseAsyncCreateParams,
+  Parse,
+  ParseResponse,
+  ParseRunJobParams,
+  ParseRunParams,
+  ParseRunResponse,
   Retrieval,
   Settings,
   Spreadsheet,
-} from './resources/parse-async';
-import { Pipeline, PipelineCreateParams, PipelineResponse, PipelineSettings } from './resources/pipeline';
+} from './resources/parse';
 import {
-  PipelineAsync,
-  PipelineAsyncCreateParams,
-  PipelineAsyncCreateResponse,
-} from './resources/pipeline-async';
+  Pipeline,
+  PipelineResponse,
+  PipelineRunJobParams,
+  PipelineRunJobResponse,
+  PipelineRunParams,
+  PipelineSettings,
+} from './resources/pipeline';
 import {
   DeepSplitPageEvidence,
   ParseUsage,
   Split,
   SplitCategory,
-  SplitCreateParams,
   SplitResponse,
+  SplitRunJobParams,
+  SplitRunJobResponse,
+  SplitRunParams,
   SplitTableOptions,
 } from './resources/split';
-import { SplitAsync, SplitAsyncCreateParams, SplitAsyncCreateResponse } from './resources/split-async';
 import { Upload, UploadCreateParams, UploadResponse } from './resources/upload';
 import { Version, VersionRetrieveResponse } from './resources/version';
 
@@ -201,15 +211,10 @@ export class Reducto extends Core.APIClient {
   }
 
   parse: API.Parse = new API.Parse(this);
-  parseAsync: API.ParseAsync = new API.ParseAsync(this);
   extract: API.Extract = new API.Extract(this);
-  extractAsync: API.ExtractAsync = new API.ExtractAsync(this);
   split: API.Split = new API.Split(this);
-  splitAsync: API.SplitAsync = new API.SplitAsync(this);
   edit: API.Edit = new API.Edit(this);
-  editAsync: API.EditAsync = new API.EditAsync(this);
   pipeline: API.Pipeline = new API.Pipeline(this);
-  pipelineAsync: API.PipelineAsync = new API.PipelineAsync(this);
   classify: API.Classify = new API.Classify(this);
   cancel: API.Cancel = new API.Cancel(this);
   upload: API.Upload = new API.Upload(this);
@@ -261,15 +266,10 @@ export class Reducto extends Core.APIClient {
 }
 
 Reducto.Parse = Parse;
-Reducto.ParseAsync = ParseAsync;
 Reducto.Extract = Extract;
-Reducto.ExtractAsync = ExtractAsync;
 Reducto.Split = Split;
-Reducto.SplitAsync = SplitAsync;
 Reducto.Edit = Edit;
-Reducto.EditAsync = EditAsync;
 Reducto.Pipeline = Pipeline;
-Reducto.PipelineAsync = PipelineAsync;
 Reducto.Classify = Classify;
 Reducto.Cancel = Cancel;
 Reducto.Upload = Upload;
@@ -282,40 +282,32 @@ export declare namespace Reducto {
 
   export {
     Parse as Parse,
-    type ParseResponse as ParseResponse,
-    type ParseCreateResponse as ParseCreateResponse,
-    type ParseCreateParams as ParseCreateParams,
-  };
-
-  export {
-    ParseAsync as ParseAsync,
     type AsyncConfigV3 as AsyncConfigV3,
     type AsyncParseConfig as AsyncParseConfig,
     type AsyncParseResponse as AsyncParseResponse,
     type Enhance as Enhance,
     type Formatting as Formatting,
+    type ParseResponse as ParseResponse,
     type Retrieval as Retrieval,
     type Settings as Settings,
     type Spreadsheet as Spreadsheet,
-    type ParseAsyncCreateParams as ParseAsyncCreateParams,
+    type ParseRunResponse as ParseRunResponse,
+    type ParseRunParams as ParseRunParams,
+    type ParseRunJobParams as ParseRunJobParams,
   };
 
   export {
     Extract as Extract,
-    type ExtractUsage as ExtractUsage,
-    type V3Extract as V3Extract,
-    type ExtractCreateResponse as ExtractCreateResponse,
-    type ExtractCreateParams as ExtractCreateParams,
-  };
-
-  export {
-    ExtractAsync as ExtractAsync,
     type AsyncExtractConfig as AsyncExtractConfig,
     type AsyncExtractResponse as AsyncExtractResponse,
     type ExtractSettings as ExtractSettings,
+    type ExtractUsage as ExtractUsage,
     type Instructions as Instructions,
     type ParseOptions as ParseOptions,
-    type ExtractAsyncCreateParams as ExtractAsyncCreateParams,
+    type V3Extract as V3Extract,
+    type ExtractRunResponse as ExtractRunResponse,
+    type ExtractRunParams as ExtractRunParams,
+    type ExtractRunJobParams as ExtractRunJobParams,
   };
 
   export {
@@ -325,13 +317,9 @@ export declare namespace Reducto {
     type SplitCategory as SplitCategory,
     type SplitResponse as SplitResponse,
     type SplitTableOptions as SplitTableOptions,
-    type SplitCreateParams as SplitCreateParams,
-  };
-
-  export {
-    SplitAsync as SplitAsync,
-    type SplitAsyncCreateResponse as SplitAsyncCreateResponse,
-    type SplitAsyncCreateParams as SplitAsyncCreateParams,
+    type SplitRunJobResponse as SplitRunJobResponse,
+    type SplitRunParams as SplitRunParams,
+    type SplitRunJobParams as SplitRunJobParams,
   };
 
   export {
@@ -340,33 +328,25 @@ export declare namespace Reducto {
     type EditOptions as EditOptions,
     type EditResponse as EditResponse,
     type EditWidget as EditWidget,
-    type EditSubmitParams as EditSubmitParams,
-  };
-
-  export {
-    EditAsync as EditAsync,
-    type EditAsyncCreateResponse as EditAsyncCreateResponse,
-    type EditAsyncCreateParams as EditAsyncCreateParams,
+    type EditRunJobResponse as EditRunJobResponse,
+    type EditRunParams as EditRunParams,
+    type EditRunJobParams as EditRunJobParams,
   };
 
   export {
     Pipeline as Pipeline,
     type PipelineResponse as PipelineResponse,
     type PipelineSettings as PipelineSettings,
-    type PipelineCreateParams as PipelineCreateParams,
-  };
-
-  export {
-    PipelineAsync as PipelineAsync,
-    type PipelineAsyncCreateResponse as PipelineAsyncCreateResponse,
-    type PipelineAsyncCreateParams as PipelineAsyncCreateParams,
+    type PipelineRunJobResponse as PipelineRunJobResponse,
+    type PipelineRunParams as PipelineRunParams,
+    type PipelineRunJobParams as PipelineRunJobParams,
   };
 
   export {
     Classify as Classify,
     type ClassifyResponse as ClassifyResponse,
     type PageRange as PageRange,
-    type ClassifyCreateParams as ClassifyCreateParams,
+    type ClassifyRunParams as ClassifyRunParams,
   };
 
   export { Cancel as Cancel, type CancelCancelJobResponse as CancelCancelJobResponse };

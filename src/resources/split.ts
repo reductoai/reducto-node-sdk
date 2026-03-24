@@ -3,15 +3,23 @@
 import { APIResource } from '../resource';
 import * as Core from '../core';
 import * as SplitAPI from './split';
-import * as ExtractAsyncAPI from './extract-async';
+import * as ExtractAPI from './extract';
+import * as ParseAPI from './parse';
 import * as UploadAPI from './upload';
 
 export class Split extends APIResource {
   /**
    * Split
    */
-  create(body: SplitCreateParams, options?: Core.RequestOptions): Core.APIPromise<SplitResponse> {
+  run(body: SplitRunParams, options?: Core.RequestOptions): Core.APIPromise<SplitResponse> {
     return this._client.post('/split', { body, ...options });
+  }
+
+  /**
+   * Split Async
+   */
+  runJob(body: SplitRunJobParams, options?: Core.RequestOptions): Core.APIPromise<SplitRunJobResponse> {
+    return this._client.post('/split_async', { body, ...options });
   }
 }
 
@@ -110,7 +118,11 @@ export interface SplitTableOptions {
   table_cutoff?: 'truncate' | 'preserve';
 }
 
-export interface SplitCreateParams {
+export interface SplitRunJobResponse {
+  job_id: string;
+}
+
+export interface SplitRunParams {
   /**
    * For parse/split/extract pipelines, the URL of the document to be processed. You
    * can provide one of the following: 1. A publicly available URL 2. A presigned S3
@@ -132,7 +144,47 @@ export interface SplitCreateParams {
    * The configuration options for parsing the document. If you are passing in a
    * jobid:// URL for the file, then this configuration will be ignored.
    */
-  parsing?: ExtractAsyncAPI.ParseOptions;
+  parsing?: ExtractAPI.ParseOptions;
+
+  /**
+   * The settings for split processing.
+   */
+  settings?: SplitTableOptions;
+
+  /**
+   * The prompt that describes rules for splitting the document.
+   */
+  split_rules?: string;
+}
+
+export interface SplitRunJobParams {
+  /**
+   * For parse/split/extract pipelines, the URL of the document to be processed. You
+   * can provide one of the following: 1. A publicly available URL 2. A presigned S3
+   * URL 3. A reducto:// prefixed URL obtained from the /upload endpoint after
+   * directly uploading a document 4. A jobid:// prefixed URL obtained from a
+   * previous /parse invocation 5. A list of URLs (for multi-document pipelines, V3
+   * API only)
+   *
+   *             For edit pipelines, this should be a string containing the edit instructions
+   */
+  input: string | Array<string> | UploadAPI.UploadResponse;
+
+  /**
+   * The configuration options for processing the document.
+   */
+  split_description: Array<SplitCategory>;
+
+  /**
+   * The configuration options for asynchronous processing (default synchronous).
+   */
+  async?: ParseAPI.AsyncConfigV3;
+
+  /**
+   * The configuration options for parsing the document. If you are passing in a
+   * jobid:// URL for the file, then this configuration will be ignored.
+   */
+  parsing?: ExtractAPI.ParseOptions;
 
   /**
    * The settings for split processing.
@@ -152,6 +204,8 @@ export declare namespace Split {
     type SplitCategory as SplitCategory,
     type SplitResponse as SplitResponse,
     type SplitTableOptions as SplitTableOptions,
-    type SplitCreateParams as SplitCreateParams,
+    type SplitRunJobResponse as SplitRunJobResponse,
+    type SplitRunParams as SplitRunParams,
+    type SplitRunJobParams as SplitRunJobParams,
   };
 }
