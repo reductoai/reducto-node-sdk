@@ -1,5 +1,72 @@
 # Changelog
 
+## 0.14.0 (2026-03-24)
+
+Full Changelog: [v0.13.0...v0.14.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.13.0...v0.14.0)
+
+### Features
+
+* **api:** api update ([30c30e1](https://github.com/reductoai/reducto-node-sdk/commit/30c30e1f01b7b4c61dbfa1b5be2131f6bf8b393e))
+* **api:** api update ([d11ad60](https://github.com/reductoai/reducto-node-sdk/commit/d11ad6012aba58e5a6742e214bdf9c2330aa838a))
+* **api:** api update ([9c1a856](https://github.com/reductoai/reducto-node-sdk/commit/9c1a85657c3d6d94eac9cf7f938771e4ff3aeef8))
+* **api:** api update ([380fa3b](https://github.com/reductoai/reducto-node-sdk/commit/380fa3b5cd05dbad8a001bdcab6ab61bfc4f0cc7))
+* **api:** api update ([7809f77](https://github.com/reductoai/reducto-node-sdk/commit/7809f7722c1c2c553ad3337229b9388977254e4e))
+* **api:** api update ([1f987fb](https://github.com/reductoai/reducto-node-sdk/commit/1f987fb226f1e4c2d6dc2f7a93ccdd3f79b17165))
+* **api:** api update ([ee1424c](https://github.com/reductoai/reducto-node-sdk/commit/ee1424c6ce3726ac2e0a8b14799b23bdd7cf5b80))
+* **api:** api update ([f2e686f](https://github.com/reductoai/reducto-node-sdk/commit/f2e686fbdd7e79a93975813553f00c3d6a3f27da))
+* **api:** api update ([4835bff](https://github.com/reductoai/reducto-node-sdk/commit/4835bffb9fb214136f5e943351d16c2077e16d2f))
+* **api:** api update ([fe7b7b2](https://github.com/reductoai/reducto-node-sdk/commit/fe7b7b2bdede6e7d91e298ac57f16f64582012a5))
+* **api:** api update ([1f64e17](https://github.com/reductoai/reducto-node-sdk/commit/1f64e171a54adf2bb387601da2b7c2db4a1fd6ae))
+* **api:** api update ([0b036c8](https://github.com/reductoai/reducto-node-sdk/commit/0b036c88555b3699b280979e2784e68c99d480a3))
+* **api:** api update ([37d1e9b](https://github.com/reductoai/reducto-node-sdk/commit/37d1e9b68358ae4ec9f8e9fa43c522b491b65d48))
+* **api:** api update ([3fff9d0](https://github.com/reductoai/reducto-node-sdk/commit/3fff9d03440d49dd7dc42293bdccdcd96bea5c26))
+* **api:** api update ([4234099](https://github.com/reductoai/reducto-node-sdk/commit/42340999ca0976567bff5f8297af3438640ea481))
+* **api:** api update ([375f898](https://github.com/reductoai/reducto-node-sdk/commit/375f89847c91462034a3a358a67f6368f4043e95))
+* **api:** api update ([6f83d8b](https://github.com/reductoai/reducto-node-sdk/commit/6f83d8b5c62ebf40488fae811ad2efca06f45c7c))
+* **api:** api update ([3885830](https://github.com/reductoai/reducto-node-sdk/commit/3885830b959fefe73a7b26dc3a2ecff719b4a9f2))
+* **api:** api update ([95c7a86](https://github.com/reductoai/reducto-node-sdk/commit/95c7a86249bf78b6164d648e34c161213ef098dd))
+* **api:** api update ([1a746fc](https://github.com/reductoai/reducto-node-sdk/commit/1a746fc043c060a266bf87cd575945cb8077290f))
+* **api:** api update ([6398260](https://github.com/reductoai/reducto-node-sdk/commit/6398260030d99c5707906aa51e0574580001468c))
+* **api:** api update ([3104233](https://github.com/reductoai/reducto-node-sdk/commit/31042333c8bdb44df5be843d72a6ce73114ddbec))
+* **api:** api update ([31a32f1](https://github.com/reductoai/reducto-node-sdk/commit/31a32f15eed8d855d3f17794a6ba0a01a8c7bc37))
+* **api:** api update ([869f688](https://github.com/reductoai/reducto-node-sdk/commit/869f688baf43a76936766a10e2e39fb2d92730c5))
+* **api:** api update ([1bc5ebb](https://github.com/reductoai/reducto-node-sdk/commit/1bc5ebb13d723d2f2dd08b22cf9de56c2f1f581e))
+* **api:** api update ([de2dad4](https://github.com/reductoai/reducto-node-sdk/commit/de2dad4e85c0e2846737a1b282aea23529c33bc5))
+* **api:** api update ([21a0bc0](https://github.com/reductoai/reducto-node-sdk/commit/21a0bc0317272966c09e56229dc1b43c63b74e23))
+* **api:** api update ([816ec6b](https://github.com/reductoai/reducto-node-sdk/commit/816ec6b489eed42d237f92431e3546145f7efa2f))
+* **api:** manual updates ([fd3f6e2](https://github.com/reductoai/reducto-node-sdk/commit/fd3f6e2467d1900ea41884a633521b2453781e2e))
+* **api:** manual updates ([7ed517c](https://github.com/reductoai/reducto-node-sdk/commit/7ed517cc2583869fc0964e19d0752da82703a6f4))
+* **api:** manual updates ([eb92503](https://github.com/reductoai/reducto-node-sdk/commit/eb92503eabed860922088a06479431f285b9511f))
+* **api:** manual updates ([12a3fa2](https://github.com/reductoai/reducto-node-sdk/commit/12a3fa257c3011beb28467c1ba8371f6c8fc2f22))
+* **files:** add support for string alternative to file upload type ([6ab83a7](https://github.com/reductoai/reducto-node-sdk/commit/6ab83a76b2c240a44721ab2018c3af8cf94d7512))
+
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([59c9805](https://github.com/reductoai/reducto-node-sdk/commit/59c9805592e28602db91d80e1681e080bb861511))
+* **docs/contributing:** correct pnpm link command ([cff59cc](https://github.com/reductoai/reducto-node-sdk/commit/cff59cca0aab03a23198288cd1ea11b0cc95f2ce))
+* **mcp:** correct code tool API endpoint ([2c26c48](https://github.com/reductoai/reducto-node-sdk/commit/2c26c48cc5540089e4ca1717296638b4552784eb))
+* **mcp:** return correct lines on typescript errors ([497e0ee](https://github.com/reductoai/reducto-node-sdk/commit/497e0ee1cb2d898b7fbee174363573393995148d))
+
+
+### Chores
+
+* break long lines in snippets into multiline ([9d52de4](https://github.com/reductoai/reducto-node-sdk/commit/9d52de4d7faa0b0a61a3ed55a0416270f26d2d51))
+* **ci:** skip uploading artifacts on stainless-internal branches ([3b9dcfc](https://github.com/reductoai/reducto-node-sdk/commit/3b9dcfcde4abfd3212ca1d06dfb63d1c26717c26))
+* **ci:** upgrade `actions/github-script` ([ce9af3a](https://github.com/reductoai/reducto-node-sdk/commit/ce9af3a38224880fa4475a831e129c7420e3d85a))
+* **client:** do not parse responses with empty content-length ([7d0ca9a](https://github.com/reductoai/reducto-node-sdk/commit/7d0ca9acdfea271373512a7c5b2b6868220e627f))
+* fix typo in descriptions ([9c4fa8a](https://github.com/reductoai/reducto-node-sdk/commit/9c4fa8a091e22f01e029b1e898b1ea0b7df8d110))
+* **internal:** codegen related update ([75d075b](https://github.com/reductoai/reducto-node-sdk/commit/75d075b2b4fc068ce0c7d13ffb5aadbc35163ea0))
+* **internal:** codegen related update ([12de323](https://github.com/reductoai/reducto-node-sdk/commit/12de3239143efba43a97f884ab454a6f9bf2fdfd))
+* **internal:** codegen related update ([ba4aea5](https://github.com/reductoai/reducto-node-sdk/commit/ba4aea56bea1bc533d8c9dfa72fead39e214817c))
+* **internal:** move stringifyQuery implementation to internal function ([77fbeb6](https://github.com/reductoai/reducto-node-sdk/commit/77fbeb61508bc627e19d5cf52ce87d803041135b))
+* **internal:** remove mock server code ([c2d42e0](https://github.com/reductoai/reducto-node-sdk/commit/c2d42e0f5e7e41318f9fb1199e6530b2bc3b8765))
+* **internal:** tweak CI branches ([40eb8b0](https://github.com/reductoai/reducto-node-sdk/commit/40eb8b09d0a7712d602df15702b53c5e8ba514ce))
+* **internal:** update `actions/checkout` version ([ca6f81a](https://github.com/reductoai/reducto-node-sdk/commit/ca6f81aebf40afce8fdd8ec6fe35d32b90c48eef))
+* **internal:** update gitignore ([e62d6d4](https://github.com/reductoai/reducto-node-sdk/commit/e62d6d4cd49c300976983b5a1710ccb2907673c0))
+* **internal:** upgrade babel, qs, js-yaml ([93ee721](https://github.com/reductoai/reducto-node-sdk/commit/93ee721b989715136efdb83704739985a87947db))
+* update mock server docs ([3036bda](https://github.com/reductoai/reducto-node-sdk/commit/3036bda24c93ab49d3b76e45bd895815b923b27e))
+
 ## 0.13.0 (2025-12-02)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.12.0...v0.13.0)
