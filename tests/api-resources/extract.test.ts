@@ -73,6 +73,7 @@ describe('resource extract', () => {
       settings: {
         array_extract: true,
         citations: { enabled: true, numerical_confidence: true },
+        deep_extract: true,
         include_images: true,
         optimize_for_latency: true,
       },
@@ -148,6 +149,7 @@ describe('resource extract', () => {
       settings: {
         array_extract: true,
         citations: { enabled: true, numerical_confidence: true },
+        deep_extract: true,
         include_images: true,
         optimize_for_latency: true,
       },

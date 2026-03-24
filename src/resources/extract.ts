@@ -72,6 +72,13 @@ export interface ExtractSettings {
   citations?: ExtractSettings.Citations;
 
   /**
+   * If True, use Deep Extract, an agentic extraction mode that iteratively refines
+   * its output to achieve near-perfect accuracy. Best for complex documents where
+   * accuracy is critical.
+   */
+  deep_extract?: boolean;
+
+  /**
    * If True, include images in the extraction.
    */
   include_images?: boolean;
