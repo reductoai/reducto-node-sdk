@@ -13,8 +13,15 @@ export class Pipeline extends APIResource {
   /**
    * Pipeline
    */
-  create(body: PipelineCreateParams, options?: Core.RequestOptions): Core.APIPromise<PipelineResponse> {
+  run(body: PipelineRunParams, options?: Core.RequestOptions): Core.APIPromise<PipelineResponse> {
     return this._client.post('/pipeline', { body, ...options });
+  }
+
+  /**
+   * Pipeline Async
+   */
+  runJob(body: PipelineRunJobParams, options?: Core.RequestOptions): Core.APIPromise<PipelineRunJobResponse> {
+    return this._client.post('/pipeline_async', { body, ...options });
   }
 }
 
@@ -63,7 +70,11 @@ export interface PipelineSettings {
   document_password?: string | null;
 }
 
-export interface PipelineCreateParams {
+export interface PipelineRunJobResponse {
+  job_id: string;
+}
+
+export interface PipelineRunParams {
   /**
    * For parse/split/extract pipelines, the URL of the document to be processed. You
    * can provide one of the following: 1. A publicly available URL 2. A presigned S3
@@ -87,10 +98,41 @@ export interface PipelineCreateParams {
   settings?: PipelineSettings;
 }
 
+export interface PipelineRunJobParams {
+  /**
+   * For parse/split/extract pipelines, the URL of the document to be processed. You
+   * can provide one of the following: 1. A publicly available URL 2. A presigned S3
+   * URL 3. A reducto:// prefixed URL obtained from the /upload endpoint after
+   * directly uploading a document 4. A jobid:// prefixed URL obtained from a
+   * previous /parse invocation 5. A list of URLs (for multi-document pipelines, V3
+   * API only)
+   *
+   *             For edit pipelines, this should be a string containing the edit instructions
+   */
+  input: string | Array<string> | UploadAPI.UploadResponse;
+
+  /**
+   * The ID of the pipeline to use for the document.
+   */
+  pipeline_id: string;
+
+  /**
+   * The configuration options for asynchronous processing (default synchronous).
+   */
+  async?: ParseAPI.AsyncConfigV3;
+
+  /**
+   * Settings for pipeline execution that override pipeline defaults.
+   */
+  settings?: PipelineSettings;
+}
+
 export declare namespace Pipeline {
   export {
     type PipelineResponse as PipelineResponse,
     type PipelineSettings as PipelineSettings,
-    type PipelineCreateParams as PipelineCreateParams,
+    type PipelineRunJobResponse as PipelineRunJobResponse,
+    type PipelineRunParams as PipelineRunParams,
+    type PipelineRunJobParams as PipelineRunJobParams,
   };
 }

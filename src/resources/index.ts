@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export { Cancel, type CancelCancelJobResponse } from './cancel';
-export { Classify, type ClassifyResponse, type PageRange, type ClassifyCreateParams } from './classify';
+export { Classify, type ClassifyResponse, type PageRange, type ClassifyRunParams } from './classify';
 export { ConfigureWebhook, type ConfigureWebhookCreateResponse } from './configure-webhook';
 export {
   Edit,
@@ -9,25 +9,23 @@ export {
   type EditOptions,
   type EditResponse,
   type EditWidget,
-  type EditSubmitParams,
+  type EditRunJobResponse,
+  type EditRunParams,
+  type EditRunJobParams,
 } from './edit';
-export { EditAsync, type EditAsyncCreateResponse, type EditAsyncCreateParams } from './edit-async';
 export {
   Extract,
-  type ExtractUsage,
-  type V3Extract,
-  type ExtractCreateResponse,
-  type ExtractCreateParams,
-} from './extract';
-export {
-  ExtractAsync,
   type AsyncExtractConfig,
   type AsyncExtractResponse,
   type ExtractSettings,
+  type ExtractUsage,
   type Instructions,
   type ParseOptions,
-  type ExtractAsyncCreateParams,
-} from './extract-async';
+  type V3Extract,
+  type ExtractRunResponse,
+  type ExtractRunParams,
+  type ExtractRunJobParams,
+} from './extract';
 export {
   Job,
   type ExtractResponse,
@@ -35,30 +33,29 @@ export {
   type JobListResponse,
   type JobListParams,
 } from './job';
-export { Parse, type ParseResponse, type ParseCreateResponse, type ParseCreateParams } from './parse';
 export {
-  ParseAsync,
+  Parse,
   type AsyncConfigV3,
   type AsyncParseConfig,
   type AsyncParseResponse,
   type Enhance,
   type Formatting,
+  type ParseResponse,
   type Retrieval,
   type Settings,
   type Spreadsheet,
-  type ParseAsyncCreateParams,
-} from './parse-async';
+  type ParseRunResponse,
+  type ParseRunParams,
+  type ParseRunJobParams,
+} from './parse';
 export {
   Pipeline,
   type PipelineResponse,
   type PipelineSettings,
-  type PipelineCreateParams,
+  type PipelineRunJobResponse,
+  type PipelineRunParams,
+  type PipelineRunJobParams,
 } from './pipeline';
-export {
-  PipelineAsync,
-  type PipelineAsyncCreateResponse,
-  type PipelineAsyncCreateParams,
-} from './pipeline-async';
 export {
   Split,
   type DeepSplitPageEvidence,
@@ -66,8 +63,9 @@ export {
   type SplitCategory,
   type SplitResponse,
   type SplitTableOptions,
-  type SplitCreateParams,
+  type SplitRunJobResponse,
+  type SplitRunParams,
+  type SplitRunJobParams,
 } from './split';
-export { SplitAsync, type SplitAsyncCreateResponse, type SplitAsyncCreateParams } from './split-async';
 export { Upload, type UploadResponse, type UploadCreateParams } from './upload';
 export { Version, type VersionRetrieveResponse } from './version';

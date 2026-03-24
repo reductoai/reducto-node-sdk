@@ -8,7 +8,7 @@ export class Classify extends APIResource {
   /**
    * Classify
    */
-  create(body: ClassifyCreateParams, options?: Core.RequestOptions): Core.APIPromise<ClassifyResponse> {
+  run(body: ClassifyRunParams, options?: Core.RequestOptions): Core.APIPromise<ClassifyResponse> {
     return this._client.post('/classify', { body, ...options });
   }
 }
@@ -81,7 +81,7 @@ export interface PageRange {
   start?: number | null;
 }
 
-export interface ClassifyCreateParams {
+export interface ClassifyRunParams {
   /**
    * For parse/split/extract pipelines, the URL of the document to be processed. You
    * can provide one of the following: 1. A publicly available URL 2. A presigned S3
@@ -97,7 +97,7 @@ export interface ClassifyCreateParams {
   /**
    * A list of classification categories and their matching criteria.
    */
-  classification_schema?: Array<ClassifyCreateParams.ClassificationSchema>;
+  classification_schema?: Array<ClassifyRunParams.ClassificationSchema>;
 
   /**
    * Optional document-level metadata to include in classification prompts.
@@ -117,7 +117,7 @@ export interface ClassifyCreateParams {
   persist_results?: boolean;
 }
 
-export namespace ClassifyCreateParams {
+export namespace ClassifyRunParams {
   /**
    * A single classification category with its matching criteria.
    */
@@ -141,6 +141,6 @@ export declare namespace Classify {
   export {
     type ClassifyResponse as ClassifyResponse,
     type PageRange as PageRange,
-    type ClassifyCreateParams as ClassifyCreateParams,
+    type ClassifyRunParams as ClassifyRunParams,
   };
 }

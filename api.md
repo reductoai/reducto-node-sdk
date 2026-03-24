@@ -2,55 +2,39 @@
 
 Types:
 
+- <code><a href="./src/resources/parse.ts">AsyncConfigV3</a></code>
+- <code><a href="./src/resources/parse.ts">AsyncParseConfig</a></code>
+- <code><a href="./src/resources/parse.ts">AsyncParseResponse</a></code>
+- <code><a href="./src/resources/parse.ts">Enhance</a></code>
+- <code><a href="./src/resources/parse.ts">Formatting</a></code>
 - <code><a href="./src/resources/parse.ts">ParseResponse</a></code>
-- <code><a href="./src/resources/parse.ts">ParseCreateResponse</a></code>
+- <code><a href="./src/resources/parse.ts">Retrieval</a></code>
+- <code><a href="./src/resources/parse.ts">Settings</a></code>
+- <code><a href="./src/resources/parse.ts">Spreadsheet</a></code>
+- <code><a href="./src/resources/parse.ts">ParseRunResponse</a></code>
 
 Methods:
 
-- <code title="post /parse">client.parse.<a href="./src/resources/parse.ts">create</a>({ ...params }) -> ParseCreateResponse</code>
-
-# ParseAsync
-
-Types:
-
-- <code><a href="./src/resources/parse-async.ts">AsyncConfigV3</a></code>
-- <code><a href="./src/resources/parse-async.ts">AsyncParseConfig</a></code>
-- <code><a href="./src/resources/parse-async.ts">AsyncParseResponse</a></code>
-- <code><a href="./src/resources/parse-async.ts">Enhance</a></code>
-- <code><a href="./src/resources/parse-async.ts">Formatting</a></code>
-- <code><a href="./src/resources/parse-async.ts">Retrieval</a></code>
-- <code><a href="./src/resources/parse-async.ts">Settings</a></code>
-- <code><a href="./src/resources/parse-async.ts">Spreadsheet</a></code>
-
-Methods:
-
-- <code title="post /parse_async">client.parseAsync.<a href="./src/resources/parse-async.ts">create</a>({ ...params }) -> AsyncParseResponse</code>
+- <code title="post /parse">client.parse.<a href="./src/resources/parse.ts">run</a>({ ...params }) -> ParseRunResponse</code>
+- <code title="post /parse_async">client.parse.<a href="./src/resources/parse.ts">runJob</a>({ ...params }) -> AsyncParseResponse</code>
 
 # Extract
 
 Types:
 
+- <code><a href="./src/resources/extract.ts">AsyncExtractConfig</a></code>
+- <code><a href="./src/resources/extract.ts">AsyncExtractResponse</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractSettings</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractUsage</a></code>
+- <code><a href="./src/resources/extract.ts">Instructions</a></code>
+- <code><a href="./src/resources/extract.ts">ParseOptions</a></code>
 - <code><a href="./src/resources/extract.ts">V3Extract</a></code>
-- <code><a href="./src/resources/extract.ts">ExtractCreateResponse</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractRunResponse</a></code>
 
 Methods:
 
-- <code title="post /extract">client.extract.<a href="./src/resources/extract.ts">create</a>({ ...params }) -> ExtractCreateResponse</code>
-
-# ExtractAsync
-
-Types:
-
-- <code><a href="./src/resources/extract-async.ts">AsyncExtractConfig</a></code>
-- <code><a href="./src/resources/extract-async.ts">AsyncExtractResponse</a></code>
-- <code><a href="./src/resources/extract-async.ts">ExtractSettings</a></code>
-- <code><a href="./src/resources/extract-async.ts">Instructions</a></code>
-- <code><a href="./src/resources/extract-async.ts">ParseOptions</a></code>
-
-Methods:
-
-- <code title="post /extract_async">client.extractAsync.<a href="./src/resources/extract-async.ts">create</a>({ ...params }) -> AsyncExtractResponse</code>
+- <code title="post /extract">client.extract.<a href="./src/resources/extract.ts">run</a>({ ...params }) -> ExtractRunResponse</code>
+- <code title="post /extract_async">client.extract.<a href="./src/resources/extract.ts">runJob</a>({ ...params }) -> AsyncExtractResponse</code>
 
 # Split
 
@@ -61,20 +45,12 @@ Types:
 - <code><a href="./src/resources/split.ts">SplitCategory</a></code>
 - <code><a href="./src/resources/split.ts">SplitResponse</a></code>
 - <code><a href="./src/resources/split.ts">SplitTableOptions</a></code>
+- <code><a href="./src/resources/split.ts">SplitRunJobResponse</a></code>
 
 Methods:
 
-- <code title="post /split">client.split.<a href="./src/resources/split.ts">create</a>({ ...params }) -> SplitResponse</code>
-
-# SplitAsync
-
-Types:
-
-- <code><a href="./src/resources/split-async.ts">SplitAsyncCreateResponse</a></code>
-
-Methods:
-
-- <code title="post /split_async">client.splitAsync.<a href="./src/resources/split-async.ts">create</a>({ ...params }) -> SplitAsyncCreateResponse</code>
+- <code title="post /split">client.split.<a href="./src/resources/split.ts">run</a>({ ...params }) -> SplitResponse</code>
+- <code title="post /split_async">client.split.<a href="./src/resources/split.ts">runJob</a>({ ...params }) -> SplitRunJobResponse</code>
 
 # Edit
 
@@ -84,20 +60,12 @@ Types:
 - <code><a href="./src/resources/edit.ts">EditOptions</a></code>
 - <code><a href="./src/resources/edit.ts">EditResponse</a></code>
 - <code><a href="./src/resources/edit.ts">EditWidget</a></code>
+- <code><a href="./src/resources/edit.ts">EditRunJobResponse</a></code>
 
 Methods:
 
-- <code title="post /edit">client.edit.<a href="./src/resources/edit.ts">submit</a>({ ...params }) -> EditResponse</code>
-
-# EditAsync
-
-Types:
-
-- <code><a href="./src/resources/edit-async.ts">EditAsyncCreateResponse</a></code>
-
-Methods:
-
-- <code title="post /edit_async">client.editAsync.<a href="./src/resources/edit-async.ts">create</a>({ ...params }) -> EditAsyncCreateResponse</code>
+- <code title="post /edit">client.edit.<a href="./src/resources/edit.ts">run</a>({ ...params }) -> EditResponse</code>
+- <code title="post /edit_async">client.edit.<a href="./src/resources/edit.ts">runJob</a>({ ...params }) -> EditRunJobResponse</code>
 
 # Pipeline
 
@@ -105,20 +73,12 @@ Types:
 
 - <code><a href="./src/resources/pipeline.ts">PipelineResponse</a></code>
 - <code><a href="./src/resources/pipeline.ts">PipelineSettings</a></code>
+- <code><a href="./src/resources/pipeline.ts">PipelineRunJobResponse</a></code>
 
 Methods:
 
-- <code title="post /pipeline">client.pipeline.<a href="./src/resources/pipeline.ts">create</a>({ ...params }) -> PipelineResponse</code>
-
-# PipelineAsync
-
-Types:
-
-- <code><a href="./src/resources/pipeline-async.ts">PipelineAsyncCreateResponse</a></code>
-
-Methods:
-
-- <code title="post /pipeline_async">client.pipelineAsync.<a href="./src/resources/pipeline-async.ts">create</a>({ ...params }) -> PipelineAsyncCreateResponse</code>
+- <code title="post /pipeline">client.pipeline.<a href="./src/resources/pipeline.ts">run</a>({ ...params }) -> PipelineResponse</code>
+- <code title="post /pipeline_async">client.pipeline.<a href="./src/resources/pipeline.ts">runJob</a>({ ...params }) -> PipelineRunJobResponse</code>
 
 # Classify
 
@@ -129,7 +89,7 @@ Types:
 
 Methods:
 
-- <code title="post /classify">client.classify.<a href="./src/resources/classify.ts">create</a>({ ...params }) -> ClassifyResponse</code>
+- <code title="post /classify">client.classify.<a href="./src/resources/classify.ts">run</a>({ ...params }) -> ClassifyResponse</code>
 
 # Cancel
 
