@@ -13,6 +13,13 @@ import * as SplitAPI from './split';
 
 export class Job extends APIResource {
   /**
+   * Cancel Job
+   */
+  cancel(jobId: string, options?: Core.RequestOptions): Core.APIPromise<unknown> {
+    return this._client.post(`/cancel/${jobId}`, options);
+  }
+
+  /**
    * Retrieve Parse
    */
   get(jobId: string, options?: Core.RequestOptions): Core.APIPromise<JobGetResponse> {
@@ -56,6 +63,8 @@ export interface ExtractResponse {
    */
   studio_link?: string | null;
 }
+
+export type JobCancelResponse = unknown;
 
 export type JobGetResponse = JobGetResponse.AsyncJobResponse | JobGetResponse.EnhancedAsyncJobResponse;
 
@@ -177,6 +186,7 @@ export interface JobGetAllParams {
 export declare namespace Job {
   export {
     type ExtractResponse as ExtractResponse,
+    type JobCancelResponse as JobCancelResponse,
     type JobGetResponse as JobGetResponse,
     type JobGetAllResponse as JobGetAllResponse,
     type JobGetAllParams as JobGetAllParams,
