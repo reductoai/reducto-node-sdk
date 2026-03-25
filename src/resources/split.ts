@@ -5,7 +5,7 @@ import * as Core from '../core';
 import * as SplitAPI from './split';
 import * as ExtractAPI from './extract';
 import * as ParseAPI from './parse';
-import * as UploadAPI from './upload';
+import * as Shared from './shared';
 
 export class Split extends APIResource {
   /**
@@ -133,7 +133,7 @@ export interface SplitRunParams {
    *
    *             For edit pipelines, this should be a string containing the edit instructions
    */
-  input: string | Array<string> | UploadAPI.UploadResponse;
+  input: string | Array<string> | Shared.Upload;
 
   /**
    * The configuration options for processing the document.
@@ -168,7 +168,7 @@ export interface SplitRunJobParams {
    *
    *             For edit pipelines, this should be a string containing the edit instructions
    */
-  input: string | Array<string> | UploadAPI.UploadResponse;
+  input: string | Array<string> | Shared.Upload;
 
   /**
    * The configuration options for processing the document.

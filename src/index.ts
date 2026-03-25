@@ -1,10 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import { isRequestOptions } from './core';
 import { type Agent } from './_shims/index';
 import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
+import * as Shared from './resources/shared';
+import * as TopLevelAPI from './resources/top-level';
+import { UploadParams } from './resources/top-level';
 import { Cancel, CancelCancelJobResponse } from './resources/cancel';
 import { Classify, ClassifyResponse, ClassifyRunParams, PageRange } from './resources/classify';
 import { ConfigureWebhook, ConfigureWebhookCreateResponse } from './resources/configure-webhook';
@@ -31,7 +35,7 @@ import {
   ParseOptions,
   V3Extract,
 } from './resources/extract';
-import { ExtractResponse, Job, JobListParams, JobListResponse, JobRetrieveResponse } from './resources/job';
+import { ExtractResponse, Job, JobGetAllParams, JobGetAllResponse, JobGetResponse } from './resources/job';
 import {
   AsyncConfigV3,
   AsyncParseConfig,
@@ -66,7 +70,6 @@ import {
   SplitRunParams,
   SplitTableOptions,
 } from './resources/split';
-import { Upload, UploadCreateParams, UploadResponse } from './resources/upload';
 import { Version, VersionRetrieveResponse } from './resources/version';
 
 const environments = {
@@ -217,7 +220,6 @@ export class Reducto extends Core.APIClient {
   pipeline: API.Pipeline = new API.Pipeline(this);
   classify: API.Classify = new API.Classify(this);
   cancel: API.Cancel = new API.Cancel(this);
-  upload: API.Upload = new API.Upload(this);
   configureWebhook: API.ConfigureWebhook = new API.ConfigureWebhook(this);
   version: API.Version = new API.Version(this);
   job: API.Job = new API.Job(this);
@@ -227,6 +229,25 @@ export class Reducto extends Core.APIClient {
    */
   #baseURLOverridden(): boolean {
     return this.baseURL !== environments[this._options.environment || 'production'];
+  }
+
+  /**
+   * Upload
+   */
+  upload(params?: TopLevelAPI.UploadParams, options?: Core.RequestOptions): Core.APIPromise<Shared.Upload>;
+  upload(options?: Core.RequestOptions): Core.APIPromise<Shared.Upload>;
+  upload(
+    params: TopLevelAPI.UploadParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<Shared.Upload> {
+    if (isRequestOptions(params)) {
+      return this.upload({}, params);
+    }
+    const { extension, ...body } = params;
+    return this.post(
+      '/upload',
+      Core.maybeMultipartFormRequestOptions({ query: { extension }, body, ...options }),
+    );
   }
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
@@ -272,13 +293,14 @@ Reducto.Edit = Edit;
 Reducto.Pipeline = Pipeline;
 Reducto.Classify = Classify;
 Reducto.Cancel = Cancel;
-Reducto.Upload = Upload;
 Reducto.ConfigureWebhook = ConfigureWebhook;
 Reducto.Version = Version;
 Reducto.Job = Job;
 
 export declare namespace Reducto {
   export type RequestOptions = Core.RequestOptions;
+
+  export { type UploadParams as UploadParams };
 
   export {
     Parse as Parse,
@@ -352,12 +374,6 @@ export declare namespace Reducto {
   export { Cancel as Cancel, type CancelCancelJobResponse as CancelCancelJobResponse };
 
   export {
-    Upload as Upload,
-    type UploadResponse as UploadResponse,
-    type UploadCreateParams as UploadCreateParams,
-  };
-
-  export {
     ConfigureWebhook as ConfigureWebhook,
     type ConfigureWebhookCreateResponse as ConfigureWebhookCreateResponse,
   };
@@ -367,10 +383,12 @@ export declare namespace Reducto {
   export {
     Job as Job,
     type ExtractResponse as ExtractResponse,
-    type JobRetrieveResponse as JobRetrieveResponse,
-    type JobListResponse as JobListResponse,
-    type JobListParams as JobListParams,
+    type JobGetResponse as JobGetResponse,
+    type JobGetAllResponse as JobGetAllResponse,
+    type JobGetAllParams as JobGetAllParams,
   };
+
+  export type Upload = API.Upload;
 }
 
 export { toFile, fileFromPath } from './uploads';

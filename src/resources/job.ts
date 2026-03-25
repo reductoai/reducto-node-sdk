@@ -15,21 +15,21 @@ export class Job extends APIResource {
   /**
    * Retrieve Parse
    */
-  retrieve(jobId: string, options?: Core.RequestOptions): Core.APIPromise<JobRetrieveResponse> {
+  get(jobId: string, options?: Core.RequestOptions): Core.APIPromise<JobGetResponse> {
     return this._client.get(`/job/${jobId}`, options);
   }
 
   /**
    * Get Jobs
    */
-  list(query?: JobListParams, options?: Core.RequestOptions): Core.APIPromise<JobListResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<JobListResponse>;
-  list(
-    query: JobListParams | Core.RequestOptions = {},
+  getAll(query?: JobGetAllParams, options?: Core.RequestOptions): Core.APIPromise<JobGetAllResponse>;
+  getAll(options?: Core.RequestOptions): Core.APIPromise<JobGetAllResponse>;
+  getAll(
+    query: JobGetAllParams | Core.RequestOptions = {},
     options?: Core.RequestOptions,
-  ): Core.APIPromise<JobListResponse> {
+  ): Core.APIPromise<JobGetAllResponse> {
     if (isRequestOptions(query)) {
-      return this.list({}, query);
+      return this.getAll({}, query);
     }
     return this._client.get('/jobs', { query, ...options });
   }
@@ -57,11 +57,9 @@ export interface ExtractResponse {
   studio_link?: string | null;
 }
 
-export type JobRetrieveResponse =
-  | JobRetrieveResponse.AsyncJobResponse
-  | JobRetrieveResponse.EnhancedAsyncJobResponse;
+export type JobGetResponse = JobGetResponse.AsyncJobResponse | JobGetResponse.EnhancedAsyncJobResponse;
 
-export namespace JobRetrieveResponse {
+export namespace JobGetResponse {
   export interface AsyncJobResponse {
     status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
 
@@ -121,12 +119,12 @@ export namespace JobRetrieveResponse {
   }
 }
 
-export interface JobListResponse {
+export interface JobGetAllResponse {
   /**
    * List of jobs with their job_id, status, type, raw_config, created_at, num_pages
    * and duration
    */
-  jobs: Array<JobListResponse.Job>;
+  jobs: Array<JobGetAllResponse.Job>;
 
   /**
    * Cursor to fetch the next page of results. If null, there are no more results.
@@ -134,7 +132,7 @@ export interface JobListResponse {
   next_cursor?: string | null;
 }
 
-export namespace JobListResponse {
+export namespace JobGetAllResponse {
   export interface Job {
     created_at: string;
 
@@ -158,7 +156,7 @@ export namespace JobListResponse {
   }
 }
 
-export interface JobListParams {
+export interface JobGetAllParams {
   /**
    * Cursor for pagination. Use the next_cursor from the previous response to fetch
    * the next page.
@@ -179,8 +177,8 @@ export interface JobListParams {
 export declare namespace Job {
   export {
     type ExtractResponse as ExtractResponse,
-    type JobRetrieveResponse as JobRetrieveResponse,
-    type JobListResponse as JobListResponse,
-    type JobListParams as JobListParams,
+    type JobGetResponse as JobGetResponse,
+    type JobGetAllResponse as JobGetAllResponse,
+    type JobGetAllParams as JobGetAllParams,
   };
 }

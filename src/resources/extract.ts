@@ -3,7 +3,7 @@
 import { APIResource } from '../resource';
 import * as Core from '../core';
 import * as ParseAPI from './parse';
-import * as UploadAPI from './upload';
+import * as Shared from './shared';
 
 export class Extract extends APIResource {
   /**
@@ -32,7 +32,7 @@ export interface AsyncExtractConfig {
    *
    *             For edit pipelines, this should be a string containing the edit instructions
    */
-  input: string | Array<string> | UploadAPI.UploadResponse;
+  input: string | Array<string> | Shared.Upload;
 
   /**
    * The configuration options for asynchronous processing (default synchronous).
@@ -174,7 +174,7 @@ export declare namespace ExtractRunParams {
      *
      *             For edit pipelines, this should be a string containing the edit instructions
      */
-    input: string | Array<string> | UploadAPI.UploadResponse;
+    input: string | Array<string> | Shared.Upload;
 
     /**
      * The instructions to use for the extraction.
@@ -204,7 +204,7 @@ export declare namespace ExtractRunParams {
      *
      *             For edit pipelines, this should be a string containing the edit instructions
      */
-    input: string | Array<string> | UploadAPI.UploadResponse;
+    input: string | Array<string> | Shared.Upload;
 
     /**
      * The configuration options for asynchronous processing (default synchronous).
@@ -240,7 +240,7 @@ export interface ExtractRunJobParams {
    *
    *             For edit pipelines, this should be a string containing the edit instructions
    */
-  input: string | Array<string> | UploadAPI.UploadResponse;
+  input: string | Array<string> | Shared.Upload;
 
   /**
    * The configuration options for asynchronous processing (default synchronous).

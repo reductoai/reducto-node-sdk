@@ -6,8 +6,8 @@ import * as EditAPI from './edit';
 import * as ExtractAPI from './extract';
 import * as JobAPI from './job';
 import * as ParseAPI from './parse';
+import * as Shared from './shared';
 import * as SplitAPI from './split';
-import * as UploadAPI from './upload';
 
 export class Pipeline extends APIResource {
   /**
@@ -85,7 +85,7 @@ export interface PipelineRunParams {
    *
    *             For edit pipelines, this should be a string containing the edit instructions
    */
-  input: string | Array<string> | UploadAPI.UploadResponse;
+  input: string | Array<string> | Shared.Upload;
 
   /**
    * The ID of the pipeline to use for the document.
@@ -109,7 +109,7 @@ export interface PipelineRunJobParams {
    *
    *             For edit pipelines, this should be a string containing the edit instructions
    */
-  input: string | Array<string> | UploadAPI.UploadResponse;
+  input: string | Array<string> | Shared.Upload;
 
   /**
    * The ID of the pipeline to use for the document.
