@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+export * from './shared';
 export { Cancel, type CancelCancelJobResponse } from './cancel';
 export { Classify, type ClassifyResponse, type PageRange, type ClassifyRunParams } from './classify';
 export { ConfigureWebhook, type ConfigureWebhookCreateResponse } from './configure-webhook';
@@ -29,9 +30,9 @@ export {
 export {
   Job,
   type ExtractResponse,
-  type JobRetrieveResponse,
-  type JobListResponse,
-  type JobListParams,
+  type JobGetResponse,
+  type JobGetAllResponse,
+  type JobGetAllParams,
 } from './job';
 export {
   Parse,
@@ -67,5 +68,5 @@ export {
   type SplitRunParams,
   type SplitRunJobParams,
 } from './split';
-export { Upload, type UploadResponse, type UploadCreateParams } from './upload';
 export { Version, type VersionRetrieveResponse } from './version';
+export { type UploadParams } from './top-level';

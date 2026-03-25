@@ -8,10 +8,10 @@ const client = new Reducto({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource upload', () => {
+describe('top level methods', () => {
   // Mock server tests are disabled
-  test.skip('create', async () => {
-    const responsePromise = client.upload.create();
+  test.skip('upload', async () => {
+    const responsePromise = client.upload();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,18 +22,16 @@ describe('resource upload', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('create: request options instead of params are passed correctly', async () => {
+  test.skip('upload: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.upload.create({ path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Reducto.NotFoundError,
-    );
+    await expect(client.upload({ path: '/_stainless_unknown_path' })).rejects.toThrow(Reducto.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('create: request options and params are passed correctly', async () => {
+  test.skip('upload: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.upload.create({ extension: 'extension', file: 'file' }, { path: '/_stainless_unknown_path' }),
+      client.upload({ extension: 'extension', file: 'file' }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Reducto.NotFoundError);
   });
 });

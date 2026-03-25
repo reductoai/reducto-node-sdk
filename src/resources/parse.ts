@@ -4,8 +4,8 @@ import { APIResource } from '../resource';
 import * as Core from '../core';
 import * as ClassifyAPI from './classify';
 import * as EditAPI from './edit';
+import * as Shared from './shared';
 import * as SplitAPI from './split';
-import * as UploadAPI from './upload';
 
 export class Parse extends APIResource {
   /**
@@ -71,7 +71,7 @@ export interface AsyncParseConfig {
    *
    *             For edit pipelines, this should be a string containing the edit instructions
    */
-  input: string | Array<string> | UploadAPI.UploadResponse;
+  input: string | Array<string> | Shared.Upload;
 
   /**
    * The configuration options for asynchronous processing (default synchronous).
@@ -576,7 +576,7 @@ export declare namespace ParseRunParams {
      *
      *             For edit pipelines, this should be a string containing the edit instructions
      */
-    input: string | Array<string> | UploadAPI.UploadResponse;
+    input: string | Array<string> | Shared.Upload;
 
     enhance?: Enhance;
 
@@ -600,7 +600,7 @@ export declare namespace ParseRunParams {
      *
      *             For edit pipelines, this should be a string containing the edit instructions
      */
-    input: string | Array<string> | UploadAPI.UploadResponse;
+    input: string | Array<string> | Shared.Upload;
 
     /**
      * The configuration options for asynchronous processing (default synchronous).
@@ -636,7 +636,7 @@ export interface ParseRunJobParams {
    *
    *             For edit pipelines, this should be a string containing the edit instructions
    */
-  input: string | Array<string> | UploadAPI.UploadResponse;
+  input: string | Array<string> | Shared.Upload;
 
   /**
    * The configuration options for asynchronous processing (default synchronous).

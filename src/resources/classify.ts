@@ -2,7 +2,7 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
-import * as UploadAPI from './upload';
+import * as Shared from './shared';
 
 export class Classify extends APIResource {
   /**
@@ -92,7 +92,7 @@ export interface ClassifyRunParams {
    *
    *             For edit pipelines, this should be a string containing the edit instructions
    */
-  input: string | Array<string> | UploadAPI.UploadResponse;
+  input: string | Array<string> | Shared.Upload;
 
   /**
    * A list of classification categories and their matching criteria.

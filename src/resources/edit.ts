@@ -2,8 +2,8 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
+import * as Shared from './shared';
 import * as SplitAPI from './split';
-import * as UploadAPI from './upload';
 
 export class Edit extends APIResource {
   /**
@@ -140,7 +140,7 @@ export interface EditRunParams {
    * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
    *    uploading a document
    */
-  document_url: string | UploadAPI.UploadResponse;
+  document_url: string | Shared.Upload;
 
   /**
    * The instructions for the edit.
@@ -172,7 +172,7 @@ export interface EditRunJobParams {
    * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
    *    uploading a document
    */
-  document_url: string | UploadAPI.UploadResponse;
+  document_url: string | Shared.Upload;
 
   /**
    * The instructions for the edit.

@@ -1,3 +1,15 @@
+# Reducto
+
+Methods:
+
+- <code title="post /upload">client.<a href="./src/index.ts">upload</a>({ ...params }) -> Upload</code>
+
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">Upload</a></code>
+
 # Parse
 
 Types:
@@ -101,16 +113,6 @@ Methods:
 
 - <code title="post /cancel/{job_id}">client.cancel.<a href="./src/resources/cancel.ts">cancelJob</a>(jobId) -> unknown</code>
 
-# Upload
-
-Types:
-
-- <code><a href="./src/resources/upload.ts">UploadResponse</a></code>
-
-Methods:
-
-- <code title="post /upload">client.upload.<a href="./src/resources/upload.ts">create</a>({ ...params }) -> UploadResponse</code>
-
 # ConfigureWebhook
 
 Types:
@@ -136,10 +138,10 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/job.ts">ExtractResponse</a></code>
-- <code><a href="./src/resources/job.ts">JobRetrieveResponse</a></code>
-- <code><a href="./src/resources/job.ts">JobListResponse</a></code>
+- <code><a href="./src/resources/job.ts">JobGetResponse</a></code>
+- <code><a href="./src/resources/job.ts">JobGetAllResponse</a></code>
 
 Methods:
 
-- <code title="get /job/{job_id}">client.job.<a href="./src/resources/job.ts">retrieve</a>(jobId) -> JobRetrieveResponse</code>
-- <code title="get /jobs">client.job.<a href="./src/resources/job.ts">list</a>({ ...params }) -> JobListResponse</code>
+- <code title="get /job/{job_id}">client.job.<a href="./src/resources/job.ts">get</a>(jobId) -> JobGetResponse</code>
+- <code title="get /jobs">client.job.<a href="./src/resources/job.ts">getAll</a>({ ...params }) -> JobGetAllResponse</code>
