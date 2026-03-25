@@ -1,7 +1,12 @@
 # Reducto
 
+Types:
+
+- <code><a href="./src/resources/top-level.ts">APIVersionResponse</a></code>
+
 Methods:
 
+- <code title="get /version">client.<a href="./src/index.ts">apiVersion</a>() -> string</code>
 - <code title="post /upload">client.<a href="./src/index.ts">upload</a>({ ...params }) -> Upload</code>
 
 # Shared
@@ -103,45 +108,27 @@ Methods:
 
 - <code title="post /classify">client.classify.<a href="./src/resources/classify.ts">run</a>({ ...params }) -> ClassifyResponse</code>
 
-# Cancel
+# Webhook
 
 Types:
 
-- <code><a href="./src/resources/cancel.ts">CancelCancelJobResponse</a></code>
+- <code><a href="./src/resources/webhook.ts">WebhookRunResponse</a></code>
 
 Methods:
 
-- <code title="post /cancel/{job_id}">client.cancel.<a href="./src/resources/cancel.ts">cancelJob</a>(jobId) -> unknown</code>
-
-# ConfigureWebhook
-
-Types:
-
-- <code><a href="./src/resources/configure-webhook.ts">ConfigureWebhookCreateResponse</a></code>
-
-Methods:
-
-- <code title="post /configure_webhook">client.configureWebhook.<a href="./src/resources/configure-webhook.ts">create</a>() -> string</code>
-
-# Version
-
-Types:
-
-- <code><a href="./src/resources/version.ts">VersionRetrieveResponse</a></code>
-
-Methods:
-
-- <code title="get /version">client.version.<a href="./src/resources/version.ts">retrieve</a>() -> string</code>
+- <code title="post /configure_webhook">client.webhook.<a href="./src/resources/webhook.ts">run</a>() -> string</code>
 
 # Job
 
 Types:
 
 - <code><a href="./src/resources/job.ts">ExtractResponse</a></code>
+- <code><a href="./src/resources/job.ts">JobCancelResponse</a></code>
 - <code><a href="./src/resources/job.ts">JobGetResponse</a></code>
 - <code><a href="./src/resources/job.ts">JobGetAllResponse</a></code>
 
 Methods:
 
+- <code title="post /cancel/{job_id}">client.job.<a href="./src/resources/job.ts">cancel</a>(jobId) -> unknown</code>
 - <code title="get /job/{job_id}">client.job.<a href="./src/resources/job.ts">get</a>(jobId) -> JobGetResponse</code>
 - <code title="get /jobs">client.job.<a href="./src/resources/job.ts">getAll</a>({ ...params }) -> JobGetAllResponse</code>

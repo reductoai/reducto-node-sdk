@@ -8,10 +8,8 @@ import * as Uploads from './uploads';
 import * as API from './resources/index';
 import * as Shared from './resources/shared';
 import * as TopLevelAPI from './resources/top-level';
-import { UploadParams } from './resources/top-level';
-import { Cancel, CancelCancelJobResponse } from './resources/cancel';
+import { APIVersionResponse, UploadParams } from './resources/top-level';
 import { Classify, ClassifyResponse, ClassifyRunParams, PageRange } from './resources/classify';
-import { ConfigureWebhook, ConfigureWebhookCreateResponse } from './resources/configure-webhook';
 import {
   BoundingBox,
   Edit,
@@ -35,7 +33,14 @@ import {
   ParseOptions,
   V3Extract,
 } from './resources/extract';
-import { ExtractResponse, Job, JobGetAllParams, JobGetAllResponse, JobGetResponse } from './resources/job';
+import {
+  ExtractResponse,
+  Job,
+  JobCancelResponse,
+  JobGetAllParams,
+  JobGetAllResponse,
+  JobGetResponse,
+} from './resources/job';
 import {
   AsyncConfigV3,
   AsyncParseConfig,
@@ -70,7 +75,7 @@ import {
   SplitRunParams,
   SplitTableOptions,
 } from './resources/split';
-import { Version, VersionRetrieveResponse } from './resources/version';
+import { Webhook, WebhookRunResponse } from './resources/webhook';
 
 const environments = {
   production: 'https://platform.reducto.ai',
@@ -219,9 +224,7 @@ export class Reducto extends Core.APIClient {
   edit: API.Edit = new API.Edit(this);
   pipeline: API.Pipeline = new API.Pipeline(this);
   classify: API.Classify = new API.Classify(this);
-  cancel: API.Cancel = new API.Cancel(this);
-  configureWebhook: API.ConfigureWebhook = new API.ConfigureWebhook(this);
-  version: API.Version = new API.Version(this);
+  webhook: API.Webhook = new API.Webhook(this);
   job: API.Job = new API.Job(this);
 
   /**
@@ -229,6 +232,13 @@ export class Reducto extends Core.APIClient {
    */
   #baseURLOverridden(): boolean {
     return this.baseURL !== environments[this._options.environment || 'production'];
+  }
+
+  /**
+   * Get Version
+   */
+  apiVersion(options?: Core.RequestOptions): Core.APIPromise<string> {
+    return this.get('/version', options);
   }
 
   /**
@@ -292,15 +302,13 @@ Reducto.Split = Split;
 Reducto.Edit = Edit;
 Reducto.Pipeline = Pipeline;
 Reducto.Classify = Classify;
-Reducto.Cancel = Cancel;
-Reducto.ConfigureWebhook = ConfigureWebhook;
-Reducto.Version = Version;
+Reducto.Webhook = Webhook;
 Reducto.Job = Job;
 
 export declare namespace Reducto {
   export type RequestOptions = Core.RequestOptions;
 
-  export { type UploadParams as UploadParams };
+  export { type APIVersionResponse as APIVersionResponse, type UploadParams as UploadParams };
 
   export {
     Parse as Parse,
@@ -371,18 +379,12 @@ export declare namespace Reducto {
     type ClassifyRunParams as ClassifyRunParams,
   };
 
-  export { Cancel as Cancel, type CancelCancelJobResponse as CancelCancelJobResponse };
-
-  export {
-    ConfigureWebhook as ConfigureWebhook,
-    type ConfigureWebhookCreateResponse as ConfigureWebhookCreateResponse,
-  };
-
-  export { Version as Version, type VersionRetrieveResponse as VersionRetrieveResponse };
+  export { Webhook as Webhook, type WebhookRunResponse as WebhookRunResponse };
 
   export {
     Job as Job,
     type ExtractResponse as ExtractResponse,
+    type JobCancelResponse as JobCancelResponse,
     type JobGetResponse as JobGetResponse,
     type JobGetAllResponse as JobGetAllResponse,
     type JobGetAllParams as JobGetAllParams,
