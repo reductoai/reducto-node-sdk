@@ -2,7 +2,6 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
-import * as SplitAPI from './split';
 import * as ExtractAPI from './extract';
 import * as ParseAPI from './parse';
 import * as Shared from './shared';
@@ -11,14 +10,14 @@ export class Split extends APIResource {
   /**
    * Split
    */
-  run(body: SplitRunParams, options?: Core.RequestOptions): Core.APIPromise<SplitResponse> {
+  run(body: SplitRunParams, options?: Core.RequestOptions): Core.APIPromise<Shared.SplitResponse> {
     return this._client.post('/split', { body, ...options });
   }
 
   /**
    * Split Async
    */
-  runJob(body: SplitRunJobParams, options?: Core.RequestOptions): Core.APIPromise<SplitRunJobResponse> {
+  runJob(body: SplitRunJobParams, options?: Core.RequestOptions): Core.APIPromise<Shared.AsyncSplitResponse> {
     return this._client.post('/split_async', { body, ...options });
   }
 }
@@ -47,67 +46,6 @@ export interface SplitCategory {
   partition_key?: string | null;
 }
 
-export interface SplitResponse {
-  /**
-   * The split result.
-   */
-  result: SplitResponse.SplitResult | SplitResponse.DeepSplitResult;
-
-  usage: ParseUsage;
-}
-
-export namespace SplitResponse {
-  export interface SplitResult {
-    section_mapping: { [key: string]: Array<number> } | null;
-
-    splits: Array<SplitResult.Split>;
-  }
-
-  export namespace SplitResult {
-    export interface Split {
-      name: string;
-
-      pages: Array<number>;
-
-      conf?: 'high' | 'low';
-
-      partitions?: Array<Split.Partition> | null;
-    }
-
-    export namespace Split {
-      export interface Partition {
-        name: string;
-
-        pages: Array<number>;
-
-        conf?: 'high' | 'low';
-      }
-    }
-  }
-
-  export interface DeepSplitResult {
-    splits: Array<DeepSplitResult.Split>;
-  }
-
-  export namespace DeepSplitResult {
-    export interface Split {
-      name: string;
-
-      pages: Array<SplitAPI.DeepSplitPageEvidence>;
-
-      partitions?: Array<Split.Partition> | null;
-    }
-
-    export namespace Split {
-      export interface Partition {
-        name: string;
-
-        pages: Array<SplitAPI.DeepSplitPageEvidence>;
-      }
-    }
-  }
-}
-
 export interface SplitTableOptions {
   /**
    * If tables should be truncated to the first few rows or if all content should be
@@ -116,10 +54,6 @@ export interface SplitTableOptions {
    * table. Defaults to truncate
    */
   table_cutoff?: 'truncate' | 'preserve';
-}
-
-export interface SplitRunJobResponse {
-  job_id: string;
 }
 
 export interface SplitRunParams {
@@ -202,9 +136,7 @@ export declare namespace Split {
     type DeepSplitPageEvidence as DeepSplitPageEvidence,
     type ParseUsage as ParseUsage,
     type SplitCategory as SplitCategory,
-    type SplitResponse as SplitResponse,
     type SplitTableOptions as SplitTableOptions,
-    type SplitRunJobResponse as SplitRunJobResponse,
     type SplitRunParams as SplitRunParams,
     type SplitRunJobParams as SplitRunJobParams,
   };

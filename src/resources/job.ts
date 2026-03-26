@@ -3,13 +3,8 @@
 import { APIResource } from '../resource';
 import { isRequestOptions } from '../core';
 import * as Core from '../core';
-import * as JobAPI from './job';
-import * as ClassifyAPI from './classify';
-import * as EditAPI from './edit';
 import * as ExtractAPI from './extract';
-import * as ParseAPI from './parse';
-import * as PipelineAPI from './pipeline';
-import * as SplitAPI from './split';
+import * as Shared from './shared';
 
 export class Job extends APIResource {
   /**
@@ -42,28 +37,6 @@ export class Job extends APIResource {
   }
 }
 
-export interface ExtractResponse {
-  /**
-   * The citations corresponding to the extracted response.
-   */
-  citations: Array<unknown> | null;
-
-  /**
-   * The extracted response in your provided schema. This is a list of dictionaries.
-   * If disable_chunking is True (default), then it will be a list of length one.
-   */
-  result: Array<unknown>;
-
-  usage: ExtractAPI.ExtractUsage;
-
-  job_id?: string | null;
-
-  /**
-   * The link to the studio pipeline for the document.
-   */
-  studio_link?: string | null;
-}
-
 export type JobCancelResponse = unknown;
 
 export type JobGetResponse = JobGetResponse.AsyncJobResponse | JobGetResponse.EnhancedAsyncJobResponse;
@@ -80,13 +53,13 @@ export namespace JobGetResponse {
      * Response from classify job - returned when polling /job/{job_id}
      */
     result?:
-      | ParseAPI.ParseResponse
-      | JobAPI.ExtractResponse
-      | SplitAPI.SplitResponse
-      | EditAPI.EditResponse
-      | PipelineAPI.PipelineResponse
+      | Shared.ParseResponse
+      | Shared.ExtractResponse
+      | Shared.SplitResponse
+      | Shared.EditResponse
+      | Shared.PipelineResponse
       | ExtractAPI.V3Extract
-      | ClassifyAPI.ClassifyResponse
+      | Shared.ClassifyResponse
       | null;
   }
 
@@ -111,13 +84,13 @@ export namespace JobGetResponse {
      * Response from classify job - returned when polling /job/{job_id}
      */
     result?:
-      | ParseAPI.ParseResponse
-      | JobAPI.ExtractResponse
-      | SplitAPI.SplitResponse
-      | EditAPI.EditResponse
-      | PipelineAPI.PipelineResponse
+      | Shared.ParseResponse
+      | Shared.ExtractResponse
+      | Shared.SplitResponse
+      | Shared.EditResponse
+      | Shared.PipelineResponse
       | ExtractAPI.V3Extract
-      | ClassifyAPI.ClassifyResponse
+      | Shared.ClassifyResponse
       | null;
 
     source?: unknown;
@@ -185,7 +158,6 @@ export interface JobGetAllParams {
 
 export declare namespace Job {
   export {
-    type ExtractResponse as ExtractResponse,
     type JobCancelResponse as JobCancelResponse,
     type JobGetResponse as JobGetResponse,
     type JobGetAllResponse as JobGetAllResponse,
