@@ -2,61 +2,25 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
-import * as EditAPI from './edit';
-import * as ExtractAPI from './extract';
-import * as JobAPI from './job';
 import * as ParseAPI from './parse';
 import * as Shared from './shared';
-import * as SplitAPI from './split';
 
 export class Pipeline extends APIResource {
   /**
    * Pipeline
    */
-  run(body: PipelineRunParams, options?: Core.RequestOptions): Core.APIPromise<PipelineResponse> {
+  run(body: PipelineRunParams, options?: Core.RequestOptions): Core.APIPromise<Shared.PipelineResponse> {
     return this._client.post('/pipeline', { body, ...options });
   }
 
   /**
    * Pipeline Async
    */
-  runJob(body: PipelineRunJobParams, options?: Core.RequestOptions): Core.APIPromise<PipelineRunJobResponse> {
+  runJob(
+    body: PipelineRunJobParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<Shared.AsyncPipelineResponse> {
     return this._client.post('/pipeline_async', { body, ...options });
-  }
-}
-
-export interface PipelineResponse {
-  job_id: string;
-
-  result: PipelineResponse.Result;
-
-  usage: SplitAPI.ParseUsage;
-}
-
-export namespace PipelineResponse {
-  export interface Result {
-    extract: Array<Result.ExtractVariant0> | JobAPI.ExtractResponse | ExtractAPI.V3Extract | null;
-
-    parse: ParseAPI.ParseResponse | Array<ParseAPI.ParseResponse> | null;
-
-    split: SplitAPI.SplitResponse | null;
-
-    edit?: EditAPI.EditResponse | null;
-  }
-
-  export namespace Result {
-    /**
-     * This is the response format for Extract -> Split Pipelines
-     */
-    export interface ExtractVariant0 {
-      page_range: Array<number>;
-
-      result: JobAPI.ExtractResponse | ExtractAPI.V3Extract;
-
-      split_name: string;
-
-      partition?: string | null;
-    }
   }
 }
 
@@ -68,10 +32,6 @@ export interface PipelineSettings {
    * Password to decrypt password-protected documents.
    */
   document_password?: string | null;
-}
-
-export interface PipelineRunJobResponse {
-  job_id: string;
 }
 
 export interface PipelineRunParams {
@@ -129,9 +89,7 @@ export interface PipelineRunJobParams {
 
 export declare namespace Pipeline {
   export {
-    type PipelineResponse as PipelineResponse,
     type PipelineSettings as PipelineSettings,
-    type PipelineRunJobResponse as PipelineRunJobResponse,
     type PipelineRunParams as PipelineRunParams,
     type PipelineRunJobParams as PipelineRunJobParams,
   };

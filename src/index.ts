@@ -9,20 +9,17 @@ import * as API from './resources/index';
 import * as Shared from './resources/shared';
 import * as TopLevelAPI from './resources/top-level';
 import { APIVersionResponse, UploadParams } from './resources/top-level';
-import { Classify, ClassifyResponse, ClassifyRunParams, PageRange } from './resources/classify';
+import { Classify, ClassifyRunParams, PageRange } from './resources/classify';
 import {
   BoundingBox,
   Edit,
   EditOptions,
-  EditResponse,
   EditRunJobParams,
-  EditRunJobResponse,
   EditRunParams,
   EditWidget,
 } from './resources/edit';
 import {
   AsyncExtractConfig,
-  AsyncExtractResponse,
   Extract,
   ExtractRunJobParams,
   ExtractRunParams,
@@ -33,22 +30,13 @@ import {
   ParseOptions,
   V3Extract,
 } from './resources/extract';
-import {
-  ExtractResponse,
-  Job,
-  JobCancelResponse,
-  JobGetAllParams,
-  JobGetAllResponse,
-  JobGetResponse,
-} from './resources/job';
+import { Job, JobCancelResponse, JobGetAllParams, JobGetAllResponse, JobGetResponse } from './resources/job';
 import {
   AsyncConfigV3,
   AsyncParseConfig,
-  AsyncParseResponse,
   Enhance,
   Formatting,
   Parse,
-  ParseResponse,
   ParseRunJobParams,
   ParseRunParams,
   ParseRunResponse,
@@ -56,22 +44,13 @@ import {
   Settings,
   Spreadsheet,
 } from './resources/parse';
-import {
-  Pipeline,
-  PipelineResponse,
-  PipelineRunJobParams,
-  PipelineRunJobResponse,
-  PipelineRunParams,
-  PipelineSettings,
-} from './resources/pipeline';
+import { Pipeline, PipelineRunJobParams, PipelineRunParams, PipelineSettings } from './resources/pipeline';
 import {
   DeepSplitPageEvidence,
   ParseUsage,
   Split,
   SplitCategory,
-  SplitResponse,
   SplitRunJobParams,
-  SplitRunJobResponse,
   SplitRunParams,
   SplitTableOptions,
 } from './resources/split';
@@ -311,10 +290,8 @@ export declare namespace Reducto {
     Parse as Parse,
     type AsyncConfigV3 as AsyncConfigV3,
     type AsyncParseConfig as AsyncParseConfig,
-    type AsyncParseResponse as AsyncParseResponse,
     type Enhance as Enhance,
     type Formatting as Formatting,
-    type ParseResponse as ParseResponse,
     type Retrieval as Retrieval,
     type Settings as Settings,
     type Spreadsheet as Spreadsheet,
@@ -326,7 +303,6 @@ export declare namespace Reducto {
   export {
     Extract as Extract,
     type AsyncExtractConfig as AsyncExtractConfig,
-    type AsyncExtractResponse as AsyncExtractResponse,
     type ExtractSettings as ExtractSettings,
     type ExtractUsage as ExtractUsage,
     type Instructions as Instructions,
@@ -342,9 +318,7 @@ export declare namespace Reducto {
     type DeepSplitPageEvidence as DeepSplitPageEvidence,
     type ParseUsage as ParseUsage,
     type SplitCategory as SplitCategory,
-    type SplitResponse as SplitResponse,
     type SplitTableOptions as SplitTableOptions,
-    type SplitRunJobResponse as SplitRunJobResponse,
     type SplitRunParams as SplitRunParams,
     type SplitRunJobParams as SplitRunJobParams,
   };
@@ -353,41 +327,60 @@ export declare namespace Reducto {
     Edit as Edit,
     type BoundingBox as BoundingBox,
     type EditOptions as EditOptions,
-    type EditResponse as EditResponse,
     type EditWidget as EditWidget,
-    type EditRunJobResponse as EditRunJobResponse,
     type EditRunParams as EditRunParams,
     type EditRunJobParams as EditRunJobParams,
   };
 
   export {
     Pipeline as Pipeline,
-    type PipelineResponse as PipelineResponse,
     type PipelineSettings as PipelineSettings,
-    type PipelineRunJobResponse as PipelineRunJobResponse,
     type PipelineRunParams as PipelineRunParams,
     type PipelineRunJobParams as PipelineRunJobParams,
   };
 
-  export {
-    Classify as Classify,
-    type ClassifyResponse as ClassifyResponse,
-    type PageRange as PageRange,
-    type ClassifyRunParams as ClassifyRunParams,
-  };
+  export { Classify as Classify, type PageRange as PageRange, type ClassifyRunParams as ClassifyRunParams };
 
   export { Webhook as Webhook, type WebhookRunResponse as WebhookRunResponse };
 
   export {
     Job as Job,
-    type ExtractResponse as ExtractResponse,
     type JobCancelResponse as JobCancelResponse,
     type JobGetResponse as JobGetResponse,
     type JobGetAllResponse as JobGetAllResponse,
     type JobGetAllParams as JobGetAllParams,
   };
 
+  export type AdvancedCitationsConfig = API.AdvancedCitationsConfig;
+  export type AdvancedProcessingOptions = API.AdvancedProcessingOptions;
+  export type ArrayExtractConfig = API.ArrayExtractConfig;
+  export type AsyncEditResponse = API.AsyncEditResponse;
+  export type AsyncExtractResponse = API.AsyncExtractResponse;
+  export type AsyncParseResponse = API.AsyncParseResponse;
+  export type AsyncPipelineResponse = API.AsyncPipelineResponse;
+  export type AsyncSplitResponse = API.AsyncSplitResponse;
+  export type BaseProcessingOptions = API.BaseProcessingOptions;
+  export type Chunking = API.Chunking;
+  export type ChunkingConfig = API.ChunkingConfig;
+  export type ClassifyResponse = API.ClassifyResponse;
+  export type DirectWebhookConfig = API.DirectWebhookConfig;
+  export type EditResponse = API.EditResponse;
+  export type EnrichConfig = API.EnrichConfig;
+  export type ExperimentalProcessingOptions = API.ExperimentalProcessingOptions;
+  export type ExtractResponse = API.ExtractResponse;
+  export type FigureAgentic = API.FigureAgentic;
+  export type FigureSummaryConfig = API.FigureSummaryConfig;
+  export type LargeTableChunkingConfig = API.LargeTableChunkingConfig;
+  export type ParseResponse = API.ParseResponse;
+  export type PipelineResponse = API.PipelineResponse;
+  export type SplitLargeTables = API.SplitLargeTables;
+  export type SplitResponse = API.SplitResponse;
+  export type SvixWebhookConfig = API.SvixWebhookConfig;
+  export type TableAgentic = API.TableAgentic;
+  export type TableSummaryConfig = API.TableSummaryConfig;
+  export type TextAgentic = API.TextAgentic;
   export type Upload = API.Upload;
+  export type WebhookConfigNew = API.WebhookConfigNew;
 }
 
 export { toFile, fileFromPath } from './uploads';

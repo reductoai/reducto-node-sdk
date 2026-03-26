@@ -13,7 +13,36 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/shared.ts">AdvancedCitationsConfig</a></code>
+- <code><a href="./src/resources/shared.ts">AdvancedProcessingOptions</a></code>
+- <code><a href="./src/resources/shared.ts">ArrayExtractConfig</a></code>
+- <code><a href="./src/resources/shared.ts">AsyncEditResponse</a></code>
+- <code><a href="./src/resources/shared.ts">AsyncExtractResponse</a></code>
+- <code><a href="./src/resources/shared.ts">AsyncParseResponse</a></code>
+- <code><a href="./src/resources/shared.ts">AsyncPipelineResponse</a></code>
+- <code><a href="./src/resources/shared.ts">AsyncSplitResponse</a></code>
+- <code><a href="./src/resources/shared.ts">BaseProcessingOptions</a></code>
+- <code><a href="./src/resources/shared.ts">Chunking</a></code>
+- <code><a href="./src/resources/shared.ts">ChunkingConfig</a></code>
+- <code><a href="./src/resources/shared.ts">ClassifyResponse</a></code>
+- <code><a href="./src/resources/shared.ts">DirectWebhookConfig</a></code>
+- <code><a href="./src/resources/shared.ts">EditResponse</a></code>
+- <code><a href="./src/resources/shared.ts">EnrichConfig</a></code>
+- <code><a href="./src/resources/shared.ts">ExperimentalProcessingOptions</a></code>
+- <code><a href="./src/resources/shared.ts">ExtractResponse</a></code>
+- <code><a href="./src/resources/shared.ts">FigureAgentic</a></code>
+- <code><a href="./src/resources/shared.ts">FigureSummaryConfig</a></code>
+- <code><a href="./src/resources/shared.ts">LargeTableChunkingConfig</a></code>
+- <code><a href="./src/resources/shared.ts">ParseResponse</a></code>
+- <code><a href="./src/resources/shared.ts">PipelineResponse</a></code>
+- <code><a href="./src/resources/shared.ts">SplitLargeTables</a></code>
+- <code><a href="./src/resources/shared.ts">SplitResponse</a></code>
+- <code><a href="./src/resources/shared.ts">SvixWebhookConfig</a></code>
+- <code><a href="./src/resources/shared.ts">TableAgentic</a></code>
+- <code><a href="./src/resources/shared.ts">TableSummaryConfig</a></code>
+- <code><a href="./src/resources/shared.ts">TextAgentic</a></code>
 - <code><a href="./src/resources/shared.ts">Upload</a></code>
+- <code><a href="./src/resources/shared.ts">WebhookConfigNew</a></code>
 
 # Parse
 
@@ -21,10 +50,8 @@ Types:
 
 - <code><a href="./src/resources/parse.ts">AsyncConfigV3</a></code>
 - <code><a href="./src/resources/parse.ts">AsyncParseConfig</a></code>
-- <code><a href="./src/resources/parse.ts">AsyncParseResponse</a></code>
 - <code><a href="./src/resources/parse.ts">Enhance</a></code>
 - <code><a href="./src/resources/parse.ts">Formatting</a></code>
-- <code><a href="./src/resources/parse.ts">ParseResponse</a></code>
 - <code><a href="./src/resources/parse.ts">Retrieval</a></code>
 - <code><a href="./src/resources/parse.ts">Settings</a></code>
 - <code><a href="./src/resources/parse.ts">Spreadsheet</a></code>
@@ -40,7 +67,6 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/extract.ts">AsyncExtractConfig</a></code>
-- <code><a href="./src/resources/extract.ts">AsyncExtractResponse</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractSettings</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractUsage</a></code>
 - <code><a href="./src/resources/extract.ts">Instructions</a></code>
@@ -60,14 +86,12 @@ Types:
 - <code><a href="./src/resources/split.ts">DeepSplitPageEvidence</a></code>
 - <code><a href="./src/resources/split.ts">ParseUsage</a></code>
 - <code><a href="./src/resources/split.ts">SplitCategory</a></code>
-- <code><a href="./src/resources/split.ts">SplitResponse</a></code>
 - <code><a href="./src/resources/split.ts">SplitTableOptions</a></code>
-- <code><a href="./src/resources/split.ts">SplitRunJobResponse</a></code>
 
 Methods:
 
 - <code title="post /split">client.split.<a href="./src/resources/split.ts">run</a>({ ...params }) -> SplitResponse</code>
-- <code title="post /split_async">client.split.<a href="./src/resources/split.ts">runJob</a>({ ...params }) -> SplitRunJobResponse</code>
+- <code title="post /split_async">client.split.<a href="./src/resources/split.ts">runJob</a>({ ...params }) -> AsyncSplitResponse</code>
 
 # Edit
 
@@ -75,33 +99,28 @@ Types:
 
 - <code><a href="./src/resources/edit.ts">BoundingBox</a></code>
 - <code><a href="./src/resources/edit.ts">EditOptions</a></code>
-- <code><a href="./src/resources/edit.ts">EditResponse</a></code>
 - <code><a href="./src/resources/edit.ts">EditWidget</a></code>
-- <code><a href="./src/resources/edit.ts">EditRunJobResponse</a></code>
 
 Methods:
 
 - <code title="post /edit">client.edit.<a href="./src/resources/edit.ts">run</a>({ ...params }) -> EditResponse</code>
-- <code title="post /edit_async">client.edit.<a href="./src/resources/edit.ts">runJob</a>({ ...params }) -> EditRunJobResponse</code>
+- <code title="post /edit_async">client.edit.<a href="./src/resources/edit.ts">runJob</a>({ ...params }) -> AsyncEditResponse</code>
 
 # Pipeline
 
 Types:
 
-- <code><a href="./src/resources/pipeline.ts">PipelineResponse</a></code>
 - <code><a href="./src/resources/pipeline.ts">PipelineSettings</a></code>
-- <code><a href="./src/resources/pipeline.ts">PipelineRunJobResponse</a></code>
 
 Methods:
 
 - <code title="post /pipeline">client.pipeline.<a href="./src/resources/pipeline.ts">run</a>({ ...params }) -> PipelineResponse</code>
-- <code title="post /pipeline_async">client.pipeline.<a href="./src/resources/pipeline.ts">runJob</a>({ ...params }) -> PipelineRunJobResponse</code>
+- <code title="post /pipeline_async">client.pipeline.<a href="./src/resources/pipeline.ts">runJob</a>({ ...params }) -> AsyncPipelineResponse</code>
 
 # Classify
 
 Types:
 
-- <code><a href="./src/resources/classify.ts">ClassifyResponse</a></code>
 - <code><a href="./src/resources/classify.ts">PageRange</a></code>
 
 Methods:
@@ -122,7 +141,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/job.ts">ExtractResponse</a></code>
 - <code><a href="./src/resources/job.ts">JobCancelResponse</a></code>
 - <code><a href="./src/resources/job.ts">JobGetResponse</a></code>
 - <code><a href="./src/resources/job.ts">JobGetAllResponse</a></code>

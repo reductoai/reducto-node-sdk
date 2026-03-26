@@ -3,20 +3,19 @@
 import { APIResource } from '../resource';
 import * as Core from '../core';
 import * as Shared from './shared';
-import * as SplitAPI from './split';
 
 export class Edit extends APIResource {
   /**
    * Edit
    */
-  run(body: EditRunParams, options?: Core.RequestOptions): Core.APIPromise<EditResponse> {
+  run(body: EditRunParams, options?: Core.RequestOptions): Core.APIPromise<Shared.EditResponse> {
     return this._client.post('/edit', { body, ...options });
   }
 
   /**
    * Edit Async
    */
-  runJob(body: EditRunJobParams, options?: Core.RequestOptions): Core.APIPromise<EditRunJobResponse> {
+  runJob(body: EditRunJobParams, options?: Core.RequestOptions): Core.APIPromise<Shared.AsyncEditResponse> {
     return this._client.post('/edit_async', { body, ...options });
   }
 }
@@ -72,25 +71,6 @@ export interface EditOptions {
   llm_provider_preference?: 'openai' | 'anthropic' | 'google' | null;
 }
 
-export interface EditResponse {
-  /**
-   * Presigned URL to download the edited document.
-   */
-  document_url: string;
-
-  /**
-   * Form schema for PDF forms. List of widgets with their types, descriptions, and
-   * bounding boxes.
-   */
-  form_schema?: Array<EditWidget> | null;
-
-  /**
-   * Usage information for the edit operation, including number of pages and credits
-   * charged.
-   */
-  usage?: SplitAPI.ParseUsage | null;
-}
-
 export interface EditWidget {
   /**
    * Bounding box coordinates of the widget
@@ -125,10 +105,6 @@ export interface EditWidget {
    * intelligently determine the field value.
    */
   value?: string | null;
-}
-
-export interface EditRunJobResponse {
-  job_id: string;
 }
 
 export interface EditRunParams {
@@ -194,42 +170,14 @@ export interface EditRunJobParams {
    */
   priority?: boolean;
 
-  webhook?: EditRunJobParams.Webhook;
-}
-
-export namespace EditRunJobParams {
-  export interface Webhook {
-    /**
-     * A list of Svix channels the message will be delivered down, omit to send to all
-     * channels.
-     */
-    channels?: Array<string>;
-
-    /**
-     * JSON metadata included in webhook request body
-     */
-    metadata?: unknown;
-
-    /**
-     * The mode to use for webhook delivery. Defaults to 'disabled'. We recommend using
-     * 'svix' for production environments.
-     */
-    mode?: 'disabled' | 'svix' | 'direct';
-
-    /**
-     * The URL to send the webhook to (if using direct webhoook).
-     */
-    url?: string;
-  }
+  webhook?: Shared.WebhookConfigNew;
 }
 
 export declare namespace Edit {
   export {
     type BoundingBox as BoundingBox,
     type EditOptions as EditOptions,
-    type EditResponse as EditResponse,
     type EditWidget as EditWidget,
-    type EditRunJobResponse as EditRunJobResponse,
     type EditRunParams as EditRunParams,
     type EditRunJobParams as EditRunJobParams,
   };

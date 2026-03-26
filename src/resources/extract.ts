@@ -16,7 +16,10 @@ export class Extract extends APIResource {
   /**
    * Extract Async
    */
-  runJob(body: ExtractRunJobParams, options?: Core.RequestOptions): Core.APIPromise<AsyncExtractResponse> {
+  runJob(
+    body: ExtractRunJobParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<Shared.AsyncExtractResponse> {
     return this._client.post('/extract_async', { body, ...options });
   }
 }
@@ -54,10 +57,6 @@ export interface AsyncExtractConfig {
    * The settings to use for the extraction.
    */
   settings?: ExtractSettings;
-}
-
-export interface AsyncExtractResponse {
-  job_id: string;
 }
 
 export interface ExtractSettings {
@@ -158,7 +157,7 @@ export interface V3Extract {
   studio_link?: string | null;
 }
 
-export type ExtractRunResponse = V3Extract | AsyncExtractResponse;
+export type ExtractRunResponse = V3Extract | Shared.AsyncExtractResponse;
 
 export type ExtractRunParams = ExtractRunParams.SyncExtractConfig | ExtractRunParams.AsyncExtractConfig;
 
@@ -267,7 +266,6 @@ export interface ExtractRunJobParams {
 export declare namespace Extract {
   export {
     type AsyncExtractConfig as AsyncExtractConfig,
-    type AsyncExtractResponse as AsyncExtractResponse,
     type ExtractSettings as ExtractSettings,
     type ExtractUsage as ExtractUsage,
     type Instructions as Instructions,
