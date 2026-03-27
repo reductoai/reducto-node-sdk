@@ -51,10 +51,7 @@ describe('top level methods', () => {
   test.skip('upload: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.upload(
-        { query_extension: 'extension', body_extension: 'extension' },
-        { path: '/_stainless_unknown_path' },
-      ),
+      client.upload({ extension: 'extension' }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Reducto.NotFoundError);
   });
 });
