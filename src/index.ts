@@ -232,10 +232,10 @@ export class Reducto extends Core.APIClient {
     if (isRequestOptions(params)) {
       return this.upload({}, params);
     }
-    const { query_extension, ...body } = params;
+    const { extension, ...body } = params;
     return this.post(
       '/upload',
-      Core.maybeMultipartFormRequestOptions({ query: { extension: query_extension }, body, ...options }),
+      Core.maybeMultipartFormRequestOptions({ query: { extension }, body, ...options }),
     );
   }
 
