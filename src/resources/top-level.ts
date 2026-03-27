@@ -3,7 +3,15 @@
 export type APIVersionResponse = string;
 
 export interface UploadParams {
+  /**
+   * Query param
+   */
   extension?: string | null;
+
+  /**
+   * Body param
+   */
+  file?: string | null;
 }
 
 export declare namespace TopLevel {
