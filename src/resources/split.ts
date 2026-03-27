@@ -2,16 +2,23 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
-import * as SplitAPI from './split';
-import * as ExtractAsyncAPI from './extract-async';
-import * as UploadAPI from './upload';
+import * as ExtractAPI from './extract';
+import * as ParseAPI from './parse';
+import * as Shared from './shared';
 
 export class Split extends APIResource {
   /**
    * Split
    */
-  create(body: SplitCreateParams, options?: Core.RequestOptions): Core.APIPromise<SplitResponse> {
+  run(body: SplitRunParams, options?: Core.RequestOptions): Core.APIPromise<Shared.SplitResponse> {
     return this._client.post('/split', { body, ...options });
+  }
+
+  /**
+   * Split Async
+   */
+  runJob(body: SplitRunJobParams, options?: Core.RequestOptions): Core.APIPromise<Shared.AsyncSplitResponse> {
+    return this._client.post('/split_async', { body, ...options });
   }
 }
 
@@ -39,67 +46,6 @@ export interface SplitCategory {
   partition_key?: string | null;
 }
 
-export interface SplitResponse {
-  /**
-   * The split result.
-   */
-  result: SplitResponse.SplitResult | SplitResponse.DeepSplitResult;
-
-  usage: ParseUsage;
-}
-
-export namespace SplitResponse {
-  export interface SplitResult {
-    section_mapping: { [key: string]: Array<number> } | null;
-
-    splits: Array<SplitResult.Split>;
-  }
-
-  export namespace SplitResult {
-    export interface Split {
-      name: string;
-
-      pages: Array<number>;
-
-      conf?: 'high' | 'low';
-
-      partitions?: Array<Split.Partition> | null;
-    }
-
-    export namespace Split {
-      export interface Partition {
-        name: string;
-
-        pages: Array<number>;
-
-        conf?: 'high' | 'low';
-      }
-    }
-  }
-
-  export interface DeepSplitResult {
-    splits: Array<DeepSplitResult.Split>;
-  }
-
-  export namespace DeepSplitResult {
-    export interface Split {
-      name: string;
-
-      pages: Array<SplitAPI.DeepSplitPageEvidence>;
-
-      partitions?: Array<Split.Partition> | null;
-    }
-
-    export namespace Split {
-      export interface Partition {
-        name: string;
-
-        pages: Array<SplitAPI.DeepSplitPageEvidence>;
-      }
-    }
-  }
-}
-
 export interface SplitTableOptions {
   /**
    * If tables should be truncated to the first few rows or if all content should be
@@ -110,7 +56,7 @@ export interface SplitTableOptions {
   table_cutoff?: 'truncate' | 'preserve';
 }
 
-export interface SplitCreateParams {
+export interface SplitRunParams {
   /**
    * For parse/split/extract pipelines, the URL of the document to be processed. You
    * can provide one of the following: 1. A publicly available URL 2. A presigned S3
@@ -121,7 +67,7 @@ export interface SplitCreateParams {
    *
    *             For edit pipelines, this should be a string containing the edit instructions
    */
-  input: string | Array<string> | UploadAPI.UploadResponse;
+  input: string | Array<string> | Shared.Upload;
 
   /**
    * The configuration options for processing the document.
@@ -132,7 +78,47 @@ export interface SplitCreateParams {
    * The configuration options for parsing the document. If you are passing in a
    * jobid:// URL for the file, then this configuration will be ignored.
    */
-  parsing?: ExtractAsyncAPI.ParseOptions;
+  parsing?: ExtractAPI.ParseOptions;
+
+  /**
+   * The settings for split processing.
+   */
+  settings?: SplitTableOptions;
+
+  /**
+   * The prompt that describes rules for splitting the document.
+   */
+  split_rules?: string;
+}
+
+export interface SplitRunJobParams {
+  /**
+   * For parse/split/extract pipelines, the URL of the document to be processed. You
+   * can provide one of the following: 1. A publicly available URL 2. A presigned S3
+   * URL 3. A reducto:// prefixed URL obtained from the /upload endpoint after
+   * directly uploading a document 4. A jobid:// prefixed URL obtained from a
+   * previous /parse invocation 5. A list of URLs (for multi-document pipelines, V3
+   * API only)
+   *
+   *             For edit pipelines, this should be a string containing the edit instructions
+   */
+  input: string | Array<string> | Shared.Upload;
+
+  /**
+   * The configuration options for processing the document.
+   */
+  split_description: Array<SplitCategory>;
+
+  /**
+   * The configuration options for asynchronous processing (default synchronous).
+   */
+  async?: ParseAPI.AsyncConfigV3;
+
+  /**
+   * The configuration options for parsing the document. If you are passing in a
+   * jobid:// URL for the file, then this configuration will be ignored.
+   */
+  parsing?: ExtractAPI.ParseOptions;
 
   /**
    * The settings for split processing.
@@ -150,8 +136,8 @@ export declare namespace Split {
     type DeepSplitPageEvidence as DeepSplitPageEvidence,
     type ParseUsage as ParseUsage,
     type SplitCategory as SplitCategory,
-    type SplitResponse as SplitResponse,
     type SplitTableOptions as SplitTableOptions,
-    type SplitCreateParams as SplitCreateParams,
+    type SplitRunParams as SplitRunParams,
+    type SplitRunJobParams as SplitRunJobParams,
   };
 }

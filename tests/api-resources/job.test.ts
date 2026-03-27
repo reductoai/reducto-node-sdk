@@ -10,8 +10,8 @@ const client = new Reducto({
 
 describe('resource job', () => {
   // Mock server tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.job.retrieve('job_id');
+  test.skip('cancel', async () => {
+    const responsePromise = client.job.cancel('job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,16 +22,16 @@ describe('resource job', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: request options instead of params are passed correctly', async () => {
+  test.skip('cancel: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.job.retrieve('job_id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(client.job.cancel('job_id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
       Reducto.NotFoundError,
     );
   });
 
   // Mock server tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.job.list();
+  test.skip('get', async () => {
+    const responsePromise = client.job.get('job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -42,18 +42,38 @@ describe('resource job', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: request options instead of params are passed correctly', async () => {
+  test.skip('get: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.job.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(client.job.get('job_id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
       Reducto.NotFoundError,
     );
   });
 
   // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
+  test.skip('getAll', async () => {
+    const responsePromise = client.job.getAll();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('getAll: request options instead of params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(client.job.getAll({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      Reducto.NotFoundError,
+    );
+  });
+
+  // Mock server tests are disabled
+  test.skip('getAll: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.job.list(
+      client.job.getAll(
         {
           cursor: 'cursor',
           exclude_configs: true,

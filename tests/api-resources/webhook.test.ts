@@ -8,10 +8,10 @@ const client = new Reducto({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource classify', () => {
+describe('resource webhook', () => {
   // Mock server tests are disabled
-  test.skip('run: only required params', async () => {
-    const responsePromise = client.classify.run({ input: 'string' });
+  test.skip('run', async () => {
+    const responsePromise = client.webhook.run();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,13 +22,10 @@ describe('resource classify', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('run: required and optional params', async () => {
-    const response = await client.classify.run({
-      input: 'string',
-      classification_schema: [{ category: 'category', criteria: ['string'] }],
-      document_metadata: 'document_metadata',
-      page_range: { end: 0, start: 0 },
-      persist_results: true,
-    });
+  test.skip('run: request options instead of params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(client.webhook.run({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      Reducto.NotFoundError,
+    );
   });
 });

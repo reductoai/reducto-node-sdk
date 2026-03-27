@@ -2,231 +2,242 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
-import * as EditAPI from './edit';
-import * as ParseAsyncAPI from './parse-async';
-import * as SplitAPI from './split';
-import * as UploadAPI from './upload';
+import * as ClassifyAPI from './classify';
+import * as Shared from './shared';
 
 export class Parse extends APIResource {
   /**
    * Parse
    */
-  create(body: ParseCreateParams, options?: Core.RequestOptions): Core.APIPromise<ParseCreateResponse> {
+  run(body: ParseRunParams, options?: Core.RequestOptions): Core.APIPromise<ParseRunResponse> {
     return this._client.post('/parse', { body, ...options });
   }
-}
-
-export interface ParseResponse {
-  /**
-   * The duration of the parse request in seconds.
-   */
-  duration: number;
-
-  job_id: string;
 
   /**
-   * The response from the document processing service. Note that there can be two
-   * types of responses, Full Result and URL Result. This is due to limitations on
-   * the max return size on HTTPS. If the response is too large, it will be returned
-   * as a presigned URL in the URL response. You should handle this in your
-   * application.
+   * Async Parse
    */
-  result: ParseResponse.FullResult | ParseResponse.URLResult;
-
-  usage: SplitAPI.ParseUsage;
-
-  /**
-   * The storage URL of the converted PDF file.
-   */
-  pdf_url?: string | null;
-
-  /**
-   * The link to the studio pipeline for the document.
-   */
-  studio_link?: string | null;
-}
-
-export namespace ParseResponse {
-  export interface FullResult {
-    chunks: Array<FullResult.Chunk>;
-
-    /**
-     * type = 'full'
-     */
-    type: 'full';
-
-    custom?: unknown;
-
-    ocr?: FullResult.Ocr | null;
-  }
-
-  export namespace FullResult {
-    export interface Chunk {
-      blocks: Array<Chunk.Block>;
-
-      /**
-       * The content of the chunk extracted from the document.
-       */
-      content: string;
-
-      /**
-       * Chunk content optimized for embedding and retrieval.
-       */
-      embed: string;
-
-      /**
-       * The enriched content of the chunk extracted from the document.
-       */
-      enriched: string | null;
-
-      /**
-       * Whether the enrichment was successful.
-       */
-      enrichment_success?: boolean;
-    }
-
-    export namespace Chunk {
-      export interface Block {
-        /**
-         * The bounding box of the block extracted from the document.
-         */
-        bbox: EditAPI.BoundingBox;
-
-        /**
-         * The content of the block extracted from the document.
-         */
-        content: string;
-
-        /**
-         * The type of block extracted from the document.
-         */
-        type:
-          | 'Header'
-          | 'Footer'
-          | 'Title'
-          | 'Section Header'
-          | 'Page Number'
-          | 'List Item'
-          | 'Figure'
-          | 'Table'
-          | 'Key Value'
-          | 'Text'
-          | 'Comment'
-          | 'Signature';
-
-        /**
-         * (Experimental) The URL/link to chart data JSON for figure blocks processed by
-         * chart agent.
-         */
-        chart_data?: Array<string> | null;
-
-        /**
-         * The confidence for the block. It is either low or high and takes into account
-         * factors like OCR and table structure
-         */
-        confidence?: string | null;
-
-        /**
-         * Extra metadata fields for the block. Fields like 'is_chart' will only appear
-         * when set to True.
-         */
-        extra?: { [key: string]: unknown } | null;
-
-        /**
-         * Granular confidence scores for the block. It is a dictionary of confidence
-         * scores for the block. The confidence scores will not be None if the user has
-         * enabled numeric confidence scores.
-         */
-        granular_confidence?: Block.GranularConfidence | null;
-
-        /**
-         * (Experimental) The URL of the image associated with the block.
-         */
-        image_url?: string | null;
-      }
-
-      export namespace Block {
-        /**
-         * Granular confidence scores for the block. It is a dictionary of confidence
-         * scores for the block. The confidence scores will not be None if the user has
-         * enabled numeric confidence scores.
-         */
-        export interface GranularConfidence {
-          extract_confidence?: number | null;
-
-          parse_confidence?: number | null;
-        }
-      }
-    }
-
-    export interface Ocr {
-      lines: Array<Ocr.Line>;
-
-      words: Array<Ocr.Word>;
-    }
-
-    export namespace Ocr {
-      export interface Line {
-        bbox: EditAPI.BoundingBox;
-
-        text: string;
-
-        /**
-         * The index of the chunk that the line belongs to.
-         */
-        chunk_index?: number | null;
-
-        /**
-         * OCR confidence score between 0 and 1, where 1 indicates highest confidence
-         */
-        confidence?: number | null;
-
-        /**
-         * The rotation angle in degrees, from 0 to 360, counterclockwise.
-         */
-        rotation?: number | null;
-      }
-
-      export interface Word {
-        bbox: EditAPI.BoundingBox;
-
-        text: string;
-
-        /**
-         * The index of the chunk that the word belongs to.
-         */
-        chunk_index?: number | null;
-
-        /**
-         * OCR confidence score between 0 and 1, where 1 indicates highest confidence
-         */
-        confidence?: number | null;
-
-        /**
-         * The rotation angle in degrees, from 0 to 360, counterclockwise.
-         */
-        rotation?: number | null;
-      }
-    }
-  }
-
-  export interface URLResult {
-    result_id: string;
-
-    /**
-     * type = 'url'
-     */
-    type: 'url';
-
-    url: string;
+  runJob(body: ParseRunJobParams, options?: Core.RequestOptions): Core.APIPromise<Shared.AsyncParseResponse> {
+    return this._client.post('/parse_async', { body, ...options });
   }
 }
 
-export type ParseCreateResponse = ParseResponse | ParseAsyncAPI.AsyncParseResponse;
+export interface AsyncConfigV3 {
+  /**
+   * JSON metadata included in webhook request body. Defaults to None.
+   */
+  metadata?: unknown;
 
-export type ParseCreateParams = ParseCreateParams.SyncParseConfig | ParseCreateParams.AsyncParseConfig;
+  /**
+   * If True, attempts to process the job with priority if the user has priority
+   * processing budget available; by default, sync jobs are prioritized above async
+   * jobs.
+   */
+  priority?: boolean;
 
-export declare namespace ParseCreateParams {
+  /**
+   * The webhook configuration for the asynchronous processing.
+   */
+  webhook?: Shared.SvixWebhookConfig | Shared.DirectWebhookConfig | null;
+}
+
+export interface AsyncParseConfig {
+  /**
+   * For parse/split/extract pipelines, the URL of the document to be processed. You
+   * can provide one of the following: 1. A publicly available URL 2. A presigned S3
+   * URL 3. A reducto:// prefixed URL obtained from the /upload endpoint after
+   * directly uploading a document 4. A jobid:// prefixed URL obtained from a
+   * previous /parse invocation 5. A list of URLs (for multi-document pipelines, V3
+   * API only)
+   *
+   *             For edit pipelines, this should be a string containing the edit instructions
+   */
+  input: string | Array<string> | Shared.Upload;
+
+  /**
+   * The configuration options for asynchronous processing (default synchronous).
+   */
+  async?: AsyncConfigV3;
+
+  enhance?: Enhance;
+
+  formatting?: Formatting;
+
+  /**
+   * Queue priority. 'batch' for non-urgent work that processes when spare GPU
+   * capacity is available.
+   */
+  queue_priority?: 'auto' | 'batch';
+
+  retrieval?: Retrieval;
+
+  settings?: Settings;
+
+  spreadsheet?: Spreadsheet;
+}
+
+export interface Enhance {
+  /**
+   * Agentic uses vision language models to enhance the accuracy of the output of
+   * different types of extraction. This will incur a cost and latency increase.
+   */
+  agentic?: Array<Shared.TableAgentic | Shared.FigureAgentic | Shared.TextAgentic>;
+
+  /**
+   * If True, use an advanced vision language model to improve reading order
+   * accuracy, with a small increase in latency. Defaults to False.
+   */
+  intelligent_ordering?: boolean;
+
+  /**
+   * If True, summarize figures using a small vision language model. Defaults to
+   * True.
+   */
+  summarize_figures?: boolean;
+}
+
+export interface Formatting {
+  /**
+   * If True, add page markers to the output. Defaults to False. Useful for
+   * extracting data with page specific information.
+   */
+  add_page_markers?: boolean;
+
+  /**
+   * A list of formatting to include in the output.
+   */
+  include?: Array<
+    'change_tracking' | 'highlight' | 'comments' | 'hyperlinks' | 'signatures' | 'ignore_watermarks'
+  >;
+
+  /**
+   * A flag to indicate if consecutive tables with the same number of columns should
+   * be merged. Defaults to False.
+   */
+  merge_tables?: boolean;
+
+  /**
+   * The mode to use for table output. Defaults to dynamic, which returns md for
+   * simpler tables and html for more complex tables.
+   */
+  table_output_format?: 'html' | 'json' | 'md' | 'jsonbbox' | 'dynamic' | 'csv';
+}
+
+export interface Retrieval {
+  chunking?: Shared.Chunking;
+
+  /**
+   * If True, use embedding optimized mode. Defaults to False.
+   */
+  embedding_optimized?: boolean;
+
+  /**
+   * A list of block types to filter out from 'content' and 'embed' fields. By
+   * default, no blocks are filtered.
+   */
+  filter_blocks?: Array<
+    | 'Header'
+    | 'Footer'
+    | 'Title'
+    | 'Section Header'
+    | 'Page Number'
+    | 'List Item'
+    | 'Figure'
+    | 'Table'
+    | 'Key Value'
+    | 'Text'
+    | 'Comment'
+    | 'Signature'
+  >;
+}
+
+export interface Settings {
+  /**
+   * Password to decrypt password-protected documents.
+   */
+  document_password?: string | null;
+
+  /**
+   * If True, embed OCR metadata into the returned PDF. Defaults to False.
+   */
+  embed_pdf_metadata?: boolean;
+
+  /**
+   * The mode to use for text extraction from PDFs. OCR mode uses optical character
+   * recognition only. Hybrid mode combines OCR with embedded PDF text for best
+   * accuracy (default).
+   */
+  extraction_mode?: 'ocr' | 'hybrid';
+
+  /**
+   * Force the URL to be downloaded as a specific file extension (e.g. `.png`).
+   */
+  force_file_extension?: string | null;
+
+  /**
+   * Force the result to be returned in URL form.
+   */
+  force_url_result?: boolean;
+
+  /**
+   * Standard is our best multilingual OCR system. Legacy only supports germanic
+   * languages and is available for backwards compatibility.
+   */
+  ocr_system?: 'standard' | 'legacy';
+
+  /**
+   * The page range to process (1-indexed). By default, the entire document is
+   * processed. For spreadsheets, you can also provide a list of sheet names.
+   */
+  page_range?: ClassifyAPI.PageRange | Array<ClassifyAPI.PageRange> | Array<number> | Array<string> | null;
+
+  /**
+   * If True, persist the results indefinitely. Defaults to False.
+   */
+  persist_results?: boolean;
+
+  /**
+   * Whether to return images for the specified block types. 'page' returns full page
+   * images. By default, no images are returned.
+   */
+  return_images?: Array<'figure' | 'table' | 'page'>;
+
+  /**
+   * If True, return OCR data in the result. Defaults to False.
+   */
+  return_ocr_data?: boolean;
+
+  /**
+   * The timeout for the job in seconds.
+   */
+  timeout?: number | null;
+}
+
+export interface Spreadsheet {
+  /**
+   * In a spreadsheet with different tables inside, we enable splitting up the tables
+   * by default. Accurate mode applies more powerful models for superior accuracy, at
+   * 5× the default per-cell rate. Disabling will register as one large table.
+   */
+  clustering?: 'accurate' | 'fast' | 'disabled';
+
+  /**
+   * Whether to exclude hidden sheets, rows, or columns in the output.
+   */
+  exclude?: Array<'hidden_sheets' | 'hidden_rows' | 'hidden_cols' | 'styling' | 'spreadsheet_images'>;
+
+  /**
+   * Whether to include cell color, formula, and dropdown information in the output.
+   */
+  include?: Array<'cell_colors' | 'formula' | 'dropdowns'>;
+
+  split_large_tables?: Shared.SplitLargeTables;
+}
+
+export type ParseRunResponse = Shared.ParseResponse | Shared.AsyncParseResponse;
+
+export type ParseRunParams = ParseRunParams.SyncParseConfig | ParseRunParams.AsyncParseConfig;
+
+export declare namespace ParseRunParams {
   export interface SyncParseConfig {
     /**
      * For parse/split/extract pipelines, the URL of the document to be processed. You
@@ -238,17 +249,17 @@ export declare namespace ParseCreateParams {
      *
      *             For edit pipelines, this should be a string containing the edit instructions
      */
-    input: string | Array<string> | UploadAPI.UploadResponse;
+    input: string | Array<string> | Shared.Upload;
 
-    enhance?: ParseAsyncAPI.Enhance;
+    enhance?: Enhance;
 
-    formatting?: ParseAsyncAPI.Formatting;
+    formatting?: Formatting;
 
-    retrieval?: ParseAsyncAPI.Retrieval;
+    retrieval?: Retrieval;
 
-    settings?: ParseAsyncAPI.Settings;
+    settings?: Settings;
 
-    spreadsheet?: ParseAsyncAPI.Spreadsheet;
+    spreadsheet?: Spreadsheet;
   }
 
   export interface AsyncParseConfig {
@@ -262,16 +273,16 @@ export declare namespace ParseCreateParams {
      *
      *             For edit pipelines, this should be a string containing the edit instructions
      */
-    input: string | Array<string> | UploadAPI.UploadResponse;
+    input: string | Array<string> | Shared.Upload;
 
     /**
      * The configuration options for asynchronous processing (default synchronous).
      */
-    async?: ParseAsyncAPI.AsyncConfigV3;
+    async?: AsyncConfigV3;
 
-    enhance?: ParseAsyncAPI.Enhance;
+    enhance?: Enhance;
 
-    formatting?: ParseAsyncAPI.Formatting;
+    formatting?: Formatting;
 
     /**
      * Queue priority. 'batch' for non-urgent work that processes when spare GPU
@@ -279,18 +290,60 @@ export declare namespace ParseCreateParams {
      */
     queue_priority?: 'auto' | 'batch';
 
-    retrieval?: ParseAsyncAPI.Retrieval;
+    retrieval?: Retrieval;
 
-    settings?: ParseAsyncAPI.Settings;
+    settings?: Settings;
 
-    spreadsheet?: ParseAsyncAPI.Spreadsheet;
+    spreadsheet?: Spreadsheet;
   }
+}
+
+export interface ParseRunJobParams {
+  /**
+   * For parse/split/extract pipelines, the URL of the document to be processed. You
+   * can provide one of the following: 1. A publicly available URL 2. A presigned S3
+   * URL 3. A reducto:// prefixed URL obtained from the /upload endpoint after
+   * directly uploading a document 4. A jobid:// prefixed URL obtained from a
+   * previous /parse invocation 5. A list of URLs (for multi-document pipelines, V3
+   * API only)
+   *
+   *             For edit pipelines, this should be a string containing the edit instructions
+   */
+  input: string | Array<string> | Shared.Upload;
+
+  /**
+   * The configuration options for asynchronous processing (default synchronous).
+   */
+  async?: AsyncConfigV3;
+
+  enhance?: Enhance;
+
+  formatting?: Formatting;
+
+  /**
+   * Queue priority. 'batch' for non-urgent work that processes when spare GPU
+   * capacity is available.
+   */
+  queue_priority?: 'auto' | 'batch';
+
+  retrieval?: Retrieval;
+
+  settings?: Settings;
+
+  spreadsheet?: Spreadsheet;
 }
 
 export declare namespace Parse {
   export {
-    type ParseResponse as ParseResponse,
-    type ParseCreateResponse as ParseCreateResponse,
-    type ParseCreateParams as ParseCreateParams,
+    type AsyncConfigV3 as AsyncConfigV3,
+    type AsyncParseConfig as AsyncParseConfig,
+    type Enhance as Enhance,
+    type Formatting as Formatting,
+    type Retrieval as Retrieval,
+    type Settings as Settings,
+    type Spreadsheet as Spreadsheet,
+    type ParseRunResponse as ParseRunResponse,
+    type ParseRunParams as ParseRunParams,
+    type ParseRunJobParams as ParseRunJobParams,
   };
 }

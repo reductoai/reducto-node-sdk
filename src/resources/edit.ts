@@ -2,15 +2,21 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
-import * as SplitAPI from './split';
-import * as UploadAPI from './upload';
+import * as Shared from './shared';
 
 export class Edit extends APIResource {
   /**
    * Edit
    */
-  submit(body: EditSubmitParams, options?: Core.RequestOptions): Core.APIPromise<EditResponse> {
+  run(body: EditRunParams, options?: Core.RequestOptions): Core.APIPromise<Shared.EditResponse> {
     return this._client.post('/edit', { body, ...options });
+  }
+
+  /**
+   * Edit Async
+   */
+  runJob(body: EditRunJobParams, options?: Core.RequestOptions): Core.APIPromise<Shared.AsyncEditResponse> {
+    return this._client.post('/edit_async', { body, ...options });
   }
 }
 
@@ -65,25 +71,6 @@ export interface EditOptions {
   llm_provider_preference?: 'openai' | 'anthropic' | 'google' | null;
 }
 
-export interface EditResponse {
-  /**
-   * Presigned URL to download the edited document.
-   */
-  document_url: string;
-
-  /**
-   * Form schema for PDF forms. List of widgets with their types, descriptions, and
-   * bounding boxes.
-   */
-  form_schema?: Array<EditWidget> | null;
-
-  /**
-   * Usage information for the edit operation, including number of pages and credits
-   * charged.
-   */
-  usage?: SplitAPI.ParseUsage | null;
-}
-
 export interface EditWidget {
   /**
    * Bounding box coordinates of the widget
@@ -120,7 +107,7 @@ export interface EditWidget {
   value?: string | null;
 }
 
-export interface EditSubmitParams {
+export interface EditRunParams {
   /**
    * The URL of the document to be processed. You can provide one of the following:
    *
@@ -129,7 +116,7 @@ export interface EditSubmitParams {
    * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
    *    uploading a document
    */
-  document_url: string | UploadAPI.UploadResponse;
+  document_url: string | Shared.Upload;
 
   /**
    * The instructions for the edit.
@@ -152,12 +139,46 @@ export interface EditSubmitParams {
   priority?: boolean;
 }
 
+export interface EditRunJobParams {
+  /**
+   * The URL of the document to be processed. You can provide one of the following:
+   *
+   * 1. A publicly available URL
+   * 2. A presigned S3 URL
+   * 3. A reducto:// prefixed URL obtained from the /upload endpoint after directly
+   *    uploading a document
+   */
+  document_url: string | Shared.Upload;
+
+  /**
+   * The instructions for the edit.
+   */
+  edit_instructions: string;
+
+  edit_options?: EditOptions;
+
+  /**
+   * Form schema for PDF forms. List of widgets with their types, descriptions, and
+   * bounding boxes. Only works for PDFs.
+   */
+  form_schema?: Array<EditWidget> | null;
+
+  /**
+   * If True, attempts to process the job with priority if the user has priority
+   * processing budget available; by default, sync jobs are prioritized above async
+   * jobs.
+   */
+  priority?: boolean;
+
+  webhook?: Shared.WebhookConfigNew;
+}
+
 export declare namespace Edit {
   export {
     type BoundingBox as BoundingBox,
     type EditOptions as EditOptions,
-    type EditResponse as EditResponse,
     type EditWidget as EditWidget,
-    type EditSubmitParams as EditSubmitParams,
+    type EditRunParams as EditRunParams,
+    type EditRunJobParams as EditRunJobParams,
   };
 }

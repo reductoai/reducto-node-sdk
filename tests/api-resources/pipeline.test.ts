@@ -10,8 +10,8 @@ const client = new Reducto({
 
 describe('resource pipeline', () => {
   // Mock server tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.pipeline.create({ input: 'string', pipeline_id: 'pipeline_id' });
+  test.skip('run: only required params', async () => {
+    const responsePromise = client.pipeline.run({ input: 'string', pipeline_id: 'pipeline_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,10 +22,36 @@ describe('resource pipeline', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.pipeline.create({
+  test.skip('run: required and optional params', async () => {
+    const response = await client.pipeline.run({
       input: 'string',
       pipeline_id: 'pipeline_id',
+      settings: { document_password: 'document_password' },
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('runJob: only required params', async () => {
+    const responsePromise = client.pipeline.runJob({ input: 'string', pipeline_id: 'pipeline_id' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('runJob: required and optional params', async () => {
+    const response = await client.pipeline.runJob({
+      input: 'string',
+      pipeline_id: 'pipeline_id',
+      async: {
+        metadata: {},
+        priority: true,
+        webhook: { channels: ['string'], mode: 'svix' },
+      },
       settings: { document_password: 'document_password' },
     });
   });

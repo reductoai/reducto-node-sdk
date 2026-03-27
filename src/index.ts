@@ -1,63 +1,60 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import { isRequestOptions } from './core';
 import { type Agent } from './_shims/index';
 import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
-import { Cancel, CancelCancelJobResponse } from './resources/cancel';
-import { Classify, ClassifyCreateParams, ClassifyResponse, PageRange } from './resources/classify';
-import { ConfigureWebhook, ConfigureWebhookCreateResponse } from './resources/configure-webhook';
-import { BoundingBox, Edit, EditOptions, EditResponse, EditSubmitParams, EditWidget } from './resources/edit';
-import { EditAsync, EditAsyncCreateParams, EditAsyncCreateResponse } from './resources/edit-async';
+import * as Shared from './resources/shared';
+import * as TopLevelAPI from './resources/top-level';
+import { APIVersionResponse, UploadParams } from './resources/top-level';
+import { Classify, ClassifyRunParams, PageRange } from './resources/classify';
 import {
-  Extract,
-  ExtractCreateParams,
-  ExtractCreateResponse,
-  ExtractUsage,
-  V3Extract,
-} from './resources/extract';
+  BoundingBox,
+  Edit,
+  EditOptions,
+  EditRunJobParams,
+  EditRunParams,
+  EditWidget,
+} from './resources/edit';
 import {
   AsyncExtractConfig,
-  AsyncExtractResponse,
-  ExtractAsync,
-  ExtractAsyncCreateParams,
+  Extract,
+  ExtractRunJobParams,
+  ExtractRunParams,
+  ExtractRunResponse,
   ExtractSettings,
+  ExtractUsage,
   Instructions,
   ParseOptions,
-} from './resources/extract-async';
-import { ExtractResponse, Job, JobListParams, JobListResponse, JobRetrieveResponse } from './resources/job';
-import { Parse, ParseCreateParams, ParseCreateResponse, ParseResponse } from './resources/parse';
+  V3Extract,
+} from './resources/extract';
+import { Job, JobCancelResponse, JobGetAllParams, JobGetAllResponse, JobGetResponse } from './resources/job';
 import {
   AsyncConfigV3,
   AsyncParseConfig,
-  AsyncParseResponse,
   Enhance,
   Formatting,
-  ParseAsync,
-  ParseAsyncCreateParams,
+  Parse,
+  ParseRunJobParams,
+  ParseRunParams,
+  ParseRunResponse,
   Retrieval,
   Settings,
   Spreadsheet,
-} from './resources/parse-async';
-import { Pipeline, PipelineCreateParams, PipelineResponse, PipelineSettings } from './resources/pipeline';
-import {
-  PipelineAsync,
-  PipelineAsyncCreateParams,
-  PipelineAsyncCreateResponse,
-} from './resources/pipeline-async';
+} from './resources/parse';
+import { Pipeline, PipelineRunJobParams, PipelineRunParams, PipelineSettings } from './resources/pipeline';
 import {
   DeepSplitPageEvidence,
   ParseUsage,
   Split,
   SplitCategory,
-  SplitCreateParams,
-  SplitResponse,
+  SplitRunJobParams,
+  SplitRunParams,
   SplitTableOptions,
 } from './resources/split';
-import { SplitAsync, SplitAsyncCreateParams, SplitAsyncCreateResponse } from './resources/split-async';
-import { Upload, UploadCreateParams, UploadResponse } from './resources/upload';
-import { Version, VersionRetrieveResponse } from './resources/version';
+import { Webhook, WebhookRunResponse } from './resources/webhook';
 
 const environments = {
   production: 'https://platform.reducto.ai',
@@ -201,20 +198,12 @@ export class Reducto extends Core.APIClient {
   }
 
   parse: API.Parse = new API.Parse(this);
-  parseAsync: API.ParseAsync = new API.ParseAsync(this);
   extract: API.Extract = new API.Extract(this);
-  extractAsync: API.ExtractAsync = new API.ExtractAsync(this);
   split: API.Split = new API.Split(this);
-  splitAsync: API.SplitAsync = new API.SplitAsync(this);
   edit: API.Edit = new API.Edit(this);
-  editAsync: API.EditAsync = new API.EditAsync(this);
   pipeline: API.Pipeline = new API.Pipeline(this);
-  pipelineAsync: API.PipelineAsync = new API.PipelineAsync(this);
   classify: API.Classify = new API.Classify(this);
-  cancel: API.Cancel = new API.Cancel(this);
-  upload: API.Upload = new API.Upload(this);
-  configureWebhook: API.ConfigureWebhook = new API.ConfigureWebhook(this);
-  version: API.Version = new API.Version(this);
+  webhook: API.Webhook = new API.Webhook(this);
   job: API.Job = new API.Job(this);
 
   /**
@@ -222,6 +211,32 @@ export class Reducto extends Core.APIClient {
    */
   #baseURLOverridden(): boolean {
     return this.baseURL !== environments[this._options.environment || 'production'];
+  }
+
+  /**
+   * Get Version
+   */
+  apiVersion(options?: Core.RequestOptions): Core.APIPromise<string> {
+    return this.get('/version', options);
+  }
+
+  /**
+   * Upload
+   */
+  upload(params?: TopLevelAPI.UploadParams, options?: Core.RequestOptions): Core.APIPromise<Shared.Upload>;
+  upload(options?: Core.RequestOptions): Core.APIPromise<Shared.Upload>;
+  upload(
+    params: TopLevelAPI.UploadParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<Shared.Upload> {
+    if (isRequestOptions(params)) {
+      return this.upload({}, params);
+    }
+    const { extension, ...body } = params;
+    return this.post(
+      '/upload',
+      Core.maybeMultipartFormRequestOptions({ query: { extension }, body, ...options }),
+    );
   }
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
@@ -261,61 +276,44 @@ export class Reducto extends Core.APIClient {
 }
 
 Reducto.Parse = Parse;
-Reducto.ParseAsync = ParseAsync;
 Reducto.Extract = Extract;
-Reducto.ExtractAsync = ExtractAsync;
 Reducto.Split = Split;
-Reducto.SplitAsync = SplitAsync;
 Reducto.Edit = Edit;
-Reducto.EditAsync = EditAsync;
 Reducto.Pipeline = Pipeline;
-Reducto.PipelineAsync = PipelineAsync;
 Reducto.Classify = Classify;
-Reducto.Cancel = Cancel;
-Reducto.Upload = Upload;
-Reducto.ConfigureWebhook = ConfigureWebhook;
-Reducto.Version = Version;
+Reducto.Webhook = Webhook;
 Reducto.Job = Job;
 
 export declare namespace Reducto {
   export type RequestOptions = Core.RequestOptions;
 
-  export {
-    Parse as Parse,
-    type ParseResponse as ParseResponse,
-    type ParseCreateResponse as ParseCreateResponse,
-    type ParseCreateParams as ParseCreateParams,
-  };
+  export { type APIVersionResponse as APIVersionResponse, type UploadParams as UploadParams };
 
   export {
-    ParseAsync as ParseAsync,
+    Parse as Parse,
     type AsyncConfigV3 as AsyncConfigV3,
     type AsyncParseConfig as AsyncParseConfig,
-    type AsyncParseResponse as AsyncParseResponse,
     type Enhance as Enhance,
     type Formatting as Formatting,
     type Retrieval as Retrieval,
     type Settings as Settings,
     type Spreadsheet as Spreadsheet,
-    type ParseAsyncCreateParams as ParseAsyncCreateParams,
+    type ParseRunResponse as ParseRunResponse,
+    type ParseRunParams as ParseRunParams,
+    type ParseRunJobParams as ParseRunJobParams,
   };
 
   export {
     Extract as Extract,
-    type ExtractUsage as ExtractUsage,
-    type V3Extract as V3Extract,
-    type ExtractCreateResponse as ExtractCreateResponse,
-    type ExtractCreateParams as ExtractCreateParams,
-  };
-
-  export {
-    ExtractAsync as ExtractAsync,
     type AsyncExtractConfig as AsyncExtractConfig,
-    type AsyncExtractResponse as AsyncExtractResponse,
     type ExtractSettings as ExtractSettings,
+    type ExtractUsage as ExtractUsage,
     type Instructions as Instructions,
     type ParseOptions as ParseOptions,
-    type ExtractAsyncCreateParams as ExtractAsyncCreateParams,
+    type V3Extract as V3Extract,
+    type ExtractRunResponse as ExtractRunResponse,
+    type ExtractRunParams as ExtractRunParams,
+    type ExtractRunJobParams as ExtractRunJobParams,
   };
 
   export {
@@ -323,74 +321,69 @@ export declare namespace Reducto {
     type DeepSplitPageEvidence as DeepSplitPageEvidence,
     type ParseUsage as ParseUsage,
     type SplitCategory as SplitCategory,
-    type SplitResponse as SplitResponse,
     type SplitTableOptions as SplitTableOptions,
-    type SplitCreateParams as SplitCreateParams,
-  };
-
-  export {
-    SplitAsync as SplitAsync,
-    type SplitAsyncCreateResponse as SplitAsyncCreateResponse,
-    type SplitAsyncCreateParams as SplitAsyncCreateParams,
+    type SplitRunParams as SplitRunParams,
+    type SplitRunJobParams as SplitRunJobParams,
   };
 
   export {
     Edit as Edit,
     type BoundingBox as BoundingBox,
     type EditOptions as EditOptions,
-    type EditResponse as EditResponse,
     type EditWidget as EditWidget,
-    type EditSubmitParams as EditSubmitParams,
-  };
-
-  export {
-    EditAsync as EditAsync,
-    type EditAsyncCreateResponse as EditAsyncCreateResponse,
-    type EditAsyncCreateParams as EditAsyncCreateParams,
+    type EditRunParams as EditRunParams,
+    type EditRunJobParams as EditRunJobParams,
   };
 
   export {
     Pipeline as Pipeline,
-    type PipelineResponse as PipelineResponse,
     type PipelineSettings as PipelineSettings,
-    type PipelineCreateParams as PipelineCreateParams,
+    type PipelineRunParams as PipelineRunParams,
+    type PipelineRunJobParams as PipelineRunJobParams,
   };
 
-  export {
-    PipelineAsync as PipelineAsync,
-    type PipelineAsyncCreateResponse as PipelineAsyncCreateResponse,
-    type PipelineAsyncCreateParams as PipelineAsyncCreateParams,
-  };
+  export { Classify as Classify, type PageRange as PageRange, type ClassifyRunParams as ClassifyRunParams };
 
-  export {
-    Classify as Classify,
-    type ClassifyResponse as ClassifyResponse,
-    type PageRange as PageRange,
-    type ClassifyCreateParams as ClassifyCreateParams,
-  };
-
-  export { Cancel as Cancel, type CancelCancelJobResponse as CancelCancelJobResponse };
-
-  export {
-    Upload as Upload,
-    type UploadResponse as UploadResponse,
-    type UploadCreateParams as UploadCreateParams,
-  };
-
-  export {
-    ConfigureWebhook as ConfigureWebhook,
-    type ConfigureWebhookCreateResponse as ConfigureWebhookCreateResponse,
-  };
-
-  export { Version as Version, type VersionRetrieveResponse as VersionRetrieveResponse };
+  export { Webhook as Webhook, type WebhookRunResponse as WebhookRunResponse };
 
   export {
     Job as Job,
-    type ExtractResponse as ExtractResponse,
-    type JobRetrieveResponse as JobRetrieveResponse,
-    type JobListResponse as JobListResponse,
-    type JobListParams as JobListParams,
+    type JobCancelResponse as JobCancelResponse,
+    type JobGetResponse as JobGetResponse,
+    type JobGetAllResponse as JobGetAllResponse,
+    type JobGetAllParams as JobGetAllParams,
   };
+
+  export type AdvancedCitationsConfig = API.AdvancedCitationsConfig;
+  export type AdvancedProcessingOptions = API.AdvancedProcessingOptions;
+  export type ArrayExtractConfig = API.ArrayExtractConfig;
+  export type AsyncEditResponse = API.AsyncEditResponse;
+  export type AsyncExtractResponse = API.AsyncExtractResponse;
+  export type AsyncParseResponse = API.AsyncParseResponse;
+  export type AsyncPipelineResponse = API.AsyncPipelineResponse;
+  export type AsyncSplitResponse = API.AsyncSplitResponse;
+  export type BaseProcessingOptions = API.BaseProcessingOptions;
+  export type Chunking = API.Chunking;
+  export type ChunkingConfig = API.ChunkingConfig;
+  export type ClassifyResponse = API.ClassifyResponse;
+  export type DirectWebhookConfig = API.DirectWebhookConfig;
+  export type EditResponse = API.EditResponse;
+  export type EnrichConfig = API.EnrichConfig;
+  export type ExperimentalProcessingOptions = API.ExperimentalProcessingOptions;
+  export type ExtractResponse = API.ExtractResponse;
+  export type FigureAgentic = API.FigureAgentic;
+  export type FigureSummaryConfig = API.FigureSummaryConfig;
+  export type LargeTableChunkingConfig = API.LargeTableChunkingConfig;
+  export type ParseResponse = API.ParseResponse;
+  export type PipelineResponse = API.PipelineResponse;
+  export type SplitLargeTables = API.SplitLargeTables;
+  export type SplitResponse = API.SplitResponse;
+  export type SvixWebhookConfig = API.SvixWebhookConfig;
+  export type TableAgentic = API.TableAgentic;
+  export type TableSummaryConfig = API.TableSummaryConfig;
+  export type TextAgentic = API.TextAgentic;
+  export type Upload = API.Upload;
+  export type WebhookConfigNew = API.WebhookConfigNew;
 }
 
 export { toFile, fileFromPath } from './uploads';

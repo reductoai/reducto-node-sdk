@@ -3,65 +3,45 @@
 import { APIResource } from '../resource';
 import { isRequestOptions } from '../core';
 import * as Core from '../core';
-import * as JobAPI from './job';
-import * as ClassifyAPI from './classify';
-import * as EditAPI from './edit';
 import * as ExtractAPI from './extract';
-import * as ParseAPI from './parse';
-import * as PipelineAPI from './pipeline';
-import * as SplitAPI from './split';
+import * as Shared from './shared';
 
 export class Job extends APIResource {
   /**
+   * Cancel Job
+   */
+  cancel(jobId: string, options?: Core.RequestOptions): Core.APIPromise<unknown> {
+    return this._client.post(`/cancel/${jobId}`, options);
+  }
+
+  /**
    * Retrieve Parse
    */
-  retrieve(jobId: string, options?: Core.RequestOptions): Core.APIPromise<JobRetrieveResponse> {
+  get(jobId: string, options?: Core.RequestOptions): Core.APIPromise<JobGetResponse> {
     return this._client.get(`/job/${jobId}`, options);
   }
 
   /**
    * Get Jobs
    */
-  list(query?: JobListParams, options?: Core.RequestOptions): Core.APIPromise<JobListResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<JobListResponse>;
-  list(
-    query: JobListParams | Core.RequestOptions = {},
+  getAll(query?: JobGetAllParams, options?: Core.RequestOptions): Core.APIPromise<JobGetAllResponse>;
+  getAll(options?: Core.RequestOptions): Core.APIPromise<JobGetAllResponse>;
+  getAll(
+    query: JobGetAllParams | Core.RequestOptions = {},
     options?: Core.RequestOptions,
-  ): Core.APIPromise<JobListResponse> {
+  ): Core.APIPromise<JobGetAllResponse> {
     if (isRequestOptions(query)) {
-      return this.list({}, query);
+      return this.getAll({}, query);
     }
     return this._client.get('/jobs', { query, ...options });
   }
 }
 
-export interface ExtractResponse {
-  /**
-   * The citations corresponding to the extracted response.
-   */
-  citations: Array<unknown> | null;
+export type JobCancelResponse = unknown;
 
-  /**
-   * The extracted response in your provided schema. This is a list of dictionaries.
-   * If disable_chunking is True (default), then it will be a list of length one.
-   */
-  result: Array<unknown>;
+export type JobGetResponse = JobGetResponse.AsyncJobResponse | JobGetResponse.EnhancedAsyncJobResponse;
 
-  usage: ExtractAPI.ExtractUsage;
-
-  job_id?: string | null;
-
-  /**
-   * The link to the studio pipeline for the document.
-   */
-  studio_link?: string | null;
-}
-
-export type JobRetrieveResponse =
-  | JobRetrieveResponse.AsyncJobResponse
-  | JobRetrieveResponse.EnhancedAsyncJobResponse;
-
-export namespace JobRetrieveResponse {
+export namespace JobGetResponse {
   export interface AsyncJobResponse {
     status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
 
@@ -73,13 +53,13 @@ export namespace JobRetrieveResponse {
      * Response from classify job - returned when polling /job/{job_id}
      */
     result?:
-      | ParseAPI.ParseResponse
-      | JobAPI.ExtractResponse
-      | SplitAPI.SplitResponse
-      | EditAPI.EditResponse
-      | PipelineAPI.PipelineResponse
+      | Shared.ParseResponse
+      | Shared.ExtractResponse
+      | Shared.SplitResponse
+      | Shared.EditResponse
+      | Shared.PipelineResponse
       | ExtractAPI.V3Extract
-      | ClassifyAPI.ClassifyResponse
+      | Shared.ClassifyResponse
       | null;
   }
 
@@ -104,13 +84,13 @@ export namespace JobRetrieveResponse {
      * Response from classify job - returned when polling /job/{job_id}
      */
     result?:
-      | ParseAPI.ParseResponse
-      | JobAPI.ExtractResponse
-      | SplitAPI.SplitResponse
-      | EditAPI.EditResponse
-      | PipelineAPI.PipelineResponse
+      | Shared.ParseResponse
+      | Shared.ExtractResponse
+      | Shared.SplitResponse
+      | Shared.EditResponse
+      | Shared.PipelineResponse
       | ExtractAPI.V3Extract
-      | ClassifyAPI.ClassifyResponse
+      | Shared.ClassifyResponse
       | null;
 
     source?: unknown;
@@ -121,12 +101,12 @@ export namespace JobRetrieveResponse {
   }
 }
 
-export interface JobListResponse {
+export interface JobGetAllResponse {
   /**
    * List of jobs with their job_id, status, type, raw_config, created_at, num_pages
    * and duration
    */
-  jobs: Array<JobListResponse.Job>;
+  jobs: Array<JobGetAllResponse.Job>;
 
   /**
    * Cursor to fetch the next page of results. If null, there are no more results.
@@ -134,7 +114,7 @@ export interface JobListResponse {
   next_cursor?: string | null;
 }
 
-export namespace JobListResponse {
+export namespace JobGetAllResponse {
   export interface Job {
     created_at: string;
 
@@ -158,7 +138,7 @@ export namespace JobListResponse {
   }
 }
 
-export interface JobListParams {
+export interface JobGetAllParams {
   /**
    * Cursor for pagination. Use the next_cursor from the previous response to fetch
    * the next page.
@@ -178,9 +158,9 @@ export interface JobListParams {
 
 export declare namespace Job {
   export {
-    type ExtractResponse as ExtractResponse,
-    type JobRetrieveResponse as JobRetrieveResponse,
-    type JobListResponse as JobListResponse,
-    type JobListParams as JobListParams,
+    type JobCancelResponse as JobCancelResponse,
+    type JobGetResponse as JobGetResponse,
+    type JobGetAllResponse as JobGetAllResponse,
+    type JobGetAllParams as JobGetAllParams,
   };
 }
