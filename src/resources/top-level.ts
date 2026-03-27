@@ -6,12 +6,12 @@ export interface UploadParams {
   /**
    * Query param
    */
-  extension?: string | null;
+  query_extension?: string | null;
 
   /**
    * Body param
    */
-  file?: string | null;
+  body_extension?: string;
 }
 
 export declare namespace TopLevel {
