@@ -1,5 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import { type Uploadable } from '../core';
+
 export type APIVersionResponse = string;
 
 export interface UploadParams {
@@ -11,7 +13,7 @@ export interface UploadParams {
   /**
    * Body param
    */
-  file?: string | null;
+  file?: Uploadable;
 }
 
 export declare namespace TopLevel {
