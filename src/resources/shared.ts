@@ -814,7 +814,7 @@ export interface PipelineResponse {
 
 export namespace PipelineResponse {
   export interface Result {
-    extract: Array<Result.ExtractVariant0> | Shared.ExtractResponse | ExtractAPI.V3Extract | null;
+    extract: Array<Result.UnionMember0> | Shared.ExtractResponse | ExtractAPI.V3Extract | null;
 
     parse: Shared.ParseResponse | Array<Shared.ParseResponse> | null;
 
@@ -827,7 +827,7 @@ export namespace PipelineResponse {
     /**
      * This is the response format for Extract -> Split Pipelines
      */
-    export interface ExtractVariant0 {
+    export interface UnionMember0 {
       page_range: Array<number>;
 
       result: Shared.ExtractResponse | ExtractAPI.V3Extract;
