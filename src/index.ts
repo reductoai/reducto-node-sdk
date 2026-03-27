@@ -9,7 +9,7 @@ import * as API from './resources/index';
 import * as Shared from './resources/shared';
 import * as TopLevelAPI from './resources/top-level';
 import { APIVersionResponse, UploadParams } from './resources/top-level';
-import { Classify, ClassifyRunParams, PageRange } from './resources/classify';
+import { Classify, ClassifyRunParams } from './resources/classify';
 import {
   BoundingBox,
   Edit,
@@ -342,7 +342,7 @@ export declare namespace Reducto {
     type PipelineRunJobParams as PipelineRunJobParams,
   };
 
-  export { Classify as Classify, type PageRange as PageRange, type ClassifyRunParams as ClassifyRunParams };
+  export { Classify as Classify, type ClassifyRunParams as ClassifyRunParams };
 
   export { Webhook as Webhook, type WebhookRunResponse as WebhookRunResponse };
 
@@ -374,6 +374,7 @@ export declare namespace Reducto {
   export type FigureAgentic = API.FigureAgentic;
   export type FigureSummaryConfig = API.FigureSummaryConfig;
   export type LargeTableChunkingConfig = API.LargeTableChunkingConfig;
+  export type PageRange = API.PageRange;
   export type ParseResponse = API.ParseResponse;
   export type PipelineResponse = API.PipelineResponse;
   export type SplitLargeTables = API.SplitLargeTables;

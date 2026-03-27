@@ -33,6 +33,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">FigureAgentic</a></code>
 - <code><a href="./src/resources/shared.ts">FigureSummaryConfig</a></code>
 - <code><a href="./src/resources/shared.ts">LargeTableChunkingConfig</a></code>
+- <code><a href="./src/resources/shared.ts">PageRange</a></code>
 - <code><a href="./src/resources/shared.ts">ParseResponse</a></code>
 - <code><a href="./src/resources/shared.ts">PipelineResponse</a></code>
 - <code><a href="./src/resources/shared.ts">SplitLargeTables</a></code>
@@ -118,10 +119,6 @@ Methods:
 - <code title="post /pipeline_async">client.pipeline.<a href="./src/resources/pipeline.ts">runJob</a>({ ...params }) -> AsyncPipelineResponse</code>
 
 # Classify
-
-Types:
-
-- <code><a href="./src/resources/classify.ts">PageRange</a></code>
 
 Methods:
 
