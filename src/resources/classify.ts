@@ -13,18 +13,6 @@ export class Classify extends APIResource {
   }
 }
 
-export interface PageRange {
-  /**
-   * The page number to stop processing at (1-indexed).
-   */
-  end?: number | null;
-
-  /**
-   * The page number to start processing from (1-indexed).
-   */
-  start?: number | null;
-}
-
 export interface ClassifyRunParams {
   /**
    * For parse/split/extract pipelines, the URL of the document to be processed. You
@@ -53,7 +41,7 @@ export interface ClassifyRunParams {
    * If more than 25 pages are selected, only the first 25 (after sorting) are used.
    * Only applies to PDFs; ignored for other document types.
    */
-  page_range?: PageRange | Array<PageRange> | Array<number> | null;
+  page_range?: Shared.PageRange | Array<Shared.PageRange> | Array<number> | null;
 
   /**
    * If True, persist the results indefinitely. Defaults to False.
@@ -82,5 +70,5 @@ export namespace ClassifyRunParams {
 }
 
 export declare namespace Classify {
-  export { type PageRange as PageRange, type ClassifyRunParams as ClassifyRunParams };
+  export { type ClassifyRunParams as ClassifyRunParams };
 }
