@@ -32,6 +32,9 @@ if (!apiKey) {
 
 const client = new Reducto({ apiKey });
 
+// Increase Jest timeout for E2E tests that hit the live API
+jest.setTimeout(180_000);
+
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
