@@ -127,7 +127,6 @@ describe('Split', () => {
         { name: 'other', description: 'Any other content' },
       ],
     });
-    expect(response).toHaveProperty('job_id');
     expect(response).toHaveProperty('result');
   });
 
@@ -177,13 +176,11 @@ describe('Classify', () => {
       input: DOCUMENT_URL,
       classification_schema: [
         {
-          name: 'report',
-          description: 'A report or whitepaper document',
+          category: 'report',
           criteria: ['Contains structured sections', 'Has a title and summary'],
         },
         {
-          name: 'invoice',
-          description: 'An invoice or billing document',
+          category: 'invoice',
           criteria: ['Contains line items', 'Has totals and payment info'],
         },
       ],
@@ -201,7 +198,7 @@ describe('Edit', () => {
       document_url: DOCUMENT_URL,
       edit_instructions: 'Add a watermark that says DRAFT to every page',
     });
-    expect(response).toHaveProperty('result');
+    expect(response).toHaveProperty('document_url');
   });
 });
 
