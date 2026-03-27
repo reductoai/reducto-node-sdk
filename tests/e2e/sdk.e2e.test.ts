@@ -133,6 +133,64 @@ describe('ExtractAsync', () => {
   });
 });
 
+describe('Split', () => {
+  test('split sync returns response with sections', async () => {
+    const response = await client.split.run({
+      input: DOCUMENT_URL,
+      split_description: [
+        {
+          name: 'report',
+          description: 'A report or whitepaper document',
+        },
+        {
+          name: 'other',
+          description: 'Any other type of document',
+        },
+      ],
+    });
+    expect(response).toHaveProperty('result');
+    expect(response).toHaveProperty('usage');
+
+    const result = response.result;
+    if ('splits' in result) {
+      expect(result.splits.length).toBeGreaterThan(0);
+    }
+  });
+});
+
+describe('Classify', () => {
+  test('classify returns a category result', async () => {
+    const response = await client.classify.run({
+      input: DOCUMENT_URL,
+      classification_schema: [
+        {
+          category: 'report',
+          criteria: ['Contains structured sections', 'Has a title and summary'],
+        },
+        {
+          category: 'invoice',
+          criteria: ['Contains line items', 'Has totals and payment info'],
+        },
+      ],
+    });
+    expect(response).toHaveProperty('job_id');
+    expect(response).toHaveProperty('result');
+    expect(response.result).toHaveProperty('category');
+    expect(typeof response.result.category).toBe('string');
+  });
+});
+
+describe('Edit', () => {
+  test('edit returns response with document_url', async () => {
+    const response = await client.edit.run({
+      document_url: DOCUMENT_URL,
+      edit_instructions: 'Add a watermark that says DRAFT to every page',
+    });
+    expect(response).toHaveProperty('document_url');
+    expect(typeof response.document_url).toBe('string');
+  });
+});
+
 describe('Upload', () => {
   test('upload returns file_id and presigned_url', async () => {
     const response = await client.upload.create();
