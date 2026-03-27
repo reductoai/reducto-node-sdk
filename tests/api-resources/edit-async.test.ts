@@ -1,0 +1,65 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+import Reducto from 'reductoai';
+import { Response } from 'node-fetch';
+
+const client = new Reducto({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
+
+describe('resource editAsync', () => {
+  // Mock server tests are disabled
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.editAsync.create({
+      document_url: 'string',
+      edit_instructions: 'edit_instructions',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('create: required and optional params', async () => {
+    const response = await client.editAsync.create({
+      document_url: 'string',
+      edit_instructions: 'edit_instructions',
+      edit_options: {
+        color: '#e1cb97',
+        enable_overflow_pages: true,
+        flatten: true,
+        font_size: 1,
+        llm_provider_preference: 'openai',
+      },
+      form_schema: [
+        {
+          bbox: {
+            height: 0,
+            left: 0,
+            page: 0,
+            top: 0,
+            width: 0,
+            original_page: 0,
+          },
+          description: 'description',
+          type: 'text',
+          fill: true,
+          font_size: 1,
+          value: 'value',
+        },
+      ],
+      priority: true,
+      webhook: {
+        channels: ['string'],
+        metadata: {},
+        mode: 'disabled',
+        url: 'url',
+      },
+    });
+  });
+});
