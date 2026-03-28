@@ -91,4 +91,25 @@ jobs:
         run: ./scripts/bootstrap
 
       - name: Run tests
-        run: ./scripts/test
+        run: ./scripts/test --testPathIgnorePatterns='tests/e2e'
+
+  test-e2e:
+    timeout-minutes: 10
+    name: test-e2e
+    runs-on: ${{ github.repository == 'stainless-sdks/reductoai-node' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Bootstrap
+        run: ./scripts/bootstrap
+
+      - name: Run e2e tests
+        env:
+          REDUCTO_API_KEY: ${{ secrets.REDUCTO_API_KEY }}
+        run: ./scripts/test tests/e2e
