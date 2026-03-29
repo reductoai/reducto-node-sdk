@@ -13,7 +13,7 @@ export interface UploadParams {
   /**
    * Body param
    */
-  file?: Uploadable | string | null;
+  file?: Uploadable | null;
 }
 
 export declare namespace TopLevel {
