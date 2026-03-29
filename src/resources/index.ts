@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export * from './shared';
-export { Classify, type ClassifyRunParams } from './classify';
+export { Classify, type PageRange, type ClassifyRunParams } from './classify';
 export {
   Edit,
   type BoundingBox,

@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import * as Shared from './shared';
+import * as ClassifyAPI from './classify';
 import * as EditAPI from './edit';
 import * as ExtractAPI from './extract';
 import * as SplitAPI from './split';
@@ -112,7 +113,7 @@ export interface AdvancedProcessingOptions {
    * The page range to process (1-indexed). By default, the entire document is
    * processed. For spreadsheets, you can also provide a list of sheet names.
    */
-  page_range?: PageRange | Array<PageRange> | Array<number> | Array<string>;
+  page_range?: ClassifyAPI.PageRange | Array<ClassifyAPI.PageRange> | Array<number> | Array<string>;
 
   /**
    * If True, persist the results indefinitely. Defaults to False.
@@ -595,18 +596,6 @@ export interface LargeTableChunkingConfig {
    * rows/columns are persisted based on heuristics.
    */
   size?: number;
-}
-
-export interface PageRange {
-  /**
-   * The page number to stop processing at (1-indexed).
-   */
-  end?: number | null;
-
-  /**
-   * The page number to start processing from (1-indexed).
-   */
-  start?: number | null;
 }
 
 export interface ParseResponse {

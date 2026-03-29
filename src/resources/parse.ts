@@ -2,6 +2,7 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
+import * as ClassifyAPI from './classify';
 import * as Shared from './shared';
 
 export class Parse extends APIResource {
@@ -187,7 +188,7 @@ export interface Settings {
    * The page range to process (1-indexed). By default, the entire document is
    * processed. For spreadsheets, you can also provide a list of sheet names.
    */
-  page_range?: Shared.PageRange | Array<Shared.PageRange> | Array<number> | Array<string> | null;
+  page_range?: ClassifyAPI.PageRange | Array<ClassifyAPI.PageRange> | Array<number> | Array<string> | null;
 
   /**
    * If True, persist the results indefinitely. Defaults to False.
