@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.15.0 (2026-03-29)
+
+Full Changelog: [v0.14.0...v0.15.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.14.0...v0.15.0)
+
+### Features
+
+* **api:** Add transform to fix file upload type for /upload endpoint ([e3c05a0](https://github.com/reductoai/reducto-node-sdk/commit/e3c05a02aaca5190c00e016ad9dbaafe4135bafe))
+* **api:** api update ([7e42241](https://github.com/reductoai/reducto-node-sdk/commit/7e42241bf9f6ab60d59c4ca9668784c36f3739f4))
+* **api:** manual updates ([fb2a3e6](https://github.com/reductoai/reducto-node-sdk/commit/fb2a3e6428aa9f109cdebb8dafbcc96f50ab7d90))
+* **api:** manual updates ([c387965](https://github.com/reductoai/reducto-node-sdk/commit/c387965fa78cf8c5496abcca3cf42258fd6291d3))
+* **api:** manual updates ([e82218a](https://github.com/reductoai/reducto-node-sdk/commit/e82218ae910e6e457f2b5bb8f14f6d48dbcb7fd8))
+* **api:** manual updates ([67369ea](https://github.com/reductoai/reducto-node-sdk/commit/67369eaa93220cb1848d29c967c9113b805bce7c))
+* **api:** manual updates ([575285c](https://github.com/reductoai/reducto-node-sdk/commit/575285c3b55865d10ea1eb5ca79e0421635cafa1))
+* **api:** manual updates ([852ff65](https://github.com/reductoai/reducto-node-sdk/commit/852ff6560ddbb4a46cd0425127775ea51b7a665a))
+* **api:** manual updates ([20c4c53](https://github.com/reductoai/reducto-node-sdk/commit/20c4c53f39536598146ed2f16bb5249fce794d7a))
+* **api:** manual updates ([42d9e58](https://github.com/reductoai/reducto-node-sdk/commit/42d9e58a0706a8967ade6a952da3372206aeab99))
+* **api:** manual updates ([cd0f66c](https://github.com/reductoai/reducto-node-sdk/commit/cd0f66c7f0cc4c8c409ab7c2f72f4d20309c881b))
+* **api:** manual updates ([ff670d3](https://github.com/reductoai/reducto-node-sdk/commit/ff670d3143e28c0bb281eb58846175e5b60f7000))
+* **api:** manual updates ([927f36e](https://github.com/reductoai/reducto-node-sdk/commit/927f36e60fa518b00e18b1e827fe2bef97c31e48))
+* **api:** manual updates ([346d1a6](https://github.com/reductoai/reducto-node-sdk/commit/346d1a66d3eb1e4fd5b6424991b9b3916a801b31))
+* **api:** manual updates ([eebca48](https://github.com/reductoai/reducto-node-sdk/commit/eebca48ef6309ee769843e0c47eb06517d4b8b09))
+* **api:** remove transforms ([40c6c24](https://github.com/reductoai/reducto-node-sdk/commit/40c6c2467d2a19dbc1cbf78a1138156e14f8cc2a))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([944dbac](https://github.com/reductoai/reducto-node-sdk/commit/944dbac8470bbae67d943245f6eb8541a9b54ca5))
+
 ## 0.14.0 (2026-03-24)
 
 Full Changelog: [v0.13.0...v0.14.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.13.0...v0.14.0)
