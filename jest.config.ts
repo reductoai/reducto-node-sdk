@@ -17,7 +17,7 @@ const config: JestConfigWithTsJest = {
     '<rootDir>/deno/',
     '<rootDir>/deno_tests/',
   ],
-  testPathIgnorePatterns: ['scripts'],
+  testPathIgnorePatterns: ['scripts', 'tests/e2e'],
 };
 
 export default config;
