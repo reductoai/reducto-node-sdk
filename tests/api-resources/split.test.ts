@@ -76,7 +76,7 @@ describe('resource split', () => {
           split_large_tables: { enabled: true, size: 0 },
         },
       },
-      settings: { table_cutoff: 'truncate' },
+      settings: { allow_page_overlap: true, table_cutoff: 'truncate' },
       split_rules: 'split_rules',
     });
   });
@@ -153,7 +153,7 @@ describe('resource split', () => {
           split_large_tables: { enabled: true, size: 0 },
         },
       },
-      settings: { table_cutoff: 'truncate' },
+      settings: { allow_page_overlap: true, table_cutoff: 'truncate' },
       split_rules: 'split_rules',
     });
   });
