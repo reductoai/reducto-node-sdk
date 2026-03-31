@@ -36,6 +36,17 @@ export interface ParseUsage {
   credit_breakdown?: { [key: string]: number } | null;
 
   credits?: number | null;
+
+  /**
+   * Per-page breakdown of features used. Maps 1-indexed page numbers (as strings) to
+   * the list of billing features applied on that page (e.g. 'page', 'complex',
+   * 'chart_agent').
+   */
+  page_billing_breakdown?: {
+    [key: string]: Array<
+      'page' | 'html_page' | 'docx_native_page' | 'agentic' | 'complex' | 'chart_agent' | 'spreadsheet_cells'
+    >;
+  } | null;
 }
 
 export interface SplitCategory {
