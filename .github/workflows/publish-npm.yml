@@ -23,8 +23,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: '22'
 
       - name: Install dependencies
         run: |
@@ -33,5 +32,3 @@ jobs:
       - name: Publish to NPM
         run: |
           bash ./bin/publish-npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.REDUCTO_NPM_TOKEN }}

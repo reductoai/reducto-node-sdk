@@ -55,5 +55,5 @@ else
   TAG="latest"
 fi
 
-# Publish with the appropriate tag and OIDC provenance
-npm publish --tag "$TAG" --provenance --access public
+# Publish with the appropriate tag (provenance is automatic with trusted publishers)
+npm publish --tag "$TAG" --access public
