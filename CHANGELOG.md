@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.16.0 (2026-04-10)
+
+Full Changelog: [v0.15.0...v0.16.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.15.0...v0.16.0)
+
+### Features
+
+* **api:** api update ([40cb261](https://github.com/reductoai/reducto-node-sdk/commit/40cb26123fcfb4164a0123424b478f4411c4c3e6))
+* **api:** api update ([66f22f8](https://github.com/reductoai/reducto-node-sdk/commit/66f22f8b11944e359b34a09a3d5425f2694eb76f))
+* **api:** api update ([f112df9](https://github.com/reductoai/reducto-node-sdk/commit/f112df9f262cc61d784bad9ef49c3fb98ee959ae))
+
+
+### Chores
+
+* add Renovate config and SHA-pin GitHub Actions ([7e64dc8](https://github.com/reductoai/reducto-node-sdk/commit/7e64dc8548bafe76ee4d830d80264ebc4f4cf27b))
+
+
+### Styles
+
+* format renovate.json with Prettier ([84f98c8](https://github.com/reductoai/reducto-node-sdk/commit/84f98c88465d19b5ee1c7932b10b45b95135db4e))
+
 ## 0.15.0 (2026-03-29)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.14.0...v0.15.0)
