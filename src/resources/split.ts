@@ -36,6 +36,24 @@ export interface ParseUsage {
   credit_breakdown?: { [key: string]: number } | null;
 
   credits?: number | null;
+
+  /**
+   * Per-page breakdown of features used. Maps 1-indexed page numbers (as strings) to
+   * the list of billing features applied on that page (e.g. 'page', 'complex',
+   * 'chart_agent').
+   */
+  page_billing_breakdown?: {
+    [key: string]: Array<
+      | 'page'
+      | 'html_page'
+      | 'docx_native_page'
+      | 'agentic'
+      | 'complex'
+      | 'chart_agent'
+      | 'spreadsheet_cells'
+      | 'billable_spreadsheet_pages'
+    >;
+  } | null;
 }
 
 export interface SplitCategory {
@@ -47,6 +65,12 @@ export interface SplitCategory {
 }
 
 export interface SplitTableOptions {
+  /**
+   * If True, a page can belong to multiple categories/partitions. If False, each
+   * page must belong to exactly one category. Defaults to True.
+   */
+  allow_page_overlap?: boolean;
+
   /**
    * If tables should be truncated to the first few rows or if all content should be
    * preserved. truncate improves latency, preserve is recommended for cases where
