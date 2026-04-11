@@ -140,22 +140,7 @@ export interface ParseOptions {
   spreadsheet?: ParseAPI.Spreadsheet;
 }
 
-export interface V3Extract {
-  /**
-   * The extracted response in your provided schema. This is a list of dictionaries.
-   * If disable_chunking is True (default), then it will be a list of length one.
-   */
-  result: unknown | Array<unknown>;
-
-  usage: ExtractUsage;
-
-  job_id?: string | null;
-
-  /**
-   * The link to the studio pipeline for the document.
-   */
-  studio_link?: string | null;
-}
+export type V3Extract = { [key: string]: unknown };
 
 export type ExtractRunResponse = V3Extract | Shared.AsyncExtractResponse;
 

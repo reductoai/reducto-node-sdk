@@ -517,27 +517,7 @@ export interface ExperimentalProcessingOptions {
   [k: string]: unknown;
 }
 
-export interface ExtractResponse {
-  /**
-   * The citations corresponding to the extracted response.
-   */
-  citations: Array<unknown> | null;
-
-  /**
-   * The extracted response in your provided schema. This is a list of dictionaries.
-   * If disable_chunking is True (default), then it will be a list of length one.
-   */
-  result: Array<unknown>;
-
-  usage: ExtractAPI.ExtractUsage;
-
-  job_id?: string | null;
-
-  /**
-   * The link to the studio pipeline for the document.
-   */
-  studio_link?: string | null;
-}
+export type ExtractResponse = { [key: string]: unknown };
 
 export interface FigureAgentic {
   scope: 'figure';
