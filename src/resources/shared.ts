@@ -464,6 +464,7 @@ export interface ExperimentalProcessingOptions {
   layout_model?:
     | 'default'
     | 'beta'
+    | 'dfine'
     | 'rfdetr'
     | 'rfdetr0302'
     | 'rfdetr0303'
