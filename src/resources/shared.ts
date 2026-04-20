@@ -470,6 +470,7 @@ export interface ExperimentalProcessingOptions {
     | 'rfdetr0303'
     | 'rfdetrbase0218'
     | 'rfdetr0304'
+    | 'rfdetr0306'
     | 'qwen35_27b_0317';
 
   /**
