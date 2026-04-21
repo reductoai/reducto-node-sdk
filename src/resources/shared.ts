@@ -106,7 +106,7 @@ export interface AdvancedProcessingOptions {
    * The OCR system to use. Highres is recommended for documents with English
    * characters. Legacy uses an alternative OCR backend.
    */
-  ocr_system?: 'highres' | 'multilingual' | 'combined' | 'reducto' | 'legacy' | 'reducto-v2';
+  ocr_system?: 'highres' | 'multilingual' | 'combined' | 'reducto' | 'legacy' | 'reducto-v2' | 'reducto-v3';
 
   /**
    * The page range to process (1-indexed). By default, the entire document is
