@@ -611,6 +611,14 @@ export interface ParseResponse {
   usage: SplitAPI.ParseUsage;
 
   /**
+   * Which pipeline produced this response. `lite` means Reducto Flash Lite served
+   * the request; `base` is the standard pipeline. Optional / nullable for forward
+   * compatibility — older API instances or persisted responses written before this
+   * field existed will leave it `None`; treat `None` as `base`.
+   */
+  parse_mode?: 'base' | 'lite' | null;
+
+  /**
    * The storage URL of the converted PDF file.
    */
   pdf_url?: string | null;
