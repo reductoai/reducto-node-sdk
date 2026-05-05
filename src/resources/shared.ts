@@ -945,6 +945,12 @@ export interface TableAgentic {
   scope: 'table';
 
   /**
+   * Routing mode for table agentic: 'default' runs enrichment on all tables, 'auto'
+   * uses the router to skip tables where enrichment is unlikely to help.
+   */
+  mode?: 'default' | 'auto';
+
+  /**
    * Custom prompt for table agentic.
    */
   prompt?: string | null;

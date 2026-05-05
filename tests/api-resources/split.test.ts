@@ -37,7 +37,13 @@ describe('resource split', () => {
       ],
       parsing: {
         enhance: {
-          agentic: [{ scope: 'table', prompt: 'prompt' }],
+          agentic: [
+            {
+              scope: 'table',
+              mode: 'default',
+              prompt: 'prompt',
+            },
+          ],
           intelligent_ordering: true,
           summarize_figures: true,
         },
@@ -114,7 +120,13 @@ describe('resource split', () => {
       },
       parsing: {
         enhance: {
-          agentic: [{ scope: 'table', prompt: 'prompt' }],
+          agentic: [
+            {
+              scope: 'table',
+              mode: 'default',
+              prompt: 'prompt',
+            },
+          ],
           intelligent_ordering: true,
           summarize_figures: true,
         },
