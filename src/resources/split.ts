@@ -52,6 +52,12 @@ export interface ParseUsage {
       | 'chart_agent'
       | 'spreadsheet_cells'
       | 'billable_spreadsheet_pages'
+      | 'enrich_table'
+      | 'figure_summary'
+      | 'table_summary'
+      | 'key_value'
+      | 'agentic_text'
+      | 'promptable_agentic_text'
     >;
   } | null;
 }
