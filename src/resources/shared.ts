@@ -309,6 +309,8 @@ export interface ClassifyResponse {
    * Overall confidence breakdown for classification response.
    */
   response_confidence?: ClassifyResponse.ResponseConfidence | null;
+
+  response_type?: 'classify';
 }
 
 export namespace ClassifyResponse {
@@ -365,6 +367,8 @@ export interface EditResponse {
    * bounding boxes.
    */
   form_schema?: Array<EditAPI.EditWidget> | null;
+
+  response_type?: 'edit';
 
   /**
    * Usage information for the edit operation, including number of pages and credits
@@ -623,6 +627,8 @@ export interface ParseResponse {
    */
   pdf_url?: string | null;
 
+  response_type?: 'parse';
+
   /**
    * The link to the studio pipeline for the document.
    */
@@ -811,6 +817,8 @@ export interface PipelineResponse {
   result: PipelineResponse.Result;
 
   usage: SplitAPI.ParseUsage;
+
+  response_type?: 'pipeline';
 }
 
 export namespace PipelineResponse {
@@ -877,6 +885,8 @@ export interface SplitResponse {
   result: SplitResponse.SplitResult | SplitResponse.DeepSplitResult;
 
   usage: SplitAPI.ParseUsage;
+
+  response_type?: 'split';
 }
 
 export namespace SplitResponse {
