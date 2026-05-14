@@ -105,6 +105,12 @@ export interface SplitRunParams {
   split_description: Array<SplitCategory>;
 
   /**
+   * If True, uses the deep split agent for higher-quality document splitting. Off by
+   * default.
+   */
+  deep_split?: boolean;
+
+  /**
    * The configuration options for parsing the document. If you are passing in a
    * jobid:// URL for the file, then this configuration will be ignored.
    */
@@ -143,6 +149,12 @@ export interface SplitRunJobParams {
    * The configuration options for asynchronous processing (default synchronous).
    */
   async?: ParseAPI.AsyncConfigV3;
+
+  /**
+   * If True, uses the deep split agent for higher-quality document splitting. Off by
+   * default.
+   */
+  deep_split?: boolean;
 
   /**
    * The configuration options for parsing the document. If you are passing in a

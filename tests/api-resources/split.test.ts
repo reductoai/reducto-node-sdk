@@ -35,6 +35,7 @@ describe('resource split', () => {
           partition_key: 'partition_key',
         },
       ],
+      deep_split: true,
       parsing: {
         enhance: {
           agentic: [
@@ -118,6 +119,7 @@ describe('resource split', () => {
         priority: true,
         webhook: { channels: ['string'], mode: 'svix' },
       },
+      deep_split: true,
       parsing: {
         enhance: {
           agentic: [
