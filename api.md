@@ -87,7 +87,6 @@ Types:
 - <code><a href="./src/resources/split.ts">DeepSplitPageEvidence</a></code>
 - <code><a href="./src/resources/split.ts">ParseUsage</a></code>
 - <code><a href="./src/resources/split.ts">SplitCategory</a></code>
-- <code><a href="./src/resources/split.ts">SplitTableOptions</a></code>
 
 Methods:
 

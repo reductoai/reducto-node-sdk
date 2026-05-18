@@ -53,7 +53,6 @@ export {
   type DeepSplitPageEvidence,
   type ParseUsage,
   type SplitCategory,
-  type SplitTableOptions,
   type SplitRunParams,
   type SplitRunJobParams,
 } from './split';

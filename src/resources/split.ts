@@ -70,22 +70,6 @@ export interface SplitCategory {
   partition_key?: string | null;
 }
 
-export interface SplitTableOptions {
-  /**
-   * If True, a page can belong to multiple categories/partitions. If False, each
-   * page must belong to exactly one category. Defaults to True.
-   */
-  allow_page_overlap?: boolean;
-
-  /**
-   * If tables should be truncated to the first few rows or if all content should be
-   * preserved. truncate improves latency, preserve is recommended for cases where
-   * partition_key is being used and the partition_key may be included within the
-   * table. Defaults to truncate
-   */
-  table_cutoff?: 'truncate' | 'preserve';
-}
-
 export interface SplitRunParams {
   /**
    * For parse/split/extract pipelines, the URL of the document to be processed. You
@@ -105,12 +89,6 @@ export interface SplitRunParams {
   split_description: Array<SplitCategory>;
 
   /**
-   * If True, uses the deep split agent for higher-quality document splitting. Off by
-   * default.
-   */
-  deep_split?: boolean;
-
-  /**
    * The configuration options for parsing the document. If you are passing in a
    * jobid:// URL for the file, then this configuration will be ignored.
    */
@@ -119,12 +97,39 @@ export interface SplitRunParams {
   /**
    * The settings for split processing.
    */
-  settings?: SplitTableOptions;
+  settings?: SplitRunParams.Settings;
 
   /**
    * The prompt that describes rules for splitting the document.
    */
   split_rules?: string;
+}
+
+export namespace SplitRunParams {
+  /**
+   * The settings for split processing.
+   */
+  export interface Settings {
+    /**
+     * If True, a page can belong to multiple categories/partitions. If False, each
+     * page must belong to exactly one category. Defaults to True.
+     */
+    allow_page_overlap?: boolean;
+
+    /**
+     * If True, uses the deep split agent for higher-quality document splitting. Off by
+     * default.
+     */
+    deep_split?: boolean;
+
+    /**
+     * If tables should be truncated to the first few rows or if all content should be
+     * preserved. truncate improves latency, preserve is recommended for cases where
+     * partition_key is being used and the partition_key may be included within the
+     * table. Defaults to truncate
+     */
+    table_cutoff?: 'truncate' | 'preserve';
+  }
 }
 
 export interface SplitRunJobParams {
@@ -151,12 +156,6 @@ export interface SplitRunJobParams {
   async?: ParseAPI.AsyncConfigV3;
 
   /**
-   * If True, uses the deep split agent for higher-quality document splitting. Off by
-   * default.
-   */
-  deep_split?: boolean;
-
-  /**
    * The configuration options for parsing the document. If you are passing in a
    * jobid:// URL for the file, then this configuration will be ignored.
    */
@@ -165,7 +164,7 @@ export interface SplitRunJobParams {
   /**
    * The settings for split processing.
    */
-  settings?: SplitTableOptions;
+  settings?: SplitRunJobParams.Settings;
 
   /**
    * The prompt that describes rules for splitting the document.
@@ -173,12 +172,38 @@ export interface SplitRunJobParams {
   split_rules?: string;
 }
 
+export namespace SplitRunJobParams {
+  /**
+   * The settings for split processing.
+   */
+  export interface Settings {
+    /**
+     * If True, a page can belong to multiple categories/partitions. If False, each
+     * page must belong to exactly one category. Defaults to True.
+     */
+    allow_page_overlap?: boolean;
+
+    /**
+     * If True, uses the deep split agent for higher-quality document splitting. Off by
+     * default.
+     */
+    deep_split?: boolean;
+
+    /**
+     * If tables should be truncated to the first few rows or if all content should be
+     * preserved. truncate improves latency, preserve is recommended for cases where
+     * partition_key is being used and the partition_key may be included within the
+     * table. Defaults to truncate
+     */
+    table_cutoff?: 'truncate' | 'preserve';
+  }
+}
+
 export declare namespace Split {
   export {
     type DeepSplitPageEvidence as DeepSplitPageEvidence,
     type ParseUsage as ParseUsage,
     type SplitCategory as SplitCategory,
-    type SplitTableOptions as SplitTableOptions,
     type SplitRunParams as SplitRunParams,
     type SplitRunJobParams as SplitRunJobParams,
   };

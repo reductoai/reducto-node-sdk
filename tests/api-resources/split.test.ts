@@ -35,7 +35,6 @@ describe('resource split', () => {
           partition_key: 'partition_key',
         },
       ],
-      deep_split: true,
       parsing: {
         enhance: {
           agentic: [
@@ -83,7 +82,11 @@ describe('resource split', () => {
           split_large_tables: { enabled: true, size: 0 },
         },
       },
-      settings: { allow_page_overlap: true, table_cutoff: 'truncate' },
+      settings: {
+        allow_page_overlap: true,
+        deep_split: true,
+        table_cutoff: 'truncate',
+      },
       split_rules: 'split_rules',
     });
   });
@@ -119,7 +122,6 @@ describe('resource split', () => {
         priority: true,
         webhook: { channels: ['string'], mode: 'svix' },
       },
-      deep_split: true,
       parsing: {
         enhance: {
           agentic: [
@@ -167,7 +169,11 @@ describe('resource split', () => {
           split_large_tables: { enabled: true, size: 0 },
         },
       },
-      settings: { allow_page_overlap: true, table_cutoff: 'truncate' },
+      settings: {
+        allow_page_overlap: true,
+        deep_split: true,
+        table_cutoff: 'truncate',
+      },
       split_rules: 'split_rules',
     });
   });

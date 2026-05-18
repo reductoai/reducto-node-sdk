@@ -52,7 +52,6 @@ import {
   SplitCategory,
   SplitRunJobParams,
   SplitRunParams,
-  SplitTableOptions,
 } from './resources/split';
 import { Webhook, WebhookRunResponse } from './resources/webhook';
 
@@ -333,7 +332,6 @@ export declare namespace Reducto {
     type DeepSplitPageEvidence as DeepSplitPageEvidence,
     type ParseUsage as ParseUsage,
     type SplitCategory as SplitCategory,
-    type SplitTableOptions as SplitTableOptions,
     type SplitRunParams as SplitRunParams,
     type SplitRunJobParams as SplitRunJobParams,
   };
