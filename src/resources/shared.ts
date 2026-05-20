@@ -422,6 +422,14 @@ export interface ExperimentalProcessingOptions {
   disable_office_external_links?: boolean;
 
   /**
+   * Render DPI used when rasterizing the source PDF before embedding the OCR text
+   * layer. Lower values produce dramatically smaller output PDFs; higher values
+   * preserve more detail when zoomed past 200%. Defaults to 100 (good for on-screen
+   * viewing); raise toward the source scan DPI for crisper output. Min 50, max 250.
+   */
+  embed_pdf_metadata_dpi?: number;
+
+  /**
    * If extracted OCR text metadata should be embedded back into the returned PDF,
    * overwriting any existing text. Defaults to False.
    */

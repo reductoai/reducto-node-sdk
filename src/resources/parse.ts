@@ -161,6 +161,15 @@ export interface Settings {
   embed_pdf_metadata?: boolean;
 
   /**
+   * Render DPI used when rasterizing the source PDF before embedding the OCR text
+   * layer (only applies when `embed_pdf_metadata` is True). Lower values produce
+   * dramatically smaller output PDFs; higher values preserve more detail when zoomed
+   * past 200%. Defaults to 100 (good for on-screen viewing); raise toward the source
+   * scan DPI for crisper output. Min 50, max 250.
+   */
+  embed_pdf_metadata_dpi?: number;
+
+  /**
    * The mode to use for text extraction from PDFs. OCR mode uses optical character
    * recognition only. Hybrid mode combines OCR with embedded PDF text for best
    * accuracy (default).

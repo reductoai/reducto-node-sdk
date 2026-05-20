@@ -54,6 +54,7 @@ describe('resource parse', () => {
       settings: {
         document_password: 'document_password',
         embed_pdf_metadata: true,
+        embed_pdf_metadata_dpi: 50,
         extraction_mode: 'ocr',
         force_file_extension: 'force_file_extension',
         force_url_result: true,
@@ -124,6 +125,7 @@ describe('resource parse', () => {
       settings: {
         document_password: 'document_password',
         embed_pdf_metadata: true,
+        embed_pdf_metadata_dpi: 50,
         extraction_mode: 'ocr',
         force_file_extension: 'force_file_extension',
         force_url_result: true,
