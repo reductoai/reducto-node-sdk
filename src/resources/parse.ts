@@ -63,9 +63,9 @@ export interface AsyncParseConfig {
 
   /**
    * Queue priority. 'batch' for non-urgent work that processes when spare GPU
-   * capacity is available.
+   * capacity is available. 'auto' (alias: 'standard') uses the default queue.
    */
-  queue_priority?: 'auto' | 'batch';
+  queue_priority?: 'auto' | 'standard' | 'batch';
 
   retrieval?: Retrieval;
 
@@ -294,9 +294,9 @@ export declare namespace ParseRunParams {
 
     /**
      * Queue priority. 'batch' for non-urgent work that processes when spare GPU
-     * capacity is available.
+     * capacity is available. 'auto' (alias: 'standard') uses the default queue.
      */
-    queue_priority?: 'auto' | 'batch';
+    queue_priority?: 'auto' | 'standard' | 'batch';
 
     retrieval?: Retrieval;
 
@@ -330,9 +330,9 @@ export interface ParseRunJobParams {
 
   /**
    * Queue priority. 'batch' for non-urgent work that processes when spare GPU
-   * capacity is available.
+   * capacity is available. 'auto' (alias: 'standard') uses the default queue.
    */
-  queue_priority?: 'auto' | 'batch';
+  queue_priority?: 'auto' | 'standard' | 'batch';
 
   retrieval?: Retrieval;
 
