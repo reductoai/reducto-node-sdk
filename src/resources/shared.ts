@@ -159,18 +159,12 @@ export interface ArrayExtractConfig {
   /**
    * The array extraction version to use.
    */
-  mode?: 'auto' | 'legacy' | 'streaming' | 'no_overlap';
+  mode?: 'auto' | 'legacy' | 'no_overlap';
 
   /**
    * Length of each segment, in pages, for parallel calls with array extraction.
    */
   pages_per_segment?: number;
-
-  /**
-   * Number of items to extract in each stream call. Lower numbers will increase
-   * quality but be much slower. 50 works well for most documents with tables.
-   */
-  streaming_extract_item_density?: number;
 }
 
 export interface AsyncEditResponse {
