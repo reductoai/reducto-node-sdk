@@ -305,6 +305,8 @@ export interface ClassifyResponse {
   response_confidence?: ClassifyResponse.ResponseConfidence | null;
 
   response_type?: 'classify';
+
+  usage?: ClassifyResponse.Usage | null;
 }
 
 export namespace ClassifyResponse {
@@ -341,6 +343,14 @@ export namespace ClassifyResponse {
         criterion: string;
       }
     }
+  }
+
+  export interface Usage {
+    num_categories: number;
+
+    num_pages: number;
+
+    credits?: number | null;
   }
 }
 
