@@ -97,6 +97,13 @@ export interface AdvancedProcessingOptions {
   large_table_chunking?: LargeTableChunkingConfig;
 
   /**
+   * Maximum total non-empty cells allowed across all sheets. If exceeded, the
+   * request is rejected with a 422 error. Set to null to disable the limit. Defaults
+   * to null.
+   */
+  max_cell_count?: number | null;
+
+  /**
    * A flag to indicate if consecutive tables with the same number of columns should
    * be merged across breaks and spaces.
    */

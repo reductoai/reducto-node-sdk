@@ -238,6 +238,13 @@ export interface Spreadsheet {
    */
   include?: Array<'cell_colors' | 'formula' | 'dropdowns'>;
 
+  /**
+   * Maximum total non-empty cells allowed across all sheets. If exceeded, the
+   * request is rejected with a 422 error. Set to null to disable the limit. Defaults
+   * to null.
+   */
+  max_cell_count?: number | null;
+
   split_large_tables?: Shared.SplitLargeTables;
 }
 

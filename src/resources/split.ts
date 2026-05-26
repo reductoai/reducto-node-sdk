@@ -38,6 +38,11 @@ export interface ParseUsage {
   credits?: number | null;
 
   /**
+   * Total non-empty cells across all sheets. Only set for spreadsheet inputs.
+   */
+  non_empty_cell_count?: number | null;
+
+  /**
    * Per-page breakdown of features used. Maps 1-indexed page numbers (as strings) to
    * the list of billing features applied on that page (e.g. 'page', 'complex',
    * 'chart_agent').

@@ -69,6 +69,7 @@ describe('resource parse', () => {
         clustering: 'accurate',
         exclude: ['hidden_sheets'],
         include: ['cell_colors'],
+        max_cell_count: 1,
         split_large_tables: { enabled: true, size: 0 },
       },
     });
@@ -140,6 +141,7 @@ describe('resource parse', () => {
         clustering: 'accurate',
         exclude: ['hidden_sheets'],
         include: ['cell_colors'],
+        max_cell_count: 1,
         split_large_tables: { enabled: true, size: 0 },
       },
     });
