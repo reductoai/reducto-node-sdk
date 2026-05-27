@@ -494,7 +494,8 @@ export interface ExperimentalProcessingOptions {
     | 'rfdetrbase0218'
     | 'rfdetr0304'
     | 'rfdetr0306'
-    | 'qwen35_27b_0317';
+    | 'qwen35_27b_0317'
+    | 'qwenrfdetr460m_0526';
 
   /**
    * Instead of using LibreOffice, when enabled, this flag uses a Windows VM to
