@@ -187,6 +187,11 @@ export interface Settings {
   force_url_result?: boolean;
 
   /**
+   * Hybrid VPC request-scoped settings.
+   */
+  hybrid_vpc?: Settings.HybridVpc;
+
+  /**
    * Standard is our best multilingual OCR system. Legacy only supports germanic
    * languages and is available for backwards compatibility.
    */
@@ -218,6 +223,19 @@ export interface Settings {
    * The timeout for the job in seconds.
    */
   timeout?: number | null;
+}
+
+export namespace Settings {
+  /**
+   * Hybrid VPC request-scoped settings.
+   */
+  export interface HybridVpc {
+    /**
+     * Named Hybrid VPC environment to use for this request. Only applies when your
+     * organization has Hybrid VPC environments configured.
+     */
+    environment?: string | null;
+  }
 }
 
 export interface Spreadsheet {
