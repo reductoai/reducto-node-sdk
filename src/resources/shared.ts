@@ -399,7 +399,7 @@ export interface EnrichConfig {
   /**
    * The mode to use for enrichment. Defaults to standard
    */
-  mode?: 'standard' | 'page' | 'table';
+  mode?: 'standard' | 'page' | 'table' | 'table_auto';
 
   /**
    * Add information to the prompt for enrichment.
@@ -975,9 +975,8 @@ export interface TableAgentic {
   scope: 'table';
 
   /**
-   * Routing mode for table agentic: 'default' and 'max' run enrichment on all
-   * tables, 'auto' uses the router to skip tables where enrichment is unlikely to
-   * help.
+   * Mode for table agentic: 'default' selectively applies enrichment only to tables
+   * likely to benefit, and 'max' runs enrichment on all tables.
    */
   mode?: 'default' | 'auto' | 'max';
 
