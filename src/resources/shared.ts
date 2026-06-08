@@ -113,7 +113,7 @@ export interface AdvancedProcessingOptions {
    * The OCR system to use. Highres is recommended for documents with English
    * characters. Legacy uses an alternative OCR backend.
    */
-  ocr_system?: 'highres' | 'multilingual' | 'combined' | 'reducto' | 'legacy' | 'reducto-v2' | 'reducto-v3';
+  ocr_system?: 'highres' | 'multilingual' | 'combined' | 'reducto' | 'legacy';
 
   /**
    * The page range to process (1-indexed). By default, the entire document is
@@ -484,19 +484,7 @@ export interface ExperimentalProcessingOptions {
   /**
    * The layout model to use for the document. This will be deprecated in the future.
    */
-  layout_model?:
-    | 'default'
-    | 'beta'
-    | 'dfine'
-    | 'rfdetr'
-    | 'rfdetr0302'
-    | 'rfdetr0303'
-    | 'rfdetrbase0218'
-    | 'rfdetr0304'
-    | 'rfdetr0306'
-    | 'qwen35_27b_0317'
-    | 'qwenrfdetr460m_0526'
-    | 'qwenrfdetr460m_0526_tritonflash';
+  layout_model?: 'default' | 'beta';
 
   /**
    * Instead of using LibreOffice, when enabled, this flag uses a Windows VM to
