@@ -220,6 +220,13 @@ export interface Settings {
   return_ocr_data?: boolean;
 
   /**
+   * Per-tenant throttling for multi-tenant applications. Tag each request with your
+   * tenant's id to bound how much of your account's concurrency a single tenant can
+   * consume. Account-level throttles still apply.
+   */
+  tenant_throttling?: Settings.TenantThrottling | null;
+
+  /**
    * The timeout for the job in seconds.
    */
   timeout?: number | null;
@@ -235,6 +242,25 @@ export namespace Settings {
      * organization has Hybrid VPC environments configured.
      */
     environment?: string | null;
+  }
+
+  /**
+   * Per-tenant throttling for multi-tenant applications. Tag each request with your
+   * tenant's id to bound how much of your account's concurrency a single tenant can
+   * consume. Account-level throttles still apply.
+   */
+  export interface TenantThrottling {
+    /**
+     * Your identifier for the tenant (customer, workspace, organization) this request
+     * belongs to. Used only for noisy-neighbor throttling inside your account.
+     */
+    tenant_id: string;
+
+    /**
+     * Maximum fraction of your account's concurrency ceiling this tenant may use,
+     * between 0 (exclusive) and 1. Defaults to 0.5.
+     */
+    max_share?: number;
   }
 }
 

@@ -75,6 +75,7 @@ describe('resource split', () => {
           persist_results: true,
           return_images: ['figure'],
           return_ocr_data: true,
+          tenant_throttling: { tenant_id: 'x', max_share: 1 },
           timeout: 0,
         },
         spreadsheet: {
@@ -165,6 +166,7 @@ describe('resource split', () => {
           persist_results: true,
           return_images: ['figure'],
           return_ocr_data: true,
+          tenant_throttling: { tenant_id: 'x', max_share: 1 },
           timeout: 0,
         },
         spreadsheet: {
