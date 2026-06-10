@@ -14,7 +14,6 @@ export {
   Extract,
   type AsyncExtractConfig,
   type ExtractSettings,
-  type ExtractUsage,
   type Instructions,
   type ParseOptions,
   type V3Extract,

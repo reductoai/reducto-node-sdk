@@ -25,7 +25,6 @@ import {
   ExtractRunParams,
   ExtractRunResponse,
   ExtractSettings,
-  ExtractUsage,
   Instructions,
   ParseOptions,
   V3Extract,
@@ -318,7 +317,6 @@ export declare namespace Reducto {
     Extract as Extract,
     type AsyncExtractConfig as AsyncExtractConfig,
     type ExtractSettings as ExtractSettings,
-    type ExtractUsage as ExtractUsage,
     type Instructions as Instructions,
     type ParseOptions as ParseOptions,
     type V3Extract as V3Extract,
@@ -364,26 +362,17 @@ export declare namespace Reducto {
     type JobGetAllParams as JobGetAllParams,
   };
 
-  export type AdvancedCitationsConfig = API.AdvancedCitationsConfig;
-  export type AdvancedProcessingOptions = API.AdvancedProcessingOptions;
-  export type ArrayExtractConfig = API.ArrayExtractConfig;
   export type AsyncEditResponse = API.AsyncEditResponse;
   export type AsyncExtractResponse = API.AsyncExtractResponse;
   export type AsyncParseResponse = API.AsyncParseResponse;
   export type AsyncPipelineResponse = API.AsyncPipelineResponse;
   export type AsyncSplitResponse = API.AsyncSplitResponse;
-  export type BaseProcessingOptions = API.BaseProcessingOptions;
   export type Chunking = API.Chunking;
-  export type ChunkingConfig = API.ChunkingConfig;
   export type ClassifyResponse = API.ClassifyResponse;
   export type DirectWebhookConfig = API.DirectWebhookConfig;
   export type EditResponse = API.EditResponse;
-  export type EnrichConfig = API.EnrichConfig;
-  export type ExperimentalProcessingOptions = API.ExperimentalProcessingOptions;
   export type ExtractResponse = API.ExtractResponse;
   export type FigureAgentic = API.FigureAgentic;
-  export type FigureSummaryConfig = API.FigureSummaryConfig;
-  export type LargeTableChunkingConfig = API.LargeTableChunkingConfig;
   export type PageRange = API.PageRange;
   export type ParseResponse = API.ParseResponse;
   export type PipelineResponse = API.PipelineResponse;
@@ -391,7 +380,6 @@ export declare namespace Reducto {
   export type SplitResponse = API.SplitResponse;
   export type SvixWebhookConfig = API.SvixWebhookConfig;
   export type TableAgentic = API.TableAgentic;
-  export type TableSummaryConfig = API.TableSummaryConfig;
   export type TextAgentic = API.TextAgentic;
   export type Upload = API.Upload;
   export type WebhookConfigNew = API.WebhookConfigNew;

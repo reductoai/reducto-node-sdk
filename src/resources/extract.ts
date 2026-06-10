@@ -106,16 +106,6 @@ export namespace ExtractSettings {
   }
 }
 
-export interface ExtractUsage {
-  num_fields: number;
-
-  num_pages: number;
-
-  credits?: number | null;
-
-  extract_mode?: 'super_agent' | 'extract' | 'spreadsheet_agent' | null;
-}
-
 export interface Instructions {
   /**
    * The JSON schema to use for the extraction.
@@ -252,7 +242,6 @@ export declare namespace Extract {
   export {
     type AsyncExtractConfig as AsyncExtractConfig,
     type ExtractSettings as ExtractSettings,
-    type ExtractUsage as ExtractUsage,
     type Instructions as Instructions,
     type ParseOptions as ParseOptions,
     type V3Extract as V3Extract,
