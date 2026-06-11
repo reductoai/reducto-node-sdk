@@ -386,7 +386,7 @@ export declare namespace Reducto {
   export type WebhookConfigNew = API.WebhookConfigNew;
 }
 
-export { toFile, fileFromPath } from './uploads';
+export { toFile, fileFromPath, type Uploadable } from './uploads';
 export {
   ReductoError,
   APIError,

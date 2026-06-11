@@ -10,6 +10,7 @@
  */
 
 import Reducto from 'reductoai';
+import fetch from 'node-fetch';
 
 const DOCUMENT_URL = 'https://ci.reducto.ai/onepager.pdf';
 
@@ -253,5 +254,25 @@ describe('Job', () => {
     }
 
     throw new Error('Job did not complete within timeout');
+  });
+});
+
+describe('Upload', () => {
+  test('upload a fetched file returns a file_id', async () => {
+    const response = await fetch(DOCUMENT_URL);
+    expect(response.ok).toBe(true);
+
+    const { file_id } = await client.upload({ file: response });
+    expect(typeof file_id).toBe('string');
+    expect(file_id.length).toBeGreaterThan(0);
+  });
+
+  test('uploaded file_id can be used as parse input', async () => {
+    const response = await fetch(DOCUMENT_URL);
+    const { file_id } = await client.upload({ file: response });
+
+    const parsed = await client.parse.run({ input: file_id });
+    expect(parsed).toHaveProperty('job_id');
+    expect(parsed).toHaveProperty('result');
   });
 });
