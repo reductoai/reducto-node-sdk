@@ -103,6 +103,16 @@ export namespace ExtractSettings {
      * If True, enable numeric citation confidence scores. Defaults to True.
      */
     numerical_confidence?: boolean;
+
+    /**
+     * How much of the source parse block to embed on each citation's parentBlock.
+     * 'full' (default) embeds the verbatim source-block HTML in parentBlock.content.
+     * 'bbox_only' suppresses parentBlock.content (returned as an empty string) while
+     * keeping parentBlock.bbox and all citation-level fields — this can drastically
+     * shrink responses on table-heavy schemas where the same source block is cited
+     * many times.
+     */
+    parent_block?: 'full' | 'bbox_only';
   }
 }
 
