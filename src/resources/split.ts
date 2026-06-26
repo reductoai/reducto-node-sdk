@@ -129,6 +129,11 @@ export namespace SplitRunParams {
     deep_split?: boolean;
 
     /**
+     * Force the endpoint result to be returned in URL form.
+     */
+    force_url_result?: boolean;
+
+    /**
      * If tables should be truncated to the first few rows or if all content should be
      * preserved. truncate improves latency, preserve is recommended for cases where
      * partition_key is being used and the partition_key may be included within the
@@ -194,6 +199,11 @@ export namespace SplitRunJobParams {
      * default.
      */
     deep_split?: boolean;
+
+    /**
+     * Force the endpoint result to be returned in URL form.
+     */
+    force_url_result?: boolean;
 
     /**
      * If tables should be truncated to the first few rows or if all content should be

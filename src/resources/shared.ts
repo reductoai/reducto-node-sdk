@@ -53,7 +53,7 @@ export interface Chunking {
 export interface ClassifyResponse {
   job_id: string;
 
-  result: ClassifyResponse.Result;
+  result: ClassifyResponse.ClassifyResponseCategory | ClassifyResponse.URLResult;
 
   /**
    * The duration of the classify request in seconds.
@@ -71,8 +71,19 @@ export interface ClassifyResponse {
 }
 
 export namespace ClassifyResponse {
-  export interface Result {
+  export interface ClassifyResponseCategory {
     category: string;
+  }
+
+  export interface URLResult {
+    result_id: string;
+
+    /**
+     * type = 'url'
+     */
+    type: 'url';
+
+    url: string;
   }
 
   /**
@@ -387,9 +398,9 @@ export namespace SplitLargeTables {
 
 export interface SplitResponse {
   /**
-   * The split result.
+   * The split result. If force_url_result is True, this is returned as a URL result.
    */
-  result: SplitResponse.SplitResult | SplitResponse.DeepSplitResult;
+  result: SplitResponse.SplitResult | SplitResponse.DeepSplitResult | SplitResponse.URLResult;
 
   usage: SplitAPI.ParseUsage;
 
@@ -445,6 +456,17 @@ export namespace SplitResponse {
         pages: Array<SplitAPI.DeepSplitPageEvidence>;
       }
     }
+  }
+
+  export interface URLResult {
+    result_id: string;
+
+    /**
+     * type = 'url'
+     */
+    type: 'url';
+
+    url: string;
   }
 }
 

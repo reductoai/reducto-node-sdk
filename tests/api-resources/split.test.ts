@@ -89,6 +89,7 @@ describe('resource split', () => {
       settings: {
         allow_page_overlap: true,
         deep_split: true,
+        force_url_result: true,
         table_cutoff: 'truncate',
       },
       split_rules: 'split_rules',
@@ -180,6 +181,7 @@ describe('resource split', () => {
       settings: {
         allow_page_overlap: true,
         deep_split: true,
+        force_url_result: true,
         table_cutoff: 'truncate',
       },
       split_rules: 'split_rules',

@@ -78,6 +78,11 @@ export interface ExtractSettings {
   deep_extract?: boolean;
 
   /**
+   * Force the endpoint result to be returned in URL form.
+   */
+  force_url_result?: boolean;
+
+  /**
    * If True, include images in the extraction.
    */
   include_images?: boolean;

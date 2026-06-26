@@ -37,6 +37,11 @@ export interface ClassifyRunParams {
   document_metadata?: string | null;
 
   /**
+   * Force the endpoint result to be returned in URL form.
+   */
+  force_url_result?: boolean;
+
+  /**
    * The page range to process (1-indexed). By default, the first 5 pages are used.
    * If more than 25 pages are selected, only the first 25 (after sorting) are used.
    * Only applies to PDFs; ignored for other document types.
