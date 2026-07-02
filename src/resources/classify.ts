@@ -47,11 +47,6 @@ export interface ClassifyRunParams {
    * Only applies to PDFs; ignored for other document types.
    */
   page_range?: Shared.PageRange | Array<Shared.PageRange> | Array<number> | null;
-
-  /**
-   * If True, persist the results indefinitely. Defaults to False.
-   */
-  persist_results?: boolean;
 }
 
 export namespace ClassifyRunParams {
