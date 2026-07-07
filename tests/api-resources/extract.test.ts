@@ -91,6 +91,7 @@ describe('resource extract', () => {
         force_url_result: true,
         include_images: true,
         optimize_for_latency: true,
+        page_range: { end: 0, start: 0 },
       },
     });
   });
@@ -182,6 +183,7 @@ describe('resource extract', () => {
         force_url_result: true,
         include_images: true,
         optimize_for_latency: true,
+        page_range: { end: 0, start: 0 },
       },
     });
   });

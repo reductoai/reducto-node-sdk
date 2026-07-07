@@ -92,6 +92,12 @@ export interface ExtractSettings {
    * higher cost. Defaults to False.
    */
   optimize_for_latency?: boolean;
+
+  /**
+   * The page range to extract from (1-indexed). By default, the entire document is
+   * used. For spreadsheets, you can also provide a list of sheet names.
+   */
+  page_range?: Shared.PageRange | Array<Shared.PageRange> | Array<number> | Array<string> | null;
 }
 
 export namespace ExtractSettings {
