@@ -61,7 +61,9 @@ export interface AsyncExtractConfig {
 
 export interface ExtractSettings {
   /**
-   * If True, use array extraction.
+   * Deprecated: prefer deep_extract, which supersedes array extraction for complex
+   * and long (array-heavy) extractions via an agentic loop (at higher cost and
+   * latency). If True, use array extraction.
    */
   array_extract?: boolean;
 
