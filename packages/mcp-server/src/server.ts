@@ -71,9 +71,6 @@ export async function initMcpServer(params: {
             'X-Stainless-MCP': 'true',
           },
         });
-        if (_logLevel) {
-          _client = _client.withOptions({ logLevel: _logLevel });
-        }
       } catch (e) {
         _clientError = e instanceof Error ? e : new Error(String(e));
         throw _clientError;
