@@ -123,6 +123,14 @@ export namespace SplitRunParams {
     allow_page_overlap?: boolean;
 
     /**
+     * If True (default), deep split may split a category into partitions even when
+     * that category has no configured partition_key. If False, categories without a
+     * partition_key are never partitioned, so partitioning happens only where you
+     * explicitly configured a partition_key.
+     */
+    auto_partition?: boolean;
+
+    /**
      * If True, uses the deep split agent for higher-quality document splitting. Off by
      * default.
      */
@@ -193,6 +201,14 @@ export namespace SplitRunJobParams {
      * page must belong to exactly one category. Defaults to True.
      */
     allow_page_overlap?: boolean;
+
+    /**
+     * If True (default), deep split may split a category into partitions even when
+     * that category has no configured partition_key. If False, categories without a
+     * partition_key are never partitioned, so partitioning happens only where you
+     * explicitly configured a partition_key.
+     */
+    auto_partition?: boolean;
 
     /**
      * If True, uses the deep split agent for higher-quality document splitting. Off by
