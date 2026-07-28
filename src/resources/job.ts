@@ -3,8 +3,6 @@
 import { APIResource } from '../resource';
 import { isRequestOptions } from '../core';
 import * as Core from '../core';
-import * as ExtractAPI from './extract';
-import * as Shared from './shared';
 
 export class Job extends APIResource {
   /**
@@ -39,67 +37,7 @@ export class Job extends APIResource {
 
 export type JobCancelResponse = unknown;
 
-export type JobGetResponse = JobGetResponse.AsyncJobResponse | JobGetResponse.EnhancedAsyncJobResponse;
-
-export namespace JobGetResponse {
-  export interface AsyncJobResponse {
-    status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
-
-    progress?: number | null;
-
-    reason?: string | null;
-
-    /**
-     * Response from classify job - returned when polling /job/{job_id}
-     */
-    result?:
-      | Shared.ParseResponse
-      | Shared.ExtractResponse
-      | Shared.SplitResponse
-      | Shared.EditResponse
-      | Shared.PipelineResponse
-      | ExtractAPI.V3Extract
-      | Shared.ClassifyResponse
-      | null;
-  }
-
-  export interface EnhancedAsyncJobResponse {
-    status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
-
-    bucket?: unknown;
-
-    created_at?: string | null;
-
-    duration?: number | null;
-
-    num_pages?: number | null;
-
-    progress?: number | null;
-
-    raw_config?: string | null;
-
-    reason?: string | null;
-
-    /**
-     * Response from classify job - returned when polling /job/{job_id}
-     */
-    result?:
-      | Shared.ParseResponse
-      | Shared.ExtractResponse
-      | Shared.SplitResponse
-      | Shared.EditResponse
-      | Shared.PipelineResponse
-      | ExtractAPI.V3Extract
-      | Shared.ClassifyResponse
-      | null;
-
-    source?: unknown;
-
-    total_pages?: number | null;
-
-    type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | 'Classify' | null;
-  }
-}
+export type JobGetResponse = { [key: string]: unknown } | { [key: string]: unknown };
 
 export interface JobGetAllResponse {
   /**
