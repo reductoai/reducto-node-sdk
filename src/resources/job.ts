@@ -3,6 +3,8 @@
 import { APIResource } from '../resource';
 import { isRequestOptions } from '../core';
 import * as Core from '../core';
+import * as ExtractAPI from './extract';
+import * as Shared from './shared';
 
 export class Job extends APIResource {
   /**
@@ -37,7 +39,203 @@ export class Job extends APIResource {
 
 export type JobCancelResponse = unknown;
 
-export type JobGetResponse = { [key: string]: unknown } | { [key: string]: unknown };
+export type JobGetResponse = JobGetResponse.AsyncJobResponse | JobGetResponse.EnhancedAsyncJobResponse;
+
+export namespace JobGetResponse {
+  export interface AsyncJobResponse {
+    status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
+
+    /**
+     * Structured error body returned to customers.
+     *
+     * Matches the format specified in `ERROR_POLICY.md`.
+     */
+    error?: AsyncJobResponse.Error | null;
+
+    progress?: number | null;
+
+    reason?: string | null;
+
+    /**
+     * Response from classify job - returned when polling /job/{job_id}
+     */
+    result?:
+      | Shared.ParseResponse
+      | Shared.ExtractResponse
+      | Shared.SplitResponse
+      | Shared.EditResponse
+      | Shared.PipelineResponse
+      | ExtractAPI.V3Extract
+      | Shared.ClassifyResponse
+      | null;
+  }
+
+  export namespace AsyncJobResponse {
+    /**
+     * Structured error body returned to customers.
+     *
+     * Matches the format specified in `ERROR_POLICY.md`.
+     */
+    export interface Error {
+      code: number;
+
+      message: string;
+
+      /**
+       * Machine-readable error names returned in API error responses.
+       *
+       * Each member maps to a category (Transient / Processing / Input) and a default
+       * HTTP status code defined in `ERROR_CODE_DEFAULTS`. The enum value is the string
+       * customers see in the `error.name` field.
+       */
+      name:
+        | 'TIMEOUT'
+        | 'CUSTOMER_TIMEOUT'
+        | 'INTERNAL_ERROR'
+        | 'SERVICE_UNAVAILABLE'
+        | 'GPU_ALLOCATION_ERROR'
+        | 'GPU_POOL_SATURATED'
+        | 'BATCH_QUEUE_FULL'
+        | 'JOB_STATE_ERROR'
+        | 'DOCUMENT_CORRUPT'
+        | 'DOCUMENT_UNSUPPORTED'
+        | 'DOCUMENT_TOO_LARGE'
+        | 'IMAGE_TOO_LARGE'
+        | 'IMAGE_TOO_SMALL'
+        | 'IMAGE_INVALID_ASPECT_RATIO'
+        | 'DOCUMENT_PASSWORD_PROTECTED'
+        | 'FORM_FILL_FAILED'
+        | 'INTERNAL_INVARIANT_VIOLATION'
+        | 'CONTEXT_WINDOW_EXCEEDED'
+        | 'PROCESSING_FAILED'
+        | 'INFERENCE_METHOD_UNSUPPORTED'
+        | 'SUBPROCESS_CRASHED'
+        | 'BATCH_ORPHANED'
+        | 'OVERSIZED_RESULT'
+        | 'LLM_OUTPUT_PARSE_FAILED'
+        | 'LLM_PROVIDER_ERROR'
+        | 'INVALID_CONFIG'
+        | 'INVALID_SCHEMA'
+        | 'AUTH_ERROR'
+        | 'NOT_APPLICABLE'
+        | 'REGION_UNAVAILABLE'
+        | 'NOT_FOUND'
+        | 'JOB_DELETION_IN_PROGRESS'
+        | 'JOB_DELETED'
+        | 'JOB_NOT_COMPLETE'
+        | 'JOB_CANCELLED'
+        | 'RATE_LIMIT'
+        | 'CELL_COUNT_EXCEEDED';
+
+      job_id?: string | null;
+    }
+  }
+
+  export interface EnhancedAsyncJobResponse {
+    status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
+
+    bucket?: unknown;
+
+    created_at?: string | null;
+
+    duration?: number | null;
+
+    /**
+     * Structured error body returned to customers.
+     *
+     * Matches the format specified in `ERROR_POLICY.md`.
+     */
+    error?: EnhancedAsyncJobResponse.Error | null;
+
+    num_pages?: number | null;
+
+    progress?: number | null;
+
+    raw_config?: string | null;
+
+    reason?: string | null;
+
+    /**
+     * Response from classify job - returned when polling /job/{job_id}
+     */
+    result?:
+      | Shared.ParseResponse
+      | Shared.ExtractResponse
+      | Shared.SplitResponse
+      | Shared.EditResponse
+      | Shared.PipelineResponse
+      | ExtractAPI.V3Extract
+      | Shared.ClassifyResponse
+      | null;
+
+    source?: unknown;
+
+    total_pages?: number | null;
+
+    type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | 'Classify' | null;
+  }
+
+  export namespace EnhancedAsyncJobResponse {
+    /**
+     * Structured error body returned to customers.
+     *
+     * Matches the format specified in `ERROR_POLICY.md`.
+     */
+    export interface Error {
+      code: number;
+
+      message: string;
+
+      /**
+       * Machine-readable error names returned in API error responses.
+       *
+       * Each member maps to a category (Transient / Processing / Input) and a default
+       * HTTP status code defined in `ERROR_CODE_DEFAULTS`. The enum value is the string
+       * customers see in the `error.name` field.
+       */
+      name:
+        | 'TIMEOUT'
+        | 'CUSTOMER_TIMEOUT'
+        | 'INTERNAL_ERROR'
+        | 'SERVICE_UNAVAILABLE'
+        | 'GPU_ALLOCATION_ERROR'
+        | 'GPU_POOL_SATURATED'
+        | 'BATCH_QUEUE_FULL'
+        | 'JOB_STATE_ERROR'
+        | 'DOCUMENT_CORRUPT'
+        | 'DOCUMENT_UNSUPPORTED'
+        | 'DOCUMENT_TOO_LARGE'
+        | 'IMAGE_TOO_LARGE'
+        | 'IMAGE_TOO_SMALL'
+        | 'IMAGE_INVALID_ASPECT_RATIO'
+        | 'DOCUMENT_PASSWORD_PROTECTED'
+        | 'FORM_FILL_FAILED'
+        | 'INTERNAL_INVARIANT_VIOLATION'
+        | 'CONTEXT_WINDOW_EXCEEDED'
+        | 'PROCESSING_FAILED'
+        | 'INFERENCE_METHOD_UNSUPPORTED'
+        | 'SUBPROCESS_CRASHED'
+        | 'BATCH_ORPHANED'
+        | 'OVERSIZED_RESULT'
+        | 'LLM_OUTPUT_PARSE_FAILED'
+        | 'LLM_PROVIDER_ERROR'
+        | 'INVALID_CONFIG'
+        | 'INVALID_SCHEMA'
+        | 'AUTH_ERROR'
+        | 'NOT_APPLICABLE'
+        | 'REGION_UNAVAILABLE'
+        | 'NOT_FOUND'
+        | 'JOB_DELETION_IN_PROGRESS'
+        | 'JOB_DELETED'
+        | 'JOB_NOT_COMPLETE'
+        | 'JOB_CANCELLED'
+        | 'RATE_LIMIT'
+        | 'CELL_COUNT_EXCEEDED';
+
+      job_id?: string | null;
+    }
+  }
+}
 
 export interface JobGetAllResponse {
   /**

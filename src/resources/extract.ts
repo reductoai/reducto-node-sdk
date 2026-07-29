@@ -129,6 +129,16 @@ export namespace ExtractSettings {
   }
 }
 
+export interface ExtractUsage {
+  num_fields: number;
+
+  num_pages: number;
+
+  credits?: number | null;
+
+  extract_mode?: 'super_agent' | 'extract' | 'spreadsheet_agent' | null;
+}
+
 export interface Instructions {
   /**
    * The JSON schema to use for the extraction.
@@ -153,7 +163,34 @@ export interface ParseOptions {
   spreadsheet?: ParseAPI.Spreadsheet;
 }
 
-export type V3Extract = { [key: string]: unknown };
+export interface V3Extract {
+  /**
+   * The extracted response in your provided schema. This is a list of dictionaries.
+   * If disable_chunking is True (default), then it will be a list of length one.
+   */
+  result: unknown | Array<unknown>;
+
+  usage: ExtractUsage;
+
+  /**
+   * Optional document-level deep extract confidence label.
+   */
+  confidence?: 'high' | 'low' | null;
+
+  /**
+   * Optional explanation for the document-level confidence label.
+   */
+  confidence_reason?: string | null;
+
+  job_id?: string | null;
+
+  response_type?: 'v3_extract';
+
+  /**
+   * The link to the studio pipeline for the document.
+   */
+  studio_link?: string | null;
+}
 
 export type ExtractRunResponse = V3Extract | Shared.AsyncExtractResponse;
 
@@ -265,6 +302,7 @@ export declare namespace Extract {
   export {
     type AsyncExtractConfig as AsyncExtractConfig,
     type ExtractSettings as ExtractSettings,
+    type ExtractUsage as ExtractUsage,
     type Instructions as Instructions,
     type ParseOptions as ParseOptions,
     type V3Extract as V3Extract,

@@ -153,7 +153,61 @@ export interface EditResponse {
   usage?: SplitAPI.ParseUsage | null;
 }
 
-export type ExtractResponse = { [key: string]: unknown };
+export interface ExtractResponse {
+  /**
+   * The citations corresponding to the extracted response. If force_url_result is
+   * True and citations are present, this is returned as a URL result.
+   */
+  citations: Array<unknown> | ExtractResponse.URLResult | null;
+
+  /**
+   * The extracted response in your provided schema. This is a list of dictionaries.
+   * If disable_chunking is True (default), then it will be a list of length one. If
+   * force_url_result is True, this is returned as a URL result.
+   */
+  result: Array<unknown> | ExtractResponse.URLResult;
+
+  usage: ExtractAPI.ExtractUsage;
+
+  job_id?: string | null;
+
+  /**
+   * Optional deep extract confidence metadata containing document-level confidence
+   * plus a mirrored leaf-level confidence tree.
+   */
+  response_confidence?: { [key: string]: unknown } | null;
+
+  response_type?: 'extract';
+
+  /**
+   * The link to the studio pipeline for the document.
+   */
+  studio_link?: string | null;
+}
+
+export namespace ExtractResponse {
+  export interface URLResult {
+    result_id: string;
+
+    /**
+     * type = 'url'
+     */
+    type: 'url';
+
+    url: string;
+  }
+
+  export interface URLResult {
+    result_id: string;
+
+    /**
+     * type = 'url'
+     */
+    type: 'url';
+
+    url: string;
+  }
+}
 
 export interface FigureAgentic {
   scope: 'figure';
@@ -235,7 +289,7 @@ export namespace ParseResponse {
 
   export namespace FullResult {
     export interface Chunk {
-      blocks: Array<{ [key: string]: unknown }>;
+      blocks: Array<Chunk.Block>;
 
       /**
        * The content of the chunk extracted from the document.
@@ -256,6 +310,103 @@ export namespace ParseResponse {
        * Whether the enrichment was successful.
        */
       enrichment_success?: boolean;
+    }
+
+    export namespace Chunk {
+      export interface Block {
+        /**
+         * The bounding box of the block extracted from the document.
+         */
+        bbox: EditAPI.BoundingBox;
+
+        /**
+         * The content of the block extracted from the document.
+         */
+        content: string;
+
+        /**
+         * The type of block extracted from the document.
+         */
+        type:
+          | 'Header'
+          | 'Footer'
+          | 'Title'
+          | 'Section Header'
+          | 'Page Number'
+          | 'List Item'
+          | 'Figure'
+          | 'Table'
+          | 'Key Value'
+          | 'Text'
+          | 'Comment'
+          | 'Signature';
+
+        /**
+         * (Experimental) The URL/link to chart data JSON for figure blocks processed by
+         * chart agent.
+         */
+        chart_data?: Array<string> | null;
+
+        /**
+         * The confidence for the block. It is either low or high and takes into account
+         * factors like OCR and table structure
+         */
+        confidence?: string | null;
+
+        /**
+         * Extra metadata fields for the block. Fields like 'is_chart' will only appear
+         * when set to True.
+         */
+        extra?: { [key: string]: unknown } | null;
+
+        /**
+         * Granular confidence scores for the block. It is a dictionary of confidence
+         * scores for the block. The confidence scores will not be None if the user has
+         * enabled numeric confidence scores.
+         */
+        granular_confidence?: Block.GranularConfidence | null;
+
+        /**
+         * (Experimental) The URL of the image associated with the block.
+         */
+        image_url?: string | null;
+
+        /**
+         * Original table fragments that were combined into this table by merge_tables.
+         */
+        merged_tables?: Array<Block.MergedTable> | null;
+      }
+
+      export namespace Block {
+        /**
+         * Granular confidence scores for the block. It is a dictionary of confidence
+         * scores for the block. The confidence scores will not be None if the user has
+         * enabled numeric confidence scores.
+         */
+        export interface GranularConfidence {
+          extract_confidence?: number | null;
+
+          parse_confidence?: number | null;
+        }
+
+        export interface MergedTable {
+          /**
+           * The original bounding box of a table before merge_tables merged it.
+           */
+          bbox: EditAPI.BoundingBox;
+
+          /**
+           * The original content of a table before merge_tables merged it.
+           */
+          content: string;
+
+          /**
+           * (Experimental) The URL of the image for this original table fragment. Only
+           * populated when settings.return_images includes 'table'.
+           */
+          image_url?: string | null;
+        }
+      }
     }
 
     export interface Ocr {

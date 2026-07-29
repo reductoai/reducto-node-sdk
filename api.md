@@ -59,6 +59,7 @@ Types:
 
 - <code><a href="./src/resources/extract.ts">AsyncExtractConfig</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractSettings</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractUsage</a></code>
 - <code><a href="./src/resources/extract.ts">Instructions</a></code>
 - <code><a href="./src/resources/extract.ts">ParseOptions</a></code>
 - <code><a href="./src/resources/extract.ts">V3Extract</a></code>
