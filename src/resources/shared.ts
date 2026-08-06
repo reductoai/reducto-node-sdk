@@ -213,7 +213,10 @@ export interface FigureAgentic {
   scope: 'figure';
 
   /**
-   * If True, use the advanced chart agent. Defaults to False.
+   * If True, run advanced chart extraction on figures classified as charts: an
+   * agentic extractor that returns full structured series data (chart_data) plus a
+   * reconstruction image re-drawn from that data (extra.chart_reconstruction).
+   * Higher latency. Defaults to False.
    */
   advanced_chart_agent?: boolean;
 
