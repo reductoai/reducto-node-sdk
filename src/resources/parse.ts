@@ -170,6 +170,11 @@ export interface Settings {
   embed_pdf_metadata_dpi?: number;
 
   /**
+   * If True, return properties embedded in the original document. Defaults to False.
+   */
+  extract_document_properties?: boolean;
+
+  /**
    * The mode to use for text extraction from PDFs. OCR mode uses optical character
    * recognition only. Hybrid mode combines OCR with embedded PDF text for best
    * accuracy (default).

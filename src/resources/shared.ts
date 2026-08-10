@@ -264,6 +264,11 @@ export interface ParseResponse {
   usage: SplitAPI.ParseUsage;
 
   /**
+   * Embedded properties read from the customer's original document.
+   */
+  document_properties?: ParseResponse.DocumentProperties | null;
+
+  /**
    * The storage URL of the converted PDF file.
    */
   pdf_url?: string | null;
@@ -472,6 +477,58 @@ export namespace ParseResponse {
     type: 'url';
 
     url: string;
+  }
+
+  /**
+   * Embedded properties read from the customer's original document.
+   */
+  export interface DocumentProperties {
+    /**
+     * The document author.
+     */
+    author?: string | null;
+
+    /**
+     * The document creation time as a timezone-aware datetime. Dates without an offset
+     * are interpreted as UTC.
+     */
+    created_at?: string | null;
+
+    /**
+     * The application or tool that authored the document.
+     */
+    creator?: string | null;
+
+    /**
+     * Keywords embedded in the document.
+     */
+    keywords?: string | null;
+
+    /**
+     * The user who last modified the document.
+     */
+    last_modified_by?: string | null;
+
+    /**
+     * The document modification time as a timezone-aware datetime. Dates without an
+     * offset are interpreted as UTC.
+     */
+    modified_at?: string | null;
+
+    /**
+     * The application or library that produced the document.
+     */
+    producer?: string | null;
+
+    /**
+     * The document subject.
+     */
+    subject?: string | null;
+
+    /**
+     * The document title.
+     */
+    title?: string | null;
   }
 }
 
