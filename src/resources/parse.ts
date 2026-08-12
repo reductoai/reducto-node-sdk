@@ -27,9 +27,9 @@ export interface AsyncConfigV3 {
   metadata?: unknown;
 
   /**
-   * If True, attempts to process the job with priority if the user has priority
-   * processing budget available; by default, sync jobs are prioritized above async
-   * jobs.
+   * Workers poll the priority queue ahead of the standard queue, so priority jobs
+   * start sooner when there is queued work; sync jobs are prioritized above async
+   * jobs by default.
    */
   priority?: boolean;
 
