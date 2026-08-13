@@ -41,8 +41,8 @@ export interface ClassifyRunParams {
 
   /**
    * The page range to process (1-indexed). By default, the first 5 pages are used.
-   * If more than 25 pages are selected, only the first 25 (after sorting) are used.
-   * Only applies to PDFs; ignored for other document types.
+   * At most 10 pages can be selected. Only applies to PDFs; ignored for other
+   * document types.
    */
   page_range?: Shared.PageRange | Array<Shared.PageRange> | Array<number> | null;
 }
