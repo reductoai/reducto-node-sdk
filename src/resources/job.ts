@@ -90,6 +90,7 @@ export namespace JobGetResponse {
        */
       name:
         | 'TIMEOUT'
+        | 'CAPACITY_TIMEOUT'
         | 'CUSTOMER_TIMEOUT'
         | 'INTERNAL_ERROR'
         | 'SERVICE_UNAVAILABLE'
@@ -198,6 +199,7 @@ export namespace JobGetResponse {
        */
       name:
         | 'TIMEOUT'
+        | 'CAPACITY_TIMEOUT'
         | 'CUSTOMER_TIMEOUT'
         | 'INTERNAL_ERROR'
         | 'SERVICE_UNAVAILABLE'
