@@ -129,7 +129,8 @@ export namespace JobGetResponse {
         | 'JOB_NOT_COMPLETE'
         | 'JOB_CANCELLED'
         | 'RATE_LIMIT'
-        | 'CELL_COUNT_EXCEEDED';
+        | 'CELL_COUNT_EXCEEDED'
+        | 'URL_NOT_ALLOWED';
 
       job_id?: string | null;
     }
@@ -238,7 +239,8 @@ export namespace JobGetResponse {
         | 'JOB_NOT_COMPLETE'
         | 'JOB_CANCELLED'
         | 'RATE_LIMIT'
-        | 'CELL_COUNT_EXCEEDED';
+        | 'CELL_COUNT_EXCEEDED'
+        | 'URL_NOT_ALLOWED';
 
       job_id?: string | null;
     }
