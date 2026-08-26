@@ -67,6 +67,7 @@ export namespace JobGetResponse {
       | Shared.PipelineResponse
       | ExtractAPI.V3Extract
       | Shared.ClassifyResponse
+      | AsyncJobResponse.ChartResponse
       | null;
   }
 
@@ -134,6 +135,39 @@ export namespace JobGetResponse {
 
       job_id?: string | null;
     }
+
+    /**
+     * Response from synchronous and persisted chart extraction jobs.
+     */
+    export interface ChartResponse {
+      job_id: string;
+
+      result: ChartResponse.Result;
+
+      duration?: number | null;
+
+      response_type?: 'chart';
+
+      usage?: ChartResponse.Usage;
+    }
+
+    export namespace ChartResponse {
+      export interface Result {
+        chart_data: { [key: string]: unknown };
+
+        reconstruction_url: string;
+
+        summary: string;
+
+        verified: boolean;
+      }
+
+      export interface Usage {
+        credits?: number;
+
+        num_charts?: 1;
+      }
+    }
   }
 
   export interface EnhancedAsyncJobResponse {
@@ -171,13 +205,14 @@ export namespace JobGetResponse {
       | Shared.PipelineResponse
       | ExtractAPI.V3Extract
       | Shared.ClassifyResponse
+      | EnhancedAsyncJobResponse.ChartResponse
       | null;
 
     source?: unknown;
 
     total_pages?: number | null;
 
-    type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | 'Classify' | null;
+    type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | 'Classify' | 'Chart' | null;
   }
 
   export namespace EnhancedAsyncJobResponse {
@@ -244,6 +279,39 @@ export namespace JobGetResponse {
 
       job_id?: string | null;
     }
+
+    /**
+     * Response from synchronous and persisted chart extraction jobs.
+     */
+    export interface ChartResponse {
+      job_id: string;
+
+      result: ChartResponse.Result;
+
+      duration?: number | null;
+
+      response_type?: 'chart';
+
+      usage?: ChartResponse.Usage;
+    }
+
+    export namespace ChartResponse {
+      export interface Result {
+        chart_data: { [key: string]: unknown };
+
+        reconstruction_url: string;
+
+        summary: string;
+
+        verified: boolean;
+      }
+
+      export interface Usage {
+        credits?: number;
+
+        num_charts?: 1;
+      }
+    }
   }
 }
 
@@ -276,7 +344,7 @@ export namespace JobGetAllResponse {
 
     total_pages: number | null;
 
-    type: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | 'Classify';
+    type: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | 'Classify' | 'Chart';
 
     bucket?: unknown;
 
