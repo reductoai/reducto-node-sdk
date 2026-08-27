@@ -29,6 +29,7 @@ describe('resource classify', () => {
       document_metadata: 'document_metadata',
       force_url_result: true,
       page_range: { end: 0, start: 0 },
+      priority: true,
     });
   });
 });

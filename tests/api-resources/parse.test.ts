@@ -26,6 +26,7 @@ describe('resource parse', () => {
     const response = await client.parse.run({
       input: 'string',
       enhance: {
+        advanced_chart_agent: true,
         agentic: [
           {
             scope: 'table',
@@ -100,6 +101,7 @@ describe('resource parse', () => {
         webhook: { channels: ['string'], mode: 'svix' },
       },
       enhance: {
+        advanced_chart_agent: true,
         agentic: [
           {
             scope: 'table',

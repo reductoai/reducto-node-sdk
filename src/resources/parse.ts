@@ -76,6 +76,14 @@ export interface AsyncParseConfig {
 
 export interface Enhance {
   /**
+   * If True, run advanced chart extraction on figures classified as charts, without
+   * requiring a figure-scoped agentic entry. Returns full structured series data
+   * (chart_data) plus a reconstruction image re-drawn from that data. Higher
+   * latency. Defaults to False.
+   */
+  advanced_chart_agent?: boolean;
+
+  /**
    * Agentic uses vision language models to enhance the accuracy of the output of
    * different types of extraction. This will incur a cost and latency increase.
    */

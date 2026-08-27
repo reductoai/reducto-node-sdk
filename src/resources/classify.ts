@@ -45,6 +45,13 @@ export interface ClassifyRunParams {
    * document types.
    */
   page_range?: Shared.PageRange | Array<Shared.PageRange> | Array<number> | null;
+
+  /**
+   * Workers poll the priority queue ahead of the standard queue, so priority jobs
+   * start sooner when there is queued work; sync jobs are prioritized above async
+   * jobs by default.
+   */
+  priority?: boolean;
 }
 
 export namespace ClassifyRunParams {

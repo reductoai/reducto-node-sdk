@@ -31,6 +31,7 @@ describe('resource extract', () => {
       },
       parsing: {
         enhance: {
+          advanced_chart_agent: true,
           agentic: [
             {
               scope: 'table',
@@ -124,6 +125,7 @@ describe('resource extract', () => {
       },
       parsing: {
         enhance: {
+          advanced_chart_agent: true,
           agentic: [
             {
               scope: 'table',
