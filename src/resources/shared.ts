@@ -144,6 +144,11 @@ export interface EditResponse {
    */
   form_schema?: Array<EditAPI.EditWidget> | null;
 
+  /**
+   * The unique identifier for the edit job.
+   */
+  job_id?: string | null;
+
   response_type?: 'edit';
 
   /**
@@ -606,6 +611,11 @@ export interface SplitResponse {
   result: SplitResponse.SplitResult | SplitResponse.DeepSplitResult | SplitResponse.URLResult;
 
   usage: SplitAPI.ParseUsage;
+
+  /**
+   * The unique identifier for the split job.
+   */
+  job_id?: string | null;
 
   response_type?: 'split';
 }
