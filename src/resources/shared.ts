@@ -123,6 +123,28 @@ export namespace ClassifyResponse {
     num_pages: number;
 
     credits?: number | null;
+
+    /**
+     * Raw classify quantities for accounts on the new pricing model.
+     *
+     * `classify_pages` is capped at 5, the same cap that the classify credit
+     * computation uses.
+     */
+    usage_breakdown?: Usage.UsageBreakdown | null;
+  }
+
+  export namespace Usage {
+    /**
+     * Raw classify quantities for accounts on the new pricing model.
+     *
+     * `classify_pages` is capped at 5, the same cap that the classify credit
+     * computation uses.
+     */
+    export interface UsageBreakdown {
+      classify_model: 'Classify' | 'Deep Classify';
+
+      classify_pages?: number;
+    }
   }
 }
 

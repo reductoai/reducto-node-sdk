@@ -66,6 +66,78 @@ export interface ParseUsage {
       | 'reducto_lite_page'
     >;
   } | null;
+
+  /**
+   * Raw usage quantities. Only set for accounts on the new pricing model; credit
+   * fields are omitted for those accounts.
+   */
+  usage_breakdown?:
+    | ParseUsage.ParseUsageBreakdown
+    | ParseUsage.SplitUsageBreakdown
+    | ParseUsage.EditUsageBreakdown
+    | null;
+}
+
+export namespace ParseUsage {
+  /**
+   * Raw parse quantities for accounts on the new (Q3 2026) pricing model.
+   *
+   * `parse_model` is "R-1" for the new parse model and "Legacy" for the legacy parse
+   * pipeline. A legacy-pipeline parse carries its cost in `legacy_parse_credits`;
+   * add-on quantities (`ocr_pages`, `charts`, `prompted_blocks`) apply to the new
+   * parse model only.
+   */
+  export interface ParseUsageBreakdown {
+    parse_model: 'R-1' | 'Legacy';
+
+    tier: 'Default' | 'Batch';
+
+    charts?: number;
+
+    legacy_parse_credits?: number;
+
+    ocr_pages?: number;
+
+    parse_native_pages?: number;
+
+    parse_pages?: number;
+
+    prompted_blocks?: number;
+  }
+
+  /**
+   * Raw split quantities for accounts on the new pricing model.
+   *
+   * The add-on quantities (`ocr_pages`, `charts`, `prompted_blocks`) come from the
+   * parse bundled into the split job; its page cost is covered by `split_pages` but
+   * its add-ons are billed separately.
+   */
+  export interface SplitUsageBreakdown {
+    split_model: 'Split' | 'Deep Split';
+
+    charts?: number;
+
+    ocr_pages?: number;
+
+    prompted_blocks?: number;
+
+    split_pages?: number;
+  }
+
+  /**
+   * Raw edit quantities for accounts on the new pricing model.
+   *
+   * `edit_pages` is the page count billed at the `edit_model` rate. A job with both
+   * normal and prefilled pages reports `edit_model="Normal"` with the prefilled
+   * pages in `prefill_pages`, billed at the "Prefill" rate.
+   */
+  export interface EditUsageBreakdown {
+    edit_model: 'Normal' | 'Prefill';
+
+    edit_pages?: number;
+
+    prefill_pages?: number;
+  }
 }
 
 export interface SplitCategory {

@@ -137,6 +137,40 @@ export interface ExtractUsage {
   credits?: number | null;
 
   extract_mode?: 'super_agent' | 'extract' | 'spreadsheet_agent' | null;
+
+  /**
+   * Raw extract quantities for accounts on the new pricing model.
+   *
+   * `extract_fields` is reported but not billed at launch. The add-on quantities
+   * (`ocr_pages`, `charts`, `prompted_blocks`) come from the parse bundled into the
+   * extract job; its page cost is covered by `extract_pages` but its add-ons are
+   * billed separately.
+   */
+  usage_breakdown?: ExtractUsage.UsageBreakdown | null;
+}
+
+export namespace ExtractUsage {
+  /**
+   * Raw extract quantities for accounts on the new pricing model.
+   *
+   * `extract_fields` is reported but not billed at launch. The add-on quantities
+   * (`ocr_pages`, `charts`, `prompted_blocks`) come from the parse bundled into the
+   * extract job; its page cost is covered by `extract_pages` but its add-ons are
+   * billed separately.
+   */
+  export interface UsageBreakdown {
+    extract_model: 'Extract' | 'Deep Extract';
+
+    charts?: number;
+
+    extract_fields?: number;
+
+    extract_pages?: number;
+
+    ocr_pages?: number;
+
+    prompted_blocks?: number;
+  }
 }
 
 export interface Instructions {
