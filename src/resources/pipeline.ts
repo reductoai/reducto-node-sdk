@@ -8,6 +8,8 @@ import * as Shared from './shared';
 export class Pipeline extends APIResource {
   /**
    * Pipeline
+   *
+   * @deprecated
    */
   run(body: PipelineRunParams, options?: Core.RequestOptions): Core.APIPromise<Shared.PipelineResponse> {
     return this._client.post('/pipeline', { body, ...options });
@@ -15,6 +17,8 @@ export class Pipeline extends APIResource {
 
   /**
    * Pipeline Async
+   *
+   * @deprecated
    */
   runJob(
     body: PipelineRunJobParams,
