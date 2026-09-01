@@ -84,20 +84,23 @@ export interface Enhance {
   advanced_chart_agent?: boolean;
 
   /**
-   * Agentic uses vision language models to enhance the accuracy of the output of
-   * different types of extraction. This will incur a cost and latency increase.
+   * For legacy Parse, agentic processing uses vision language models to improve
+   * text, table, or figure extraction. With r-1, use agentic processing for custom
+   * prompts or advanced chart extraction. Agentic processing adds latency.
    */
   agentic?: Array<Shared.TableAgentic | Shared.FigureAgentic | Shared.TextAgentic>;
 
   /**
-   * If True, use an advanced vision language model to improve reading order
-   * accuracy, with a small increase in latency. Defaults to False.
+   * For legacy Parse, if True, use an advanced vision language model to improve
+   * reading order accuracy, with a small increase in latency. r-1 handles reading
+   * order natively and ignores this setting. Defaults to False.
    */
   intelligent_ordering?: boolean;
 
   /**
-   * If True, summarize figures using a small vision language model. Defaults to
-   * True.
+   * For legacy Parse, if True, summarize figures using a separate vision language
+   * model. r-1 generates figure descriptions natively and ignores this setting.
+   * Defaults to True.
    */
   summarize_figures?: boolean;
 }
@@ -110,7 +113,9 @@ export interface Formatting {
   add_page_markers?: boolean;
 
   /**
-   * A list of formatting to include in the output.
+   * For legacy Parse, the formatting details to include in the output. r-1 handles
+   * highlights, signatures, and watermarks natively and ignores those values. r-1
+   * does not support hyperlinks.
    */
   include?: Array<
     'change_tracking' | 'highlight' | 'comments' | 'hyperlinks' | 'signatures' | 'ignore_watermarks'
@@ -123,8 +128,8 @@ export interface Formatting {
   merge_tables?: boolean;
 
   /**
-   * The mode to use for table output. Defaults to dynamic, which returns md for
-   * simpler tables and html for more complex tables.
+   * The table output format. Defaults to dynamic, which returns md for simpler
+   * tables and html for more complex tables. r-1 does not support jsonbbox.
    */
   table_output_format?: 'html' | 'json' | 'md' | 'jsonbbox' | 'dynamic' | 'csv';
 }
@@ -183,9 +188,9 @@ export interface Settings {
   extract_document_properties?: boolean;
 
   /**
-   * The mode to use for text extraction from PDFs. OCR mode uses optical character
-   * recognition only. Hybrid mode combines OCR with embedded PDF text for best
-   * accuracy (default).
+   * The text extraction method for legacy Parse. OCR uses optical character
+   * recognition only. Hybrid combines OCR with embedded PDF text. r-1 uses native
+   * full-page processing and ignores this setting. Defaults to hybrid.
    */
   extraction_mode?: 'ocr' | 'hybrid';
 
@@ -212,8 +217,10 @@ export interface Settings {
   model?: 'r-1' | 'legacy' | null;
 
   /**
-   * Standard is our best multilingual OCR system. Legacy only supports germanic
-   * languages and is available for backwards compatibility.
+   * The OCR system for legacy Parse. Standard is the best multilingual OCR system.
+   * Legacy supports Germanic languages and remains available for backwards
+   * compatibility. r-1 uses native full-page processing and ignores this setting.
+   * Defaults to standard.
    */
   ocr_system?: 'standard' | 'legacy';
 
