@@ -205,6 +205,13 @@ export interface Settings {
   hybrid_vpc?: Settings.HybridVpc;
 
   /**
+   * The parse model to use. 'r-1' is the R-1 full-page parse model, which parses
+   * each page in a single generation. 'legacy' is the previous parsing pipeline.
+   * Defaults to 'legacy'.
+   */
+  model?: 'r-1' | 'legacy' | null;
+
+  /**
    * Standard is our best multilingual OCR system. Legacy only supports germanic
    * languages and is available for backwards compatibility.
    */
