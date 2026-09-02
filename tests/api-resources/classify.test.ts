@@ -25,9 +25,11 @@ describe('resource classify', () => {
   test.skip('run: required and optional params', async () => {
     const response = await client.classify.run({
       input: 'string',
+      category_groups: { foo: ['string'] },
       classification_schema: [{ category: 'category', criteria: ['string'] }],
       document_metadata: 'document_metadata',
       force_url_result: true,
+      model: 'default',
       page_range: { end: 0, start: 0 },
       priority: true,
     });

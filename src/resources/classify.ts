@@ -25,6 +25,14 @@ export interface ClassifyRunParams {
   input: string | Array<string> | Shared.Upload;
 
   /**
+   * A mapping of higher-level classify groups to the category labels that belong to
+   * each group. When provided, the response includes `extra_metadata.grouping` with
+   * the matched group name, or `ungrouped` if the selected category is not in any
+   * group.
+   */
+  category_groups?: { [key: string]: Array<string> };
+
+  /**
    * A list of classification categories and their matching criteria.
    */
   classification_schema?: Array<ClassifyRunParams.ClassificationSchema>;
@@ -38,6 +46,12 @@ export interface ClassifyRunParams {
    * Force the endpoint result to be returned in URL form.
    */
   force_url_result?: boolean;
+
+  /**
+   * The classification model to use. Set to "accurate" to run Deep Classify for
+   * higher accuracy on hard documents. Defaults to "default".
+   */
+  model?: 'default' | 'accurate';
 
   /**
    * The page range to process (1-indexed). By default, the first 5 pages are used.

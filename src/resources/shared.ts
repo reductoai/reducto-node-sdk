@@ -61,6 +61,12 @@ export interface ClassifyResponse {
   duration?: number | null;
 
   /**
+   * Additional metadata for the classify response. Contains `grouping` when the
+   * request set `category_groups`. Omitted when empty.
+   */
+  extra_metadata?: { [key: string]: string };
+
+  /**
    * Overall confidence breakdown for classification response.
    */
   response_confidence?: ClassifyResponse.ResponseConfidence | null;
