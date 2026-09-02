@@ -212,7 +212,8 @@ export interface Settings {
   /**
    * The parse model to use. 'r-1' is the R-1 full-page parse model, which parses
    * each page in a single generation. 'legacy' is the previous parsing pipeline.
-   * Defaults to 'legacy'.
+   * Defaults to 'legacy' unless your organization was created on the r-1 plan, in
+   * which case it defaults to 'r-1'.
    */
   model?: 'r-1' | 'legacy' | null;
 

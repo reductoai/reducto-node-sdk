@@ -635,6 +635,11 @@ export interface SplitResponse {
   usage: SplitAPI.ParseUsage;
 
   /**
+   * The duration of the split request in seconds.
+   */
+  duration?: number | null;
+
+  /**
    * The unique identifier for the split job.
    */
   job_id?: string | null;
