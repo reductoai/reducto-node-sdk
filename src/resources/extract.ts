@@ -54,6 +54,12 @@ export interface AsyncExtractConfig {
   parsing?: ParseOptions;
 
   /**
+   * Queue priority. 'batch' places the job in a lower-priority queue for non-urgent
+   * bulk work. 'auto' (alias: 'standard') uses the default queue.
+   */
+  queue_priority?: 'auto' | 'standard' | 'batch';
+
+  /**
    * The settings to use for the extraction.
    */
   settings?: ExtractSettings;
@@ -291,6 +297,12 @@ export declare namespace ExtractRunParams {
     parsing?: ParseOptions;
 
     /**
+     * Queue priority. 'batch' places the job in a lower-priority queue for non-urgent
+     * bulk work. 'auto' (alias: 'standard') uses the default queue.
+     */
+    queue_priority?: 'auto' | 'standard' | 'batch';
+
+    /**
      * The settings to use for the extraction.
      */
     settings?: ExtractSettings;
@@ -325,6 +337,12 @@ export interface ExtractRunJobParams {
    * jobid:// URL for the file, then this configuration will be ignored.
    */
   parsing?: ParseOptions;
+
+  /**
+   * Queue priority. 'batch' places the job in a lower-priority queue for non-urgent
+   * bulk work. 'auto' (alias: 'standard') uses the default queue.
+   */
+  queue_priority?: 'auto' | 'standard' | 'batch';
 
   /**
    * The settings to use for the extraction.

@@ -62,8 +62,8 @@ export interface AsyncParseConfig {
   formatting?: Formatting;
 
   /**
-   * Queue priority. 'batch' for non-urgent work that processes when spare GPU
-   * capacity is available. 'auto' (alias: 'standard') uses the default queue.
+   * Queue priority. 'batch' places the job in a lower-priority queue for non-urgent
+   * bulk work. 'auto' (alias: 'standard') uses the default queue.
    */
   queue_priority?: 'auto' | 'standard' | 'batch';
 
@@ -372,8 +372,8 @@ export declare namespace ParseRunParams {
     formatting?: Formatting;
 
     /**
-     * Queue priority. 'batch' for non-urgent work that processes when spare GPU
-     * capacity is available. 'auto' (alias: 'standard') uses the default queue.
+     * Queue priority. 'batch' places the job in a lower-priority queue for non-urgent
+     * bulk work. 'auto' (alias: 'standard') uses the default queue.
      */
     queue_priority?: 'auto' | 'standard' | 'batch';
 
@@ -408,8 +408,8 @@ export interface ParseRunJobParams {
   formatting?: Formatting;
 
   /**
-   * Queue priority. 'batch' for non-urgent work that processes when spare GPU
-   * capacity is available. 'auto' (alias: 'standard') uses the default queue.
+   * Queue priority. 'batch' places the job in a lower-priority queue for non-urgent
+   * bulk work. 'auto' (alias: 'standard') uses the default queue.
    */
   queue_priority?: 'auto' | 'standard' | 'batch';
 

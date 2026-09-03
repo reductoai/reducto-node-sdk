@@ -178,6 +178,7 @@ describe('resource extract', () => {
           split_large_tables: { enabled: true, size: 0 },
         },
       },
+      queue_priority: 'auto',
       settings: {
         array_extract: true,
         citations: {
