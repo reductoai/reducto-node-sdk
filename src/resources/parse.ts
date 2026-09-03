@@ -179,6 +179,12 @@ export interface Settings {
   force_url_result?: boolean;
 
   /**
+   * The parse model used for the request. Setting `r-1` will use Reducto's latest
+   * flagship Parse model. `legacy` pins the previous parsing pipeline.
+   */
+  model?: 'r-1' | 'legacy' | null;
+
+  /**
    * Standard is our best multilingual OCR system. Legacy only supports germanic
    * languages and is available for backwards compatibility.
    */
