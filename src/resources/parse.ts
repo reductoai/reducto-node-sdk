@@ -179,10 +179,8 @@ export interface Settings {
   force_url_result?: boolean;
 
   /**
-   * The parse model to use. 'r-1' is the R-1 full-page parse model, which parses
-   * each page in a single generation. 'legacy' is the previous parsing pipeline.
-   * Defaults to 'legacy' unless your organization was created on the r-1 plan, in
-   * which case it defaults to 'r-1'.
+   * The parse model used for the request. Setting `r-1` will use Reducto's latest
+   * flagship Parse model. `legacy` pins the previous parsing pipeline.
    */
   model?: 'r-1' | 'legacy' | null;
 
