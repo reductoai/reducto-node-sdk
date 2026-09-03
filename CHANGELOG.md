@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.17.0 (2026-09-03)
+
+Full Changelog: [v0.16.0...v0.17.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.16.0...v0.17.0)
+
+### Features
+
+* **parse:** add `settings.model` (`r-1` | `legacy`) ([2e37b9e](https://github.com/reductoai/reducto-node-sdk/commit/2e37b9e))
+
 ## 0.16.0 (2026-06-11)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.15.0...v0.16.0)
