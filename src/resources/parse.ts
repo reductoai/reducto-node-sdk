@@ -179,6 +179,14 @@ export interface Settings {
   force_url_result?: boolean;
 
   /**
+   * The parse model to use. 'r-1' is the R-1 full-page parse model, which parses
+   * each page in a single generation. 'legacy' is the previous parsing pipeline.
+   * Defaults to 'legacy' unless your organization was created on the r-1 plan, in
+   * which case it defaults to 'r-1'.
+   */
+  model?: 'r-1' | 'legacy' | null;
+
+  /**
    * Standard is our best multilingual OCR system. Legacy only supports germanic
    * languages and is available for backwards compatibility.
    */
