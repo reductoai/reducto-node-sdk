@@ -150,7 +150,8 @@ export interface ExtractUsage {
    * `extract_fields` is reported but not billed at launch. The add-on quantities
    * (`ocr_pages`, `charts`, `prompted_blocks`) come from the parse bundled into the
    * extract job; its page cost is covered by `extract_pages` but its add-ons are
-   * billed separately.
+   * billed separately. `tier` is "Batch" when the job ran on the batch queue, which
+   * takes the batch discount on the rate card.
    */
   usage_breakdown?: ExtractUsage.UsageBreakdown | null;
 }
@@ -162,7 +163,8 @@ export namespace ExtractUsage {
    * `extract_fields` is reported but not billed at launch. The add-on quantities
    * (`ocr_pages`, `charts`, `prompted_blocks`) come from the parse bundled into the
    * extract job; its page cost is covered by `extract_pages` but its add-ons are
-   * billed separately.
+   * billed separately. `tier` is "Batch" when the job ran on the batch queue, which
+   * takes the batch discount on the rate card.
    */
   export interface UsageBreakdown {
     extract_model: 'Extract' | 'Deep Extract';
@@ -176,6 +178,8 @@ export namespace ExtractUsage {
     ocr_pages?: number;
 
     prompted_blocks?: number;
+
+    tier?: 'Default' | 'Batch';
   }
 }
 
