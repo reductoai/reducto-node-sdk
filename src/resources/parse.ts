@@ -114,8 +114,7 @@ export interface Formatting {
 
   /**
    * For legacy Parse, the formatting details to include in the output. r-1 handles
-   * highlights, signatures, and watermarks natively and ignores those values. r-1
-   * does not support hyperlinks.
+   * highlights, signatures, and watermarks natively and ignores those values.
    */
   include?: Array<
     'change_tracking' | 'highlight' | 'comments' | 'hyperlinks' | 'signatures' | 'ignore_watermarks'
