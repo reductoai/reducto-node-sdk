@@ -195,8 +195,20 @@ describe('Job deletion', () => {
   test('job delete removes a completed job', async () => {
     const { job_id } = await client.parse.runJob({ input: DOCUMENT_URL });
 
-    const deleted = await client.job.delete(job_id, { include_persisted: false });
-    expect(deleted.job_id).toBe(job_id);
+    for (let i = 0; i < 60; i++) {
+      const job = await client.job.get(job_id);
+      if (job.status === 'Completed') {
+        const deleted = await client.job.delete(job_id, { include_persisted: false });
+        expect(deleted.job_id).toBe(job_id);
+        return;
+      }
+      if (job.status === 'Failed') {
+        throw new Error(`Parse job failed: ${job.reason}`);
+      }
+      await sleep(2000);
+    }
+
+    throw new Error('Parse job did not complete before deletion');
   });
 
   test('job delete with an unknown id returns an error', async () => {
@@ -325,8 +337,9 @@ describe('Upload', () => {
     const response = await fetch(DOCUMENT_URL);
     const { file_id } = await client.upload({ file: response });
 
-    const deleted = await client.deleteUpload(file_id.replace('reducto://', ''));
-    expect(typeof deleted.file_id).toBe('string');
+    const deleted = await client.deleteUpload(file_id);
+    expect(deleted.file_id).toBe(file_id);
+    await expect(settled(client.deleteUpload(file_id))).rejects.toBeInstanceOf(Reducto.NotFoundError);
   });
 
   test('uploaded file_id can be used as parse input', async () => {
