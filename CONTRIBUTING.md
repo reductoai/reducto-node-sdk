@@ -78,6 +78,40 @@ To format and fix all lint issues automatically:
 $ bun run format
 ```
 
+## Checking for API spec drift
+
+`scripts/spec-drift.ts` compares the SDK request and response types against the
+public OpenAPI spec. It does not match on schema names. It anchors each type to an
+endpoint found in `src/resources/`, then walks both sides in parallel and compares
+JSON property names, types, enum values, and required-ness. Types are erased at
+runtime, so the SDK side is read statically with the TypeScript compiler API.
+
+```sh
+$ bun run spec-drift                        # committed snapshot
+$ bun run spec-drift --live                 # https://reducto.ai/openapi.json
+$ bun run spec-drift --spec other.json      # any URL or file
+$ bun run spec-drift --update-snapshot      # refresh spec/openapi.json, then check
+$ bun run spec-drift --json                 # machine-readable
+$ bun run spec-drift --ignore extra         # hide one drift kind
+```
+
+Drift kinds: `endpoint`, `missing` (spec has it, SDK lacks it), `extra` (SDK has
+it, spec lacks it), `type`, `enum`, `required`. The script exits 1 when it finds
+drift, unless you pass `--warn-only`.
+
+Known, intentional deviations go in `spec/drift-allowlist.json` with a reason.
+Matching items are reported as allowed and do not fail the check; entries that
+match nothing are flagged as stale.
+
+### Spec snapshot
+
+`spec/openapi.json` is a committed copy of the public spec. The `spec-drift`
+workflow checks every PR against this snapshot, so the check is reproducible
+and an upstream API change cannot turn an unrelated PR red.
+
+Refreshing the snapshot is a manual step. Run `--update-snapshot`, sync the SDK
+until the check is clean, then commit the new snapshot with the SDK changes.
+
 ## Publishing and releases
 
 Releases are cut by hand. `CHANGELOG.md` is maintained manually.

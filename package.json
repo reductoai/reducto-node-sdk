@@ -18,11 +18,12 @@
   "scripts": {
     "test": "bun test tests/*.test.ts",
     "test:e2e": "bun test tests/e2e",
+    "spec-drift": "bun run scripts/spec-drift.ts",
     "build": "./scripts/build",
     "bump-version": "bun run scripts/bump-version.ts",
     "lint": "bun run lint:eslint && bun run lint:types",
     "lint:eslint": "ESLINT_USE_FLAT_CONFIG=false eslint --ext ts,js .",
-    "lint:types": "tsc --noEmit",
+    "lint:types": "tsc --noEmit && tsc -p scripts/tsconfig.json",
     "format": "ESLINT_USE_FLAT_CONFIG=false eslint --fix --ext ts,js . && prettier --write --cache --cache-strategy metadata . \"!dist\"",
     "prepublishOnly": "echo 'to publish, run bun run build && (cd dist; npm publish)' && exit 1"
   },
