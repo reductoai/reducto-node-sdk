@@ -9,7 +9,9 @@
  * Required environment variable: REDUCTO_API_KEY
  */
 
+import { setDefaultTimeout } from 'bun:test';
 import Reducto from 'reductoai';
+import { settled } from '../helpers';
 import fetch from 'node-fetch';
 
 const DOCUMENT_URL = 'https://ci.reducto.ai/onepager.pdf';
@@ -33,8 +35,8 @@ if (!apiKey) {
 
 const client = new Reducto({ apiKey });
 
-// Increase Jest timeout for E2E tests that hit the live API
-jest.setTimeout(180_000);
+// Increase the test timeout for E2E tests that hit the live API
+setDefaultTimeout(180_000);
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -208,10 +210,12 @@ describe('Pipeline', () => {
     // Note: requires a valid pipeline_id configured in the account
     // This test verifies the method exists and accepts the correct params
     await expect(
-      client.pipeline.run({
-        input: DOCUMENT_URL,
-        pipeline_id: 'test-pipeline',
-      }),
+      settled(
+        client.pipeline.run({
+          input: DOCUMENT_URL,
+          pipeline_id: 'test-pipeline',
+        }),
+      ),
     ).rejects.toThrow(); // Expected to fail with invalid pipeline_id
   });
 });
@@ -232,7 +236,7 @@ describe('Job', () => {
   });
 
   test('job cancel with invalid ID returns error', async () => {
-    await expect(client.job.cancel('nonexistent-job-id')).rejects.toThrow();
+    await expect(settled(client.job.cancel('nonexistent-job-id'))).rejects.toThrow();
   });
 
   test('job get returns completed result', async () => {

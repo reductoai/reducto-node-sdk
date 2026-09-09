@@ -1,43 +1,31 @@
 ## Setting up the environment
 
-This repository uses [`yarn@v1`](https://classic.yarnpkg.com/lang/en/docs/install).
-Other package managers may work but are not officially supported for development.
-
-To set up the repository, run:
+This repository uses [bun](https://bun.sh) for everything: installing dependencies, running tests,
+linting, and building.
 
 ```sh
-$ yarn
-$ yarn build
+$ bun install
+$ bun run build
 ```
 
 This will install all the required dependencies and build output files to `dist/`.
 
-## Modifying/Adding code
-
-Most of the SDK is generated code. Modifications to code will be persisted between generations, but may
-result in merge conflicts between manual patches and changes from the generator. The generator will never
-modify the contents of the `src/lib/` and `examples/` directories.
-
 ## Adding and running examples
 
-All files in the `examples/` directory are not modified by the generator and can be freely edited or added to.
+All files in the `examples/` directory can be freely edited or added to.
 
 ```ts
 // add an example to examples/<your-example>.ts
-
-#!/usr/bin/env -S npm run tsn -T
-…
 ```
 
 ```sh
-$ chmod +x examples/<your-example>.ts
 # run the example against your api
-$ yarn tsn -T examples/<your-example>.ts
+$ bun run examples/<your-example>.ts
 ```
 
 ## Using the repository from source
 
-If you’d like to use the repository from source, you can either install from git or link to a cloned repository:
+If you'd like to use the repository from source, you can either install from git or link to a cloned repository:
 
 To install via git:
 
@@ -52,21 +40,25 @@ Alternatively, to link a local copy of the repo:
 $ git clone https://www.github.com/reductoai/reducto-node-sdk
 $ cd reducto-node-sdk
 
-# With yarn
-$ yarn link
+$ bun link
 $ cd ../my-package
-$ yarn link reductoai
-
-# With pnpm
-$ pnpm link --global
-$ cd ../my-package
-$ pnpm link --global reductoai
+$ bun link reductoai
 ```
 
 ## Running tests
 
+Unit tests run against the SDK internals — retries, timeouts, header handling, multipart encoding
+and query serialization. They need no API key and no network:
+
 ```sh
-$ yarn run test
+$ bun test
+```
+
+End-to-end tests hit the live Reducto API and require a valid key. They run automatically on pull
+requests against `main` and `next`:
+
+```sh
+$ REDUCTO_API_KEY=... bun run test:e2e
 ```
 
 ## Linting and formatting
@@ -74,28 +66,42 @@ $ yarn run test
 This repository uses [prettier](https://www.npmjs.com/package/prettier) and
 [eslint](https://www.npmjs.com/package/eslint) to format the code in the repository.
 
-To lint:
+To lint (eslint plus `tsc --noEmit`):
 
 ```sh
-$ yarn lint
+$ bun run lint
 ```
 
 To format and fix all lint issues automatically:
 
 ```sh
-$ yarn fix
+$ bun run format
 ```
 
 ## Publishing and releases
 
-Changes made to this repository via the automated release PR pipeline should publish to npm automatically. If
-the changes aren't made through the automated pipeline, you may want to make releases manually.
+Releases are cut by hand. `CHANGELOG.md` is maintained manually.
 
-### Publish with a GitHub workflow
+1. Bump the version — this updates `package.json`, `src/version.ts`, and opens a `CHANGELOG.md`
+   section for you to fill in:
 
-You can release to package managers by using [the `Publish NPM` GitHub action](https://www.github.com/reductoai/reducto-node-sdk/actions/workflows/publish-npm.yml). This requires a setup organization or repository secret to be set up.
+   ```sh
+   $ bun run bump-version 0.18.0
+   ```
+
+2. Commit the bump and merge it to `main`.
+
+3. Tag the release commit and push the tag:
+
+   ```sh
+   $ git tag v0.18.0 && git push origin v0.18.0
+   ```
+
+4. Publish a GitHub release for that tag. That triggers
+   [the `Publish NPM` workflow](https://www.github.com/reductoai/reducto-node-sdk/actions/workflows/publish-npm.yml),
+   which builds and publishes to npm.
 
 ### Publish manually
 
-If you need to manually release a package, you can run the `bin/publish-npm` script with an `NPM_TOKEN` set on
-the environment.
+If you need to release outside that flow, run the `bin/publish-npm` script with an `NPM_TOKEN` set on
+the environment. You can also re-run the `Publish NPM` workflow manually if a publish failed.

@@ -16,7 +16,7 @@ describe('form data validation', () => {
   });
 
   test('null', async () => {
-    await expect(() =>
+    await expect(
       multipartFormRequestOptions({
         body: {
           null: null,

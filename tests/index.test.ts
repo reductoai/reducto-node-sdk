@@ -1,6 +1,5 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
 import Reducto from 'reductoai';
+import { settled } from './helpers';
 import { APIUserAbortError } from 'reductoai';
 import { Headers } from 'reductoai/core';
 import defaultFetch, { Response, type RequestInit, type RequestInfo } from 'node-fetch';
@@ -9,7 +8,6 @@ describe('instantiate client', () => {
   const env = process.env;
 
   beforeEach(() => {
-    jest.resetModules();
     process.env = { ...env };
 
     console.warn = jest.fn();
@@ -127,7 +125,9 @@ describe('instantiate client', () => {
 
     const spy = jest.spyOn(client, 'request');
 
-    await expect(client.get('/foo', { signal: controller.signal })).rejects.toThrowError(APIUserAbortError);
+    await expect(settled(client.get('/foo', { signal: controller.signal }))).rejects.toThrowError(
+      APIUserAbortError,
+    );
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
