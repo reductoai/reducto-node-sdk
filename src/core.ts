@@ -226,7 +226,6 @@ export abstract class APIClient {
       Accept: 'application/json',
       ...(['head', 'get'].includes(opts.method) ? {} : { 'Content-Type': 'application/json' }),
       'User-Agent': this.getUserAgent(),
-      ...getPlatformHeaders(),
       ...this.authHeaders(opts),
     };
   }
@@ -239,7 +238,7 @@ export abstract class APIClient {
   protected validateHeaders(headers: Headers, customHeaders: Headers) {}
 
   protected defaultIdempotencyKey(): string {
-    return `stainless-node-retry-${uuid4()}`;
+    return `reducto-node-retry-${uuid4()}`;
   }
 
   get<Req, Rsp>(path: string, opts?: PromiseOrValue<RequestOptions<Req>>): APIPromise<Rsp> {
@@ -308,7 +307,6 @@ export abstract class APIClient {
 
   async buildRequest<Req>(
     inputOptions: FinalRequestOptions<Req>,
-    { retryCount = 0 }: { retryCount?: number } = {},
   ): Promise<{ req: RequestInit; url: string; timeout: number }> {
     const options = { ...inputOptions };
     const { method, path, query, defaultBaseURL, headers: headers = {} } = options;
@@ -342,7 +340,7 @@ export abstract class APIClient {
       headers[this.idempotencyHeader] = inputOptions.idempotencyKey;
     }
 
-    const reqHeaders = this.buildHeaders({ options, headers, contentLength, retryCount });
+    const reqHeaders = this.buildHeaders({ options, headers, contentLength });
 
     const req: RequestInit = {
       method,
@@ -361,12 +359,10 @@ export abstract class APIClient {
     options,
     headers,
     contentLength,
-    retryCount,
   }: {
     options: FinalRequestOptions;
     headers: Record<string, string | null | undefined>;
     contentLength: string | null | undefined;
-    retryCount: number;
   }): Record<string, string> {
     const reqHeaders: Record<string, string> = {};
     if (contentLength) {
@@ -380,23 +376,6 @@ export abstract class APIClient {
     // let builtin fetch set the Content-Type for multipart bodies
     if (isMultipartBody(options.body) && shimsKind !== 'node') {
       delete reqHeaders['content-type'];
-    }
-
-    // Don't set theses headers if they were already set or removed through default headers or by the caller.
-    // We check `defaultHeaders` and `headers`, which can contain nulls, instead of `reqHeaders` to account
-    // for the removal case.
-    if (
-      getHeader(defaultHeaders, 'x-stainless-retry-count') === undefined &&
-      getHeader(headers, 'x-stainless-retry-count') === undefined
-    ) {
-      reqHeaders['x-stainless-retry-count'] = String(retryCount);
-    }
-    if (
-      getHeader(defaultHeaders, 'x-stainless-timeout') === undefined &&
-      getHeader(headers, 'x-stainless-timeout') === undefined &&
-      options.timeout
-    ) {
-      reqHeaders['x-stainless-timeout'] = String(Math.trunc(options.timeout / 1000));
     }
 
     this.validateHeaders(reqHeaders, headers);
@@ -457,9 +436,7 @@ export abstract class APIClient {
 
     await this.prepareOptions(options);
 
-    const { req, url, timeout } = await this.buildRequest(options, {
-      retryCount: maxRetries - retriesRemaining,
-    });
+    const { req, url, timeout } = await this.buildRequest(options);
 
     await this.prepareRequest(req, { url, options });
 
@@ -844,165 +821,6 @@ export type FinalRequestOptions<Req = unknown | Record<string, unknown> | Readab
     path: string;
   };
 
-declare const Deno: any;
-declare const EdgeRuntime: any;
-type Arch = 'x32' | 'x64' | 'arm' | 'arm64' | `other:${string}` | 'unknown';
-type PlatformName =
-  | 'MacOS'
-  | 'Linux'
-  | 'Windows'
-  | 'FreeBSD'
-  | 'OpenBSD'
-  | 'iOS'
-  | 'Android'
-  | `Other:${string}`
-  | 'Unknown';
-type Browser = 'ie' | 'edge' | 'chrome' | 'firefox' | 'safari';
-type PlatformProperties = {
-  'X-Stainless-Lang': 'js';
-  'X-Stainless-Package-Version': string;
-  'X-Stainless-OS': PlatformName;
-  'X-Stainless-Arch': Arch;
-  'X-Stainless-Runtime': 'node' | 'deno' | 'edge' | `browser:${Browser}` | 'unknown';
-  'X-Stainless-Runtime-Version': string;
-};
-const getPlatformProperties = (): PlatformProperties => {
-  if (typeof Deno !== 'undefined' && Deno.build != null) {
-    return {
-      'X-Stainless-Lang': 'js',
-      'X-Stainless-Package-Version': VERSION,
-      'X-Stainless-OS': normalizePlatform(Deno.build.os),
-      'X-Stainless-Arch': normalizeArch(Deno.build.arch),
-      'X-Stainless-Runtime': 'deno',
-      'X-Stainless-Runtime-Version':
-        typeof Deno.version === 'string' ? Deno.version : Deno.version?.deno ?? 'unknown',
-    };
-  }
-  if (typeof EdgeRuntime !== 'undefined') {
-    return {
-      'X-Stainless-Lang': 'js',
-      'X-Stainless-Package-Version': VERSION,
-      'X-Stainless-OS': 'Unknown',
-      'X-Stainless-Arch': `other:${EdgeRuntime}`,
-      'X-Stainless-Runtime': 'edge',
-      'X-Stainless-Runtime-Version': process.version,
-    };
-  }
-  // Check if Node.js
-  if (Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]') {
-    return {
-      'X-Stainless-Lang': 'js',
-      'X-Stainless-Package-Version': VERSION,
-      'X-Stainless-OS': normalizePlatform(process.platform),
-      'X-Stainless-Arch': normalizeArch(process.arch),
-      'X-Stainless-Runtime': 'node',
-      'X-Stainless-Runtime-Version': process.version,
-    };
-  }
-
-  const browserInfo = getBrowserInfo();
-  if (browserInfo) {
-    return {
-      'X-Stainless-Lang': 'js',
-      'X-Stainless-Package-Version': VERSION,
-      'X-Stainless-OS': 'Unknown',
-      'X-Stainless-Arch': 'unknown',
-      'X-Stainless-Runtime': `browser:${browserInfo.browser}`,
-      'X-Stainless-Runtime-Version': browserInfo.version,
-    };
-  }
-
-  // TODO add support for Cloudflare workers, etc.
-  return {
-    'X-Stainless-Lang': 'js',
-    'X-Stainless-Package-Version': VERSION,
-    'X-Stainless-OS': 'Unknown',
-    'X-Stainless-Arch': 'unknown',
-    'X-Stainless-Runtime': 'unknown',
-    'X-Stainless-Runtime-Version': 'unknown',
-  };
-};
-
-type BrowserInfo = {
-  browser: Browser;
-  version: string;
-};
-
-declare const navigator: { userAgent: string } | undefined;
-
-// Note: modified from https://github.com/JS-DevTools/host-environment/blob/b1ab79ecde37db5d6e163c050e54fe7d287d7c92/src/isomorphic.browser.ts
-function getBrowserInfo(): BrowserInfo | null {
-  if (typeof navigator === 'undefined' || !navigator) {
-    return null;
-  }
-
-  // NOTE: The order matters here!
-  const browserPatterns = [
-    { key: 'edge' as const, pattern: /Edge(?:\W+(\d+)\.(\d+)(?:\.(\d+))?)?/ },
-    { key: 'ie' as const, pattern: /MSIE(?:\W+(\d+)\.(\d+)(?:\.(\d+))?)?/ },
-    { key: 'ie' as const, pattern: /Trident(?:.*rv\:(\d+)\.(\d+)(?:\.(\d+))?)?/ },
-    { key: 'chrome' as const, pattern: /Chrome(?:\W+(\d+)\.(\d+)(?:\.(\d+))?)?/ },
-    { key: 'firefox' as const, pattern: /Firefox(?:\W+(\d+)\.(\d+)(?:\.(\d+))?)?/ },
-    { key: 'safari' as const, pattern: /(?:Version\W+(\d+)\.(\d+)(?:\.(\d+))?)?(?:\W+Mobile\S*)?\W+Safari/ },
-  ];
-
-  // Find the FIRST matching browser
-  for (const { key, pattern } of browserPatterns) {
-    const match = pattern.exec(navigator.userAgent);
-    if (match) {
-      const major = match[1] || 0;
-      const minor = match[2] || 0;
-      const patch = match[3] || 0;
-
-      return { browser: key, version: `${major}.${minor}.${patch}` };
-    }
-  }
-
-  return null;
-}
-
-const normalizeArch = (arch: string): Arch => {
-  // Node docs:
-  // - https://nodejs.org/api/process.html#processarch
-  // Deno docs:
-  // - https://doc.deno.land/deno/stable/~/Deno.build
-  if (arch === 'x32') return 'x32';
-  if (arch === 'x86_64' || arch === 'x64') return 'x64';
-  if (arch === 'arm') return 'arm';
-  if (arch === 'aarch64' || arch === 'arm64') return 'arm64';
-  if (arch) return `other:${arch}`;
-  return 'unknown';
-};
-
-const normalizePlatform = (platform: string): PlatformName => {
-  // Node platforms:
-  // - https://nodejs.org/api/process.html#processplatform
-  // Deno platforms:
-  // - https://doc.deno.land/deno/stable/~/Deno.build
-  // - https://github.com/denoland/deno/issues/14799
-
-  platform = platform.toLowerCase();
-
-  // NOTE: this iOS check is untested and may not work
-  // Node does not work natively on IOS, there is a fork at
-  // https://github.com/nodejs-mobile/nodejs-mobile
-  // however it is unknown at the time of writing how to detect if it is running
-  if (platform.includes('ios')) return 'iOS';
-  if (platform === 'android') return 'Android';
-  if (platform === 'darwin') return 'MacOS';
-  if (platform === 'win32') return 'Windows';
-  if (platform === 'freebsd') return 'FreeBSD';
-  if (platform === 'openbsd') return 'OpenBSD';
-  if (platform === 'linux') return 'Linux';
-  if (platform) return `Other:${platform}`;
-  return 'Unknown';
-};
-
-let _platformHeaders: PlatformProperties;
-const getPlatformHeaders = () => {
-  return (_platformHeaders ??= getPlatformProperties());
-};
-
 export const safeJSON = (text: string) => {
   try {
     return JSON.parse(text);
@@ -1043,6 +861,8 @@ export const ensurePresent = <T>(value: T | null | undefined): T => {
   if (value == null) throw new ReductoError(`Expected a value to be given but received ${value} instead.`);
   return value;
 };
+
+declare const Deno: any;
 
 /**
  * Read an environment variable.
@@ -1184,7 +1004,7 @@ export const getRequiredHeader = (headers: HeadersLike | Headers, header: string
 export const getHeader = (headers: HeadersLike | Headers, header: string): string | undefined => {
   const lowerCasedHeader = header.toLowerCase();
   if (isHeadersProtocol(headers)) {
-    // to deal with the case where the header looks like Stainless-Event-Id
+    // to deal with the case where the header looks like Some-Header-Name
     const intercapsHeader =
       header[0]?.toUpperCase() +
       header.substring(1).replace(/([^\w])(\w)/g, (_m, g1, g2) => g1 + g2.toUpperCase());
