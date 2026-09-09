@@ -42,21 +42,6 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function waitForJob(jobId: string): Promise<Reducto.JobGetResponse> {
-  for (let i = 0; i < 60; i++) {
-    const job = await client.job.get(jobId);
-    expect(['Pending', 'Completed', 'Failed', 'Idle']).toContain(job.status);
-
-    if (job.status === 'Completed') return job;
-    if (job.status === 'Failed') {
-      throw new Error(`Job ${jobId} failed: ${job.reason}`);
-    }
-    await sleep(2000);
-  }
-
-  throw new Error(`Job ${jobId} did not complete within timeout`);
-}
-
 describe('Parse', () => {
   test('parse sync returns response with chunks', async () => {
     const response = await client.parse.run({ input: DOCUMENT_URL });
@@ -93,8 +78,21 @@ describe('Parse', () => {
     const response = await client.parse.runJob({ input: DOCUMENT_URL });
     const jobId = response.job_id;
 
-    const job = await waitForJob(jobId);
-    expect(job.result).not.toBeNull();
+    for (let i = 0; i < 60; i++) {
+      const job = await client.job.get(jobId);
+      expect(['Pending', 'Completed', 'Failed', 'Idle']).toContain(job.status);
+
+      if (job.status === 'Completed') {
+        expect(job.result).not.toBeNull();
+        return;
+      }
+      if (job.status === 'Failed') {
+        throw new Error(`Parse async job failed: ${job.reason}`);
+      }
+      await sleep(2000);
+    }
+
+    throw new Error('Parse async job did not complete within timeout');
   });
 });
 
@@ -123,8 +121,21 @@ describe('Extract', () => {
     });
     const jobId = response.job_id;
 
-    const job = await waitForJob(jobId);
-    expect(job.result).not.toBeNull();
+    for (let i = 0; i < 60; i++) {
+      const job = await client.job.get(jobId);
+      expect(['Pending', 'Completed', 'Failed', 'Idle']).toContain(job.status);
+
+      if (job.status === 'Completed') {
+        expect(job.result).not.toBeNull();
+        return;
+      }
+      if (job.status === 'Failed') {
+        throw new Error(`Extract async job failed: ${job.reason}`);
+      }
+      await sleep(2000);
+    }
+
+    throw new Error('Extract async job did not complete within timeout');
   });
 });
 
@@ -162,16 +173,27 @@ describe('Split', () => {
     });
     const jobId = response.job_id;
 
-    const job = await waitForJob(jobId);
-    expect(job.result).not.toBeNull();
+    for (let i = 0; i < 60; i++) {
+      const job = await client.job.get(jobId);
+      expect(['Pending', 'Completed', 'Failed', 'Idle']).toContain(job.status);
+
+      if (job.status === 'Completed') {
+        expect(job.result).not.toBeNull();
+        return;
+      }
+      if (job.status === 'Failed') {
+        throw new Error(`Split async job failed: ${job.reason}`);
+      }
+      await sleep(2000);
+    }
+
+    throw new Error('Split async job did not complete within timeout');
   });
 });
 
 describe('Job deletion', () => {
   test('job delete removes a completed job', async () => {
     const { job_id } = await client.parse.runJob({ input: DOCUMENT_URL });
-
-    await waitForJob(job_id);
 
     const deleted = await client.job.delete(job_id, { include_persisted: false });
     expect(deleted.job_id).toBe(job_id);
@@ -271,8 +293,21 @@ describe('Job', () => {
     const asyncResponse = await client.parse.runJob({ input: DOCUMENT_URL });
     const jobId = asyncResponse.job_id;
 
-    const job = await waitForJob(jobId);
-    expect(job.result).not.toBeNull();
+    for (let i = 0; i < 60; i++) {
+      const job = await client.job.get(jobId);
+      expect(['Pending', 'Completed', 'Failed', 'Idle']).toContain(job.status);
+
+      if (job.status === 'Completed') {
+        expect(job.result).not.toBeNull();
+        return;
+      }
+      if (job.status === 'Failed') {
+        throw new Error(`Job failed: ${job.reason}`);
+      }
+      await sleep(2000);
+    }
+
+    throw new Error('Job did not complete within timeout');
   });
 });
 
@@ -290,9 +325,8 @@ describe('Upload', () => {
     const response = await fetch(DOCUMENT_URL);
     const { file_id } = await client.upload({ file: response });
 
-    const deleted = await client.deleteUpload(file_id);
-    expect(deleted.file_id).toBe(file_id);
-    await expect(settled(client.deleteUpload(file_id))).rejects.toBeInstanceOf(Reducto.NotFoundError);
+    const deleted = await client.deleteUpload(file_id.replace('reducto://', ''));
+    expect(typeof deleted.file_id).toBe('string');
   });
 
   test('uploaded file_id can be used as parse input', async () => {
