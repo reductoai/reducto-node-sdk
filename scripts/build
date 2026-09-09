@@ -15,14 +15,9 @@ rm -rf dist; mkdir dist
 # Copy src to dist/src and build from dist/src into dist, so that
 # the source map for index.js.map will refer to ./src/index.ts etc
 cp -rp src README.md dist
-rm dist/src/_shims/*-deno.ts dist/src/_shims/auto/*-deno.ts
 for file in LICENSE CHANGELOG.md; do
   if [ -e "${file}" ]; then cp "${file}" dist; fi
 done
-if [ -e "bin/cli" ]; then
-  mkdir dist/bin
-  cp -p "bin/cli" dist/bin/;
-fi
 # this converts the export map paths for the dist directory
 # and does a few other minor things
 node scripts/utils/make-dist-package-json.cjs > dist/package.json
@@ -49,8 +44,3 @@ node scripts/utils/postprocess-files.cjs
 # import the output ESM
 (cd dist && node -e 'require("reductoai")')
 (cd dist && node -e 'import("reductoai")' --input-type=module)
-
-if [ -e ./scripts/build-deno ]
-then
-  ./scripts/build-deno
-fi
