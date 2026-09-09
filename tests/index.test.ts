@@ -1,3 +1,4 @@
+import { afterEach, beforeEach, describe, expect, jest, test } from 'bun:test';
 import Reducto from 'reductoai';
 import { settled } from './helpers';
 import { APIUserAbortError } from 'reductoai';
@@ -299,7 +300,7 @@ describe('retries', () => {
       fetch: testFetch,
     });
 
-    expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
+    expect(await client.request<null, { a: number }>({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
     expect(
       await client
@@ -333,7 +334,7 @@ describe('retries', () => {
       maxRetries: 4,
     });
 
-    expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
+    expect(await client.request<null, { a: number }>({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
 
     expect((capturedRequest!.headers as Headers)['x-stainless-retry-count']).toEqual('2');
     expect(count).toEqual(3);
@@ -362,7 +363,7 @@ describe('retries', () => {
     });
 
     expect(
-      await client.request({
+      await client.request<null, { a: number }>({
         path: '/foo',
         method: 'get',
         headers: { 'X-Stainless-Retry-Count': null },
@@ -396,7 +397,7 @@ describe('retries', () => {
     });
 
     expect(
-      await client.request({
+      await client.request<null, { a: number }>({
         path: '/foo',
         method: 'get',
       }),
@@ -428,7 +429,7 @@ describe('retries', () => {
     });
 
     expect(
-      await client.request({
+      await client.request<null, { a: number }>({
         path: '/foo',
         method: 'get',
         headers: { 'X-Stainless-Retry-Count': '42' },
@@ -454,7 +455,7 @@ describe('retries', () => {
 
     const client = new Reducto({ apiKey: 'My API Key', fetch: testFetch });
 
-    expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
+    expect(await client.request<null, { a: number }>({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
     expect(
       await client
@@ -481,7 +482,7 @@ describe('retries', () => {
 
     const client = new Reducto({ apiKey: 'My API Key', fetch: testFetch });
 
-    expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
+    expect(await client.request<null, { a: number }>({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
     expect(
       await client

@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'bun:test';
 import { stringifyQuery } from 'reductoai/internal/utils/query';
 
 describe(stringifyQuery, () => {
