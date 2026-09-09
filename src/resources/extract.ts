@@ -1,5 +1,6 @@
 import { APIResource } from '../resource';
 import * as Core from '../core';
+import * as ClassifyAPI from './classify';
 import * as ParseAPI from './parse';
 import * as Shared from './shared';
 
@@ -52,6 +53,12 @@ export interface AsyncExtractConfig {
   parsing?: ParseOptions;
 
   /**
+   * Queue priority. 'batch' places the job in a lower-priority queue for non-urgent
+   * bulk work. 'auto' (alias: 'standard') uses the default queue.
+   */
+  queue_priority?: 'auto' | 'batch' | 'standard';
+
+  /**
    * The settings to use for the extraction.
    */
   settings?: ExtractSettings;
@@ -76,6 +83,11 @@ export interface ExtractSettings {
   deep_extract?: boolean;
 
   /**
+   * Force the result to be returned in URL form.
+   */
+  force_url_result?: boolean;
+
+  /**
    * If True, include images in the extraction.
    */
   include_images?: boolean;
@@ -85,6 +97,12 @@ export interface ExtractSettings {
    * higher cost. Defaults to False.
    */
   optimize_for_latency?: boolean;
+
+  /**
+   * The page range to process (1-indexed). By default, the entire document is
+   * processed. For spreadsheets, you can also provide a list of sheet names.
+   */
+  page_range?: ClassifyAPI.PageRange | Array<ClassifyAPI.PageRange> | Array<number> | Array<string> | null;
 }
 
 export namespace ExtractSettings {
@@ -101,6 +119,16 @@ export namespace ExtractSettings {
      * If True, enable numeric citation confidence scores. Defaults to True.
      */
     numerical_confidence?: boolean;
+
+    /**
+     * How much of the source parse block to embed on each citation's parentBlock.
+     * 'full' (default) embeds the verbatim source-block HTML in parentBlock.content.
+     * 'bbox_only' suppresses parentBlock.content (returned as an empty string) while
+     * keeping parentBlock.bbox and all citation-level fields — this can drastically
+     * shrink responses on table-heavy schemas where the same source block is cited
+     * many times.
+     */
+    parent_block?: 'full' | 'bbox_only';
   }
 }
 
@@ -112,6 +140,28 @@ export interface ExtractUsage {
   credits?: number | null;
 
   extract_mode?: 'super_agent' | 'extract' | 'spreadsheet_agent' | null;
+
+  /**
+   * Raw usage quantities. Only set for accounts on the new pricing model; credit
+   * fields are omitted for those accounts.
+   */
+  usage_breakdown?: ExtractUsageBreakdown | null;
+}
+
+export interface ExtractUsageBreakdown {
+  extract_model: 'Extract' | 'Deep Extract';
+
+  charts?: number;
+
+  extract_fields?: number;
+
+  extract_pages?: number;
+
+  ocr_pages?: number;
+
+  prompted_blocks?: number;
+
+  tier?: 'Default' | 'Batch';
 }
 
 export interface Instructions {
@@ -145,7 +195,19 @@ export interface V3Extract {
    */
   result: unknown | Array<unknown>;
 
+  response_type: 'v3_extract';
+
   usage: ExtractUsage;
+
+  /**
+   * Optional document-level deep extract confidence label.
+   */
+  confidence?: 'high' | 'low' | null;
+
+  /**
+   * Optional explanation for the document-level confidence label.
+   */
+  confidence_reason?: string | null;
 
   job_id?: string | null;
 
@@ -220,6 +282,12 @@ export declare namespace ExtractRunParams {
     parsing?: ParseOptions;
 
     /**
+     * Queue priority. 'batch' places the job in a lower-priority queue for non-urgent
+     * bulk work. 'auto' (alias: 'standard') uses the default queue.
+     */
+    queue_priority?: 'auto' | 'batch' | 'standard';
+
+    /**
      * The settings to use for the extraction.
      */
     settings?: ExtractSettings;
@@ -256,6 +324,12 @@ export interface ExtractRunJobParams {
   parsing?: ParseOptions;
 
   /**
+   * Queue priority. 'batch' places the job in a lower-priority queue for non-urgent
+   * bulk work. 'auto' (alias: 'standard') uses the default queue.
+   */
+  queue_priority?: 'auto' | 'batch' | 'standard';
+
+  /**
    * The settings to use for the extraction.
    */
   settings?: ExtractSettings;
@@ -266,6 +340,7 @@ export declare namespace Extract {
     type AsyncExtractConfig as AsyncExtractConfig,
     type ExtractSettings as ExtractSettings,
     type ExtractUsage as ExtractUsage,
+    type ExtractUsageBreakdown as ExtractUsageBreakdown,
     type Instructions as Instructions,
     type ParseOptions as ParseOptions,
     type V3Extract as V3Extract,

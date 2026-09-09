@@ -61,10 +61,10 @@ export interface AsyncParseConfig {
   formatting?: Formatting;
 
   /**
-   * Queue priority. 'batch' for non-urgent work that processes when spare GPU
-   * capacity is available.
+   * Queue priority. 'batch' places the job in a lower-priority queue for non-urgent
+   * bulk work. 'auto' (alias: 'standard') uses the default queue.
    */
-  queue_priority?: 'auto' | 'batch';
+  queue_priority?: 'auto' | 'batch' | 'standard';
 
   retrieval?: Retrieval;
 
@@ -74,6 +74,14 @@ export interface AsyncParseConfig {
 }
 
 export interface Enhance {
+  /**
+   * If True, run advanced chart extraction on figures classified as charts, without
+   * requiring a figure-scoped agentic entry. Returns full structured series data
+   * (chart_data) plus a reconstruction image re-drawn from that data. Higher
+   * latency. Defaults to False.
+   */
+  advanced_chart_agent?: boolean;
+
   /**
    * Agentic uses vision language models to enhance the accuracy of the output of
    * different types of extraction. This will incur a cost and latency increase.
@@ -160,6 +168,20 @@ export interface Settings {
   embed_pdf_metadata?: boolean;
 
   /**
+   * Render DPI used when rasterizing the source PDF before embedding the OCR text
+   * layer (only applies when `embed_pdf_metadata` is True). Lower values produce
+   * dramatically smaller output PDFs; higher values preserve more detail when zoomed
+   * past 200%. Defaults to 100 (good for on-screen viewing); raise toward the source
+   * scan DPI for crisper output. Min 50, max 250.
+   */
+  embed_pdf_metadata_dpi?: number;
+
+  /**
+   * If True, return properties embedded in the original document. Defaults to False.
+   */
+  extract_document_properties?: boolean;
+
+  /**
    * The mode to use for text extraction from PDFs. OCR mode uses optical character
    * recognition only. Hybrid mode combines OCR with embedded PDF text for best
    * accuracy (default).
@@ -175,6 +197,11 @@ export interface Settings {
    * Force the result to be returned in URL form.
    */
   force_url_result?: boolean;
+
+  /**
+   * Hybrid VPC request-scoped settings.
+   */
+  hybrid_vpc?: HybridVpcSettings;
 
   /**
    * The parse model used for the request. Setting `r-1` will use Reducto's latest
@@ -211,9 +238,38 @@ export interface Settings {
   return_ocr_data?: boolean;
 
   /**
+   * Per-tenant throttling for multi-tenant applications. Tag each request with your
+   * tenant's id to bound how much of your account's concurrency a single tenant can
+   * consume. Account-level throttles still apply.
+   */
+  tenant_throttling?: TenantThrottling | null;
+
+  /**
    * The timeout for the job in seconds.
    */
   timeout?: number | null;
+}
+
+export interface HybridVpcSettings {
+  /**
+   * Named Hybrid VPC environment to use for this request. Only applies when your
+   * organization has Hybrid VPC environments configured.
+   */
+  environment?: string | null;
+}
+
+export interface TenantThrottling {
+  /**
+   * Your identifier for the tenant (customer, workspace, organization) this request
+   * belongs to. Used only for noisy-neighbor throttling inside your account.
+   */
+  tenant_id: string;
+
+  /**
+   * Maximum fraction of your account's concurrency ceiling this tenant may use,
+   * between 0 (exclusive) and 1. Defaults to 0.5.
+   */
+  max_share?: number;
 }
 
 export interface Spreadsheet {
@@ -228,6 +284,13 @@ export interface Spreadsheet {
    * Whether to exclude hidden sheets, rows, or columns in the output.
    */
   exclude?: Array<'hidden_sheets' | 'hidden_rows' | 'hidden_cols' | 'styling' | 'spreadsheet_images'>;
+
+  /**
+   * Maximum total non-empty cells allowed across all sheets. If exceeded, the
+   * request is rejected with a 422 error. Set to null to disable the limit. Defaults
+   * to null.
+   */
+  max_cell_count?: number | null;
 
   /**
    * Whether to include cell color, formula, and dropdown information in the output.
@@ -289,10 +352,10 @@ export declare namespace ParseRunParams {
     formatting?: Formatting;
 
     /**
-     * Queue priority. 'batch' for non-urgent work that processes when spare GPU
-     * capacity is available.
+     * Queue priority. 'batch' places the job in a lower-priority queue for
+     * non-urgent bulk work. 'auto' (alias: 'standard') uses the default queue.
      */
-    queue_priority?: 'auto' | 'batch';
+    queue_priority?: 'auto' | 'batch' | 'standard';
 
     retrieval?: Retrieval;
 
@@ -325,10 +388,10 @@ export interface ParseRunJobParams {
   formatting?: Formatting;
 
   /**
-   * Queue priority. 'batch' for non-urgent work that processes when spare GPU
-   * capacity is available.
+   * Queue priority. 'batch' places the job in a lower-priority queue for non-urgent
+   * bulk work. 'auto' (alias: 'standard') uses the default queue.
    */
-  queue_priority?: 'auto' | 'batch';
+  queue_priority?: 'auto' | 'batch' | 'standard';
 
   retrieval?: Retrieval;
 
@@ -343,7 +406,9 @@ export declare namespace Parse {
     type AsyncParseConfig as AsyncParseConfig,
     type Enhance as Enhance,
     type Formatting as Formatting,
+    type HybridVpcSettings as HybridVpcSettings,
     type Retrieval as Retrieval,
+    type TenantThrottling as TenantThrottling,
     type Settings as Settings,
     type Spreadsheet as Spreadsheet,
     type ParseRunResponse as ParseRunResponse,

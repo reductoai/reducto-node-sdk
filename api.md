@@ -3,10 +3,12 @@
 Types:
 
 - <code><a href="./src/resources/top-level.ts">APIVersionResponse</a></code>
+- <code><a href="./src/resources/top-level.ts">DeleteUploadResponse</a></code>
 
 Methods:
 
 - <code title="get /version">client.<a href="./src/index.ts">apiVersion</a>() -> string</code>
+- <code title="delete /upload/{file_id}">client.<a href="./src/index.ts">deleteUpload</a>(fileID) -> DeleteUploadResponse</code>
 - <code title="post /upload">client.<a href="./src/index.ts">upload</a>({ ...params }) -> Upload</code>
 
 # Shared
@@ -22,12 +24,17 @@ Types:
 - <code><a href="./src/resources/shared.ts">AsyncPipelineResponse</a></code>
 - <code><a href="./src/resources/shared.ts">AsyncSplitResponse</a></code>
 - <code><a href="./src/resources/shared.ts">BaseProcessingOptions</a></code>
+- <code><a href="./src/resources/shared.ts">ChartResponse</a></code>
 - <code><a href="./src/resources/shared.ts">Chunking</a></code>
 - <code><a href="./src/resources/shared.ts">ChunkingConfig</a></code>
 - <code><a href="./src/resources/shared.ts">ClassifyResponse</a></code>
+- <code><a href="./src/resources/shared.ts">ClassifyUsage</a></code>
+- <code><a href="./src/resources/shared.ts">ClassifyUsageBreakdown</a></code>
 - <code><a href="./src/resources/shared.ts">DirectWebhookConfig</a></code>
+- <code><a href="./src/resources/shared.ts">DocumentProperties</a></code>
 - <code><a href="./src/resources/shared.ts">EditResponse</a></code>
 - <code><a href="./src/resources/shared.ts">EnrichConfig</a></code>
+- <code><a href="./src/resources/shared.ts">ErrorDetail</a></code>
 - <code><a href="./src/resources/shared.ts">ExperimentalProcessingOptions</a></code>
 - <code><a href="./src/resources/shared.ts">ExtractResponse</a></code>
 - <code><a href="./src/resources/shared.ts">FigureAgentic</a></code>
@@ -42,6 +49,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">TableAgentic</a></code>
 - <code><a href="./src/resources/shared.ts">TableSummaryConfig</a></code>
 - <code><a href="./src/resources/shared.ts">TextAgentic</a></code>
+- <code><a href="./src/resources/shared.ts">URLResult</a></code>
 - <code><a href="./src/resources/shared.ts">Upload</a></code>
 - <code><a href="./src/resources/shared.ts">WebhookConfigNew</a></code>
 
@@ -53,9 +61,11 @@ Types:
 - <code><a href="./src/resources/parse.ts">AsyncParseConfig</a></code>
 - <code><a href="./src/resources/parse.ts">Enhance</a></code>
 - <code><a href="./src/resources/parse.ts">Formatting</a></code>
+- <code><a href="./src/resources/parse.ts">HybridVpcSettings</a></code>
 - <code><a href="./src/resources/parse.ts">Retrieval</a></code>
 - <code><a href="./src/resources/parse.ts">Settings</a></code>
 - <code><a href="./src/resources/parse.ts">Spreadsheet</a></code>
+- <code><a href="./src/resources/parse.ts">TenantThrottling</a></code>
 - <code><a href="./src/resources/parse.ts">ParseRunResponse</a></code>
 
 Methods:
@@ -70,6 +80,7 @@ Types:
 - <code><a href="./src/resources/extract.ts">AsyncExtractConfig</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractSettings</a></code>
 - <code><a href="./src/resources/extract.ts">ExtractUsage</a></code>
+- <code><a href="./src/resources/extract.ts">ExtractUsageBreakdown</a></code>
 - <code><a href="./src/resources/extract.ts">Instructions</a></code>
 - <code><a href="./src/resources/extract.ts">ParseOptions</a></code>
 - <code><a href="./src/resources/extract.ts">V3Extract</a></code>
@@ -85,9 +96,12 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/split.ts">DeepSplitPageEvidence</a></code>
+- <code><a href="./src/resources/split.ts">EditUsageBreakdown</a></code>
 - <code><a href="./src/resources/split.ts">ParseUsage</a></code>
+- <code><a href="./src/resources/split.ts">ParseUsageBreakdown</a></code>
 - <code><a href="./src/resources/split.ts">SplitCategory</a></code>
 - <code><a href="./src/resources/split.ts">SplitTableOptions</a></code>
+- <code><a href="./src/resources/split.ts">SplitUsageBreakdown</a></code>
 
 Methods:
 
@@ -139,11 +153,13 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/job.ts">JobCancelResponse</a></code>
+- <code><a href="./src/resources/job.ts">JobDeleteResponse</a></code>
 - <code><a href="./src/resources/job.ts">JobGetResponse</a></code>
 - <code><a href="./src/resources/job.ts">JobGetAllResponse</a></code>
 
 Methods:
 
 - <code title="post /cancel/{job_id}">client.job.<a href="./src/resources/job.ts">cancel</a>(jobId) -> unknown</code>
+- <code title="delete /job/{job_id}">client.job.<a href="./src/resources/job.ts">delete</a>(jobId, { ...params }) -> JobDeleteResponse</code>
 - <code title="get /job/{job_id}">client.job.<a href="./src/resources/job.ts">get</a>(jobId) -> JobGetResponse</code>
 - <code title="get /jobs">client.job.<a href="./src/resources/job.ts">getAll</a>({ ...params }) -> JobGetAllResponse</code>

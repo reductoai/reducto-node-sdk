@@ -13,6 +13,7 @@ export {
   type AsyncExtractConfig,
   type ExtractSettings,
   type ExtractUsage,
+  type ExtractUsageBreakdown,
   type Instructions,
   type ParseOptions,
   type V3Extract,
@@ -23,8 +24,10 @@ export {
 export {
   Job,
   type JobCancelResponse,
+  type JobDeleteResponse,
   type JobGetResponse,
   type JobGetAllResponse,
+  type JobDeleteParams,
   type JobGetAllParams,
 } from './job';
 export {
@@ -33,9 +36,11 @@ export {
   type AsyncParseConfig,
   type Enhance,
   type Formatting,
+  type HybridVpcSettings,
   type Retrieval,
   type Settings,
   type Spreadsheet,
+  type TenantThrottling,
   type ParseRunResponse,
   type ParseRunParams,
   type ParseRunJobParams,
@@ -49,11 +54,14 @@ export {
 export {
   Split,
   type DeepSplitPageEvidence,
+  type EditUsageBreakdown,
   type ParseUsage,
+  type ParseUsageBreakdown,
+  type SplitUsageBreakdown,
   type SplitCategory,
   type SplitTableOptions,
   type SplitRunParams,
   type SplitRunJobParams,
 } from './split';
 export { Webhook, type WebhookRunResponse } from './webhook';
-export { type APIVersionResponse, type UploadParams } from './top-level';
+export { type APIVersionResponse, type DeleteUploadResponse, type UploadParams } from './top-level';

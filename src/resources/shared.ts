@@ -247,6 +247,36 @@ export interface BaseProcessingOptions {
   table_summary?: TableSummaryConfig;
 }
 
+export interface ChartResponse {
+  job_id: string;
+
+  response_type: 'chart';
+
+  result: ChartResponse.Result;
+
+  duration?: number | null;
+
+  usage?: ChartResponse.Usage;
+}
+
+export namespace ChartResponse {
+  export interface Result {
+    chart_data: { [key: string]: unknown };
+
+    reconstruction_url: string;
+
+    summary: string;
+
+    verified: boolean;
+  }
+
+  export interface Usage {
+    credits?: number;
+
+    num_charts?: 1;
+  }
+}
+
 export interface Chunking {
   /**
    * Choose how to partition chunks. Variable mode chunks by character length and
@@ -297,7 +327,9 @@ export interface ChunkingConfig {
 export interface ClassifyResponse {
   job_id: string;
 
-  result: ClassifyResponse.Result;
+  response_type: 'classify';
+
+  result: ClassifyResponse.Result | URLResult;
 
   /**
    * The duration of the classify request in seconds.
@@ -305,9 +337,17 @@ export interface ClassifyResponse {
   duration?: number | null;
 
   /**
+   * Additional metadata for the classify response. Contains `grouping` when the
+   * request set `category_groups`. Omitted when empty.
+   */
+  extra_metadata?: { [key: string]: string };
+
+  /**
    * Overall confidence breakdown for classification response.
    */
   response_confidence?: ClassifyResponse.ResponseConfidence | null;
+
+  usage?: ClassifyUsage | null;
 }
 
 export namespace ClassifyResponse {
@@ -347,10 +387,79 @@ export namespace ClassifyResponse {
   }
 }
 
+export interface ClassifyUsage {
+  num_categories: number;
+
+  num_pages: number;
+
+  credits?: number | null;
+
+  /**
+   * Raw usage quantities. Only set for accounts on the new pricing model; credit
+   * fields are omitted for those accounts.
+   */
+  usage_breakdown?: ClassifyUsageBreakdown | null;
+}
+
+export interface ClassifyUsageBreakdown {
+  classify_model: 'Classify' | 'Deep Classify';
+
+  classify_pages?: number;
+}
+
 export interface DirectWebhookConfig {
   url: string;
 
   mode?: 'direct';
+}
+
+export interface DocumentProperties {
+  /**
+   * The document author.
+   */
+  author?: string | null;
+
+  /**
+   * The document creation time as a timezone-aware datetime. Dates without an offset
+   * are interpreted as UTC.
+   */
+  created_at?: string | null;
+
+  /**
+   * The application or tool that authored the document.
+   */
+  creator?: string | null;
+
+  /**
+   * Keywords embedded in the document.
+   */
+  keywords?: string | null;
+
+  /**
+   * The user who last modified the document.
+   */
+  last_modified_by?: string | null;
+
+  /**
+   * The document modification time as a timezone-aware datetime. Dates without an
+   * offset are interpreted as UTC.
+   */
+  modified_at?: string | null;
+
+  /**
+   * The application or library that produced the document.
+   */
+  producer?: string | null;
+
+  /**
+   * The document subject.
+   */
+  subject?: string | null;
+
+  /**
+   * The document title.
+   */
+  title?: string | null;
 }
 
 export interface EditResponse {
@@ -358,6 +467,13 @@ export interface EditResponse {
    * Presigned URL to download the edited document.
    */
   document_url: string;
+
+  response_type: 'edit';
+
+  /**
+   * The unique identifier for the edit job.
+   */
+  job_id?: string | null;
 
   /**
    * Form schema for PDF forms. List of widgets with their types, descriptions, and
@@ -389,6 +505,60 @@ export interface EnrichConfig {
    * Add information to the prompt for enrichment.
    */
   prompt?: string;
+}
+
+export interface ErrorDetail {
+  code: number;
+
+  message: string;
+
+  name:
+    | 'TIMEOUT'
+    | 'CAPACITY_TIMEOUT'
+    | 'CUSTOMER_TIMEOUT'
+    | 'INTERNAL_ERROR'
+    | 'SERVICE_UNAVAILABLE'
+    | 'GPU_ALLOCATION_ERROR'
+    | 'GPU_POOL_SATURATED'
+    | 'BATCH_QUEUE_FULL'
+    | 'QUEUE_FULL'
+    | 'JOB_STATE_ERROR'
+    | 'DOCUMENT_CORRUPT'
+    | 'DOCUMENT_EMPTY'
+    | 'DOCUMENT_UNSUPPORTED'
+    | 'DOCUMENT_TOO_LARGE'
+    | 'OFFICE_CONVERSION_TOO_LARGE'
+    | 'IMAGE_TOO_LARGE'
+    | 'IMAGE_TOO_SMALL'
+    | 'IMAGE_INVALID_ASPECT_RATIO'
+    | 'DOCUMENT_PASSWORD_PROTECTED'
+    | 'FORM_FILL_FAILED'
+    | 'INTERNAL_INVARIANT_VIOLATION'
+    | 'GPU_UNAVAILABLE'
+    | 'CONTEXT_WINDOW_EXCEEDED'
+    | 'OUTPUT_LIMIT_EXCEEDED'
+    | 'PROCESSING_FAILED'
+    | 'INFERENCE_METHOD_UNSUPPORTED'
+    | 'SUBPROCESS_CRASHED'
+    | 'BATCH_ORPHANED'
+    | 'OVERSIZED_RESULT'
+    | 'LLM_OUTPUT_PARSE_FAILED'
+    | 'LLM_PROVIDER_ERROR'
+    | 'INVALID_CONFIG'
+    | 'INVALID_SCHEMA'
+    | 'AUTH_ERROR'
+    | 'NOT_APPLICABLE'
+    | 'REGION_UNAVAILABLE'
+    | 'NOT_FOUND'
+    | 'JOB_DELETION_IN_PROGRESS'
+    | 'JOB_DELETED'
+    | 'JOB_NOT_COMPLETE'
+    | 'JOB_CANCELLED'
+    | 'RATE_LIMIT'
+    | 'CELL_COUNT_EXCEEDED'
+    | 'URL_NOT_ALLOWED';
+
+  job_id?: string | null;
 }
 
 export interface ExperimentalProcessingOptions {
@@ -518,19 +688,29 @@ export interface ExperimentalProcessingOptions {
 
 export interface ExtractResponse {
   /**
-   * The citations corresponding to the extracted response.
+   * The citations corresponding to the extracted response. If force_url_result is
+   * True and citations are present, this is returned as a URL result.
    */
-  citations: Array<unknown> | null;
+  citations: Array<unknown> | URLResult | null;
+
+  response_type: 'extract';
 
   /**
    * The extracted response in your provided schema. This is a list of dictionaries.
-   * If disable_chunking is True (default), then it will be a list of length one.
+   * If disable_chunking is True (default), then it will be a list of length one. If
+   * force_url_result is True, this is returned as a URL result.
    */
-  result: Array<unknown>;
+  result: Array<unknown> | URLResult;
 
   usage: ExtractAPI.ExtractUsage;
 
   job_id?: string | null;
+
+  /**
+   * Optional deep extract confidence metadata containing document-level confidence
+   * plus a mirrored leaf-level confidence tree.
+   */
+  response_confidence?: { [key: string]: unknown } | null;
 
   /**
    * The link to the studio pipeline for the document.
@@ -611,9 +791,16 @@ export interface ParseResponse {
    * as a presigned URL in the URL response. You should handle this in your
    * application.
    */
+  response_type: 'parse';
+
   result: ParseResponse.FullResult | ParseResponse.URLResult;
 
   usage: SplitAPI.ParseUsage;
+
+  /**
+   * Properties embedded in the customer's original document.
+   */
+  document_properties?: DocumentProperties | null;
 
   /**
    * The storage URL of the converted PDF file.
@@ -723,9 +910,33 @@ export namespace ParseResponse {
          * (Experimental) The URL of the image associated with the block.
          */
         image_url?: string | null;
+
+        /**
+         * The original tables that were merged into this block, present when
+         * merge_tables merged a table that spans pages.
+         */
+        merged_tables?: Array<Block.MergedTable> | null;
       }
 
       export namespace Block {
+        export interface MergedTable {
+          /**
+           * The original bounding box of a table before merge_tables merged it.
+           */
+          bbox: EditAPI.BoundingBox;
+
+          /**
+           * The original content of a table before merge_tables merged it.
+           */
+          content: string;
+
+          /**
+           * (Experimental) The URL of the image for this original table fragment. Only
+           * populated when settings.return_images includes 'table'.
+           */
+          image_url?: string | null;
+        }
+
         /**
          * Granular confidence scores for the block. It is a dictionary of confidence
          * scores for the block. The confidence scores will not be None if the user has
@@ -805,6 +1016,8 @@ export namespace ParseResponse {
 export interface PipelineResponse {
   job_id: string;
 
+  response_type: 'pipeline';
+
   result: PipelineResponse.Result;
 
   usage: SplitAPI.ParseUsage;
@@ -868,12 +1081,24 @@ export namespace SplitLargeTables {
 }
 
 export interface SplitResponse {
+  response_type: 'split';
+
   /**
-   * The split result.
+   * The split result. If force_url_result is True, this is returned as a URL result.
    */
-  result: SplitResponse.SplitResult | SplitResponse.DeepSplitResult;
+  result: SplitResponse.SplitResult | SplitResponse.DeepSplitResult | URLResult;
 
   usage: SplitAPI.ParseUsage;
+
+  /**
+   * The duration of the split request in seconds.
+   */
+  duration?: number | null;
+
+  /**
+   * The unique identifier for the split job.
+   */
+  job_id?: string | null;
 }
 
 export namespace SplitResponse {
@@ -942,6 +1167,12 @@ export interface TableAgentic {
   scope: 'table';
 
   /**
+   * Mode for table agentic: 'default' selectively applies enrichment only to tables
+   * likely to benefit, and 'max' runs enrichment on all tables.
+   */
+  mode?: 'default' | 'auto' | 'max';
+
+  /**
    * Custom prompt for table agentic.
    */
   prompt?: string | null;
@@ -967,6 +1198,17 @@ export interface TextAgentic {
    * (key-value).
    */
   prompt?: string | null;
+}
+
+export interface URLResult {
+  result_id: string;
+
+  /**
+   * type = 'url'
+   */
+  type: 'url';
+
+  url: string;
 }
 
 export interface Upload {

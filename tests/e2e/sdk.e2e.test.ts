@@ -50,6 +50,24 @@ describe('Parse', () => {
     expect(response).toHaveProperty('result');
   });
 
+  test('parse with spec-synced settings returns document properties and usage breakdown', async () => {
+    const response = await client.parse.run({
+      input: DOCUMENT_URL,
+      queue_priority: 'standard',
+      enhance: { advanced_chart_agent: false },
+      settings: {
+        extract_document_properties: true,
+        embed_pdf_metadata_dpi: 100,
+        hybrid_vpc: {},
+      },
+    });
+    // POST /parse returns a sync ParseResponse unless an async config is set.
+    if (!('response_type' in response)) throw new Error('expected a sync parse response');
+    expect(response.response_type).toBe('parse');
+    expect(response).toHaveProperty('document_properties');
+    expect(response.usage).toHaveProperty('num_pages');
+  });
+
   test('parse async returns job_id', async () => {
     const response = await client.parse.runJob({ input: DOCUMENT_URL });
     expect(response).toHaveProperty('job_id');
@@ -173,6 +191,19 @@ describe('Split', () => {
   });
 });
 
+describe('Job deletion', () => {
+  test('job delete removes a completed job', async () => {
+    const { job_id } = await client.parse.runJob({ input: DOCUMENT_URL });
+
+    const deleted = await client.job.delete(job_id, { include_persisted: false });
+    expect(deleted.job_id).toBe(job_id);
+  });
+
+  test('job delete with an unknown id returns an error', async () => {
+    await expect(settled(client.job.delete('nonexistent-job-id'))).rejects.toThrow();
+  });
+});
+
 describe('Classify', () => {
   test('classify returns a category result', async () => {
     const response = await client.classify.run({
@@ -190,8 +221,27 @@ describe('Classify', () => {
     });
     expect(response).toHaveProperty('job_id');
     expect(response).toHaveProperty('result');
-    expect(response.result).toHaveProperty('category');
-    expect(typeof response.result.category).toBe('string');
+    expect(response.response_type).toBe('classify');
+    const result = response.result;
+    if ('type' in result && result.type === 'url') {
+      expect(typeof result.url).toBe('string');
+    } else {
+      expect(typeof (result as { category: string }).category).toBe('string');
+    }
+  });
+
+  test('classify with category_groups returns grouping metadata', async () => {
+    const response = await client.classify.run({
+      input: DOCUMENT_URL,
+      classification_schema: [
+        { category: 'report', criteria: ['Contains structured sections'] },
+        { category: 'invoice', criteria: ['Contains line items'] },
+      ],
+      category_groups: { financial: ['invoice'], other: ['report'] },
+      model: 'default',
+    });
+    expect(response.extra_metadata).toBeDefined();
+    expect(typeof response.extra_metadata?.['grouping']).toBe('string');
   });
 });
 
@@ -269,6 +319,14 @@ describe('Upload', () => {
     const { file_id } = await client.upload({ file: response });
     expect(typeof file_id).toBe('string');
     expect(file_id.length).toBeGreaterThan(0);
+  });
+
+  test('uploaded file can be deleted', async () => {
+    const response = await fetch(DOCUMENT_URL);
+    const { file_id } = await client.upload({ file: response });
+
+    const deleted = await client.deleteUpload(file_id.replace('reducto://', ''));
+    expect(typeof deleted.file_id).toBe('string');
   });
 
   test('uploaded file_id can be used as parse input', async () => {

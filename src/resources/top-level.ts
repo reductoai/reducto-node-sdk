@@ -2,6 +2,10 @@ import { type Uploadable } from '../uploads';
 
 export type APIVersionResponse = string;
 
+export interface DeleteUploadResponse {
+  file_id: string;
+}
+
 export interface UploadParams {
   /**
    * Query param
@@ -16,5 +20,9 @@ export interface UploadParams {
 }
 
 export declare namespace TopLevel {
-  export { type APIVersionResponse as APIVersionResponse, type UploadParams as UploadParams };
+  export {
+    type APIVersionResponse as APIVersionResponse,
+    type DeleteUploadResponse as DeleteUploadResponse,
+    type UploadParams as UploadParams,
+  };
 }
