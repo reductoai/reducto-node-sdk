@@ -54,6 +54,10 @@ type APIResponseProps = {
   response: Response;
   options: FinalRequestOptions;
   controller: AbortController;
+  // The response body, read eagerly in `makeRequest` (see the comment
+  // there for why). Absent only for 204s and `__binaryResponse` requests,
+  // where the raw `Response` stream is left untouched on purpose.
+  bodyText?: string | undefined;
 };
 
 async function defaultParseResponse<T>(props: APIResponseProps): Promise<T> {
@@ -70,21 +74,24 @@ async function defaultParseResponse<T>(props: APIResponseProps): Promise<T> {
   const contentType = response.headers.get('content-type');
   const mediaType = contentType?.split(';')[0]?.trim();
   const isJSON = mediaType?.includes('application/json') || mediaType?.endsWith('+json');
+
+  // The body was already read in `makeRequest`, so parse from that instead
+  // of calling response.json()/.text() again (the underlying stream can
+  // only be consumed once).
+  const text = props.bodyText ?? '';
   if (isJSON) {
-    const contentLength = response.headers.get('content-length');
-    if (contentLength === '0') {
+    if (text === '') {
       // if there is no content we can't do anything
       return undefined as T;
     }
 
-    const json = await response.json();
+    const json = JSON.parse(text);
 
     debug('response', response.status, response.url, response.headers, json);
 
     return json as T;
   }
 
-  const text = await response.text();
   debug('response', response.status, response.url, response.headers, text);
 
   // TODO handle blob, arraybuffer, other content types, etc.
@@ -488,13 +495,18 @@ export abstract class APIClient {
     const responseHeaders = createResponseHeaders(response.headers);
 
     if (!response.ok) {
+      // This response is being discarded either way (retried or thrown),
+      // so always drain it here rather than leaving it to whichever branch
+      // happens to read it below. Without this, a retried request leaks
+      // the losing response's keep-alive socket on every retry.
+      const errText = await response.text().catch((e) => castToError(e).message);
+
       if (retriesRemaining && this.shouldRetry(response)) {
         const retryMessage = `retrying, ${retriesRemaining} attempts remaining`;
         debug(`response (error; ${retryMessage})`, response.status, url, responseHeaders);
         return this.retryRequest(options, retriesRemaining, responseHeaders);
       }
 
-      const errText = await response.text().catch((e) => castToError(e).message);
       const errJSON = safeJSON(errText);
       const errMessage = errJSON ? undefined : errText;
       const retryMessage = retriesRemaining ? `(error; no more retries left)` : `(error; not retryable)`;
@@ -505,7 +517,49 @@ export abstract class APIClient {
       throw err;
     }
 
-    return { response, options, controller };
+    // Read the body now, regardless of whether the caller ever awaits or
+    // .then()s the APIPromise we're about to return (including callers who
+    // only use .asResponse() and never touch the parsed data). A
+    // keepAlive socket is only returned to the agent's free pool once its
+    // response body has been fully read; leaving that to whenever (if
+    // ever) application code consumes the promise is what let a handful of
+    // long-running /split responses arrive successfully and then sit
+    // unread on an orphaned socket until an unrelated timeout tore down
+    // the connection.
+    //
+    // We read a *clone* rather than `response` itself: `.asResponse()` /
+    // `.withResponse()` are documented, tested ways to get the raw,
+    // independently-readable Response back (callers are expected to be
+    // able to call `.text()`/`.json()` on it themselves), so `response`
+    // must be left untouched. Cloning tees the underlying stream, so our
+    // read below still drains the network/socket side immediately;
+    // `response` stays fully readable later regardless.
+    //
+    // Skipped entirely for `__binaryResponse` requests: that's the
+    // existing escape hatch for callers who want the raw stream without
+    // any of this, e.g. to pipe a large response without buffering it.
+    let bodyText: string | undefined;
+    if (!options.__binaryResponse) {
+      const bodyResult = await response.clone().text().catch(castToError);
+      if (bodyResult instanceof Error) {
+        // The connection dropped (or similar) while reading a response
+        // whose status line already came back ok — treat it the same way
+        // as a failure of the initial fetch itself.
+        if (options.signal?.aborted) {
+          throw new APIUserAbortError();
+        }
+        if (retriesRemaining) {
+          return this.retryRequest(options, retriesRemaining);
+        }
+        if (bodyResult.name === 'AbortError') {
+          throw new APIConnectionTimeoutError();
+        }
+        throw new APIConnectionError({ cause: bodyResult });
+      }
+      bodyText = bodyResult;
+    }
+
+    return { response, options, controller, bodyText };
   }
 
   requestAPIList<Item = unknown, PageClass extends AbstractPage<Item> = AbstractPage<Item>>(
