@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.18.0 (2026-09-11)
+
+Full Changelog: [v0.17.0...v0.18.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.17.0...v0.18.0)
+
+### Features
+
+* **job:** add `client.job.delete(jobId, { include_persisted })` (`DELETE /job/{job_id}`) ([57a3f13](https://github.com/reductoai/reducto-node-sdk/commit/57a3f13))
+* sync types with the OpenAPI spec: `queue_priority: 'standard'`, `priority`, `force_url_result`, `hybrid_vpc`, `tenant_throttling`, `advanced_chart_agent`, `extract_document_properties`, `embed_pdf_metadata_dpi`, extract `page_range`, `ChartResponse`, `ExtractUsageBreakdown`, `'Chart'` job type ([57a3f13](https://github.com/reductoai/reducto-node-sdk/commit/57a3f13))
+
+### Chores
+
+* remove Stainless tooling; drop the `x-stainless-*` request headers ([461ed38](https://github.com/reductoai/reducto-node-sdk/commit/461ed38), [2d15cb4](https://github.com/reductoai/reducto-node-sdk/commit/2d15cb4))
+* add OpenAPI spec drift check ([7661e09](https://github.com/reductoai/reducto-node-sdk/commit/7661e09))
+
+### Breaking Changes
+
+* **classify:** `persist_results` removed from `ClassifyConfig` (no longer in the API spec)
+
 ## 0.17.0 (2026-09-03)
 
 Full Changelog: [v0.16.0...v0.17.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.16.0...v0.17.0)
