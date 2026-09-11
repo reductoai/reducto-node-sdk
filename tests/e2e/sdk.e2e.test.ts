@@ -15,6 +15,8 @@ import { settled } from '../helpers';
 import fetch from 'node-fetch';
 
 const DOCUMENT_URL = 'https://ci.reducto.ai/onepager.pdf';
+// /edit fills form fields; it 422s (FORM_FILL_FAILED) on documents without any.
+const FORM_DOCUMENT_URL = 'https://ci.reducto.ai/edit_ci_ss4.pdf';
 
 const TRIVIAL_SCHEMA = {
   type: 'object',
@@ -226,8 +228,10 @@ describe('Classify', () => {
 describe('Edit', () => {
   test('edit returns response with result', async () => {
     const response = await client.edit.run({
-      document_url: DOCUMENT_URL,
-      edit_instructions: 'Add a watermark that says DRAFT to every page',
+      document_url: FORM_DOCUMENT_URL,
+      edit_instructions:
+        'EIN: 88-7425361. Legal name: Thompson Digital Marketing Solutions, LLC. ' +
+        'Mailing address: 1247 Maple Street, Suite 205, Portland, OR 97205.',
     });
     expect(response).toHaveProperty('document_url');
   });
