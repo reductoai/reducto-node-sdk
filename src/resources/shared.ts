@@ -202,6 +202,11 @@ export interface ExtractResponse {
 
   usage: ExtractAPI.ExtractUsage;
 
+  /**
+   * The duration of the extract request in seconds.
+   */
+  duration?: number | null;
+
   job_id?: string | null;
 
   /**

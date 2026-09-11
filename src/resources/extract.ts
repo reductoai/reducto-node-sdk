@@ -226,6 +226,11 @@ export interface V3Extract {
    */
   confidence_reason?: string | null;
 
+  /**
+   * The duration of the extract request in seconds.
+   */
+  duration?: number | null;
+
   job_id?: string | null;
 
   response_type?: 'v3_extract';
