@@ -1,5 +1,4 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
+import { describe, expect, it } from 'bun:test';
 import { stringifyQuery } from 'reductoai/internal/utils/query';
 
 describe(stringifyQuery, () => {

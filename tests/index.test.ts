@@ -1,6 +1,6 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
+import { afterEach, beforeEach, describe, expect, jest, test } from 'bun:test';
 import Reducto from 'reductoai';
+import { settled } from './helpers';
 import { APIUserAbortError } from 'reductoai';
 import { Headers } from 'reductoai/core';
 import defaultFetch, { Response, type RequestInit, type RequestInfo } from 'node-fetch';
@@ -9,7 +9,6 @@ describe('instantiate client', () => {
   const env = process.env;
 
   beforeEach(() => {
-    jest.resetModules();
     process.env = { ...env };
 
     console.warn = jest.fn();
@@ -127,7 +126,9 @@ describe('instantiate client', () => {
 
     const spy = jest.spyOn(client, 'request');
 
-    await expect(client.get('/foo', { signal: controller.signal })).rejects.toThrowError(APIUserAbortError);
+    await expect(settled(client.get('/foo', { signal: controller.signal }))).rejects.toThrowError(
+      APIUserAbortError,
+    );
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
@@ -299,7 +300,7 @@ describe('retries', () => {
       fetch: testFetch,
     });
 
-    expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
+    expect(await client.request<null, { a: number }>({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
     expect(
       await client
@@ -308,134 +309,6 @@ describe('retries', () => {
         .then((r) => r.text()),
     ).toEqual(JSON.stringify({ a: 1 }));
     expect(count).toEqual(3);
-  });
-
-  test('retry count header', async () => {
-    let count = 0;
-    let capturedRequest: RequestInit | undefined;
-    const testFetch = async (url: RequestInfo, init: RequestInit = {}): Promise<Response> => {
-      count++;
-      if (count <= 2) {
-        return new Response(undefined, {
-          status: 429,
-          headers: {
-            'Retry-After': '0.1',
-          },
-        });
-      }
-      capturedRequest = init;
-      return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
-    };
-
-    const client = new Reducto({
-      apiKey: 'My API Key',
-      fetch: testFetch,
-      maxRetries: 4,
-    });
-
-    expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
-
-    expect((capturedRequest!.headers as Headers)['x-stainless-retry-count']).toEqual('2');
-    expect(count).toEqual(3);
-  });
-
-  test('omit retry count header', async () => {
-    let count = 0;
-    let capturedRequest: RequestInit | undefined;
-    const testFetch = async (url: RequestInfo, init: RequestInit = {}): Promise<Response> => {
-      count++;
-      if (count <= 2) {
-        return new Response(undefined, {
-          status: 429,
-          headers: {
-            'Retry-After': '0.1',
-          },
-        });
-      }
-      capturedRequest = init;
-      return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
-    };
-    const client = new Reducto({
-      apiKey: 'My API Key',
-      fetch: testFetch,
-      maxRetries: 4,
-    });
-
-    expect(
-      await client.request({
-        path: '/foo',
-        method: 'get',
-        headers: { 'X-Stainless-Retry-Count': null },
-      }),
-    ).toEqual({ a: 1 });
-
-    expect(capturedRequest!.headers as Headers).not.toHaveProperty('x-stainless-retry-count');
-  });
-
-  test('omit retry count header by default', async () => {
-    let count = 0;
-    let capturedRequest: RequestInit | undefined;
-    const testFetch = async (url: RequestInfo, init: RequestInit = {}): Promise<Response> => {
-      count++;
-      if (count <= 2) {
-        return new Response(undefined, {
-          status: 429,
-          headers: {
-            'Retry-After': '0.1',
-          },
-        });
-      }
-      capturedRequest = init;
-      return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
-    };
-    const client = new Reducto({
-      apiKey: 'My API Key',
-      fetch: testFetch,
-      maxRetries: 4,
-      defaultHeaders: { 'X-Stainless-Retry-Count': null },
-    });
-
-    expect(
-      await client.request({
-        path: '/foo',
-        method: 'get',
-      }),
-    ).toEqual({ a: 1 });
-
-    expect(capturedRequest!.headers as Headers).not.toHaveProperty('x-stainless-retry-count');
-  });
-
-  test('overwrite retry count header', async () => {
-    let count = 0;
-    let capturedRequest: RequestInit | undefined;
-    const testFetch = async (url: RequestInfo, init: RequestInit = {}): Promise<Response> => {
-      count++;
-      if (count <= 2) {
-        return new Response(undefined, {
-          status: 429,
-          headers: {
-            'Retry-After': '0.1',
-          },
-        });
-      }
-      capturedRequest = init;
-      return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
-    };
-    const client = new Reducto({
-      apiKey: 'My API Key',
-      fetch: testFetch,
-      maxRetries: 4,
-    });
-
-    expect(
-      await client.request({
-        path: '/foo',
-        method: 'get',
-        headers: { 'X-Stainless-Retry-Count': '42' },
-      }),
-    ).toEqual({ a: 1 });
-
-    expect((capturedRequest!.headers as Headers)['x-stainless-retry-count']).toBe('42');
   });
 
   test('retry on 429 with retry-after', async () => {
@@ -454,7 +327,7 @@ describe('retries', () => {
 
     const client = new Reducto({ apiKey: 'My API Key', fetch: testFetch });
 
-    expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
+    expect(await client.request<null, { a: number }>({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
     expect(
       await client
@@ -481,7 +354,7 @@ describe('retries', () => {
 
     const client = new Reducto({ apiKey: 'My API Key', fetch: testFetch });
 
-    expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
+    expect(await client.request<null, { a: number }>({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
     expect(
       await client

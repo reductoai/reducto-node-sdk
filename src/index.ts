@@ -1,5 +1,3 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
 import { isRequestOptions } from './core';
 import { type Agent } from './_shims/index';
 import * as Core from './core';
@@ -8,7 +6,7 @@ import * as Uploads from './uploads';
 import * as API from './resources/index';
 import * as Shared from './resources/shared';
 import * as TopLevelAPI from './resources/top-level';
-import { APIVersionResponse, UploadParams } from './resources/top-level';
+import { APIVersionResponse, DeleteUploadResponse, UploadParams } from './resources/top-level';
 import { Classify, ClassifyRunParams, PageRange } from './resources/classify';
 import {
   BoundingBox,
@@ -26,16 +24,25 @@ import {
   ExtractRunResponse,
   ExtractSettings,
   ExtractUsage,
+  ExtractUsageBreakdown,
   Instructions,
   ParseOptions,
   V3Extract,
 } from './resources/extract';
-import { Job, JobCancelResponse, JobGetAllParams, JobGetAllResponse, JobGetResponse } from './resources/job';
+import {
+  Job,
+  JobCancelResponse,
+  JobDeleteResponse,
+  JobGetAllParams,
+  JobGetAllResponse,
+  JobGetResponse,
+} from './resources/job';
 import {
   AsyncConfigV3,
   AsyncParseConfig,
   Enhance,
   Formatting,
+  HybridVpcSettings,
   Parse,
   ParseRunJobParams,
   ParseRunParams,
@@ -43,16 +50,20 @@ import {
   Retrieval,
   Settings,
   Spreadsheet,
+  TenantThrottling,
 } from './resources/parse';
 import { Pipeline, PipelineRunJobParams, PipelineRunParams, PipelineSettings } from './resources/pipeline';
 import {
   DeepSplitPageEvidence,
+  EditUsageBreakdown,
   ParseUsage,
+  ParseUsageBreakdown,
   Split,
   SplitCategory,
   SplitRunJobParams,
   SplitRunParams,
   SplitTableOptions,
+  SplitUsageBreakdown,
 } from './resources/split';
 import { Webhook, WebhookRunResponse } from './resources/webhook';
 
@@ -221,6 +232,21 @@ export class Reducto extends Core.APIClient {
   }
 
   /**
+   * Delete a previously uploaded file.
+   *
+   * Removes the stored file for the given `reducto://` file ID. Deletion is
+   * immediate and permanent, and returns 404 if the file does not exist or was not
+   * uploaded by your organization. Jobs that already ran against the file are
+   * unaffected; delete those separately with `client.job.delete()`.
+   */
+  deleteUpload(
+    fileId: string,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<TopLevelAPI.DeleteUploadResponse> {
+    return this.delete(`/upload/${fileId}`, options);
+  }
+
+  /**
    * Upload
    */
   upload(params?: TopLevelAPI.UploadParams, options?: Core.RequestOptions): Core.APIPromise<Shared.Upload>;
@@ -287,7 +313,11 @@ Reducto.Job = Job;
 export declare namespace Reducto {
   export type RequestOptions = Core.RequestOptions;
 
-  export { type APIVersionResponse as APIVersionResponse, type UploadParams as UploadParams };
+  export {
+    type APIVersionResponse as APIVersionResponse,
+    type DeleteUploadResponse as DeleteUploadResponse,
+    type UploadParams as UploadParams,
+  };
 
   export {
     Parse as Parse,
@@ -295,9 +325,11 @@ export declare namespace Reducto {
     type AsyncParseConfig as AsyncParseConfig,
     type Enhance as Enhance,
     type Formatting as Formatting,
+    type HybridVpcSettings as HybridVpcSettings,
     type Retrieval as Retrieval,
     type Settings as Settings,
     type Spreadsheet as Spreadsheet,
+    type TenantThrottling as TenantThrottling,
     type ParseRunResponse as ParseRunResponse,
     type ParseRunParams as ParseRunParams,
     type ParseRunJobParams as ParseRunJobParams,
@@ -308,6 +340,7 @@ export declare namespace Reducto {
     type AsyncExtractConfig as AsyncExtractConfig,
     type ExtractSettings as ExtractSettings,
     type ExtractUsage as ExtractUsage,
+    type ExtractUsageBreakdown as ExtractUsageBreakdown,
     type Instructions as Instructions,
     type ParseOptions as ParseOptions,
     type V3Extract as V3Extract,
@@ -319,7 +352,10 @@ export declare namespace Reducto {
   export {
     Split as Split,
     type DeepSplitPageEvidence as DeepSplitPageEvidence,
+    type EditUsageBreakdown as EditUsageBreakdown,
     type ParseUsage as ParseUsage,
+    type ParseUsageBreakdown as ParseUsageBreakdown,
+    type SplitUsageBreakdown as SplitUsageBreakdown,
     type SplitCategory as SplitCategory,
     type SplitTableOptions as SplitTableOptions,
     type SplitRunParams as SplitRunParams,
@@ -349,6 +385,7 @@ export declare namespace Reducto {
   export {
     Job as Job,
     type JobCancelResponse as JobCancelResponse,
+    type JobDeleteResponse as JobDeleteResponse,
     type JobGetResponse as JobGetResponse,
     type JobGetAllResponse as JobGetAllResponse,
     type JobGetAllParams as JobGetAllParams,
@@ -364,11 +401,16 @@ export declare namespace Reducto {
   export type AsyncSplitResponse = API.AsyncSplitResponse;
   export type BaseProcessingOptions = API.BaseProcessingOptions;
   export type Chunking = API.Chunking;
+  export type ChartResponse = API.ChartResponse;
   export type ChunkingConfig = API.ChunkingConfig;
   export type ClassifyResponse = API.ClassifyResponse;
+  export type ClassifyUsage = API.ClassifyUsage;
+  export type ClassifyUsageBreakdown = API.ClassifyUsageBreakdown;
   export type DirectWebhookConfig = API.DirectWebhookConfig;
+  export type DocumentProperties = API.DocumentProperties;
   export type EditResponse = API.EditResponse;
   export type EnrichConfig = API.EnrichConfig;
+  export type ErrorDetail = API.ErrorDetail;
   export type ExperimentalProcessingOptions = API.ExperimentalProcessingOptions;
   export type ExtractResponse = API.ExtractResponse;
   export type FigureAgentic = API.FigureAgentic;
@@ -382,6 +424,7 @@ export declare namespace Reducto {
   export type TableAgentic = API.TableAgentic;
   export type TableSummaryConfig = API.TableSummaryConfig;
   export type TextAgentic = API.TextAgentic;
+  export type URLResult = API.URLResult;
   export type Upload = API.Upload;
   export type WebhookConfigNew = API.WebhookConfigNew;
 }

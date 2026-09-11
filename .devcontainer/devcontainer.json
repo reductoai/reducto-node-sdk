@@ -4,9 +4,9 @@
   "name": "Development",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:latest",
   "features": {
-    "ghcr.io/devcontainers/features/node:1": {}
+    "ghcr.io/devcontainers-extra/features/bun:1": {}
   },
-  "postCreateCommand": "yarn install",
+  "postCreateCommand": "bun install",
   "customizations": {
     "vscode": {
       "extensions": ["esbenp.prettier-vscode"]

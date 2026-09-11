@@ -2,7 +2,7 @@
 
 set -eux
 
-yarn build
+bun run build
 cd dist
 
 # Get package name and version from package.json

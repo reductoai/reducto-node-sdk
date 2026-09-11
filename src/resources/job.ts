@@ -1,5 +1,3 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
 import { APIResource } from '../resource';
 import { isRequestOptions } from '../core';
 import * as Core from '../core';
@@ -12,6 +10,29 @@ export class Job extends APIResource {
    */
   cancel(jobId: string, options?: Core.RequestOptions): Core.APIPromise<unknown> {
     return this._client.post(`/cancel/${jobId}`, options);
+  }
+
+  /**
+   * Asynchronously delete a job's stored artifacts.
+   *
+   * Tags the job with the deletion marker. Retrieval returns 409 until artifact
+   * cleanup finishes, then 410 once the deletion has completed.
+   */
+  delete(
+    jobId: string,
+    query?: JobDeleteParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<JobDeleteResponse>;
+  delete(jobId: string, options?: Core.RequestOptions): Core.APIPromise<JobDeleteResponse>;
+  delete(
+    jobId: string,
+    query: JobDeleteParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<JobDeleteResponse> {
+    if (isRequestOptions(query)) {
+      return this.delete(jobId, {}, query);
+    }
+    return this._client.delete(`/job/${jobId}`, { query, ...options });
   }
 
   /**
@@ -39,11 +60,17 @@ export class Job extends APIResource {
 
 export type JobCancelResponse = unknown;
 
+export interface JobDeleteResponse {
+  job_id: string;
+}
+
 export type JobGetResponse = JobGetResponse.AsyncJobResponse | JobGetResponse.EnhancedAsyncJobResponse;
 
 export namespace JobGetResponse {
   export interface AsyncJobResponse {
     status: 'Pending' | 'Completed' | 'Failed' | 'Idle';
+
+    error?: Shared.ErrorDetail | null;
 
     progress?: number | null;
 
@@ -60,6 +87,7 @@ export namespace JobGetResponse {
       | Shared.PipelineResponse
       | ExtractAPI.V3Extract
       | Shared.ClassifyResponse
+      | Shared.ChartResponse
       | null;
   }
 
@@ -71,6 +99,8 @@ export namespace JobGetResponse {
     created_at?: string | null;
 
     duration?: number | null;
+
+    error?: Shared.ErrorDetail | null;
 
     num_pages?: number | null;
 
@@ -91,13 +121,14 @@ export namespace JobGetResponse {
       | Shared.PipelineResponse
       | ExtractAPI.V3Extract
       | Shared.ClassifyResponse
+      | Shared.ChartResponse
       | null;
 
     source?: unknown;
 
     total_pages?: number | null;
 
-    type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | 'Classify' | null;
+    type?: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | 'Classify' | 'Chart' | null;
   }
 }
 
@@ -130,12 +161,19 @@ export namespace JobGetAllResponse {
 
     total_pages: number | null;
 
-    type: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | 'Classify';
+    type: 'Parse' | 'Extract' | 'Split' | 'Edit' | 'Pipeline' | 'Classify' | 'Chart';
 
     bucket?: unknown;
 
     source?: unknown;
   }
+}
+
+export interface JobDeleteParams {
+  /**
+   * Also delete long-retention persisted artifacts for this job.
+   */
+  include_persisted?: boolean;
 }
 
 export interface JobGetAllParams {
@@ -159,8 +197,10 @@ export interface JobGetAllParams {
 export declare namespace Job {
   export {
     type JobCancelResponse as JobCancelResponse,
+    type JobDeleteResponse as JobDeleteResponse,
     type JobGetResponse as JobGetResponse,
     type JobGetAllResponse as JobGetAllResponse,
+    type JobDeleteParams as JobDeleteParams,
     type JobGetAllParams as JobGetAllParams,
   };
 }

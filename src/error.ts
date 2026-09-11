@@ -1,5 +1,3 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
 import { castToError, Headers } from './core';
 
 export class ReductoError extends Error {}

@@ -9,7 +9,9 @@
  * Required environment variable: REDUCTO_API_KEY
  */
 
+import { describe, expect, setDefaultTimeout, test } from 'bun:test';
 import Reducto from 'reductoai';
+import { settled } from '../helpers';
 import fetch from 'node-fetch';
 
 const DOCUMENT_URL = 'https://ci.reducto.ai/onepager.pdf';
@@ -33,11 +35,26 @@ if (!apiKey) {
 
 const client = new Reducto({ apiKey });
 
-// Increase Jest timeout for E2E tests that hit the live API
-jest.setTimeout(180_000);
+// Increase the test timeout for E2E tests that hit the live API
+setDefaultTimeout(180_000);
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function waitForJob(jobId: string): Promise<Reducto.JobGetResponse> {
+  for (let i = 0; i < 60; i++) {
+    const job = await client.job.get(jobId);
+    expect(['Pending', 'Completed', 'Failed', 'Idle']).toContain(job.status);
+
+    if (job.status === 'Completed') return job;
+    if (job.status === 'Failed') {
+      throw new Error(`Job ${jobId} failed: ${job.reason}`);
+    }
+    await sleep(2000);
+  }
+
+  throw new Error(`Job ${jobId} did not complete within timeout`);
 }
 
 describe('Parse', () => {
@@ -46,6 +63,24 @@ describe('Parse', () => {
     expect(response).toHaveProperty('job_id');
     expect(response).toHaveProperty('duration');
     expect(response).toHaveProperty('result');
+  });
+
+  test('parse with spec-synced settings returns document properties and usage breakdown', async () => {
+    const response = await client.parse.run({
+      input: DOCUMENT_URL,
+      queue_priority: 'standard',
+      enhance: { advanced_chart_agent: false },
+      settings: {
+        extract_document_properties: true,
+        embed_pdf_metadata_dpi: 100,
+        hybrid_vpc: {},
+      },
+    });
+    // POST /parse returns a sync ParseResponse unless an async config is set.
+    if (!('response_type' in response)) throw new Error('expected a sync parse response');
+    expect(response.response_type).toBe('parse');
+    expect(response).toHaveProperty('document_properties');
+    expect(response.usage).toHaveProperty('num_pages');
   });
 
   test('parse async returns job_id', async () => {
@@ -58,21 +93,8 @@ describe('Parse', () => {
     const response = await client.parse.runJob({ input: DOCUMENT_URL });
     const jobId = response.job_id;
 
-    for (let i = 0; i < 60; i++) {
-      const job = await client.job.get(jobId);
-      expect(['Pending', 'Completed', 'Failed', 'Idle']).toContain(job.status);
-
-      if (job.status === 'Completed') {
-        expect(job.result).not.toBeNull();
-        return;
-      }
-      if (job.status === 'Failed') {
-        throw new Error(`Parse async job failed: ${job.reason}`);
-      }
-      await sleep(2000);
-    }
-
-    throw new Error('Parse async job did not complete within timeout');
+    const job = await waitForJob(jobId);
+    expect(job.result).not.toBeNull();
   });
 });
 
@@ -101,21 +123,8 @@ describe('Extract', () => {
     });
     const jobId = response.job_id;
 
-    for (let i = 0; i < 60; i++) {
-      const job = await client.job.get(jobId);
-      expect(['Pending', 'Completed', 'Failed', 'Idle']).toContain(job.status);
-
-      if (job.status === 'Completed') {
-        expect(job.result).not.toBeNull();
-        return;
-      }
-      if (job.status === 'Failed') {
-        throw new Error(`Extract async job failed: ${job.reason}`);
-      }
-      await sleep(2000);
-    }
-
-    throw new Error('Extract async job did not complete within timeout');
+    const job = await waitForJob(jobId);
+    expect(job.result).not.toBeNull();
   });
 });
 
@@ -153,21 +162,23 @@ describe('Split', () => {
     });
     const jobId = response.job_id;
 
-    for (let i = 0; i < 60; i++) {
-      const job = await client.job.get(jobId);
-      expect(['Pending', 'Completed', 'Failed', 'Idle']).toContain(job.status);
+    const job = await waitForJob(jobId);
+    expect(job.result).not.toBeNull();
+  });
+});
 
-      if (job.status === 'Completed') {
-        expect(job.result).not.toBeNull();
-        return;
-      }
-      if (job.status === 'Failed') {
-        throw new Error(`Split async job failed: ${job.reason}`);
-      }
-      await sleep(2000);
-    }
+describe('Job deletion', () => {
+  test('job delete removes a completed job', async () => {
+    const { job_id } = await client.parse.runJob({ input: DOCUMENT_URL });
 
-    throw new Error('Split async job did not complete within timeout');
+    await waitForJob(job_id);
+
+    const deleted = await client.job.delete(job_id, { include_persisted: false });
+    expect(deleted.job_id).toBe(job_id);
+  });
+
+  test('job delete with an unknown id returns an error', async () => {
+    await expect(settled(client.job.delete('nonexistent-job-id'))).rejects.toThrow();
   });
 });
 
@@ -188,8 +199,27 @@ describe('Classify', () => {
     });
     expect(response).toHaveProperty('job_id');
     expect(response).toHaveProperty('result');
-    expect(response.result).toHaveProperty('category');
-    expect(typeof response.result.category).toBe('string');
+    expect(response.response_type).toBe('classify');
+    const result = response.result;
+    if ('type' in result && result.type === 'url') {
+      expect(typeof result.url).toBe('string');
+    } else {
+      expect(typeof (result as { category: string }).category).toBe('string');
+    }
+  });
+
+  test('classify with category_groups returns grouping metadata', async () => {
+    const response = await client.classify.run({
+      input: DOCUMENT_URL,
+      classification_schema: [
+        { category: 'report', criteria: ['Contains structured sections'] },
+        { category: 'invoice', criteria: ['Contains line items'] },
+      ],
+      category_groups: { financial: ['invoice'], other: ['report'] },
+      model: 'default',
+    });
+    expect(response.extra_metadata).toBeDefined();
+    expect(typeof response.extra_metadata?.['grouping']).toBe('string');
   });
 });
 
@@ -208,10 +238,12 @@ describe('Pipeline', () => {
     // Note: requires a valid pipeline_id configured in the account
     // This test verifies the method exists and accepts the correct params
     await expect(
-      client.pipeline.run({
-        input: DOCUMENT_URL,
-        pipeline_id: 'test-pipeline',
-      }),
+      settled(
+        client.pipeline.run({
+          input: DOCUMENT_URL,
+          pipeline_id: 'test-pipeline',
+        }),
+      ),
     ).rejects.toThrow(); // Expected to fail with invalid pipeline_id
   });
 });
@@ -232,28 +264,15 @@ describe('Job', () => {
   });
 
   test('job cancel with invalid ID returns error', async () => {
-    await expect(client.job.cancel('nonexistent-job-id')).rejects.toThrow();
+    await expect(settled(client.job.cancel('nonexistent-job-id'))).rejects.toThrow();
   });
 
   test('job get returns completed result', async () => {
     const asyncResponse = await client.parse.runJob({ input: DOCUMENT_URL });
     const jobId = asyncResponse.job_id;
 
-    for (let i = 0; i < 60; i++) {
-      const job = await client.job.get(jobId);
-      expect(['Pending', 'Completed', 'Failed', 'Idle']).toContain(job.status);
-
-      if (job.status === 'Completed') {
-        expect(job.result).not.toBeNull();
-        return;
-      }
-      if (job.status === 'Failed') {
-        throw new Error(`Job failed: ${job.reason}`);
-      }
-      await sleep(2000);
-    }
-
-    throw new Error('Job did not complete within timeout');
+    const job = await waitForJob(jobId);
+    expect(job.result).not.toBeNull();
   });
 });
 
@@ -265,6 +284,15 @@ describe('Upload', () => {
     const { file_id } = await client.upload({ file: response });
     expect(typeof file_id).toBe('string');
     expect(file_id.length).toBeGreaterThan(0);
+  });
+
+  test('uploaded file can be deleted', async () => {
+    const response = await fetch(DOCUMENT_URL);
+    const { file_id } = await client.upload({ file: response });
+
+    const deleted = await client.deleteUpload(file_id);
+    expect(deleted.file_id).toBe(file_id);
+    await expect(settled(client.deleteUpload(file_id))).rejects.toBeInstanceOf(Reducto.NotFoundError);
   });
 
   test('uploaded file_id can be used as parse input', async () => {

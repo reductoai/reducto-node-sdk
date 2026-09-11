@@ -60,7 +60,7 @@ async function getMultipartRequestOptions<T = Record<string, unknown>>(
 export function getRuntime(): Shims {
   // Polyfill global object if needed.
   if (typeof AbortController === 'undefined') {
-    // @ts-expect-error (the types are subtly different, but compatible in practice)
+    // @ts-ignore (the types are subtly different, but compatible in practice)
     globalThis.AbortController = AbortControllerPolyfill;
   }
   return {
