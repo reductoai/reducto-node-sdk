@@ -209,6 +209,16 @@ export interface Settings {
   hybrid_vpc?: Settings.HybridVpc;
 
   /**
+   * Key/value tags attached to every LLM request made while processing this job, for
+   * cost attribution in LLM gateways such as LiteLLM. Each pair is forwarded as a
+   * `key:value` tag (e.g. `{"accountId": "acc_1", "userId": "usr_2"}` becomes
+   * `accountId:acc_1`, `userId:usr_2`). Only forwarded when Reducto is configured to
+   * route LLM calls through a LiteLLM proxy. Does not affect parsing output or
+   * caching.
+   */
+  llm_tags?: { [key: string]: string } | null;
+
+  /**
    * The parse model to use. 'r-1' is the R-1 full-page parse model, which parses
    * each page in a single generation. 'legacy' is the previous parsing pipeline.
    * Defaults to 'legacy' unless your organization was created on the r-1 plan, in
