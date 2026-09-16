@@ -25,6 +25,11 @@ describe('resource classify', () => {
   test.skip('run: required and optional params', async () => {
     const response = await client.classify.run({
       input: 'string',
+      async: {
+        metadata: {},
+        priority: true,
+        webhook: { channels: ['string'], mode: 'svix' },
+      },
       category_groups: { foo: ['string'] },
       classification_schema: [{ category: 'category', criteria: ['string'] }],
       document_metadata: 'document_metadata',

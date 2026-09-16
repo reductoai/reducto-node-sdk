@@ -2,6 +2,7 @@
 
 import { APIResource } from '../resource';
 import * as Core from '../core';
+import * as ParseAPI from './parse';
 import * as Shared from './shared';
 
 export class Classify extends APIResource {
@@ -23,6 +24,11 @@ export interface ClassifyRunParams {
    *    uploading a document
    */
   input: string | Array<string> | Shared.Upload;
+
+  /**
+   * The configuration options for asynchronous processing. Used by /classify_async.
+   */
+  async?: ParseAPI.AsyncConfigV3;
 
   /**
    * A mapping of higher-level classify groups to the category labels that belong to
