@@ -62,7 +62,8 @@ export interface ClassifyResponse {
 
   /**
    * Additional metadata for the classify response. Contains `grouping` when the
-   * request set `category_groups`. Omitted when empty.
+   * request set `category_groups` and `reasoning` when an accurate classify request
+   * set `reasoning=True`. Omitted when empty.
    */
   extra_metadata?: { [key: string]: string };
 
