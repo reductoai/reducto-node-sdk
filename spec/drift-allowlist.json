@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "endpoint": "POST /classify",
+    "location": "request.async",
+    "kind": "missing",
+    "detail": "spec has field, sdk lacks it (object{metadata, priority, webhook})",
+    "reason": "/classify and /classify_async share ClassifyConfig, but the spec says async is only used by /classify_async. classify.runJob takes async; classify.run does not."
+  }
+]

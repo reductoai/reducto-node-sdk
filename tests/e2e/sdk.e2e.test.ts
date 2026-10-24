@@ -85,6 +85,24 @@ describe('Parse', () => {
     expect(response.usage).toHaveProperty('num_pages');
   });
 
+  test('parse with return_citations returns word citations', async () => {
+    const response = await client.parse.run({
+      input: DOCUMENT_URL,
+      settings: { model: 'r-1', return_citations: true, page_range: { start: 1, end: 1 } },
+    });
+    if (!('response_type' in response)) throw new Error('expected a sync parse response');
+    if (response.result.type !== 'full') throw new Error('expected a full result');
+    const citations = response.result.chunks.flatMap((chunk) =>
+      chunk.blocks.flatMap(
+        (block) => (block.extra?.['word_citations'] as Array<Record<string, unknown>>) ?? [],
+      ),
+    );
+    expect(citations.length).toBeGreaterThan(0);
+    for (const key of ['text', 'char_start', 'char_end', 'bbox']) {
+      expect(citations[0]).toHaveProperty(key);
+    }
+  });
+
   test('parse async returns job_id', async () => {
     const response = await client.parse.runJob({ input: DOCUMENT_URL });
     expect(response).toHaveProperty('job_id');
@@ -107,6 +125,15 @@ describe('Extract', () => {
       instructions: { schema: TRIVIAL_SCHEMA },
     });
     expect(response).toHaveProperty('result');
+  });
+
+  test('extract sync returns duration', async () => {
+    const response = await client.extract.run({
+      input: DOCUMENT_URL,
+      instructions: { schema: TRIVIAL_SCHEMA },
+    });
+    if (!('response_type' in response)) throw new Error('expected a sync extract response');
+    expect(typeof response.duration).toBe('number');
   });
 
   test('extract async returns job_id', async () => {
@@ -222,6 +249,23 @@ describe('Classify', () => {
     });
     expect(response.extra_metadata).toBeDefined();
     expect(typeof response.extra_metadata?.['grouping']).toBe('string');
+  });
+
+  test('classify async job completes with a category', async () => {
+    const response = await client.classify.runJob({
+      input: DOCUMENT_URL,
+      classification_schema: [
+        { category: 'report', criteria: ['Contains structured sections'] },
+        { category: 'invoice', criteria: ['Contains line items'] },
+      ],
+      async: { priority: false, metadata: { source: 'sdk-e2e' } },
+    });
+    expect(typeof response.job_id).toBe('string');
+
+    const job = await waitForJob(response.job_id);
+    const result = job.result as Reducto.ClassifyResponse;
+    expect(result.response_type).toBe('classify');
+    expect(['report', 'invoice']).toContain((result.result as { category: string }).category);
   });
 });
 

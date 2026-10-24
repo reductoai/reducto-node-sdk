@@ -227,6 +227,16 @@ export interface Settings {
   persist_results?: boolean;
 
   /**
+   * If True, return per-word citation boxes for each text block in
+   * `extra.word_citations`: the word's `text`, its `char_start`/`char_end` span in
+   * the block's `content`, and a `bbox` (null when the word cannot be located).
+   * Table blocks also get `extra.cell_citations` with `text`, `row_idx`, `col_idx`
+   * and `bbox` per non-empty cell. Requires the r-1 model. Not supported with
+   * formatting.merge_tables. Defaults to False.
+   */
+  return_citations?: boolean;
+
+  /**
    * Whether to return images for the specified block types. 'page' returns full page
    * images. By default, no images are returned.
    */
