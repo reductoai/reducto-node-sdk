@@ -18,6 +18,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">AdvancedCitationsConfig</a></code>
 - <code><a href="./src/resources/shared.ts">AdvancedProcessingOptions</a></code>
 - <code><a href="./src/resources/shared.ts">ArrayExtractConfig</a></code>
+- <code><a href="./src/resources/shared.ts">AsyncClassifyResponse</a></code>
 - <code><a href="./src/resources/shared.ts">AsyncEditResponse</a></code>
 - <code><a href="./src/resources/shared.ts">AsyncExtractResponse</a></code>
 - <code><a href="./src/resources/shared.ts">AsyncParseResponse</a></code>
@@ -137,6 +138,7 @@ Methods:
 Methods:
 
 - <code title="post /classify">client.classify.<a href="./src/resources/classify.ts">run</a>({ ...params }) -> ClassifyResponse</code>
+- <code title="post /classify_async">client.classify.<a href="./src/resources/classify.ts">runJob</a>({ ...params }) -> AsyncClassifyResponse</code>
 
 # Webhook
 

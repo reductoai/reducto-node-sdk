@@ -172,6 +172,10 @@ export interface ArrayExtractConfig {
   streaming_extract_item_density?: number;
 }
 
+export interface AsyncClassifyResponse {
+  job_id: string;
+}
+
 export interface AsyncEditResponse {
   job_id: string;
 }
@@ -704,6 +708,11 @@ export interface ExtractResponse {
 
   usage: ExtractAPI.ExtractUsage;
 
+  /**
+   * The duration of the extract request in seconds.
+   */
+  duration?: number | null;
+
   job_id?: string | null;
 
   /**
@@ -730,12 +739,6 @@ export interface FigureAgentic {
    * Custom prompt for figure agentic.
    */
   prompt?: string | null;
-
-  /**
-   * If True, return overlays for the figure. This is so you can use the overlays to
-   * double check the quality of the extraction
-   */
-  return_overlays?: boolean;
 }
 
 export interface FigureSummaryConfig {

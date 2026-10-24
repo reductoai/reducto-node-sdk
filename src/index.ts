@@ -7,7 +7,7 @@ import * as API from './resources/index';
 import * as Shared from './resources/shared';
 import * as TopLevelAPI from './resources/top-level';
 import { APIVersionResponse, DeleteUploadResponse, UploadParams } from './resources/top-level';
-import { Classify, ClassifyRunParams, PageRange } from './resources/classify';
+import { Classify, ClassifyRunJobParams, ClassifyRunParams, PageRange } from './resources/classify';
 import {
   BoundingBox,
   Edit,
@@ -378,7 +378,12 @@ export declare namespace Reducto {
     type PipelineRunJobParams as PipelineRunJobParams,
   };
 
-  export { Classify as Classify, type PageRange as PageRange, type ClassifyRunParams as ClassifyRunParams };
+  export {
+    Classify as Classify,
+    type PageRange as PageRange,
+    type ClassifyRunParams as ClassifyRunParams,
+    type ClassifyRunJobParams as ClassifyRunJobParams,
+  };
 
   export { Webhook as Webhook, type WebhookRunResponse as WebhookRunResponse };
 
@@ -394,6 +399,7 @@ export declare namespace Reducto {
   export type AdvancedCitationsConfig = API.AdvancedCitationsConfig;
   export type AdvancedProcessingOptions = API.AdvancedProcessingOptions;
   export type ArrayExtractConfig = API.ArrayExtractConfig;
+  export type AsyncClassifyResponse = API.AsyncClassifyResponse;
   export type AsyncEditResponse = API.AsyncEditResponse;
   export type AsyncExtractResponse = API.AsyncExtractResponse;
   export type AsyncParseResponse = API.AsyncParseResponse;

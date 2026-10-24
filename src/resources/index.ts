@@ -1,5 +1,5 @@
 export * from './shared';
-export { Classify, type PageRange, type ClassifyRunParams } from './classify';
+export { Classify, type PageRange, type ClassifyRunParams, type ClassifyRunJobParams } from './classify';
 export {
   Edit,
   type BoundingBox,

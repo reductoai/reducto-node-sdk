@@ -1,5 +1,6 @@
 import { APIResource } from '../resource';
 import * as Core from '../core';
+import * as ParseAPI from './parse';
 import * as Shared from './shared';
 
 export class Classify extends APIResource {
@@ -8,6 +9,16 @@ export class Classify extends APIResource {
    */
   run(body: ClassifyRunParams, options?: Core.RequestOptions): Core.APIPromise<Shared.ClassifyResponse> {
     return this._client.post('/classify', { body, ...options });
+  }
+
+  /**
+   * Classify Async
+   */
+  runJob(
+    body: ClassifyRunJobParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<Shared.AsyncClassifyResponse> {
+    return this._client.post('/classify_async', { body, ...options });
   }
 }
 
@@ -100,6 +111,17 @@ export namespace ClassifyRunParams {
   }
 }
 
+export interface ClassifyRunJobParams extends ClassifyRunParams {
+  /**
+   * The configuration options for asynchronous processing.
+   */
+  async?: ParseAPI.AsyncConfigV3;
+}
+
 export declare namespace Classify {
-  export { type PageRange as PageRange, type ClassifyRunParams as ClassifyRunParams };
+  export {
+    type PageRange as PageRange,
+    type ClassifyRunParams as ClassifyRunParams,
+    type ClassifyRunJobParams as ClassifyRunJobParams,
+  };
 }
