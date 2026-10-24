@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.19.0 (2026-10-24)
+
+Full Changelog: [v0.18.0...v0.19.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.18.0...v0.19.0)
+
+### Features
+
+* **classify:** add `client.classify.runJob()` for `POST /classify_async`, with `async` config. It returns `AsyncClassifyResponse`; poll the result with `client.job.get(jobId)`
+* **parse:** add `settings.return_citations` for per-word and per-cell citation boxes (requires `settings.model: 'r-1'`)
+* **extract:** add `duration` to `ExtractResponse` and `V3Extract`
+
+### Breaking Changes
+
+* **parse:** remove `return_overlays` from `FigureAgentic`. The API no longer lists it
+
 ## 0.18.0 (2026-09-11)
 
 Full Changelog: [v0.17.0...v0.18.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.17.0...v0.18.0)
