@@ -222,6 +222,14 @@ describe('workload identity token exchange', () => {
     expect(server.exchanges).toHaveLength(0);
   });
 
+  test('an undefined Authorization header still gets the workload token', async () => {
+    const server = fakeServer();
+    const client = makeClient(server);
+    expect(await client.get<unknown, any>('/version', { headers: { Authorization: undefined } })).toEqual({
+      auth: 'Bearer rdat_1',
+    });
+  });
+
   test('exchange errors raise OAuthError with the RFC 6749 body', async () => {
     const server = fakeServer({
       exchangeResponse: () =>

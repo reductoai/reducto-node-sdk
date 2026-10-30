@@ -324,7 +324,9 @@ export class Reducto extends Core.APIClient {
       return;
     }
     const headers = request.headers as Record<string, string>;
-    const overridden = Object.keys(options.headers ?? {}).some((k) => k.toLowerCase() === 'authorization');
+    const overridden = Object.entries(options.headers ?? {}).some(
+      ([k, v]) => k.toLowerCase() === 'authorization' && v !== undefined,
+    );
     if (overridden || 'authorization' in headers) return;
 
     const token = await this._workloadIdentityAuth.getToken();
