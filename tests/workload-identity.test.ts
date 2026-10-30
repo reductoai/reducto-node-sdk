@@ -80,7 +80,7 @@ describe('workload identity token exchange', () => {
       workloadIdentity: { identityProviderId: 'wip_test', provider: staticProvider() },
     });
 
-    expect(client.apiKey).toBeNull();
+    expect(client.apiKey).toBe('');
     expect(await client.get<unknown, any>('/version')).toEqual({ auth: 'Bearer rdat_1' });
     expect(server.exchanges).toHaveLength(1);
     const [exchange] = server.exchanges;

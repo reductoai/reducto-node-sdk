@@ -166,7 +166,8 @@ export interface ClientOptions {
  * API Client for interfacing with the Reducto API.
  */
 export class Reducto extends Core.APIClient {
-  apiKey: string | null;
+  /** The API key, or an empty string when the client uses workload identity federation. */
+  apiKey: string;
 
   private _options: ClientOptions;
   private _workloadIdentityAuth: WorkloadIdentityAuth | undefined;
@@ -231,7 +232,7 @@ export class Reducto extends Core.APIClient {
 
     this._options = options;
 
-    this.apiKey = apiKey ?? null;
+    this.apiKey = apiKey ?? '';
     if (workloadIdentity) {
       this._workloadIdentityAuth = new WorkloadIdentityAuth(
         workloadIdentity,
@@ -310,7 +311,7 @@ export class Reducto extends Core.APIClient {
   }
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
-    return this.apiKey === null ? {} : { Authorization: `Bearer ${this.apiKey}` };
+    return this._workloadIdentityAuth ? {} : { Authorization: `Bearer ${this.apiKey}` };
   }
 
   protected override async prepareRequest(
