@@ -1,6 +1,4 @@
 import { ReductoError, OAuthError, SubjectTokenProviderError, APIError } from '../error';
-import { createResponseHeaders, safeJSON, type Fetch } from '../core';
-import { fetch as defaultFetch } from '../_shims/index';
 
 /** Supplies the identity token (JWT) that the workload's platform issued to it. */
 export interface SubjectTokenProvider {
@@ -42,7 +40,6 @@ const SUBJECT_TOKEN_TYPES = {
 } as const;
 const DEFAULT_REFRESH_BUFFER_SECONDS = 1200;
 const DEFAULT_LIFETIME_SECONDS = 3600;
-const EXCHANGE_TIMEOUT_MS = 60_000;
 
 interface CachedToken {
   token: string;
@@ -61,10 +58,13 @@ export class WorkloadIdentityAuth {
   private inflight: Promise<string> | null = null;
   private generation = 0;
 
+  /**
+   * @param post Sends the exchange body to `/oauth/token` and returns the parsed JSON response.
+   *   The client passes its own request path, so the exchange gets the client's retries and backoff.
+   */
   constructor(
     private readonly config: WorkloadIdentity,
-    private readonly tokenURL: string,
-    private readonly fetch: Fetch = defaultFetch,
+    private readonly post: (body: Record<string, string>) => Promise<unknown>,
   ) {}
 
   async getToken(): Promise<string> {
@@ -102,34 +102,19 @@ export class WorkloadIdentityAuth {
     const subjectToken = await getSubjectToken(provider);
 
     const startedAt = Date.now();
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), EXCHANGE_TIMEOUT_MS);
-    let response;
+    let body: unknown;
     try {
-      response = await this.fetch.call(undefined, this.tokenURL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          grant_type: GRANT_TYPE,
-          subject_token_type: SUBJECT_TOKEN_TYPES[provider.tokenType],
-          subject_token: subjectToken,
-          identity_provider_id: identityProviderId,
-        }),
-        redirect: 'manual',
-        signal: controller.signal as any,
+      body = await this.post({
+        grant_type: GRANT_TYPE,
+        subject_token_type: SUBJECT_TOKEN_TYPES[provider.tokenType],
+        subject_token: subjectToken,
+        identity_provider_id: identityProviderId,
       });
-    } finally {
-      clearTimeout(timeout);
-    }
-
-    const text = await response.text();
-    const body = safeJSON(text);
-    if (!response.ok) {
-      const headers = createResponseHeaders(response.headers);
-      if (response.status === 400 || response.status === 401 || response.status === 403) {
-        throw new OAuthError(response.status, body, headers);
+    } catch (err) {
+      if (err instanceof APIError && (err.status === 400 || err.status === 401 || err.status === 403)) {
+        throw new OAuthError(err.status, err.error, err.headers!);
       }
-      throw APIError.generate(response.status, body, body ? undefined : text, headers);
+      throw err;
     }
 
     const result = (body ?? {}) as Partial<TokenExchangeResponse>;

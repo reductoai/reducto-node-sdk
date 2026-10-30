@@ -70,6 +70,8 @@ The client exchanges the subject token at `<baseURL>/oauth/token`, so `environme
 without extra settings. It caches the access token, refreshes it in the background before it expires
 (`refreshBufferSeconds`, default 1200, capped at half the token lifetime), shares one exchange between
 concurrent requests, and on a `401` exchanges once more and retries the request once.
+The exchange itself uses the client's `maxRetries` and backoff, like any other request (`408`, `409`, `429`
+and `5xx`). With workload identity, `client.apiKey` is an empty string.
 
 `apiKey` and `workloadIdentity` cannot be set together. Credentials resolve in this order: the `apiKey`
 option, the `workloadIdentity` option, `REDUCTO_API_KEY`, then these environment variables:
@@ -135,6 +137,8 @@ const client = new Reducto({
 A rejected exchange throws `OAuthError` (a subclass of `APIError`) with the OAuth `errorCode`
 (for example `invalid_grant`) and `errorDescription`. A provider that cannot get a token throws
 `SubjectTokenProviderError`, with the provider name in `provider` and the original error in `cause`.
+Other failed exchanges throw the usual `APIError` subclass (for example `RateLimitError` or
+`InternalServerError`), with the OAuth error body in `error`.
 
 ## File uploads
 

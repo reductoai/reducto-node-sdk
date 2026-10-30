@@ -162,6 +162,8 @@ export interface ClientOptions {
   defaultQuery?: Core.DefaultQuery | undefined;
 }
 
+const TOKEN_EXCHANGE_PATH = '/oauth/token';
+
 /**
  * API Client for interfacing with the Reducto API.
  */
@@ -234,10 +236,8 @@ export class Reducto extends Core.APIClient {
 
     this.apiKey = apiKey ?? '';
     if (workloadIdentity) {
-      this._workloadIdentityAuth = new WorkloadIdentityAuth(
-        workloadIdentity,
-        `${this.baseURL.replace(/\/+$/, '')}/oauth/token`,
-        options.fetch,
+      this._workloadIdentityAuth = new WorkloadIdentityAuth(workloadIdentity, (body) =>
+        this.post(TOKEN_EXCHANGE_PATH, { body, headers: { Authorization: null }, timeout: 60_000 }),
       );
     }
   }
@@ -319,6 +319,10 @@ export class Reducto extends Core.APIClient {
     { options }: { url: string; options: Core.FinalRequestOptions },
   ): Promise<void> {
     if (!this._workloadIdentityAuth) return;
+    if (options.path === TOKEN_EXCHANGE_PATH) {
+      request.redirect = 'manual';
+      return;
+    }
     const headers = request.headers as Record<string, string>;
     const overridden = Object.keys(options.headers ?? {}).some((k) => k.toLowerCase() === 'authorization');
     if (overridden || 'authorization' in headers) return;

@@ -256,6 +256,67 @@ describe('workload identity token exchange', () => {
     expect(err.message).toContain('access_token');
   });
 
+  test('a 429 from /oauth/token is retried with the client backoff', async () => {
+    const times: number[] = [];
+    const server = fakeServer({
+      exchangeResponse: () => {
+        times.push(Date.now());
+        return times.length <= 2 ?
+            json({ error: 'slow_down' }, 429)
+          : json({ access_token: 'rdat_ok', expires_in: 3600 });
+      },
+    });
+    const client = new Reducto({
+      baseURL: BASE_URL,
+      fetch: server.fetch,
+      maxRetries: 2,
+      workloadIdentity: { identityProviderId: 'wip_test', provider: staticProvider() },
+    });
+    expect(await client.get<unknown, any>('/version')).toEqual({ auth: 'Bearer rdat_ok' });
+    expect(times).toHaveLength(3);
+    // Default backoff: 0.5 s then 1 s, with up to 25% jitter.
+    expect(times[1]! - times[0]!).toBeGreaterThanOrEqual(370);
+    expect(times[2]! - times[1]!).toBeGreaterThanOrEqual(745);
+  });
+
+  test('a 429 that outlasts the retries raises RateLimitError', async () => {
+    const server = fakeServer({
+      exchangeResponse: () =>
+        new Response(JSON.stringify({ error: 'slow_down' }), {
+          status: 429,
+          headers: { 'Content-Type': 'application/json', 'retry-after-ms': '10' },
+        }),
+    });
+    const client = new Reducto({
+      baseURL: BASE_URL,
+      fetch: server.fetch,
+      maxRetries: 3,
+      workloadIdentity: { identityProviderId: 'wip_test', provider: staticProvider() },
+    });
+    const err = await settled(client.get<unknown, any>('/version')).catch((e) => e);
+    expect(err).toBeInstanceOf(Reducto.RateLimitError);
+    expect(server.exchanges).toHaveLength(4);
+    expect(server.apiCalls).toHaveLength(0);
+  });
+
+  test('a 503 temporarily_unavailable raises InternalServerError with the OAuth body', async () => {
+    const server = fakeServer({
+      exchangeResponse: () =>
+        json(
+          { error: 'temporarily_unavailable', error_description: 'Token exchange is not available.' },
+          503,
+        ),
+    });
+    const err = await settled(makeClient(server).get<unknown, any>('/version')).catch((e) => e);
+    expect(err).toBeInstanceOf(Reducto.InternalServerError);
+    expect(err.status).toBe(503);
+    expect(err.error).toEqual({
+      error: 'temporarily_unavailable',
+      error_description: 'Token exchange is not available.',
+    });
+    expect(server.exchanges).toHaveLength(1);
+  });
+
   test('provider failures raise SubjectTokenProviderError', async () => {
     const server = fakeServer();
     const provider: SubjectTokenProvider = {
