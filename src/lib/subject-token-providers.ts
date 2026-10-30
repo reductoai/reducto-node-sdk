@@ -41,8 +41,7 @@ export function gcpIdTokenProvider({
     getToken: async () => {
       const url = new URL(GCP_METADATA_URL);
       url.searchParams.set('audience', audience);
-      const response = await request('gcp', url, { 'Metadata-Flavor': 'Google' }, fetch);
-      return nonEmpty('gcp', await response.text());
+      return nonEmpty('gcp', await request('gcp', url, { 'Metadata-Flavor': 'Google' }, fetch));
     },
   };
 }
@@ -72,8 +71,8 @@ export function azureManagedIdentityTokenProvider({
       if (clientId) url.searchParams.set('client_id', clientId);
       if (objectId) url.searchParams.set('object_id', objectId);
       if (msiResId) url.searchParams.set('msi_res_id', msiResId);
-      const response = await request('azure', url, { Metadata: 'true' }, fetch);
-      return nonEmpty('azure', (await readJSON('azure', response))['access_token']);
+      const text = await request('azure', url, { Metadata: 'true' }, fetch);
+      return nonEmpty('azure', parseJSON('azure', text)['access_token']);
     },
   };
 }
@@ -98,13 +97,8 @@ export function githubActionsTokenProvider({
       }
       const url = new URL(requestURL);
       url.searchParams.set('audience', audience);
-      const response = await request(
-        'github-actions',
-        url,
-        { Authorization: `Bearer ${requestToken}` },
-        fetch,
-      );
-      return nonEmpty('github-actions', (await readJSON('github-actions', response))['value']);
+      const text = await request('github-actions', url, { Authorization: `Bearer ${requestToken}` }, fetch);
+      return nonEmpty('github-actions', parseJSON('github-actions', text)['value']);
     },
   };
 }
@@ -214,7 +208,7 @@ async function request(
         provider,
       );
     }
-    return response;
+    return await response.text();
   } catch (err) {
     if (err instanceof SubjectTokenProviderError) throw err;
     throw new SubjectTokenProviderError(
@@ -227,9 +221,9 @@ async function request(
   }
 }
 
-async function readJSON(provider: string, response: { json(): Promise<unknown> }) {
+function parseJSON(provider: string, text: string) {
   try {
-    const body = await response.json();
+    const body: unknown = JSON.parse(text);
     return (body && typeof body === 'object' ? body : {}) as Record<string, unknown>;
   } catch (err) {
     throw new SubjectTokenProviderError('Identity token response is not valid JSON', provider, err);
