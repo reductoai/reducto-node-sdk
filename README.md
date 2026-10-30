@@ -132,6 +132,44 @@ const client = new Reducto({
 });
 ```
 
+### X.509 client certificates
+
+On Node.js, a workload can authenticate with a TLS client certificate instead of a token. Upload the
+issuing CA in Studio under Settings > Security > Mutual TLS, create an X.509 workload identity provider
+and a mapping, then pass the certificate chain and key files:
+
+```ts
+import Reducto from 'reductoai';
+import { x509WorkloadIdentity } from 'reductoai/auth';
+
+const client = new Reducto({
+  workloadIdentity: {
+    identityProviderId: 'wip_...',
+    // PEM files: the leaf certificate first, then any intermediates; and its private key.
+    provider: x509WorkloadIdentity({ certChain: '/etc/reducto/chain.pem', key: '/etc/reducto/key.pem' }),
+  },
+});
+```
+
+Or set the environment variables:
+
+```sh
+REDUCTO_IDENTITY_PROVIDER_ID=wip_...
+REDUCTO_MTLS_CERT_CHAIN=/etc/reducto/chain.pem
+REDUCTO_MTLS_KEY=/etc/reducto/key.pem
+```
+
+The client sends the token exchange and every API request to the mTLS host of the environment
+(`https://mtls.platform.reducto.ai`, `https://mtls.eu.platform.reducto.ai` or `https://mtls.au.platform.reducto.ai`)
+through an HTTPS agent that presents the certificate. An explicit `baseURL` (or `REDUCTO_BASE_URL`) is kept.
+The access token is bound to the certificate, so each token is used with the certificate it was issued for.
+The files are re-read on each exchange, so a rotated certificate is used from the next token on.
+
+The certificate is passed as node-fetch's `agent` option, so the `httpAgent` option is not used, and a custom
+`fetch` must honor `agent` (`node-fetch` does; undici's and Node's built-in `fetch` do not). X.509 is not
+supported in browsers, edge runtimes, Bun, Deno or with `reductoai/shims/web`; the client throws when it is
+configured there.
+
 ### Errors
 
 A rejected exchange throws `OAuthError` (a subclass of `APIError`) with the OAuth `errorCode`

@@ -5,7 +5,8 @@ import * as Errors from './error';
 import * as Uploads from './uploads';
 import { isMultipartBody } from './uploads';
 import { WorkloadIdentityAuth, type WorkloadIdentity } from './lib/workload-identity';
-import { identityTokenFile } from './lib/subject-token-providers';
+import { identityTokenFile, x509WorkloadIdentity } from './lib/subject-token-providers';
+import { assertNodeTransport } from './lib/mtls';
 import * as API from './resources/index';
 import * as Shared from './resources/shared';
 import * as TopLevelAPI from './resources/top-level';
@@ -77,6 +78,12 @@ const environments = {
 };
 type Environment = keyof typeof environments;
 
+const mtlsEnvironments: Record<Environment, string> = {
+  production: 'https://mtls.platform.reducto.ai',
+  eu: 'https://mtls.eu.platform.reducto.ai',
+  au: 'https://mtls.au.platform.reducto.ai',
+};
+
 export interface ClientOptions {
   /**
    * Defaults to process.env['REDUCTO_API_KEY'].
@@ -89,7 +96,12 @@ export interface ClientOptions {
    * for short-lived Reducto access tokens. Helpers live in `reductoai/auth`.
    *
    * Cannot be combined with `apiKey`. Without either option, `REDUCTO_API_KEY` is used,
-   * then `REDUCTO_IDENTITY_PROVIDER_ID` with `REDUCTO_IDENTITY_TOKEN_FILE` or `REDUCTO_IDENTITY_TOKEN`.
+   * then `REDUCTO_IDENTITY_PROVIDER_ID` with `REDUCTO_IDENTITY_TOKEN_FILE` or `REDUCTO_IDENTITY_TOKEN`,
+   * or with `REDUCTO_MTLS_CERT_CHAIN` and `REDUCTO_MTLS_KEY` for X.509.
+   *
+   * With an X.509 provider (Node.js only), every request presents the client certificate
+   * through an HTTPS agent, and the client uses the mTLS host of the environment
+   * unless `baseURL` is set.
    */
   workloadIdentity?: WorkloadIdentity | undefined;
 
@@ -223,8 +235,12 @@ export class Reducto extends Core.APIClient {
       );
     }
 
+    const x509 = workloadIdentity?.provider.tokenType === 'x509';
+    if (x509) assertNodeTransport();
+
     super({
-      baseURL: options.baseURL || environments[options.environment || 'production'],
+      baseURL:
+        options.baseURL || (x509 ? mtlsEnvironments : environments)[options.environment || 'production'],
       baseURLOverridden: baseURL ? baseURL !== environments[options.environment || 'production'] : false,
       timeout: options.timeout ?? 3600000 /* 1 hour */,
       httpAgent: options.httpAgent,
@@ -236,8 +252,13 @@ export class Reducto extends Core.APIClient {
 
     this.apiKey = apiKey ?? '';
     if (workloadIdentity) {
-      this._workloadIdentityAuth = new WorkloadIdentityAuth(workloadIdentity, (body) =>
-        this.post(TOKEN_EXCHANGE_PATH, { body, headers: { Authorization: null }, timeout: 60_000 }),
+      this._workloadIdentityAuth = new WorkloadIdentityAuth(workloadIdentity, (body, httpAgent) =>
+        this.post(TOKEN_EXCHANGE_PATH, {
+          body,
+          headers: { Authorization: null },
+          timeout: 60_000,
+          ...(httpAgent && { httpAgent }),
+        }),
       );
     }
   }
@@ -327,8 +348,14 @@ export class Reducto extends Core.APIClient {
     const overridden = Object.keys(options.headers ?? {}).some((k) => k.toLowerCase() === 'authorization');
     if (overridden || 'authorization' in headers) return;
 
-    const token = await this._workloadIdentityAuth.getToken();
+    const { token, agent } = await this._workloadIdentityAuth.getAccessToken();
     headers['authorization'] = `Bearer ${token}`;
+    if (agent) {
+      // Same as the default agent in `buildRequest`: the socket must outlive the request timeout.
+      const minAgentTimeout = (options.timeout ?? this.timeout) + 1000;
+      if (minAgentTimeout > (agent as any).options.timeout) (agent as any).options.timeout = minAgentTimeout;
+      request.agent = agent;
+    }
     this._workloadIdentityTokens.set(options, token);
   }
 
@@ -525,13 +552,25 @@ function workloadIdentityFromEnv(): WorkloadIdentity | undefined {
   if (!identityProviderId) return undefined;
 
   const tokenFile = Core.readEnv('REDUCTO_IDENTITY_TOKEN_FILE');
-  if (tokenFile) return { identityProviderId, provider: identityTokenFile(tokenFile) };
 
   const token = Core.readEnv('REDUCTO_IDENTITY_TOKEN');
+  const certChain = Core.readEnv('REDUCTO_MTLS_CERT_CHAIN');
+  const key = Core.readEnv('REDUCTO_MTLS_KEY');
+  if ((certChain || key) && (tokenFile || token)) {
+    throw new Errors.ReductoError(
+      'Set either REDUCTO_MTLS_CERT_CHAIN and REDUCTO_MTLS_KEY, or REDUCTO_IDENTITY_TOKEN_FILE or REDUCTO_IDENTITY_TOKEN, not both.',
+    );
+  }
+  if (certChain && key) return { identityProviderId, provider: x509WorkloadIdentity({ certChain, key }) };
+  if (certChain || key) {
+    throw new Errors.ReductoError('REDUCTO_MTLS_CERT_CHAIN and REDUCTO_MTLS_KEY must be set together.');
+  }
+
+  if (tokenFile) return { identityProviderId, provider: identityTokenFile(tokenFile) };
   if (token) return { identityProviderId, provider: { tokenType: 'jwt', getToken: async () => token } };
 
   throw new Errors.ReductoError(
-    'REDUCTO_IDENTITY_PROVIDER_ID is set, but neither REDUCTO_IDENTITY_TOKEN_FILE nor REDUCTO_IDENTITY_TOKEN is.',
+    'REDUCTO_IDENTITY_PROVIDER_ID is set, but none of REDUCTO_IDENTITY_TOKEN_FILE, REDUCTO_IDENTITY_TOKEN or REDUCTO_MTLS_CERT_CHAIN and REDUCTO_MTLS_KEY is.',
   );
 }
 

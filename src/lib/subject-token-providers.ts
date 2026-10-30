@@ -1,7 +1,7 @@
 import { SubjectTokenProviderError } from '../error';
 import { readEnv, type Fetch } from '../core';
 import { fetch as defaultFetch } from '../_shims/index';
-import type { SubjectTokenProvider } from './workload-identity';
+import type { SubjectTokenProvider, X509CertificateProvider } from './workload-identity';
 
 /** Recommended audience for subject tokens exchanged with Reducto. */
 export const DEFAULT_AUDIENCE = 'https://platform.reducto.ai';
@@ -29,6 +29,31 @@ export function identityTokenFile(path: string, tokenType: 'jwt' | 'id' = 'jwt')
 /** Reads a Kubernetes projected service account token. */
 export function k8sServiceAccountTokenProvider(path: string = K8S_TOKEN_PATH): SubjectTokenProvider {
   return { tokenType: 'jwt', getToken: () => readTokenFile(path, 'kubernetes') };
+}
+
+/**
+ * Presents a TLS client certificate for X.509 workload identity federation.
+ * `certChain` is a PEM file with the leaf certificate first, then any intermediates,
+ * and `key` is its PEM private key. Both files are re-read on every exchange, so
+ * rotated certificates are picked up. Node.js only.
+ */
+export function x509WorkloadIdentity({
+  certChain,
+  key,
+}: {
+  certChain: string;
+  key: string;
+}): X509CertificateProvider {
+  return {
+    tokenType: 'x509',
+    getCertificate: async () => {
+      const [chainPEM, keyPEM] = await Promise.all([
+        readTokenFile(certChain, 'x509', 'certificate chain'),
+        readTokenFile(key, 'x509', 'private key'),
+      ]);
+      return { certChain: chainPEM, key: keyPEM };
+    },
+  };
 }
 
 /** Fetches an identity token for the default service account from the GCP metadata server. */
@@ -177,20 +202,23 @@ export function awsWebIdentityTokenProvider({
   };
 }
 
-async function readTokenFile(path: string, provider: string): Promise<string> {
+async function readTokenFile(path: string, provider: string, label = 'identity token'): Promise<string> {
   let contents: string;
   try {
     const fs = await import('fs/promises');
     contents = await fs.readFile(path, 'utf-8');
   } catch (err) {
     throw new SubjectTokenProviderError(
-      `Failed to read identity token from ${path}: ${err instanceof Error ? err.message : String(err)}`,
+      `Failed to read ${label} from ${path}: ${err instanceof Error ? err.message : String(err)}`,
       provider,
       err,
     );
   }
   if (!contents.trim()) {
-    throw new SubjectTokenProviderError(`Identity token file ${path} is empty`, provider);
+    throw new SubjectTokenProviderError(
+      `${label[0]!.toUpperCase()}${label.slice(1)} file ${path} is empty`,
+      provider,
+    );
   }
   return contents.trim();
 }
