@@ -516,4 +516,16 @@ describe('subject token providers', () => {
       { Audience: ['https://platform.reducto.ai'], SigningAlgorithm: 'ES384', DurationSeconds: 900 },
     ]);
   });
+
+  test('awsWebIdentityTokenProvider reports a client-sts without GetWebIdentityTokenCommand', async () => {
+    mock.module('@aws-sdk/client-sts', () => ({
+      STSClient: class {},
+      GetWebIdentityTokenCommand: undefined,
+    }));
+    const err = await awsWebIdentityTokenProvider()
+      .getToken()
+      .catch((e) => e);
+    expect(err).toBeInstanceOf(SubjectTokenProviderError);
+    expect(err.message).toContain('3.935.0 or later');
+  });
 });

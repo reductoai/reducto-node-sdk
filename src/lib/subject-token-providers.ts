@@ -116,7 +116,7 @@ interface STSModule {
 
 /**
  * Gets a JWT from AWS STS `GetWebIdentityToken` (outbound identity federation).
- * Requires the optional peer dependency `@aws-sdk/client-sts`. Region and
+ * Requires `@aws-sdk/client-sts` (3.935.0 or later), which is not a dependency of this package. Region and
  * credentials come from the default AWS SDK configuration.
  */
 export function awsWebIdentityTokenProvider({
@@ -136,8 +136,9 @@ export function awsWebIdentityTokenProvider({
       if (!sts) {
         // A variable specifier keeps bundlers and TypeScript from requiring the optional dependency.
         const moduleName = '@aws-sdk/client-sts';
+        let mod: Partial<STSModule>;
         try {
-          sts = (await import(moduleName)) as STSModule;
+          mod = (await import(moduleName)) as Partial<STSModule>;
         } catch (err) {
           throw new SubjectTokenProviderError(
             'awsWebIdentityTokenProvider requires @aws-sdk/client-sts; install it with `npm install @aws-sdk/client-sts`',
@@ -145,6 +146,13 @@ export function awsWebIdentityTokenProvider({
             err,
           );
         }
+        if (!mod.STSClient || !mod.GetWebIdentityTokenCommand) {
+          throw new SubjectTokenProviderError(
+            'awsWebIdentityTokenProvider requires @aws-sdk/client-sts 3.935.0 or later (GetWebIdentityTokenCommand); upgrade it with `npm install @aws-sdk/client-sts@latest`',
+            'aws',
+          );
+        }
+        sts = mod as STSModule;
       }
       client ??= new sts.STSClient({});
       let token: string | undefined;
