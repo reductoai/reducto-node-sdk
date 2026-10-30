@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Features
+
+* **auth:** X.509 workload identity federation. `x509WorkloadIdentity({ certChain, key })` from `reductoai/auth`, or `REDUCTO_MTLS_CERT_CHAIN` and `REDUCTO_MTLS_KEY` with `REDUCTO_IDENTITY_PROVIDER_ID`, exchanges a TLS client certificate for a certificate-bound access token. The client then uses the mTLS host of the environment (`mtls.platform.reducto.ai`, `mtls.eu.platform.reducto.ai`, `mtls.au.platform.reducto.ai`) unless `baseURL` is set, and presents the certificate on every request. The files are re-read on each exchange. Node.js only
+
 ## 0.19.0 (2026-10-24)
 
 Full Changelog: [v0.18.0...v0.19.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.18.0...v0.19.0)
