@@ -81,7 +81,7 @@ function mapModulePaths(code, iteratee) {
           case 'ExportNamedDeclaration':
           case 'ExportAllDeclaration':
           case 'ImportExpression':
-            if (node.source) {
+            if (typeof node.source?.value === 'string') {
               const { range, value } = node.source;
               const transformed = iteratee(value);
               if (transformed !== value) {

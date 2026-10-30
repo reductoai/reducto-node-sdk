@@ -36,6 +36,14 @@
     "formdata-node": "^4.3.2",
     "node-fetch": "^2.6.7"
   },
+  "peerDependencies": {
+    "@aws-sdk/client-sts": ">=3.935.0 <4"
+  },
+  "peerDependenciesMeta": {
+    "@aws-sdk/client-sts": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@types/bun": "^1.4.2",
     "@typescript-eslint/eslint-plugin": "^6.7.0",

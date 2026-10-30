@@ -1,8 +1,10 @@
 import { isRequestOptions } from './core';
-import { type Agent } from './_shims/index';
+import { type Agent, type RequestInit } from './_shims/index';
 import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
+import { WorkloadIdentityAuth, type WorkloadIdentity } from './lib/workload-identity';
+import { identityTokenFile } from './lib/subject-token-providers';
 import * as API from './resources/index';
 import * as Shared from './resources/shared';
 import * as TopLevelAPI from './resources/top-level';
@@ -81,6 +83,16 @@ export interface ClientOptions {
   apiKey?: string | undefined;
 
   /**
+   * Authenticate with workload identity federation instead of an API key: the SDK
+   * exchanges a token from your platform (Kubernetes, GitHub Actions, AWS, GCP, Azure, ...)
+   * for short-lived Reducto access tokens. Helpers live in `reductoai/auth`.
+   *
+   * Cannot be combined with `apiKey`. Without either option, `REDUCTO_API_KEY` is used,
+   * then `REDUCTO_IDENTITY_PROVIDER_ID` with `REDUCTO_IDENTITY_TOKEN_FILE` or `REDUCTO_IDENTITY_TOKEN`.
+   */
+  workloadIdentity?: WorkloadIdentity | undefined;
+
+  /**
    * Specifies the environment to use for the API.
    *
    * Each environment maps to a different base URL:
@@ -153,14 +165,18 @@ export interface ClientOptions {
  * API Client for interfacing with the Reducto API.
  */
 export class Reducto extends Core.APIClient {
-  apiKey: string;
+  apiKey: string | null;
 
   private _options: ClientOptions;
+  private _workloadIdentityAuth: WorkloadIdentityAuth | undefined;
+  private _workloadIdentityTokens = new WeakMap<Core.FinalRequestOptions, string>();
+  private _workloadIdentityRetried = new WeakSet<Core.FinalRequestOptions>();
 
   /**
    * API Client for interfacing with the Reducto API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['REDUCTO_API_KEY'] ?? undefined]
+   * @param {WorkloadIdentity | undefined} [opts.workloadIdentity] - Authenticate with workload identity federation instead of an API key.
    * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
    * @param {string} [opts.baseURL=process.env['REDUCTO_BASE_URL'] ?? https://platform.reducto.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 hour] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
@@ -172,17 +188,26 @@ export class Reducto extends Core.APIClient {
    */
   constructor({
     baseURL = Core.readEnv('REDUCTO_BASE_URL'),
-    apiKey = Core.readEnv('REDUCTO_API_KEY'),
+    apiKey,
+    workloadIdentity,
     ...opts
   }: ClientOptions = {}) {
-    if (apiKey === undefined) {
+    if (apiKey !== undefined && workloadIdentity) {
+      throw new Errors.ReductoError('The `apiKey` and `workloadIdentity` options are mutually exclusive.');
+    }
+    if (apiKey === undefined && !workloadIdentity) {
+      apiKey = Core.readEnv('REDUCTO_API_KEY');
+      if (apiKey === undefined) workloadIdentity = workloadIdentityFromEnv();
+    }
+    if (apiKey === undefined && !workloadIdentity) {
       throw new Errors.ReductoError(
-        "The REDUCTO_API_KEY environment variable is missing or empty; either provide it, or instantiate the Reducto client with an apiKey option, like new Reducto({ apiKey: 'My API Key' }).",
+        "Missing credentials. Set the REDUCTO_API_KEY environment variable, or instantiate the Reducto client with an apiKey option, like new Reducto({ apiKey: 'My API Key' }), or configure workload identity federation with the workloadIdentity option or the REDUCTO_IDENTITY_PROVIDER_ID and REDUCTO_IDENTITY_TOKEN_FILE environment variables.",
       );
     }
 
     const options: ClientOptions = {
       apiKey,
+      workloadIdentity,
       ...opts,
       baseURL,
       environment: opts.environment ?? 'production',
@@ -205,7 +230,14 @@ export class Reducto extends Core.APIClient {
 
     this._options = options;
 
-    this.apiKey = apiKey;
+    this.apiKey = apiKey ?? null;
+    if (workloadIdentity) {
+      this._workloadIdentityAuth = new WorkloadIdentityAuth(
+        workloadIdentity,
+        `${this.baseURL.replace(/\/+$/, '')}/oauth/token`,
+        options.fetch,
+      );
+    }
   }
 
   parse: API.Parse = new API.Parse(this);
@@ -277,7 +309,31 @@ export class Reducto extends Core.APIClient {
   }
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
-    return { Authorization: `Bearer ${this.apiKey}` };
+    return this.apiKey === null ? {} : { Authorization: `Bearer ${this.apiKey}` };
+  }
+
+  protected override async prepareRequest(
+    request: RequestInit,
+    { options }: { url: string; options: Core.FinalRequestOptions },
+  ): Promise<void> {
+    if (!this._workloadIdentityAuth) return;
+    const headers = request.headers as Record<string, string>;
+    const overridden = Object.keys(options.headers ?? {}).some((k) => k.toLowerCase() === 'authorization');
+    if (overridden || 'authorization' in headers) return;
+
+    const token = await this._workloadIdentityAuth.getToken();
+    headers['authorization'] = `Bearer ${token}`;
+    this._workloadIdentityTokens.set(options, token);
+  }
+
+  protected override async shouldRetryUnauthorized(options: Core.FinalRequestOptions): Promise<boolean> {
+    const token = this._workloadIdentityTokens.get(options);
+    if (!this._workloadIdentityAuth || token === undefined || this._workloadIdentityRetried.has(options)) {
+      return false;
+    }
+    this._workloadIdentityRetried.add(options);
+    this._workloadIdentityAuth.invalidate(token);
+    return true;
   }
 
   static Reducto = this;
@@ -296,6 +352,8 @@ export class Reducto extends Core.APIClient {
   static InternalServerError = Errors.InternalServerError;
   static PermissionDeniedError = Errors.PermissionDeniedError;
   static UnprocessableEntityError = Errors.UnprocessableEntityError;
+  static OAuthError = Errors.OAuthError;
+  static SubjectTokenProviderError = Errors.SubjectTokenProviderError;
 
   static toFile = Uploads.toFile;
   static fileFromPath = Uploads.fileFromPath;
@@ -451,5 +509,20 @@ export {
   PermissionDeniedError,
   UnprocessableEntityError,
 } from './error';
+
+function workloadIdentityFromEnv(): WorkloadIdentity | undefined {
+  const identityProviderId = Core.readEnv('REDUCTO_IDENTITY_PROVIDER_ID');
+  if (!identityProviderId) return undefined;
+
+  const tokenFile = Core.readEnv('REDUCTO_IDENTITY_TOKEN_FILE');
+  if (tokenFile) return { identityProviderId, provider: identityTokenFile(tokenFile) };
+
+  const token = Core.readEnv('REDUCTO_IDENTITY_TOKEN');
+  if (token) return { identityProviderId, provider: { tokenType: 'jwt', getToken: async () => token } };
+
+  throw new Errors.ReductoError(
+    'REDUCTO_IDENTITY_PROVIDER_ID is set, but neither REDUCTO_IDENTITY_TOKEN_FILE nor REDUCTO_IDENTITY_TOKEN is.',
+  );
+}
 
 export default Reducto;
