@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, mock, setSystemTime, test } fr
 import { mkdtempSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
 import path from 'path';
-import Reducto, { AuthenticationError } from 'reductoai';
+import Reducto, { AuthenticationError, toFile } from 'reductoai';
 import {
   OAuthError,
   SubjectTokenProviderError,
@@ -199,6 +199,16 @@ describe('workload identity token exchange', () => {
     const results = await Promise.all(Array.from({ length: 5 }, () => client.get<unknown, any>('/version')));
     expect(results).toEqual(Array(5).fill({ auth: 'Bearer rdat_2' }));
     expect(server.exchanges).toHaveLength(2);
+  });
+
+  test('a 401 on a multipart upload is not replayed, but the token is dropped', async () => {
+    const server = fakeServer({ apiStatus: (auth) => (auth === 'Bearer rdat_1' ? 401 : 200) });
+    const client = makeClient(server);
+    const file = await toFile(Buffer.from('%PDF-1.4'), 'doc.pdf');
+    const err = await settled(client.upload({ file })).catch((e) => e);
+    expect(err).toBeInstanceOf(AuthenticationError);
+    expect(server.apiCalls).toEqual(['Bearer rdat_1']);
+    expect(await client.get<unknown, any>('/version')).toEqual({ auth: 'Bearer rdat_2' });
   });
 
   test('an explicit Authorization header skips the exchange', async () => {

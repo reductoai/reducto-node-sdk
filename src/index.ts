@@ -3,6 +3,7 @@ import { type Agent, type RequestInit } from './_shims/index';
 import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
+import { isMultipartBody } from './uploads';
 import { WorkloadIdentityAuth, type WorkloadIdentity } from './lib/workload-identity';
 import { identityTokenFile } from './lib/subject-token-providers';
 import * as API from './resources/index';
@@ -328,11 +329,15 @@ export class Reducto extends Core.APIClient {
 
   protected override async shouldRetryUnauthorized(options: Core.FinalRequestOptions): Promise<boolean> {
     const token = this._workloadIdentityTokens.get(options);
-    if (!this._workloadIdentityAuth || token === undefined || this._workloadIdentityRetried.has(options)) {
-      return false;
-    }
-    this._workloadIdentityRetried.add(options);
+    if (!this._workloadIdentityAuth || token === undefined) return false;
     this._workloadIdentityAuth.invalidate(token);
+
+    // A stream body was consumed by the first attempt and cannot be sent again.
+    const body = options.body as any;
+    const streamed =
+      isMultipartBody(body) || typeof body?.pipe === 'function' || typeof body?.getReader === 'function';
+    if (streamed || this._workloadIdentityRetried.has(options)) return false;
+    this._workloadIdentityRetried.add(options);
     return true;
   }
 
