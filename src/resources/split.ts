@@ -73,7 +73,7 @@ export interface ParseUsage {
 }
 
 export interface ParseUsageBreakdown {
-  parse_model: 'R-1' | 'Legacy';
+  parse_model: 'R-1' | 'R-1 Mini' | 'Legacy';
 
   tier: 'Default' | 'Batch';
 

@@ -205,9 +205,10 @@ export interface Settings {
 
   /**
    * The parse model used for the request. Setting `r-1` will use Reducto's latest
-   * flagship Parse model. `legacy` pins the previous parsing pipeline.
+   * flagship Parse model. `r-1-mini` is a lower-cost R-1 model that does not
+   * accept spreadsheets. `legacy` pins the previous parsing pipeline.
    */
-  model?: 'r-1' | 'legacy' | null;
+  model?: 'r-1' | 'r-1-mini' | 'legacy' | null;
 
   /**
    * Standard is our best multilingual OCR system. Legacy only supports germanic
