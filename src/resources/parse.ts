@@ -171,7 +171,7 @@ export interface Settings {
    * Render DPI used when rasterizing the source PDF before embedding the OCR text
    * layer (only applies when `embed_pdf_metadata` is True). Lower values produce
    * dramatically smaller output PDFs; higher values preserve more detail when zoomed
-   * past 200%. Defaults to 100 (good for on-screen viewing); raise toward the source
+   * past 200%. Defaults to 200 (good for on-screen viewing); raise toward the source
    * scan DPI for crisper output. Min 50, max 250.
    */
   embed_pdf_metadata_dpi?: number;
@@ -205,9 +205,10 @@ export interface Settings {
 
   /**
    * The parse model used for the request. Setting `r-1` will use Reducto's latest
-   * flagship Parse model. `legacy` pins the previous parsing pipeline.
+   * flagship Parse model. `r-1-mini` is a lower-cost R-1 model that does not
+   * accept spreadsheets. `legacy` pins the previous parsing pipeline.
    */
-  model?: 'r-1' | 'legacy' | null;
+  model?: 'r-1' | 'r-1-mini' | 'legacy' | null;
 
   /**
    * Standard is our best multilingual OCR system. Legacy only supports germanic
