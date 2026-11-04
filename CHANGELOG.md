@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.20.0 (2026-11-04)
+
+Full Changelog: [v0.19.0...v0.20.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.19.0...v0.20.0)
+
+### Features
+
+* **parse:** add `settings.model: 'r-1-mini'`, a lower-cost R-1 model. It does not accept spreadsheets and is not available on-prem ([0d6fdf0](https://github.com/reductoai/reducto-node-sdk/commit/0d6fdf0))
+* **usage:** `ParseUsageBreakdown.parse_model` can be `'R-1 Mini'` ([0d6fdf0](https://github.com/reductoai/reducto-node-sdk/commit/0d6fdf0))
+
+### Notes
+
+* **parse:** the API now defaults `settings.embed_pdf_metadata_dpi` to 200 (was 100). Set it to 100 to keep the smaller output PDFs
+
 ## 0.19.0 (2026-10-24)
 
 Full Changelog: [v0.18.0...v0.19.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.18.0...v0.19.0)
