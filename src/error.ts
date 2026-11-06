@@ -126,3 +126,35 @@ export class UnprocessableEntityError extends APIError<422, Headers> {}
 export class RateLimitError extends APIError<429, Headers> {}
 
 export class InternalServerError extends APIError<number, Headers> {}
+
+/**
+ * The `/oauth/token` endpoint rejected a workload identity token exchange.
+ * `errorCode` is the RFC 6749 `error` field, e.g. `invalid_grant`.
+ */
+export class OAuthError extends APIError<number, Headers> {
+  readonly errorCode: string | undefined;
+  readonly errorDescription: string | undefined;
+
+  constructor(status: number, error: Object | undefined, headers: Headers) {
+    super(status, error, undefined, headers);
+    const body = (error ?? {}) as Record<string, unknown>;
+    this.errorCode = typeof body['error'] === 'string' ? body['error'] : undefined;
+    this.errorDescription =
+      typeof body['error_description'] === 'string' ? body['error_description'] : undefined;
+    const detail = [this.errorCode, this.errorDescription].filter(Boolean).join(': ');
+    this.message = `Workload identity token exchange failed (${status})${detail ? `: ${detail}` : ''}`;
+  }
+}
+
+/** A workload identity provider could not produce a subject token. */
+export class SubjectTokenProviderError extends ReductoError {
+  readonly provider: string;
+
+  constructor(message: string, provider: string, cause?: unknown) {
+    super(message);
+    this.provider = provider;
+    // in some environments the 'cause' property is already declared
+    // @ts-ignore
+    if (cause !== undefined) this.cause = cause;
+  }
+}

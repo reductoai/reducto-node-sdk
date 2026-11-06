@@ -399,6 +399,14 @@ export abstract class APIClient {
     { url, options }: { url: string; options: FinalRequestOptions },
   ): Promise<void> {}
 
+  /**
+   * Called when a request gets a 401. Return `true` to send it again, for example
+   * after refreshing a short-lived credential. The retry does not use up `maxRetries`.
+   */
+  protected async shouldRetryUnauthorized(options: FinalRequestOptions): Promise<boolean> {
+    return false;
+  }
+
   protected parseHeaders(headers: HeadersInit | null | undefined): Record<string, string> {
     return (
       !headers ? {}
@@ -465,6 +473,11 @@ export abstract class APIClient {
     const responseHeaders = createResponseHeaders(response.headers);
 
     if (!response.ok) {
+      if (response.status === 401 && (await this.shouldRetryUnauthorized(options))) {
+        await response.text().catch(() => {});
+        return this.makeRequest(options, retriesRemaining);
+      }
+
       if (retriesRemaining && this.shouldRetry(response)) {
         const retryMessage = `retrying, ${retriesRemaining} attempts remaining`;
         debug(`response (error; ${retryMessage})`, response.status, url, responseHeaders);

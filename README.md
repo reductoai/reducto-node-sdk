@@ -47,6 +47,99 @@ const response: Reducto.ParseRunResponse = await client.parse.run(params);
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
 
+## Workload identity federation
+
+Instead of storing a long-lived API key, a workload can exchange the identity token its platform already
+gives it (Kubernetes, GitHub Actions, AWS, Google Cloud, Azure, ...) for a short-lived Reducto access token.
+First create a workload identity provider and a mapping in Reducto Studio, then pass its ID and a token
+provider to the client:
+
+```ts
+import Reducto from 'reductoai';
+import { k8sServiceAccountTokenProvider } from 'reductoai/auth';
+
+const client = new Reducto({
+  workloadIdentity: {
+    identityProviderId: 'wip_...',
+    provider: k8sServiceAccountTokenProvider(),
+  },
+});
+```
+
+The client exchanges the subject token at `<baseURL>/oauth/token`, so `environment: 'eu'` and `'au'` work
+without extra settings. It caches the access token, refreshes it in the background before it expires
+(`refreshBufferSeconds`, default 1200, capped at half the token lifetime), shares one exchange between
+concurrent requests, and on a `401` exchanges once more and retries the request once.
+The exchange itself uses the client's `maxRetries` and backoff, like any other request (`408`, `409`, `429`
+and `5xx`). With workload identity, `client.apiKey` is an empty string.
+
+`apiKey` and `workloadIdentity` cannot be set together. Credentials resolve in this order: the `apiKey`
+option, the `workloadIdentity` option, `REDUCTO_API_KEY`, then these environment variables:
+
+```sh
+REDUCTO_IDENTITY_PROVIDER_ID=wip_...
+REDUCTO_IDENTITY_TOKEN_FILE=/path/to/token   # re-read on every exchange
+# or
+REDUCTO_IDENTITY_TOKEN=eyJ...
+```
+
+### Token providers
+
+The helpers in `reductoai/auth` default the token audience to `https://platform.reducto.ai`. Use the
+audience you configured on the Reducto provider.
+
+```ts
+import {
+  awsWebIdentityTokenProvider,
+  azureManagedIdentityTokenProvider,
+  gcpIdTokenProvider,
+  githubActionsTokenProvider,
+  identityTokenFile,
+  k8sServiceAccountTokenProvider,
+} from 'reductoai/auth';
+
+// Kubernetes (EKS, GKE, AKS, self-managed): projected service account token.
+// Defaults to /var/run/secrets/kubernetes.io/serviceaccount/token.
+k8sServiceAccountTokenProvider('/var/run/secrets/tokens/reducto');
+
+// GitHub Actions: requires `permissions: id-token: write` in the workflow.
+githubActionsTokenProvider({ audience: 'https://platform.reducto.ai' });
+
+// Google Cloud: identity token from the metadata server.
+gcpIdTokenProvider({ audience: 'https://platform.reducto.ai' });
+
+// Azure managed identity: token from IMDS. `resource` defaults to https://management.azure.com/.
+// Pass clientId, objectId or msiResId to pick a user-assigned identity.
+azureManagedIdentityTokenProvider({ resource: 'api://reducto', clientId: '...' });
+
+// AWS outbound identity federation (sts:GetWebIdentityToken).
+// Requires `npm install @aws-sdk/client-sts`.
+awsWebIdentityTokenProvider({ audience: 'https://platform.reducto.ai', signingAlgorithm: 'RS256' });
+
+// Any file that holds a JWT (SPIFFE JWT-SVID, OCI, ...), re-read on every exchange.
+identityTokenFile('/run/spire/jwt-svid', 'jwt');
+```
+
+A provider is any object with `tokenType` (`'jwt'` or `'id'`) and an async `getToken()`, so you can
+supply your own:
+
+```ts
+const client = new Reducto({
+  workloadIdentity: {
+    identityProviderId: 'wip_...',
+    provider: { tokenType: 'jwt', getToken: async () => fetchMyJwt() },
+  },
+});
+```
+
+### Errors
+
+A rejected exchange throws `OAuthError` (a subclass of `APIError`) with the OAuth `errorCode`
+(for example `invalid_grant`) and `errorDescription`. A provider that cannot get a token throws
+`SubjectTokenProviderError`, with the provider name in `provider` and the original error in `cause`.
+Other failed exchanges throw the usual `APIError` subclass (for example `RateLimitError` or
+`InternalServerError`), with the OAuth error body in `error`.
+
 ## File uploads
 
 Request parameters that correspond to file uploads can be passed in many different forms:
