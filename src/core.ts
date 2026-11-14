@@ -448,7 +448,7 @@ export abstract class APIClient {
 
     await this.prepareRequest(req, { url, options });
 
-    debug('request', url, options, req.headers);
+    debug('request', url, redactAgent(options), req.headers);
 
     if (options.signal?.aborted) {
       throw new APIUserAbortError();
@@ -967,6 +967,11 @@ function applyHeadersMut(targetHeaders: Headers, newHeaders: Headers): void {
       targetHeaders[lowerKey] = val;
     }
   }
+}
+
+// An mTLS agent holds the client private key in `agent.options.key`.
+function redactAgent<Req>(options: FinalRequestOptions<Req>): FinalRequestOptions<Req> {
+  return options.httpAgent ? { ...options, httpAgent: '[redacted]' as unknown as Agent } : options;
 }
 
 export function debug(action: string, ...args: any[]) {
