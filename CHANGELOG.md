@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.21.0 (2026-11-14)
+
+Full Changelog: [v0.20.0...v0.21.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.20.0...v0.21.0)
+
+### Features
+
+* **auth:** add workload identity federation. Pass `workloadIdentity: { identityProviderId, provider }` to `new Reducto()`, or set `REDUCTO_IDENTITY_PROVIDER_ID` with `REDUCTO_IDENTITY_TOKEN_FILE` or `REDUCTO_IDENTITY_TOKEN`. The client exchanges the platform token at `<baseURL>/oauth/token` for a short-lived access token, caches it, and refreshes it before expiry. `apiKey` and `workloadIdentity` are mutually exclusive. API key behavior does not change ([0783a94](https://github.com/reductoai/reducto-node-sdk/commit/0783a94))
+* **auth:** add `reductoai/auth` token providers: `identityTokenFile`, `k8sServiceAccountTokenProvider`, `gcpIdTokenProvider`, `azureManagedIdentityTokenProvider`, `githubActionsTokenProvider`, `awsWebIdentityTokenProvider` ([0783a94](https://github.com/reductoai/reducto-node-sdk/commit/0783a94))
+* **auth:** add `OAuthError` (token exchange failures) and `SubjectTokenProviderError` ([0783a94](https://github.com/reductoai/reducto-node-sdk/commit/0783a94))
+
 ## 0.20.0 (2026-11-04)
 
 Full Changelog: [v0.19.0...v0.20.0](https://github.com/reductoai/reducto-node-sdk/compare/v0.19.0...v0.20.0)
