@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, spyOn, test } from 'bun:test';
 import { mkdtempSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
 import path from 'path';
@@ -151,6 +151,22 @@ describe('X.509 workload identity', () => {
     const server = fakeServer();
     await x509Client(server, { timeout: 2 * 3600 * 1000 }).get('/version');
     expect([...agents][0].options.timeout).toBe(2 * 3600 * 1000 + 1000);
+  });
+
+  test('DEBUG request logs do not include the private key', async () => {
+    process.env['DEBUG'] = 'true';
+    const log = spyOn(console, 'log').mockImplementation(() => {});
+    try {
+      const server = fakeServer();
+      await x509Client(server).get('/version');
+
+      expect(server.apiCalls.map((c) => c.cert)).toEqual(['chain-1']);
+      const logged = log.mock.calls.filter(([action]) => action === 'Reducto:DEBUG:request');
+      expect(logged).toHaveLength(2);
+      expect(Bun.inspect(logged)).not.toContain('key-1');
+    } finally {
+      log.mockRestore();
+    }
   });
 
   test('environment variables configure X.509', async () => {
